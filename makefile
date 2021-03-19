@@ -9,7 +9,7 @@ CXX_FLAGS = -std=c++14\
 			-fsanitize=undefined\
 			-D_GLIBCXX_DEBUG\
 			-O2
-INC_FLAGS = -I$(inc_dir)
+INC_FLAGS = -I$(inc_dir) -I$(src_dir)
 
 src_dir = src
 lib_dir = lib
@@ -24,14 +24,14 @@ objs = $(src:$(src_dir)/%.cpp=$(obj_dir)/%.o) $(lib_src:$(lib_dir)/%.cpp=$(obj_d
 
 target = $(out_dir)/Engimon.out
 
-default: clean $(target)
+default: $(target)
 
 $(obj_dir):
 	$(MKDIR) $(obj_dir)
 
-$(obj_dir)/%.o: $(src_dir)/%.cpp $(obj_dir)
+$(obj_dir)/%.o: $(src_dir)/%.cpp
 	$(CXX) $(CXX_FLAGS) -c -o $@ $< $(INC_FLAGS)
-$(obj_dir)/%.o: $(lib_dir)/%.cpp $(obj_dir)
+$(obj_dir)/%.o: $(lib_dir)/%.cpp
 	$(CXX) $(CXX_FLAGS) -c -o $@ $< $(INC_FLAGS)
 
 $(target): $(objs)
@@ -39,7 +39,7 @@ $(target): $(objs)
 run: $(target)
 	./$<
 
-target: $(target)
+all: $(target)
 
 clean:
-	$(RM) $(objs) $(target)
+	$(RM) $(target) $(obj_dir)/*
