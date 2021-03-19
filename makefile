@@ -22,7 +22,7 @@ lib_src = $(wildcard $(lib_dir)/*.cpp)
 
 objs = $(src:$(src_dir)/%.cpp=$(obj_dir)/%.o) $(lib_src:$(lib_dir)/%.cpp=$(obj_dir)/%.o)
 
-target = $(out_dir)/Engimon
+target = $(out_dir)/Engimon.out
 
 default: clean $(target)
 
