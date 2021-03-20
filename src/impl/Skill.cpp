@@ -5,7 +5,7 @@
  * Implementasi class Skill
  */
 
-#include "Skill.hpp"
+#include "../headers/Skill.hpp"
 
 Skill::Skill(const std::string _name, const unsigned _basePower,
              const unsigned _masteryLevel,
