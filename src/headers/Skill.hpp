@@ -21,7 +21,7 @@ class Skill {
     std::string name;
     unsigned basePower;
     unsigned masteryLevel;
-    std::vector<Elements> elements; // elemen yang dapat mempelajari skill ini
+    std::vector<Elements> elements;  // elemen yang dapat mempelajari skill ini
 
    public:
     // constructors
@@ -39,6 +39,16 @@ class Skill {
 
     // setters
     void setMasteryLevel(unsigned);
+};
+
+class SkillExp {
+   private:
+    const int msgID;
+    static std::string msg[];
+
+   public:
+    SkillExp(int);
+    void diplayMsg() const;
 };
 
 #endif

@@ -7,13 +7,19 @@
 
 #include "../headers/Skill.hpp"
 
+#include <iostream>
+
+// Bagian Skill
 Skill::Skill(const std::string _name, const unsigned _basePower,
              const unsigned _masteryLevel,
              const std::vector<Elements>& _elements)
-    : name(_name),
-      basePower(_basePower),
-      masteryLevel(_masteryLevel),
-      elements(_elements) {}
+    : name(_name), basePower(_basePower), masteryLevel(_masteryLevel) {
+    if (_elements.size() == 0) {
+        throw SkillExp(0);
+    } else {
+        elements = _elements;
+    }
+}
 
 Skill::Skill(const std::string _name, const unsigned _basePower,
              const unsigned _masteryLevel, const Elements _elements)
@@ -35,3 +41,8 @@ std::vector<Elements> Skill::getElements() const { return elements; }
 void Skill::setMasteryLevel(unsigned _masteryLevel) {
     masteryLevel = _masteryLevel;
 }
+
+// bagian SkillExp
+SkillExp::SkillExp(int x) : msgID(x) {}
+void SkillExp::diplayMsg() const { std::cout << msg[msgID] << std::endl; }
+std::string SkillExp::msg[] = {"Element tidak valid"};
