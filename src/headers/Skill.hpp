@@ -48,7 +48,7 @@ class SkillExp {
 
    public:
     SkillExp(int);
-    void diplayMsg() const;
+    void what() const;
 };
 
 #endif

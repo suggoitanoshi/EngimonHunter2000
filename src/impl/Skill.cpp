@@ -1,5 +1,5 @@
 /**
- * Elements.cpp
+ * Skill.cpp
  * y e e wangy wangy
  *
  * Implementasi class Skill
@@ -44,5 +44,5 @@ void Skill::setMasteryLevel(unsigned _masteryLevel) {
 
 // bagian SkillExp
 SkillExp::SkillExp(int x) : msgID(x) {}
-void SkillExp::diplayMsg() const { std::cout << msg[msgID] << std::endl; }
+void SkillExp::what() const { std::cout << msg[msgID] << std::endl; }
 std::string SkillExp::msg[] = {"Element tidak valid"};
