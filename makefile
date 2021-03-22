@@ -1,15 +1,25 @@
+DEBUG ?= 0
+
 RM = rm -rf
 MKDIR = mkdir -p
 CXX = g++
+ifeq ($(DEBUG), 0)
+CXX_FLAGS = -std=c++14\
+			-Os\
+			-Wall\
+			-Wextra\
+			-Wshadow
+else
 CXX_FLAGS = -std=c++14\
 			-Os\
 			-Wall\
 			-Wextra\
 			-Wshadow\
-			-fsanitize=address\
-			-fsanitize=undefined\
 			-g\
-			-D_GLIBCXX_DEBUG
+			-D_GLIBCXX_DEBUG\
+			-fsanitize=address\
+			-fsanitize=undefined
+endif
 INC_FLAGS = -I$(inc_dir) -I$(header_dir)
 LD_FLAGS = -lgtest
 
@@ -35,7 +45,10 @@ test_obj= $(test_src:$(test_dir)/%.cpp=$(obj_dir)/%.o)
 target = $(out_dir)/Engimon.out
 test_target = $(out_dir)/Engimon_test.out
 
-default: $(test) $(target)
+.PHONY: default all help install run test clean
+
+default: install
+all: test run
 
 $(obj_dir):
 	$(MKDIR) $(obj_dir)
@@ -58,12 +71,16 @@ $(target): $(src_obj) $(impl_obj) $(lib_obj)
 $(test_target): $(test_obj) $(impl_obj) $(lib_obj)
 	$(CXX) $(INC_FLAGS) $(CXX_FLAGS) -o $@ $^ $(LD_FLAGS)
 
-all: $(test_target) $(target)
-target: $(target)
-test_target: $(test_target)
+help:
+	$(info `make help`: keluarkan pesan bantuan ini)
+	$(info `make`: jalankan unit testing compile program)
+	$(info `make all`: jalankan unit testing lalu jalankan program)
+	$(info `make test`: compile & jalankan unit testing)
+	$(info `make install`: jalankan unit testing lalu compile program)
+	$(info `make run`: compile & jalankan program)
 
-build: $(target)
-	./$<
+install: test $(target)
+
 run: $(target)
 	./$<
 
@@ -71,4 +88,4 @@ test: $(test_target)
 	./$<
 
 clean:
-	$(RM) $(target) $(obj_dir)/*
+	$(RM) $(target) $(test_target) $(obj_dir)/*
