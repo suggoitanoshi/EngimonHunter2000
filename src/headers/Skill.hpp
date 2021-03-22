@@ -17,13 +17,13 @@
  * Class untuk menyimpan skill yang (dapat) dimiliki Engimon
  */
 class Skill {
-   private:
+  protected:
     std::string name;
     unsigned basePower;
     unsigned masteryLevel;
     std::vector<Elements> elements;  // elemen yang dapat mempelajari skill ini
 
-   public:
+  public:
     // constructors
     Skill(const std::string, const unsigned _basePower,
           const unsigned _masteryLevel, const std::vector<Elements>&);
