@@ -42,6 +42,7 @@ void Item::setQuantity(unsigned _quantity) { quantity = _quantity; }
 
 void Item::learn(Engimon e) {
     bool compatible = false;
+    vector<Elements> engiElements = e.getElements();
 
     // Mengecek mastery level item
     if (masteryLevel != 1) {
@@ -50,9 +51,9 @@ void Item::learn(Engimon e) {
 
     // Mengecek kecocokan skill item dengan engimon
     /*
-    for (int i = 0; i < e.element.size(); i++) {
-        for (j = 0; j < elements.size(); j++) {
-            if (e.element[i] == elements[j].getName()) {
+    for (int i = 0; i < (int)e.getElementCount(); i++) {
+        for (int j = 0; j < (int)elements.size(); j++) {
+            if (engiElements[i].getName == elements[j]) {
                 compatible = true;
                 break;
             }
@@ -66,8 +67,8 @@ void Item::learn(Engimon e) {
 
     // Mengecek apakah skill sudah dipelajari atau belum
     /*
-    for (int i = 0; i < e.skills.size(); i++) {
-        if (e.skills[i].getName() == name) {
+    for (int i = 0; i < (int)e.getSkillsCount(); i++) {
+        if (e.getSkills(i) == name) {
             throw ItemExp(2);
         }
     }
@@ -75,9 +76,9 @@ void Item::learn(Engimon e) {
 
     // Mengecek jumlah skills yang telah dilajari
     /*
-    if (e.skills.size() = MAX_SKILLS) {
-        for (int i = 0; MAX_SKILLS; i++) {
-            cout << i+1 << ". "<< e.skills[i].getName() << endl;
+    if (e.getSkillsCount() = MAX_SKILLS) {
+        for (int i = 0; (int)MAX_SKILLS; i++) {
+            cout << i+1 << ". "<< e.getSkills(i) << endl;
         }
         cout << "Pilih nomor skill untuk diganti dengan skill baru: ";
         cin >> j;
@@ -86,9 +87,9 @@ void Item::learn(Engimon e) {
             throw ItemExp(3);
         }
 
-        e.Skills[j-1] = SKill(name, basePower, masteryLevel, elements);
+        e.setSkills(j-1, name);
     } else {
-        e.Skills.replace(SKill(name, basePower, masteryLevel, elements));
+        e.setSkills(e.getSkillsCount() name);
     }
     */
     quantity--;
