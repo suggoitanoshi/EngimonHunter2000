@@ -12,13 +12,14 @@
 #include <vector>
 
 #include "Elements.hpp"
-#include "Skill.hpp"
 #include "Engimon.hpp"
+#include "Skill.hpp"
 
 using namespace std;
 
 /**
- * Class untuk item skill yang (dapat) dimiliki Player dan dipelajari oleh Engimon
+ * Class untuk item skill yang (dapat) dimiliki Player dan dipelajari oleh
+ * Engimon
  */
 class Item : Skill {
 private:

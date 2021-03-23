@@ -8,32 +8,40 @@
 #ifndef _ENGIMON_HPP_
 #define _ENGIMON_HPP_
 #include <string>
-#include "Elements.hpp"
-using namespace std;
-#define MAX_ELMNT 2
-#define MAX_CEXP 10000
+#include <tuple>
+#include <vector>
 
+#include "Elements.hpp"
+#include "Skill.hpp"
+using namespace std;
+
+// Abstract Base Class
 class EngimonSpecies {
 protected:
     // Nama spesies
     string species;
     // Jumlah elemen spesies (yang terisi)
-    int _elem;
+    int _element;
     // Elemen yang dimiliki
-    Elements* element[MAX_ELMNT];
-public:
-    // konstruktor
-    EngimonSpecies();
+    vector<Elements> element;
 
+public:
+    const static unsigned MAX_CEXP = 10000;
+    // konstruktor & destruktor
+    EngimonSpecies(string ospec, int o_elem, vector<Elements> oelem);
+    // ~EngimonSpecies();
+    
 };
 
-class Engimon : public EngimonSpecies {
+class Engimon : EngimonSpecies {
 private:
     string name;
-    string parentName[2];
+    tuple<string, string> parents[2];
+    vector<Skill> skill;
     int lvl;
-    int exp;
-    int cexp;
+    unsigned exp;
+    unsigned cexp;
+
 public:
     // konstruktor & destruktor
     Engimon();
@@ -44,7 +52,8 @@ public:
     // getter
     string getName();
     int getLvl();
-    int getExp();
+    //int getExp();
+    string getSpecies();
 
     // methods
     void addExp(int exp);
