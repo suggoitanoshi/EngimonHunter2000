@@ -12,22 +12,24 @@
 #include <vector>
 
 #include "Elements.hpp"
+#include "Engimon.hpp"
 #include "Skill.hpp"
-// #include "Engimon.hpp"
+
+using namespace std;
 
 /**
- * Class untuk menyimpan skill yang (dapat) dimiliki Engimon
+ * Class untuk item skill yang (dapat) dimiliki Player dan dipelajari oleh
+ * Engimon
  */
 class Item : Skill {
 private:
     unsigned quantity;
-    std::vector<Elements> elements;  // elemen yang dapat mempelajari skill ini
 
 public:
     // constructors and destructors
-    Item(const std::string, const unsigned, const unsigned,
-         const std::vector<Elements>&, unsigned);
-    Item(const std::string, const unsigned, const unsigned, const Elements,
+    Item(const string, const unsigned, const unsigned, const vector<Elements>&,
+         unsigned);
+    Item(const string, const unsigned, const unsigned, const Elements,
          unsigned);
     Item(const Item&);
     // ~Item();
@@ -39,7 +41,17 @@ public:
     void setQuantity(unsigned);
 
     // methods
-    void learn(/*Engimon*/);
+    void learn(Engimon);
+};
+
+class ItemExp {
+private:
+    const int msgID;
+    static std::string msg[];
+
+public:
+    ItemExp(int);
+    void bruh() const;
 };
 
 #endif
