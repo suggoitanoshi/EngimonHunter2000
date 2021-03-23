@@ -1,8 +1,7 @@
 #ifndef PLAYER_HPP
 #define PLAYER_HPP
 
-#include <iostream>
-#define MAX_CAPACITY 50;
+#include <string>
 
 using namespace std;
 
@@ -14,7 +13,6 @@ protected:
     // Inventory<Engimon>[] listEngimon;
     // Inventory<SkillItem>[] listSkill;
     int totalInvent;
-    int maxCapacity;
 
 public:
     Player(string _name);
@@ -22,6 +20,8 @@ public:
     // Engimon getActiveEngimon() const;
     int getTotalInventory() const;
     // void switchEngimon(Engimon engi);
+
+    const static int MAX_CAPACITY = 50;
 };
 
 #endif

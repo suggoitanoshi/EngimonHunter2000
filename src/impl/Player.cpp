@@ -1,9 +1,7 @@
 #include "../headers/Player.hpp"
 
 Player::Player(string _name)
-    : name(_name), isEngiActive(false), totalInvent(0) {
-    maxCapacity = MAX_CAPACITY;
-}
+    : name(_name), isEngiActive(false), totalInvent(0) {}
 
 bool Player::isEngimonActive() const { return isEngiActive; }
 
