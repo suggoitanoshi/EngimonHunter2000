@@ -29,7 +29,6 @@ public:
     // konstruktor & destruktor
     EngimonSpecies(string ospec, vector<Elements> oelem);
     // ~EngimonSpecies();
-    
 };
 
 class Engimon : EngimonSpecies {
@@ -40,8 +39,7 @@ private:
     int lvl;
     unsigned exp;
     unsigned cexp;
-    tuple<int,int> location;
-    
+    tuple<int, int> location;
 
 public:
     // konstruktor & destruktor
@@ -53,21 +51,20 @@ public:
     // getter
     string getName();
     int getLvl();
-    //int getExp();
+    // int getExp();
     string getSpecies();
     vector<Elements> getElements();
-    tuple<int,int> getPosition();
+    unsigned getElementCount();
+    tuple<int, int> getPosition();
     string getSkills(int index);
 
     // setter
     void setPos();
-    void setSkills(int index, Skills oskill);
+    void setSkills(int index, Skill oskill);
 
     // methods
     void addExp(int exp);
     unsigned getBattlePower();
-
-
 };
 
 #endif
