@@ -2,6 +2,7 @@
 #define PLAYER_HPP
 
 #include <string>
+#include <tuple>
 
 using namespace std;
 
@@ -13,13 +14,22 @@ protected:
     // Inventory<Engimon>[] listEngimon;
     // Inventory<SkillItem>[] listSkill;
     int totalInvent;
+    tuple<int, int> position;
+    char dir;
 
 public:
-    Player(string _name);
+    Player(string _name, int x, int y);
+    Player();
     bool isEngimonActive() const;
     // Engimon getActiveEngimon() const;
     int getTotalInventory() const;
     // void switchEngimon(Engimon engi);
+
+    tuple<int, int> getPosition() const;
+    int getPositionX() const;
+    int getPositionY() const;
+    void setPositionX(int x);
+    void setPositionY(int y);
 
     const static int MAX_CAPACITY = 50;
 };
