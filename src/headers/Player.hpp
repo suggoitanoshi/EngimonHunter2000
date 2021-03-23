@@ -13,16 +13,18 @@ protected:
     // Engimon activeEngi; kyknya masuk game juga
     // Inventory<Engimon>[] listEngimon;
     // Inventory<SkillItem>[] listSkill;
-    int totalInvent;
     tuple<int, int> position;
     char dir;
 
 public:
     Player(string _name, int x, int y);
     Player();
+
+    string getName() const;
+    void setName(string _name);
+
     bool isEngimonActive() const;
     // Engimon getActiveEngimon() const;
-    int getTotalInventory() const;
     // void switchEngimon(Engimon engi);
 
     tuple<int, int> getPosition() const;
@@ -31,7 +33,9 @@ public:
     void setPositionX(int x);
     void setPositionY(int y);
 
-    const static int MAX_CAPACITY = 50;
+    char getDir() const;
+    void setDir(char _dir);
+
 };
 
 #endif
