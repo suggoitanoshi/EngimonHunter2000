@@ -10,28 +10,27 @@
 #include <iostream>
 
 Item::Item(const std::string _name, const unsigned _basePower,
-          const unsigned _masteryLevel, const std::vector<Elements>& _elements, unsigned _quantity)
+           const unsigned _masteryLevel, const std::vector<Elements>& _elements,
+           unsigned _quantity)
     : Skill(_name, _basePower, _masteryLevel, _elements) {
-        quantity = _quantity;
-    }
+    quantity = _quantity;
+}
 
 Item::Item(const std::string _name, const unsigned _basePower,
-        const unsigned _masteryLevel, const Elements _elements, unsigned _quantity)
+           const unsigned _masteryLevel, const Elements _elements,
+           unsigned _quantity)
     : Skill(_name, _basePower, _masteryLevel, _elements) {
-        quantity = _quantity;
-    }
+    quantity = _quantity;
+}
 
-Item::Item(const Item& src) : Skill(src.name, src.basePower, src.masteryLevel, src.elements) {
+Item::Item(const Item& src)
+    : Skill(src.name, src.basePower, src.masteryLevel, src.elements) {
     quantity = src.quantity;
 }
 
-unsigned Item::getQuantity() const {
-    return quantity;
-}
+unsigned Item::getQuantity() const { return quantity; }
 
-void Item::setQuantity(unsigned _quantity) {
-    quantity = _quantity;
-}
+void Item::setQuantity(unsigned _quantity) { quantity = _quantity; }
 
 void Item::learn(/*Engimon e*/) {
     // Mengecek apakah skill sudah dipelajari atau belum
@@ -45,7 +44,7 @@ void Item::learn(/*Engimon e*/) {
 
     // Mengecek mastery level item
     if (masteryLevel != 1) {
-        throw (masteryLevel);
+        throw(masteryLevel);
     } else {
         quantity--;
     }
@@ -65,8 +64,8 @@ void Item::learn(/*Engimon e*/) {
 
         e.Skills[j-1] = SKill(name, basePower, masteryLevel, elements);
     } else {
-        e.Skills[e.getSKillsCount()] = SKill(name, basePower, masteryLevel, elements);
+        e.Skills[e.getSKillsCount()] = SKill(name, basePower, masteryLevel,
+    elements);
     }
     */
 }
-

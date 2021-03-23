@@ -1,3 +1,6 @@
+AccessModifierOffset: -4 # Biar VsCode ga pusing
 BasedOnStyle: Google # biar nanti kerja di Google. Amin.
+#BinPackArguments: false
+#BinPackParameters: false
 ColumnLimit: 80
 IndentWidth: 4

@@ -7,7 +7,7 @@
 using namespace std;
 
 class Player {
-   protected:
+protected:
     string name;
     bool isEngiActive;  // kyknya masuk game aja
     // Engimon activeEngi; kyknya masuk game juga
@@ -16,7 +16,7 @@ class Player {
     int totalInvent;
     int maxCapacity;
 
-   public:
+public:
     Player(string _name);
     bool isEngimonActive() const;
     // Engimon getActiveEngimon() const;

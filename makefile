@@ -40,7 +40,7 @@ test_src = $(wildcard $(test_dir)/*.cpp)
 src_obj = $(src:$(src_dir)/%.cpp=$(obj_dir)/%.o)
 lib_obj = $(lib_src:$(lib_dir)/%.cpp=$(obj_dir)/%.o)
 impl_obj = $(impl_src:$(impl_dir)/%.cpp=$(obj_dir)/%.o)
-test_obj= $(test_src:$(test_dir)/%.cpp=$(obj_dir)/%.o)
+test_obj = $(test_src:$(test_dir)/%.cpp=$(obj_dir)/%.o)
 
 target = $(out_dir)/Engimon.out
 test_target = $(out_dir)/Engimon_test.out
