@@ -20,15 +20,14 @@ class EngimonSpecies {
 protected:
     // Nama spesies
     string species;
-    // Jumlah elemen spesies (yang terisi)
-    int _element;
     // Elemen yang dimiliki
     vector<Elements> element;
 
 public:
     const static unsigned MAX_CEXP = 10000;
+    const static unsigned MAX_SKILLS = 4;
     // konstruktor & destruktor
-    EngimonSpecies(string ospec, int o_elem, vector<Elements> oelem);
+    EngimonSpecies(string ospec, vector<Elements> oelem);
     // ~EngimonSpecies();
     
 };
@@ -41,12 +40,14 @@ private:
     int lvl;
     unsigned exp;
     unsigned cexp;
+    tuple<int,int> location;
+    
 
 public:
     // konstruktor & destruktor
     Engimon();
     Engimon(string name);
-    Engimon(string name, string parentName[]);
+    Engimon(string name, tuple<string, string> parents[2]);
     ~Engimon();
 
     // getter
@@ -54,9 +55,19 @@ public:
     int getLvl();
     //int getExp();
     string getSpecies();
+    vector<Elements> getElements();
+    tuple<int,int> getPosition();
+    string getSkills(int index);
+
+    // setter
+    void setPos();
+    void setSkills(int index, Skills oskill);
 
     // methods
     void addExp(int exp);
+    unsigned getBattlePower();
+
+
 };
 
 #endif
