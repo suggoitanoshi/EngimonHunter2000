@@ -1,7 +1,7 @@
 #include "../headers/Player.hpp"
 
 Player::Player(string _name, int x, int y)
-    : name(_name), isEngiActive(false), dir('a') {
+    : name(_name), isEngiActive(false), dir('a'), activeEngi("picakhu") {
     position = make_tuple(x, y);
 }
 

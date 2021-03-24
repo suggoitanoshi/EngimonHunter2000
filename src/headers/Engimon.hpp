@@ -29,8 +29,9 @@ private:
 public:
     const static unsigned defaultLevel = 1;
     // konstruktor & destruktor
-    Engimon();                   // DON'T EVER USE THIS.
+    //Engimon();                   // DON'T EVER USE THIS.
     Engimon(EngimonSpecies ES);  // untuk wild engimon (namanya=nama spesies)
+    Engimon(string ESName);  // untuk wild engimon (namanya=nama spesies)
     Engimon(EngimonSpecies ES,
             string oname);  // untuk engimon player dengan custom name
     Engimon(EngimonSpecies ES, string oname,

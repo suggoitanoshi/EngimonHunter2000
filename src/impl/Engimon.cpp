@@ -9,7 +9,7 @@
 
 #include "../headers/Dex.hpp"
 
-Engimon::Engimon() : EngimonSpecies() {
+Engimon::Engimon(string ESName) {
     name = "";
     lvl = defaultLevel;
     exp = 0;

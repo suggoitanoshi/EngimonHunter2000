@@ -1,24 +1,21 @@
 #include "../headers/EngimonSpecies.hpp"
 
-EngimonSpecies::EngimonSpecies() : starterSkill("", 0, 0, FIRE) {
-    this->species = "";
-    this->slogan = "";
-    element = vector<Elements>();
-}
-
-EngimonSpecies::EngimonSpecies(string ospec, string oslogan, vector<Elements> oelem, Skill oskill) : starterSkill(oskill) {
+EngimonSpecies::EngimonSpecies(string ospec, string oslogan,
+                               vector<Elements> oelem, Skill oskill)
+    : starterSkill(oskill) {
     this->species = ospec;
     this->slogan = oslogan;
     element = oelem;
 }
 
-EngimonSpecies::EngimonSpecies(const EngimonSpecies &ES) : starterSkill(ES.starterSkill) {
+EngimonSpecies::EngimonSpecies(const EngimonSpecies &ES)
+    : starterSkill(ES.starterSkill) {
     this->species = ES.species;
     this->slogan = ES.slogan;
     element = ES.element;
 }
 
-EngimonSpecies& EngimonSpecies::operator=(const EngimonSpecies &ES) {
+EngimonSpecies &EngimonSpecies::operator=(const EngimonSpecies &ES) {
     this->species = ES.species;
     this->slogan = ES.slogan;
     this->starterSkill = ES.starterSkill;

@@ -24,7 +24,6 @@ public:
     const static unsigned maxCumulExp = 10000;
     const static unsigned maxSkills = 4;
     // con, ccon, dest
-    EngimonSpecies();  // DON'T EVER USE THIS.
     EngimonSpecies(string ospec, string oslogan, vector<Elements> oelem,
                    Skill oskill);
     EngimonSpecies(const EngimonSpecies &ES);
