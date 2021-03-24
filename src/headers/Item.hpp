@@ -32,32 +32,31 @@ public:
     Item(const string, const unsigned, const unsigned, const Elements,
          unsigned);
     Item(const Item&);
-    Item& operator=(const Item&);
-    bool operator==(const Item&) {
-
+    
     // operator
+    Item& operator=(const Item&);
+    bool operator==(const Item&);
     friend ostream& operator<<(ostream& os, const Item& src);
 
     // getters
-    unsigned getQuantity() const;
+    unsigned getQuantity();
 
     // setters
     void setQuantity(unsigned);
 
     // methods
     void learn(Engimon);
-    bool operator==(const Item&);
 };
 
-class ItemException : std::exception {
-private:
-    const int msgID;
-    static std::string msg[];
+    class ItemException : std::exception {
+    private:
+        const int msgID;
+        static std::string msg[];
 
-public:
-    ItemException(int);
-    const char* what();
-    void bruh();
+    public:
+        ItemException(int);
+        const char* what();
+        void bruh();
 };
 
 #endif
