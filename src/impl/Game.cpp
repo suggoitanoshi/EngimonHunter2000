@@ -1,11 +1,12 @@
 #include "../headers/Game.hpp"
 
-#include <iostream>
 #include <stdlib.h>
 
-#include "../headers/Player.hpp"
+#include <iostream>
+
 #include "../headers/BreedingException.hpp"
 #include "../headers/Dex.hpp"
+#include "../headers/Player.hpp"
 
 using namespace std;
 
@@ -192,82 +193,104 @@ void Game::run() {
     cout << "makasih dah main kk" << endl;
 }
 
-Engimon& Game::kawin(Engimon& bapak, Engimon& emak){
+Engimon& Game::kawin(Engimon& bapak, Engimon& emak) {
     std::string name;
     EngimonSpecies spesies;
     vector<Skill> skillYangDiambil;
     Skill skillSekarang;
-    int indexSkillAnak, indexSkillOrangtua, skillBapakTerambil, skillEmakTerambil, pembanding;
+    int indexSkillAnak, indexSkillOrangtua, skillBapakTerambil,
+        skillEmakTerambil, pembanding;
     bool bapakTerambil, emakTerambil, pernahTerambil;
     // uji level orangtua
-    if(bapak.getLvl() < 30 || emak.getLvl() < 30){
+    if (bapak.getLvl() < 30 || emak.getLvl() < 30) {
         throw BreedingException(0);
     }
     indexSkillAnak = 0;
     skillBapakTerambil = 0;
     skillEmakTerambil = 0;
-    while(indexSkillAnak < 4 && (skillEmakTerambil < bapak.getSkillsCount() || skillEmakTerambil < emak.getSkillsCount())){
+    while (indexSkillAnak < 4 && (skillEmakTerambil < bapak.getSkillsCount() ||
+                                  skillEmakTerambil < emak.getSkillsCount())) {
         skillSekarang = bapak.getSkills(0);
         bapakTerambil = 1;
         emakTerambil = 0;
-        for(indexSkillOrangtua = 1; indexSkillOrangtua < bapak.getSkillsCount(); indexSkillOrangtua++){
+        for (indexSkillOrangtua = 1;
+             indexSkillOrangtua < bapak.getSkillsCount();
+             indexSkillOrangtua++) {
             skillSekarang = bapak.getSkills(indexSkillOrangtua);
             pembanding = 0;
             pernahTerambil = 0;
-            while(pembanding < indexSkillAnak && !pernahTerambil){
-                pernahTerambil = skillSekarang.getName() == skillYangDiambil[pembanding].getName();
+            while (pembanding < indexSkillAnak && !pernahTerambil) {
+                pernahTerambil = skillSekarang.getName() ==
+                                 skillYangDiambil[pembanding].getName();
             }
-            if(!pernahTerambil && skillYangDiambil[indexSkillAnak].getMasteryLevel() < skillSekarang.getMasteryLevel()){
+            if (!pernahTerambil &&
+                skillYangDiambil[indexSkillAnak].getMasteryLevel() <
+                    skillSekarang.getMasteryLevel()) {
                 skillYangDiambil[indexSkillAnak] = skillSekarang;
             }
         }
-        for(indexSkillOrangtua = 0; indexSkillOrangtua < emak.getSkillsCount(); indexSkillOrangtua++){
+        for (indexSkillOrangtua = 0; indexSkillOrangtua < emak.getSkillsCount();
+             indexSkillOrangtua++) {
             skillSekarang = emak.getSkills(indexSkillOrangtua);
             pembanding = 0;
             pernahTerambil = 0;
-            while(pembanding < indexSkillAnak && !pernahTerambil){
-                pernahTerambil = skillSekarang.getName() == skillYangDiambil[pembanding].getName();
+            while (pembanding < indexSkillAnak && !pernahTerambil) {
+                pernahTerambil = skillSekarang.getName() ==
+                                 skillYangDiambil[pembanding].getName();
             }
-            if(!pernahTerambil){
-                if(skillYangDiambil[indexSkillAnak].getName() == skillSekarang.getName()){
+            if (!pernahTerambil) {
+                if (skillYangDiambil[indexSkillAnak].getName() ==
+                    skillSekarang.getName()) {
                     emakTerambil = 1;
-                    pembanding = skillYangDiambil[indexSkillAnak].getMasteryLevel() - skillSekarang.getMasteryLevel();
-                    if(pembanding == 0)
-                        skillYangDiambil[indexSkillAnak].setMasteryLevel(skillYangDiambil[indexSkillAnak].getMasteryLevel()+1);
-                    else if(pembanding < 0)
-                        skillYangDiambil[indexSkillAnak].setMasteryLevel(skillSekarang.getMasteryLevel());
-                }
-                else if(skillYangDiambil[indexSkillAnak].getMasteryLevel() < skillSekarang.getMasteryLevel()){
+                    pembanding =
+                        skillYangDiambil[indexSkillAnak].getMasteryLevel() -
+                        skillSekarang.getMasteryLevel();
+                    if (pembanding == 0)
+                        skillYangDiambil[indexSkillAnak].setMasteryLevel(
+                            skillYangDiambil[indexSkillAnak].getMasteryLevel() +
+                            1);
+                    else if (pembanding < 0)
+                        skillYangDiambil[indexSkillAnak].setMasteryLevel(
+                            skillSekarang.getMasteryLevel());
+                } else if (skillYangDiambil[indexSkillAnak].getMasteryLevel() <
+                           skillSekarang.getMasteryLevel()) {
                     skillYangDiambil[indexSkillAnak] = skillSekarang;
                     bapakTerambil = 0;
                     emakTerambil = 1;
                 }
             }
         }
-        if(bapakTerambil) skillBapakTerambil++;
-        if(emakTerambil) skillEmakTerambil++;
+        if (bapakTerambil) skillBapakTerambil++;
+        if (emakTerambil) skillEmakTerambil++;
     }
     // kurangi level orangtua
-    bapak.setLevel(bapak.getLvl()-30);
-    emak.setLevel(emak.getLvl()-30);
+    bapak.setLevel(bapak.getLvl() - 30);
+    emak.setLevel(emak.getLvl() - 30);
     // kasus sama
     Elements elementBapak, elementEmak;
-    if(bapak.getElements().size() == 2) elementBapak = bapak.getElements().at(rand() % 2);
-    else elementBapak = bapak.getElements().at(0);
-    if(emak.getElements().size() == 2) elementEmak = emak.getElements().at(rand() % 2);
-    else elementEmak = emak.getElements().at(0);
-    if(elementBapak == elementEmak){
+    if (bapak.getElements().size() == 2)
+        elementBapak = bapak.getElements().at(rand() % 2);
+    else
+        elementBapak = bapak.getElements().at(0);
+    if (emak.getElements().size() == 2)
+        elementEmak = emak.getElements().at(rand() % 2);
+    else
+        elementEmak = emak.getElements().at(0);
+    if (elementBapak == elementEmak) {
         // spesies sama dengan bapak ato emak
-        if(rand()%2 == 0) spesies = dex.getEngi(bapak.getSpecies());
-        else spesies = dex.getEngi(emak.getSpecies());
-    }
-    else{
+        if (rand() % 2 == 0)
+            spesies = dex.getEngi(bapak.getSpecies());
+        else
+            spesies = dex.getEngi(emak.getSpecies());
+    } else {
         // Hitung Element Advantage
         // STUB
         spesies = dex.getEngi(bapak.getSpecies());
     }
     std::cin >> name;
-    tuple<string, string> parents[2] = {make_tuple(bapak.getName(), bapak.getSpecies()), make_tuple(emak.getName(), emak.getSpecies())};
-    Engimon *anjay = new Engimon(spesies, name, parents, skillYangDiambil);
+    tuple<string, string> parents[2] = {
+        make_tuple(bapak.getName(), bapak.getSpecies()),
+        make_tuple(emak.getName(), emak.getSpecies())};
+    Engimon* anjay = new Engimon(spesies, name, parents, skillYangDiambil);
     return *anjay;
 }

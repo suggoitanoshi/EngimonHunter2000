@@ -19,8 +19,7 @@ Skill::Skill() {
 }
 
 Skill::Skill(const string _name, const unsigned _basePower,
-             const unsigned _masteryLevel,
-             const vector<Elements>& _elements)
+             const unsigned _masteryLevel, const vector<Elements>& _elements)
     : name(_name), basePower(_basePower), masteryLevel(_masteryLevel) {
     if (_elements.size() == 0) {
         throw SkillException(0);

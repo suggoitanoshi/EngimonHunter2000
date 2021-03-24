@@ -1,4 +1,5 @@
 #include "../headers/InventoryException.hpp"
+
 #include "string"
 
 const string InventoryException::msg[] = {

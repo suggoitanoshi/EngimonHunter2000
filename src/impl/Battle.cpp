@@ -18,7 +18,7 @@ double Battle::getAdvantage(Elements A, Elements B) {
             return 1;
         } else if (B == GROUND) {
             return 0.5;
-        } else { // B == ICE
+        } else {  // B == ICE
             return 2;
         }
     } else if (A == WATER) {
@@ -30,7 +30,7 @@ double Battle::getAdvantage(Elements A, Elements B) {
             return 0;
         } else if (B == GROUND) {
             return 1;
-        } else { // B == ICE
+        } else {  // B == ICE
             return 1;
         }
     } else if (A == ELECTRIC) {
@@ -42,7 +42,7 @@ double Battle::getAdvantage(Elements A, Elements B) {
             return 1;
         } else if (B == GROUND) {
             return 0;
-        } else { // B == ICE
+        } else {  // B == ICE
             return 1.5;
         }
     } else if (A == GROUND) {
@@ -54,10 +54,10 @@ double Battle::getAdvantage(Elements A, Elements B) {
             return 2;
         } else if (B == GROUND) {
             return 1;
-        } else { // B == ICE
+        } else {  // B == ICE
             return 0;
         }
-    } else { // A == ICE
+    } else {  // A == ICE
         if (B == FIRE) {
             return 0;
         } else if (B == WATER) {
@@ -66,7 +66,7 @@ double Battle::getAdvantage(Elements A, Elements B) {
             return 0.5;
         } else if (B == GROUND) {
             return 2;
-        } else { // B == ICE
+        } else {  // B == ICE
             return 1;
         }
     }

@@ -8,9 +8,9 @@
 #include <string>
 #include <tuple>
 
+#include "./Dex.hpp"
 #include "./Engimon.hpp"
 #include "./Player.hpp"
-#include "./Dex.hpp"
 
 using namespace std;
 

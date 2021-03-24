@@ -35,9 +35,9 @@ public:
             string oname);  // untuk engimon player dengan custom name
     Engimon(EngimonSpecies ES, string oname,
             tuple<string, string> oparents[2]);  // untuk hasil breeding
-    Engimon(EngimonSpecies ES, string oname,
-            tuple<string, string> oparents[2], vector<Skill> skills);  // untuk hasil breeding
-    Engimon(const Engimon&);
+    Engimon(EngimonSpecies ES, string oname, tuple<string, string> oparents[2],
+            vector<Skill> skills);  // untuk hasil breeding
+    Engimon(const Engimon &);
 
     // getter
     string getName();
@@ -59,7 +59,7 @@ public:
     bool operator==(const Engimon &Eng);
     bool operator==(const string &oname);
     Engimon &operator=(const Engimon &Eng);
-    friend ostream& operator<<(ostream& os, const Engimon& src);
+    friend ostream &operator<<(ostream &os, const Engimon &src);
 };
 
 #endif

@@ -8,8 +8,7 @@ Parser::Parser(std::string _filePath, char _delim)
 std::vector<std::string> Parser::parseLine(std::string line) const {
     std::string currentSubstr;
     std::vector<std::string> parseResult;
-    for (std::string::iterator c = line.begin(); c != line.end();
-         ++c) {
+    for (std::string::iterator c = line.begin(); c != line.end(); ++c) {
         if (*c == delim) {
             parseResult.push_back(currentSubstr);
             currentSubstr = "";
@@ -32,7 +31,7 @@ std::vector<std::vector<std::string>> Parser::parse() const {
             /// menyimpan baris dari file yang lagi mau diparse
             std::string line;
 
-            getline(input, line); // skip first line
+            getline(input, line);  // skip first line
 
             while (getline(input, line)) {
                 parseResult.push_back(this->parseLine(line));
