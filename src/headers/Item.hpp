@@ -32,6 +32,7 @@ public:
     Item(const string, const unsigned, const unsigned, const Elements,
          unsigned);
     Item(const Item&);
+    Item& operator=(const Item&);
 
     // getters
     unsigned getQuantity() const;

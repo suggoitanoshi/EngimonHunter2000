@@ -36,6 +36,15 @@ Item::Item(const Item& src)
     quantity = src.quantity;
 }
 
+Item& Item::operator=(const Item& _Item) {
+  name = _Item.name;
+  basePower = _Item.basePower;
+  masteryLevel = _Item.masteryLevel;
+  elements = _Item.elements;
+  quantity = _Item.quantity;
+  return *this;
+}
+
 unsigned Item::getQuantity() const { return quantity; }
 
 void Item::setQuantity(unsigned _quantity) { quantity = _quantity; }
