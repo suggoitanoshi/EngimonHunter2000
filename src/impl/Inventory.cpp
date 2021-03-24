@@ -9,7 +9,6 @@ template <class T>
 class Inventory : BaseInventory {
 private:
     /* data */
-    static const int maxCapacity;
     std::vector<T> cont;
 
 public:
