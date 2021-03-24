@@ -4,10 +4,12 @@
 #include<exception>
 #include<string>
 
-class BreedingException: std::exception{
+using namespace std;
+
+class BreedingException: exception{
   private:
     const int msgID;
-    static std::string msg[];
+    static string msg[];
   public:
     BreedingException(int);
     const char* what();

@@ -49,10 +49,10 @@ public:
     void learn(Engimon);
 };
 
-class ItemException : std::exception {
+class ItemException : exception {
 private:
     const int msgID;
-    static std::string msg[];
+    static string msg[];
 
 public:
     ItemException(int);

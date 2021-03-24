@@ -2,10 +2,12 @@
 #define _INVENTORY_EXCEPTION_HPP
 #include "string"
 
-class InventoryException : std::exception {
+using namespace std;
+
+class InventoryException : exception {
 private:
     const int exceptionID;
-    static const std::string msg[];
+    static const string msg[];
 
 public:
     InventoryException(int);

@@ -9,13 +9,13 @@ template <class T>
 class Inventory : BaseInventory {
 private:
     /* data */
-    std::vector<T> cont;
+    vector<T> cont;
 
 public:
     /**
      * Konstruktor Inventory
      */
-    Inventory() : BaseInventory() { this->cont = std::vector<T>(); }
+    Inventory() : BaseInventory() { this->cont = vector<T>(); }
     /**
      * Tambah item ke inventory
      */
@@ -64,7 +64,7 @@ public:
     void showInventory() const {
         size_t i = 0;
         for (i = 0; i < this->cont.size(); i++) {
-            std::cout << this->cont.at(i) << std::endl;
+            cout << this->cont.at(i) << endl;
         }
     }
     /**
@@ -73,7 +73,7 @@ public:
     T operator[](int i) {
         try {
             return this->cont.at(i);
-        } catch (const std::out_of_range& e) {
+        } catch (const out_of_range& e) {
             throw InventoryException(3);
         }
     }
