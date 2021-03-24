@@ -12,7 +12,6 @@ using namespace std;
 class Player {
 protected:
     string name;
-    bool isEngiActive;
     Engimon activeEngi;
     Inventory<Engimon> listEngimon;
     Inventory<Item> listItem;
@@ -25,12 +24,15 @@ public:
 
     // getters
     string getName() const;
-    bool isEngimonActive() const;
     Engimon getActiveEngimon() const;
     tuple<int, int> getPosition() const;
     int getPositionX() const;
     int getPositionY() const;
     char getDir() const;
+    Engimon getEngimonFromString(string);
+    Item getItemFromString(string);
+    int getEngimonIdxFromString(string);
+    int getItemIdxFromString(string);
 
     // setters
     void setName(string);
@@ -42,11 +44,12 @@ public:
 
     // methods
     void checkActiveEngimon();
-    void switchEngimon(Engimon);
+    void switchEngimon(string);
     void showEngimon(Engimon);
+    void showEngimon(string);
     void showEngimon() const;
     void showItem() const;
-    void useItem(Engimon, Item);
+    void useItem(string, string);
     void interact();
 };
 
