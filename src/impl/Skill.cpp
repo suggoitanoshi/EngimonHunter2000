@@ -15,12 +15,12 @@ Skill::Skill() {
     name = "THUNDAAA";
     basePower = 40;
     masteryLevel = 1;
-    elements.push_back(ELECTRIC);
+    elements.insert(ELECTRIC);
 }
 
-Skill::Skill(const std::string _name, const unsigned _basePower,
+Skill::Skill(const string _name, const unsigned _basePower,
              const unsigned _masteryLevel,
-             const std::vector<Elements>& _elements)
+             const set<Elements>& _elements)
     : name(_name), basePower(_basePower), masteryLevel(_masteryLevel) {
     if (_elements.size() == 0) {
         throw SkillException(0);
@@ -32,7 +32,7 @@ Skill::Skill(const std::string _name, const unsigned _basePower,
 Skill::Skill(const std::string _name, const unsigned _basePower,
              const unsigned _masteryLevel, const Elements _elements)
     : name(_name), basePower(_basePower), masteryLevel(_masteryLevel) {
-    elements.push_back(_elements);
+    elements.insert(_elements);
 }
 
 Skill::Skill(const Skill& src)
@@ -55,10 +55,10 @@ bool Skill::operator==(const Skill& sblh) {
            masteryLevel == sblh.masteryLevel && elements == sblh.elements;
 }
 
-std::string Skill::getName() const { return name; }
+string Skill::getName() const { return name; }
 unsigned Skill::getBasePower() const { return basePower; }
 unsigned Skill::getMasteryLevel() const { return masteryLevel; }
-std::vector<Elements> Skill::getElements() const { return elements; }
+set<Elements> Skill::getElements() const { return elements; }
 
 void Skill::setMasteryLevel(unsigned _masteryLevel) {
     masteryLevel = _masteryLevel;
