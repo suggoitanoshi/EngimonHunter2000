@@ -77,19 +77,16 @@ void Item::learn(Engimon e) {
     // Mengecek jumlah skills yang telah dilajari
     /*
     if (e.getSkillsCount() = MAX_SKILLS) {
+        string old;
         for (int i = 0; (int)MAX_SKILLS; i++) {
             cout << i+1 << ". "<< e.getSkills(i) << endl;
         }
-        cout << "Pilih nomor skill untuk diganti dengan skill baru: ";
-        cin >> j;
+        cout << "Pilih nama skill untuk diganti dengan skill baru: ";
+        cin >> old;
 
-        if (j < 1 || j > e.skills.size()) {
-            throw ItemException(3);
-        }
-
-        e.setSkills(j-1, name);
+        e.setSkills(old, name);
     } else {
-        e.setSkills(e.getSkillsCount() name);
+        e.setSkills(name);
     }
     */
     quantity--;
@@ -97,7 +94,7 @@ void Item::learn(Engimon e) {
 
 ItemException::ItemException(int x) : msgID(x) {}
 const char* ItemException::what() { return msg[msgID].c_str(); }
-const void ItemException::bruh() { cout << what() << endl; }
+void ItemException::bruh() { cout << what() << endl; }
 string ItemException::msg[] = {
     "Mastery level item bukan 1", "Skill item tidak cocok dengan Engimon",
     "Skill item sudah pernah dipelajari",

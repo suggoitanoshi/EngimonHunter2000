@@ -50,7 +50,7 @@ private:
 public:
     SkillException(int);
     const char* what();
-    const void bruh();
+    void bruh();
 };
 
 #endif
