@@ -36,8 +36,8 @@ public:
             i = getFirstItemIndex(item);
             this->subtractItem();
             this->cont.erase(cont.begin() + i);
-        } catch (InventoryException e) {
-            throw e;
+        } catch (InventoryException&) {
+            throw;
         }
     }
     /**

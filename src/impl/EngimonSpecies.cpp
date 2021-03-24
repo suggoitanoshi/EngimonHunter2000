@@ -20,3 +20,12 @@ EngimonSpecies::EngimonSpecies(const EngimonSpecies &ES) {
     this->starterSkill = ES.starterSkill;
     element = ES.element;
 }
+
+EngimonSpecies& EngimonSpecies::operator=(const EngimonSpecies &ES) {
+    this->species = ES.species;
+    this->slogan = ES.slogan;
+    this->starterSkill = ES.starterSkill;
+    this->element = ES.element;
+
+    return *this;
+}

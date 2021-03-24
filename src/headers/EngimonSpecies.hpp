@@ -28,6 +28,7 @@ public:
     EngimonSpecies(string ospec, string oslogan, vector<Elements> oelem,
                    Skill oskill);
     EngimonSpecies(const EngimonSpecies &ES);
+    EngimonSpecies& operator=(const EngimonSpecies&);
 };
 
 #endif
