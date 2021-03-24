@@ -80,6 +80,7 @@ void Dex::readSkillDex(const string path) {
         string skillName;
         unsigned skillBasePower;
         vector<Elements> elements;
+
         for (string metadata : engimon) {
             switch (i) {
                 case 0:
@@ -97,7 +98,7 @@ void Dex::readSkillDex(const string path) {
             }
             ++i;
         }
-        if (elements.size() == 0) {
+        if (elements.size() == 0 || skillBasePower == 0) {
             throw DexException(0);
         }
 
@@ -110,6 +111,8 @@ void Dex::readSkillDex(const string path) {
         skillDex.emplace(skillName,
                          Skill(skillName, skillBasePower, 1, elements));
     }
+
+    // return;
 }
 
 Skill Dex::getSkill(const string skillname) const {

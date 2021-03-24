@@ -202,7 +202,8 @@ Engimon& Game::kawin(Engimon& bapak, Engimon& emak) {
         skillEmakTerambil, pembanding;
     bool bapakTerambil, emakTerambil, pernahTerambil;
     // uji level orangtua
-    if (bapak.getLvl() < 30 || emak.getLvl() < 30) {
+    if ((unsigned)bapak.getLvl() < 30 + bapak.defaultLevel ||
+        (unsigned)emak.getLvl() < 30 + emak.defaultLevel) {
         throw BreedingException(0);
     }
     indexSkillAnak = 0;

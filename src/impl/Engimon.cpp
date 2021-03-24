@@ -47,12 +47,12 @@ Engimon::Engimon(EngimonSpecies ES, string oname,
 }
 
 Engimon::Engimon(EngimonSpecies ES, string oname,
-                 tuple<string, string> oparents[2], vector<Skill> skills)
+                 tuple<string, string> oparents[2], vector<Skill> oskills)
     : EngimonSpecies(ES) {
     name = oname;
     parents[0] = oparents[0];
     parents[1] = oparents[1];
-    skills.insert(skills.end(), skills.begin(), skills.end());
+    skills.insert(skills.end(), oskills.begin(), oskills.end());
     lvl = defaultLevel;
     exp = 0;
     cexp = 0;
