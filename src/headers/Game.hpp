@@ -8,8 +8,8 @@
 #include <tuple>
 #include <list>
 
-#include "./Player.hpp"
 #include "./Engimon.hpp"
+#include "./Player.hpp"
 
 using namespace std;
 
@@ -23,32 +23,31 @@ private:
     // list<Engimon> wildEngimons;
 
 public:
-    //map & input handling
+    // map & input handling
     Game();
     void printGameIntro();
     void readMap();
     void printMap();
 
-    //battle
+    // battle
     // double getAdvantage(Elements A, Elements B);
     // double checkAdvantage(Engimon A, Engimon B);
     // void battle(Engimon A, Engimon B);
 
-    //spawn wild engimon
+    // spawn wild engimon
     // void spawnWildEngimon();
 
-    //getter
+    // getter
     bool getIsExit();
     Player getPlayer();
     // list<Engimon> getWildEngimon();
 
-    //setter
+    // setter
     void setIsExit(bool x);
     // void addWildEngimon(Engimon X);
 
-    //main
-    void run(); 
-
+    // main
+    void run();
 };
 
 #endif

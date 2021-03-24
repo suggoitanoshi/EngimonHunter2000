@@ -1,5 +1,6 @@
 #ifndef _BASE_INVENTORY_HPP
 #define _BASE_INVENTORY_HPP
+
 class BaseInventory {
 protected:
     static const int maxCap;  // kata josep 500

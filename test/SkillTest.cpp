@@ -15,7 +15,7 @@
 // nguji konstruktor Skill pake vektor
 TEST(Skill, ConstructorVector) {
     std::vector<Elements> vec;
-    EXPECT_THROW(Skill s1("test 1", 0, 100, vec), SkillExp);
+    EXPECT_THROW(Skill s1("test 1", 0, 100, vec), SkillException);
 
     vec.push_back(FIRE);
     vec.push_back(ELECTRIC);

@@ -8,6 +8,7 @@
 #ifndef _SKILL_HPP_
 #define _SKILL_HPP_
 
+#include <exception>
 #include <string>
 #include <vector>
 
@@ -41,14 +42,15 @@ public:
     void setMasteryLevel(unsigned);
 };
 
-class SkillExp {
+class SkillException : std::exception {
 private:
     const int msgID;
     static std::string msg[];
 
 public:
-    SkillExp(int);
-    void what() const;
+    SkillException(int);
+    const char* what();
+    void bruh();
 };
 
 #endif

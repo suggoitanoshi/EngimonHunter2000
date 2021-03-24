@@ -42,11 +42,11 @@ void Item::setQuantity(unsigned _quantity) { quantity = _quantity; }
 
 void Item::learn(Engimon e) {
     bool compatible = false;
-    vector<Elements> engiElements = e.getElements();
+    //vector<Elements> engiElements = e.getElements();
 
     // Mengecek mastery level item
     if (masteryLevel != 1) {
-        throw ItemExp(0);
+        throw ItemException(0);
     }
 
     // Mengecek kecocokan skill item dengan engimon
@@ -61,7 +61,7 @@ void Item::learn(Engimon e) {
     }
 
     if (!compatible) {
-        throw ItemExp(1);
+        throw ItemException(1);
     }
     */
 
@@ -69,7 +69,7 @@ void Item::learn(Engimon e) {
     /*
     for (int i = 0; i < (int)e.getSkillsCount(); i++) {
         if (e.getSkills(i) == name) {
-            throw ItemExp(2);
+            throw ItemException(2);
         }
     }
     */
@@ -77,27 +77,25 @@ void Item::learn(Engimon e) {
     // Mengecek jumlah skills yang telah dilajari
     /*
     if (e.getSkillsCount() = MAX_SKILLS) {
+        string old;
         for (int i = 0; (int)MAX_SKILLS; i++) {
             cout << i+1 << ". "<< e.getSkills(i) << endl;
         }
-        cout << "Pilih nomor skill untuk diganti dengan skill baru: ";
-        cin >> j;
+        cout << "Pilih nama skill untuk diganti dengan skill baru: ";
+        cin >> old;
 
-        if (j < 1 || j > e.skills.size()) {
-            throw ItemExp(3);
-        }
-
-        e.setSkills(j-1, name);
+        e.setSkills(old, name);
     } else {
-        e.setSkills(e.getSkillsCount() name);
+        e.setSkills(name);
     }
     */
     quantity--;
 }
 
-ItemExp::ItemExp(int x) : msgID(x) {}
-void ItemExp::bruh() const { cout << msg[msgID] << endl; }
-string ItemExp::msg[] = {"Mastery level item bukan 1",
-                         "Skill item tidak cocok dengan Engimon",
-                         "Skill item sudah pernah dipelajari",
-                         "Input pilihan untuk mengganti skill di luar batas"};
+ItemException::ItemException(int x) : msgID(x) {}
+const char* ItemException::what() { return msg[msgID].c_str(); }
+void ItemException::bruh() { cout << what() << endl; }
+string ItemException::msg[] = {
+    "Mastery level item bukan 1", "Skill item tidak cocok dengan Engimon",
+    "Skill item sudah pernah dipelajari",
+    "Input pilihan untuk mengganti skill di luar batas"};
