@@ -4,9 +4,9 @@
 #include <cctype>
 #include <fstream>
 #include <iostream>
+#include <list>
 #include <string>
 #include <tuple>
-#include <list>
 
 #include "./Engimon.hpp"
 #include "./Player.hpp"

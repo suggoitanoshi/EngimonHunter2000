@@ -3,21 +3,23 @@
 
 #include <iostream>
 #include <string>
-#include "./Engimon.hpp"
+
 #include "./Elements.hpp"
+#include "./Engimon.hpp"
 
 using namespace std;
 
-class Battle{
+class Battle {
 private:
     string winner;
+
 public:
     Battle();
-    //Setter
+    // Setter
     void setEngimonA(Engimon other);
     void setEngimonB(Engimon other);
     void setEngimonWinner();
-    //battle
+    // battle
     double getAdvantage(Elements A, Elements B);
     void checkAdvantage();
     void runBattle();

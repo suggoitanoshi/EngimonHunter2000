@@ -33,6 +33,15 @@ Skill::Skill(const Skill& src)
       masteryLevel(src.masteryLevel),
       elements(src.elements) {}
 
+Skill Skill::operator=(const Skill&src) {
+    name = src.name;
+    basePower = src.basePower;
+    masteryLevel = src.masteryLevel;
+    elements = src.elements;
+
+    return *this;
+}
+
 std::string Skill::getName() const { return name; }
 unsigned Skill::getBasePower() const { return basePower; }
 unsigned Skill::getMasteryLevel() const { return masteryLevel; }

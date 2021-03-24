@@ -32,6 +32,9 @@ public:
           const unsigned _masteryLevel, const Elements);
     Skill(const Skill&);
 
+    // operators
+    Skill operator=(const Skill&);
+
     // getters
     std::string getName() const;
     unsigned getBasePower() const;

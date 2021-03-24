@@ -55,6 +55,7 @@ public:
             tuple<string, string> oparents[2]);  // untuk hasil breeding
     ~Engimon();
 
+
     // getter
     string getName();
     int getLvl();
@@ -74,6 +75,7 @@ public:
     void addExp(int exp);
     unsigned getBattlePower();
     void getEngiInfo();
+    bool operator==(Engimon);
 };
 
 #endif

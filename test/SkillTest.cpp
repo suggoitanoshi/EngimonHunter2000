@@ -63,6 +63,23 @@ TEST(Skill, CopyConstructor) {
     EXPECT_EQ(s1.getElements()[1], s2.getElements()[1]);
 }
 
+TEST(Skill, OperatorAssign) {
+    std::vector<Elements> vec;
+    vec.push_back(FIRE);
+    vec.push_back(ELECTRIC);
+
+    Skill s1("test 1", 100, 0, vec);
+    Skill s2("test 2", 0, 0, ELECTRIC);
+
+    s2 = s1;
+
+    EXPECT_EQ(s1.getName(), s2.getName());
+    EXPECT_EQ(s1.getBasePower(), s2.getBasePower());
+    EXPECT_EQ(s1.getMasteryLevel(), s2.getMasteryLevel());
+    EXPECT_EQ(s1.getElements()[0], s2.getElements()[0]);
+    EXPECT_EQ(s1.getElements()[1], s2.getElements()[1]);
+}
+
 // nguji setter Skill
 TEST(Skill, Setter) {
     Skill s1("test 1", 100, 0, ELECTRIC);
