@@ -42,6 +42,7 @@ public:
 
     // methods
     void learn(Engimon);
+    bool operator==(const Item&);
 };
 
 class ItemException : std::exception {

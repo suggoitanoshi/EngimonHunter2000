@@ -37,12 +37,18 @@ Item::Item(const Item& src)
 }
 
 Item& Item::operator=(const Item& _Item) {
-  name = _Item.name;
-  basePower = _Item.basePower;
-  masteryLevel = _Item.masteryLevel;
-  elements = _Item.elements;
-  quantity = _Item.quantity;
-  return *this;
+    name = _Item.name;
+    basePower = _Item.basePower;
+    masteryLevel = _Item.masteryLevel;
+    elements = _Item.elements;
+    quantity = _Item.quantity;
+    return *this;
+}
+
+bool Item::operator==(const Item & sblh) {
+    return name == sblh.name && basePower == sblh.basePower &&
+    masteryLevel == sblh.masteryLevel && elements == sblh.elements &&
+    quantity == sblh.quantity;
 }
 
 unsigned Item::getQuantity() const { return quantity; }
@@ -51,7 +57,7 @@ void Item::setQuantity(unsigned _quantity) { quantity = _quantity; }
 
 void Item::learn(Engimon e) {
     bool compatible = false;
-    //vector<Elements> engiElements = e.getElements();
+    // vector<Elements> engiElements = e.getElements();
 
     // Mengecek mastery level item
     if (masteryLevel != 1) {

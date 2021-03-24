@@ -26,14 +26,16 @@ protected:
 
 public:
     // constructors
+    Skill(); /// DON'T EVER USE THIS. CURSED.
     Skill(const std::string, const unsigned _basePower,
           const unsigned _masteryLevel, const std::vector<Elements>&);
     Skill(const std::string, const unsigned _basePower,
           const unsigned _masteryLevel, const Elements);
     Skill(const Skill&);
+    virtual Skill& operator=(const Skill&);
 
     // operators
-    Skill operator=(const Skill&);
+    virtual bool operator==(const Skill&);
 
     // getters
     std::string getName() const;

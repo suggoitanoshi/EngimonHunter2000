@@ -8,8 +8,16 @@
 #include "../headers/Skill.hpp"
 
 #include <iostream>
+#include <vector>
 
-// Bagian Skill
+// Bagian Constructor
+Skill::Skill() {
+    name = "";
+    basePower = 0;
+    masteryLevel = 0;
+    elements = std::vector<Elements>();
+}
+
 Skill::Skill(const std::string _name, const unsigned _basePower,
              const unsigned _masteryLevel,
              const std::vector<Elements>& _elements)
@@ -33,13 +41,18 @@ Skill::Skill(const Skill& src)
       masteryLevel(src.masteryLevel),
       elements(src.elements) {}
 
-Skill Skill::operator=(const Skill&src) {
+Skill& Skill::operator=(const Skill& src) {
     name = src.name;
     basePower = src.basePower;
     masteryLevel = src.masteryLevel;
     elements = src.elements;
 
     return *this;
+}
+
+bool Skill::operator==(const Skill& sblh) {
+    return name == sblh.name && basePower == sblh.basePower &&
+           masteryLevel == sblh.masteryLevel && elements == sblh.elements;
 }
 
 std::string Skill::getName() const { return name; }
