@@ -9,6 +9,7 @@ class Parser {
 private:
     char delim;
     std::string filePath;
+    std::vector<std::string> parseLine(std::string) const;
 
 public:
     Parser(std::string, char);
