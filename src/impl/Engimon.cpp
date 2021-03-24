@@ -6,18 +6,15 @@
  */
 
 #include "../headers/Engimon.hpp"
-#include "../headers/Dex.hpp"
+
 #include <iostream>
 
-using std::cout;
-using std::endl;
-// Engimon::Engimon(string ESName) {
-//     name = "";
-//     lvl = defaultLevel;
-//     exp = 0;
-//     cexp = 0;
-//     location = make_tuple(-1, -1);
-// }
+#include "../headers/Dex.hpp"
+
+Engimon::Engimon()
+    : Engimon(EngimonSpecies(
+          "Picakhu", "Pica Pica Khu!", vector<Elements>(ELECTRIC),
+          Skill("THUNDAAA", 40, 1, vector<Elements>(ELECTRIC)))) {}
 
 Engimon::Engimon(EngimonSpecies ES) : EngimonSpecies(ES) {
     this->name = species;
@@ -36,17 +33,29 @@ Engimon::Engimon(EngimonSpecies ES, string oname) : EngimonSpecies(ES) {
     oparents[1] = make_tuple("Wild", species);
     Engimon(ES, oname, oparents);
 }
+
 Engimon::Engimon(EngimonSpecies ES, string oname,
                  tuple<string, string> oparents[2])
     : EngimonSpecies(ES) {
-    this->name = oname;
+    name = oname;
     parents[0] = oparents[0];
     parents[1] = oparents[1];
     skill.push_back(starterSkill);
-    this->lvl = defaultLevel;
-    this->exp = 0;
-    this->cexp = 0;
+    lvl = defaultLevel;
+    exp = 0;
+    cexp = 0;
     location = make_tuple(-1, -1);
+}
+
+Engimon::Engimon(const Engimon& src) : EngimonSpecies(src) {
+    name = src.name;
+    parents[0] = src.parents[0];
+    parents[1] = src.parents[1];
+    skill = src.skill;
+    lvl = src.lvl;
+    exp = src.exp;
+    cexp = src.cexp;
+    location = src.location;
 }
 
 string Engimon::getName() { return this->name; }
@@ -93,24 +102,22 @@ unsigned Engimon::getBattlePower(int elmtAdv) {
 void Engimon::getEngiInfo() {
     cout << this->name << endl;
     cout << get<0>(parents[0]) << get<1>(parents[0]) << endl;
-    cout << get<0>(parents[1]) << get<1>(parents[1])<< endl;
-    for (int i=0; i<getSkillsCount();i++) {
+    cout << get<0>(parents[1]) << get<1>(parents[1]) << endl;
+    for (int i = 0; i < getSkillsCount(); i++) {
         cout << skill[i].getName() << endl;
         cout << skill[i].getBasePower() << endl;
-        //cout << skill[i].getElements() << endl;
+        // cout << skill[i].getElements() << endl;
         cout << skill[i].getMasteryLevel() << endl;
     }
 }
 
 bool Engimon::operator==(const Engimon &Eng) {
-    return (this->name==Eng.name && this->species==Eng.species);
+    return (this->name == Eng.name && this->species == Eng.species);
 }
 
-bool Engimon::operator==(const string &oname) {
-    return (this->name==oname);
-}
+bool Engimon::operator==(const string &oname) { return (this->name == oname); }
 
-Engimon& Engimon::operator=(const Engimon &Eng) {
+Engimon &Engimon::operator=(const Engimon &Eng) {
     if (this != &Eng) {
         EngimonSpecies::operator=(Eng);
         this->name = Eng.name;

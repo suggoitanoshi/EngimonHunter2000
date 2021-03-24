@@ -57,7 +57,7 @@ ostream& operator<<(ostream& os, const Item& src) {
     os << "Base power\t: " << src.getBasePower() << "\n";
     os << "Mastery level\t: " << src.getMasteryLevel() << "\n";
     os << "Element(s)\t: ";
-    for (int i = 0; i < els.size(); i++) {
+    for (size_t i = 0; i < els.size(); i++) {
         os << els[i] << endl;
         if (i != els.size() - 1) {
             os << ", ";

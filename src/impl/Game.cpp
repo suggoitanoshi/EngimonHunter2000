@@ -6,13 +6,13 @@
 
 using namespace std;
 
-Game ::Game() {
+Game::Game() {
     this->isExitGame = false;
-    this->player = Player();
-    this->playerName = "josep";
+    player = Player();
 }
 
-void Game ::printGameIntro() {
+void Game::printGameIntro() {
+    std::string name;
     cout << "░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░" << endl;
     cout << "░░░░░░░░░░░░░█████████░░░░░░░░░░░░░░░░░░" << endl;
     cout << "░░░░░░░░░░███████████████░░░░░░░░░░░░░░░" << endl;
@@ -29,14 +29,15 @@ void Game ::printGameIntro() {
     cout << "Selamat datang di Engimon Factory ^_^" << endl;
     cout << "           Siapa nama mu?" << endl << endl;
     cout << "Masukkan nama mu : ";
-    cin >> this->playerName;
-    cout << "selamat bermain di Engimon Factory " << this->playerName << " !"
+    cin >> name;
+    player.setName(name);
+    cout << "selamat bermain di Engimon Factory " << player.getName() << " !"
          << endl;
     cout << "============================================================\n\n"
          << endl;
 }
 
-void Game ::readMap() {
+void Game::readMap() {
     int i, j;
     ifstream f;
     string linemap;
@@ -56,7 +57,7 @@ void Game ::readMap() {
     }
 }
 
-void Game ::printMap() {
+void Game::printMap() {
     cout << "--------------------------P E T A--------------------------"
          << endl;
     for (int i = 0; i < 15; i++) {
@@ -114,23 +115,16 @@ void Game ::printMap() {
 
 // }
 
-bool Game ::getIsExit() { return this->isExitGame; }
-
-Player Game ::getPlayer() { return this->player; }
-
 // list<Engimon> Game :: getWildEngimon(){
 //     return this->wildEngimons;
 // }
-
-void Game ::setIsExit(bool x) { this->isExitGame = x; }
 
 // void Game :: addWildEngimon(Engimon X){
 //     this->wildEngimons.push_back(X);
 // }
 
-void Game ::run() {
-    this->printGameIntro();
-    this->player.setName(this->playerName);
+void Game::run() {
+    printGameIntro();
     this->readMap();
 
     do {
@@ -183,13 +177,13 @@ void Game ::run() {
                 cout << "Aduh nabrak xixixi" << endl;
             }
         } else if ((char)tolower(input[0]) == 'x') {
-            this->setIsExit(true);
+            this->isExitGame = true;
         } else {
             cout << "Masukan salah, silakan ulangi masukan" << endl;
         }
         cout << "\n============================================================"
                 "\n"
              << endl;
-    } while (this->getIsExit() == false);
+    } while (!this->isExitGame);
     cout << "makasih dah main kk" << endl;
 }

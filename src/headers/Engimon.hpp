@@ -29,13 +29,13 @@ private:
 public:
     const static unsigned defaultLevel = 1;
     // konstruktor & destruktor
-    //Engimon();                   // DON'T EVER USE THIS.
+    Engimon();                   // Default constructor untuk first engimon
     Engimon(EngimonSpecies ES);  // untuk wild engimon (namanya=nama spesies)
-    Engimon(string ESName);  // untuk wild engimon (namanya=nama spesies)
     Engimon(EngimonSpecies ES,
             string oname);  // untuk engimon player dengan custom name
     Engimon(EngimonSpecies ES, string oname,
             tuple<string, string> oparents[2]);  // untuk hasil breeding
+    Engimon(const Engimon&);
 
     // getter
     string getName();
@@ -58,7 +58,7 @@ public:
     void getEngiInfo();
     bool operator==(const Engimon &Eng);
     bool operator==(const string &oname);
-    Engimon& operator=(const Engimon &Eng);
+    Engimon &operator=(const Engimon &Eng);
 };
 
 #endif

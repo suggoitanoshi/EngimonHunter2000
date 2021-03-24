@@ -1,11 +1,12 @@
 #include "../headers/Player.hpp"
 
-Player::Player(string _name, int x, int y)
-    : name(_name), isEngiActive(false), dir('a'), activeEngi("picakhu") {
-    position = make_tuple(x, y);
-}
-
-Player::Player() : Player("josep", 1, 1) {}
+Player::Player()
+    : name("yee"),
+      isEngiActive(false),
+      // engimon pertama akan dikonstruk di sini
+      // inventory dikonstruk di sini
+      position(make_tuple(1, 1)),
+      dir('a') {}
 
 string Player::getName() const { return name; }
 bool Player::isEngimonActive() const { return isEngiActive; }

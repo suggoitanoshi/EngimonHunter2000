@@ -26,7 +26,6 @@ protected:
 
 public:
     // constructors
-    //Skill(); /// DON'T EVER USE THIS. CURSED.
     Skill(const std::string, const unsigned _basePower,
           const unsigned _masteryLevel, const std::vector<Elements>&);
     Skill(const std::string, const unsigned _basePower,

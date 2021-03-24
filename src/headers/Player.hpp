@@ -21,7 +21,6 @@ protected:
 
 public:
     // constructors
-    Player(string, int, int);
     Player();
 
     // getters

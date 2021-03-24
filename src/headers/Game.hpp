@@ -18,16 +18,13 @@ class Game {
 private:
     char map[32][16];
     bool isExitGame;
-    string playerName;
     Player player;
     // list<Engimon> wildEngimons;
 
-public:
     // map & input handling
-    Game();
     void printGameIntro();
-    void readMap();
     void printMap();
+    void readMap();
 
     // battle
     // double getAdvantage(Elements A, Elements B);
@@ -37,14 +34,8 @@ public:
     // spawn wild engimon
     // void spawnWildEngimon();
 
-    // getter
-    bool getIsExit();
-    Player getPlayer();
-    // list<Engimon> getWildEngimon();
-
-    // setter
-    void setIsExit(bool x);
-    // void addWildEngimon(Engimon X);
+public:
+    Game();
 
     // main
     void run();
