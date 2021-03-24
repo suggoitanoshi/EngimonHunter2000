@@ -77,19 +77,16 @@ void Item::learn(Engimon e) {
     // Mengecek jumlah skills yang telah dilajari
     /*
     if (e.getSkillsCount() = MAX_SKILLS) {
+        string old;
         for (int i = 0; (int)MAX_SKILLS; i++) {
             cout << i+1 << ". "<< e.getSkills(i) << endl;
         }
-        cout << "Pilih nomor skill untuk diganti dengan skill baru: ";
-        cin >> j;
+        cout << "Pilih nama skill untuk diganti dengan skill baru: ";
+        cin >> old;
 
-        if (j < 1 || j > e.skills.size()) {
-            throw ItemException(3);
-        }
-
-        e.setSkills(j-1, name);
+        e.setSkills(old, name);
     } else {
-        e.setSkills(e.getSkillsCount() name);
+        e.setSkills(name);
     }
     */
     quantity--;
