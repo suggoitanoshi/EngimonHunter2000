@@ -16,7 +16,7 @@
 #include "Skill.hpp"
 using namespace std;
 
-class Engimon : EngimonSpecies {
+class Engimon : public EngimonSpecies {
 private:
     string name;
     tuple<string, string> parents[2];
@@ -35,16 +35,17 @@ public:
             string oname);  // untuk engimon player dengan custom name
     Engimon(EngimonSpecies ES, string oname,
             tuple<string, string> oparents[2]);  // untuk hasil breeding
+    Engimon(EngimonSpecies ES, string oname,
+            tuple<string, string> oparents[2], vector<Skill> skills);  // untuk hasil breeding
     Engimon(const Engimon&);
 
     // getter
     string getName();
     int getLvl();
-    string getSpecies();
     vector<Elements> getElements();
     unsigned getElementCount();
     tuple<int, int> getPosition();
-    string getSkills(int index);
+    Skill getSkills(int index);
     int getSkillsCount();
 
     // setter

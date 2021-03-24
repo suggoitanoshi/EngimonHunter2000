@@ -26,6 +26,7 @@ protected:
 
 public:
     // constructors
+    Skill();
     Skill(const std::string, const unsigned _basePower,
           const unsigned _masteryLevel, const std::vector<Elements>&);
     Skill(const std::string, const unsigned _basePower,

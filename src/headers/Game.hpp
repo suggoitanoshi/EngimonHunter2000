@@ -10,6 +10,7 @@
 
 #include "./Engimon.hpp"
 #include "./Player.hpp"
+#include "./Dex.hpp"
 
 using namespace std;
 
@@ -19,6 +20,7 @@ private:
     char map[32][16];
     bool isExitGame;
     Player player;
+    Dex dex;
     // list<Engimon> wildEngimons;
 
     // map & input handling
@@ -39,6 +41,8 @@ public:
 
     // main
     void run();
+
+    Engimon& kawin(Engimon&, Engimon&);
 };
 
 #endif
