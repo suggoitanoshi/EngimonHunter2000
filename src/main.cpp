@@ -7,10 +7,9 @@
 
 #include <iostream>
 
-#include "./headers/Elements.hpp"
-#include "./headers/Skill.hpp"
+#include "./headers/Game.hpp"
 
 int main() {
-    Skill a("headeh", 100, 1, WATER);
-    std::cout << a.getBasePower() << std::endl;
+    Game g = Game();
+    g.run();
 }
