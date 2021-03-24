@@ -30,9 +30,11 @@ public:
                    Skill oskill);
     EngimonSpecies(const EngimonSpecies &ES);
     EngimonSpecies &operator=(const EngimonSpecies &ES);
-    const Skill& getStarterSkill();
 
-    string getSpecies();
+    // getter
+    Skill getStarterSkill() const;
+    vector<Elements> getElements() const;
+    string getSpecies() const;
 };
 
 #endif

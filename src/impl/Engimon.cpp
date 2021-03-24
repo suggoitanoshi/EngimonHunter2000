@@ -15,7 +15,7 @@ Engimon::Engimon() : EngimonSpecies() {
     name = species;
     parents[0] = make_tuple("Wild", species);
     parents[1] = make_tuple("Wild", species);
-    skill.push_back(starterSkill);
+    skills.push_back(starterSkill);
     lvl = defaultLevel;
     exp = 0;
     cexp = 0;
@@ -26,7 +26,7 @@ Engimon::Engimon(EngimonSpecies ES) : EngimonSpecies(ES) {
     name = species;
     parents[0] = make_tuple("Wild", species);
     parents[1] = make_tuple("Wild", species);
-    skill.push_back(starterSkill);
+    skills.push_back(starterSkill);
     lvl = defaultLevel;
     exp = 0;
     cexp = 0;
@@ -43,7 +43,7 @@ Engimon::Engimon(EngimonSpecies ES, string oname) : EngimonSpecies(ES) {
 Engimon::Engimon(EngimonSpecies ES, string oname,
                  tuple<string, string> oparents[2])
     : EngimonSpecies(ES) {
-        Engimon(ES, oname, oparents, vector<Skill>{ES.getStarterSkill()});
+    Engimon(ES, oname, oparents, vector<Skill>{ES.getStarterSkill()});
 }
 
 Engimon::Engimon(EngimonSpecies ES, string oname,
@@ -52,7 +52,7 @@ Engimon::Engimon(EngimonSpecies ES, string oname,
     name = oname;
     parents[0] = oparents[0];
     parents[1] = oparents[1];
-    skill.insert(skill.end(), skills.begin(), skills.end());
+    skills.insert(skills.end(), skills.begin(), skills.end());
     lvl = defaultLevel;
     exp = 0;
     cexp = 0;
@@ -63,7 +63,7 @@ Engimon::Engimon(const Engimon& src) : EngimonSpecies(src) {
     name = src.name;
     parents[0] = src.parents[0];
     parents[1] = src.parents[1];
-    skill = src.skill;
+    skills = src.skills;
     lvl = src.lvl;
     exp = src.exp;
     cexp = src.cexp;
@@ -72,12 +72,11 @@ Engimon::Engimon(const Engimon& src) : EngimonSpecies(src) {
 
 string Engimon::getName() { return name; }
 int Engimon::getLvl() { return lvl; }
-vector<Elements> Engimon::getElements() { return element; }
 unsigned Engimon::getElementCount() { return element.size(); }
 tuple<int, int> Engimon::getPosition() { return location; }
-Skill Engimon::getSkills(int index) { return skill[index]; }
-int Engimon::getSkillsCount() { return skill.size(); }
-void Engimon::setSkills(int index, Skill oskill) { skill[index] = oskill; }
+Skill Engimon::getSkills(int index) { return skills[index]; }
+int Engimon::getSkillsCount() { return skills.size(); }
+void Engimon::setSkills(int index, Skill oskill) { skills[index] = oskill; }
 
 void Engimon::setPos(int x, int y) {
     get<0>(location) = x;
@@ -106,7 +105,7 @@ void Engimon::addExp(int oexp) {
 unsigned Engimon::getBattlePower(int elmtAdv) {
     unsigned sum = 0;
     for (int i = 0; i < getSkillsCount(); i++) {
-        sum += skill[i].getBasePower() * skill[i].getMasteryLevel();
+        sum += skills[i].getBasePower() * skills[i].getMasteryLevel();
     }
     return (lvl * elmtAdv);
 }
@@ -115,26 +114,26 @@ void Engimon::getEngiInfo() {
     cout << get<0>(parents[0]) << get<1>(parents[0]) << endl;
     cout << get<0>(parents[1]) << get<1>(parents[1]) << endl;
     for (int i = 0; i < getSkillsCount(); i++) {
-        cout << skill[i].getName() << endl;
-        cout << skill[i].getBasePower() << endl;
+        cout << skills[i].getName() << endl;
+        cout << skills[i].getBasePower() << endl;
         // cout << skill[i].getElements() << endl;
-        cout << skill[i].getMasteryLevel() << endl;
+        cout << skills[i].getMasteryLevel() << endl;
     }
 }
 
-bool Engimon::operator==(const Engimon &Eng) {
+bool Engimon::operator==(const Engimon& Eng) {
     return (name == Eng.name && species == Eng.species);
 }
 
-bool Engimon::operator==(const string &oname) { return (name == oname); }
+bool Engimon::operator==(const string& oname) { return (name == oname); }
 
-Engimon &Engimon::operator=(const Engimon &Eng) {
+Engimon& Engimon::operator=(const Engimon& Eng) {
     if (this != &Eng) {
         EngimonSpecies::operator=(Eng);
         name = Eng.name;
         parents[0] = Eng.parents[0];
         parents[1] = Eng.parents[1];
-        skill = Eng.skill;
+        skills = Eng.skills;
         lvl = Eng.lvl;
         exp = Eng.exp;
         cexp = Eng.cexp;
@@ -147,7 +146,8 @@ ostream& operator<<(ostream& os, const Engimon& src) {
     vector<Elements> els = src.element;
     os << "Name\t:" << src.name << "\n";
     os << "Experience\t: " << src.exp << "\n";
-    os << "Cumulative Experience/Maximum\t: " << src.cexp << src.maxCumulExp << "\n";
+    os << "Cumulative Experience/Maximum\t: " << src.cexp << src.maxCumulExp
+       << "\n";
     os << "Element(s)\t: ";
     for (size_t i = 0; i < els.size(); i++) {
         os << els[i] << endl;

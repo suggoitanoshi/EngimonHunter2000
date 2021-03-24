@@ -8,8 +8,9 @@
 #ifndef _ELEMENTS_HPP_
 #define _ELEMENTS_HPP_
 
-using namespace std;
 #include <string>
+
+using namespace std;
 
 /**
  * Elemen-elemen yang dapat dimiliki Engimon ataupun skill item

@@ -34,10 +34,10 @@ public:
     Skill(const std::string, const unsigned _basePower,
           const unsigned _masteryLevel, const Elements);
     Skill(const Skill&);
-    virtual Skill& operator=(const Skill&);
+    Skill& operator=(const Skill&);
 
     // operators
-    virtual bool operator==(const Skill&);
+    bool operator==(const Skill&);
 
     // getters
     string getName() const;

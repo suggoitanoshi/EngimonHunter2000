@@ -20,7 +20,7 @@ class Engimon : public EngimonSpecies {
 private:
     string name;
     tuple<string, string> parents[2];
-    vector<Skill> skill;
+    vector<Skill> skills;
     int lvl;
     unsigned exp;
     unsigned cexp;
@@ -42,7 +42,6 @@ public:
     // getter
     string getName();
     int getLvl();
-    vector<Elements> getElements();
     unsigned getElementCount();
     tuple<int, int> getPosition();
     Skill getSkills(int index);

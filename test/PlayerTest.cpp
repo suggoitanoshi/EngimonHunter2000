@@ -9,8 +9,7 @@
 
 #include "../src/headers/BaseInventory.hpp"
 #include "../src/headers/InventoryException.hpp"
-#include "../src/impl/Inventory.cpp"
-#include "../src/impl/Player.cpp"
+#include "../src/headers/Player.hpp"
 
 // uji konstruktor
 TEST(Player, ConstructorPlayer) {
