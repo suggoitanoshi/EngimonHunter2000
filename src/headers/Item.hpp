@@ -39,7 +39,7 @@ public:
     friend ostream& operator<<(ostream& os, const Item& src);
 
     // getters
-    unsigned getQuantity();
+    unsigned getQuantity() const;
 
     // setters
     void setQuantity(unsigned);
