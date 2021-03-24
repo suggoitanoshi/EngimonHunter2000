@@ -97,7 +97,7 @@ void Item::learn(Engimon e) {
 
 ItemException::ItemException(int x) : msgID(x) {}
 const char* ItemException::what() { return msg[msgID].c_str(); }
-const void ItemException::bruh() { cout << what() << endl; }
+void ItemException::bruh() { cout << what() << endl; }
 string ItemException::msg[] = {
     "Mastery level item bukan 1", "Skill item tidak cocok dengan Engimon",
     "Skill item sudah pernah dipelajari",

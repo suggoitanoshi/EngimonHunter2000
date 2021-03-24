@@ -51,7 +51,7 @@ private:
 public:
     ItemException(int);
     const char* what();
-    const void bruh();
+    void bruh();
 };
 
 #endif

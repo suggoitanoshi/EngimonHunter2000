@@ -45,5 +45,5 @@ void Skill::setMasteryLevel(unsigned _masteryLevel) {
 // bagian SkillException
 SkillException::SkillException(int x) : msgID(x) {}
 const char* SkillException::what() { return msg[msgID].c_str(); }
-const void SkillException::bruh() { std::cout << what() << std::endl; }
+void SkillException::bruh() { std::cout << what() << std::endl; }
 std::string SkillException::msg[] = {"Element tidak valid"};
