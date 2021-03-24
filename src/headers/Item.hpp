@@ -33,6 +33,10 @@ public:
          unsigned);
     Item(const Item&);
     Item& operator=(const Item&);
+    bool operator==(const Item&) {
+
+    // operator
+    friend ostream& operator<<(ostream& os, const Item& src);
 
     // getters
     unsigned getQuantity() const;
