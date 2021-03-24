@@ -48,7 +48,7 @@ test_target = $(out_dir)/Engimon_test.out
 .PHONY: default all help install run test clean
 
 default: install
-all: test run
+all: $(obj_dir) test run
 
 $(obj_dir):
 	$(MKDIR) $(obj_dir)
@@ -79,7 +79,7 @@ help:
 	$(info `make install`: jalankan unit testing lalu compile program)
 	$(info `make run`: compile & jalankan program)
 
-install: test $(target)
+install: $(obj_dir) test $(target)
 
 run: $(target)
 	./$<
