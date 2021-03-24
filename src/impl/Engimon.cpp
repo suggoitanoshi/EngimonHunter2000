@@ -13,8 +13,8 @@
 
 Engimon::Engimon()
     : Engimon(EngimonSpecies(
-          "Picakhu", "Pica Pica Khu!", vector<Elements>(ELECTRIC),
-          Skill("THUNDAAA", 40, 1, vector<Elements>(ELECTRIC)))) {}
+          "Picakhu", "Pica Pica Khu!", vector<Elements>{ELECTRIC},
+          Skill("THUNDAAA", 40, 1, vector<Elements>{ELECTRIC}))) {}
 
 Engimon::Engimon(EngimonSpecies ES) : EngimonSpecies(ES) {
     this->name = species;

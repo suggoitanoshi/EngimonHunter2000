@@ -28,7 +28,7 @@ void Game::printGameIntro() {
     cout << "░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░" << endl;
     cout << "Selamat datang di Engimon Factory ^_^" << endl;
     cout << "           Siapa nama mu?" << endl << endl;
-    cout << "Masukkan nama mu : ";
+    cout << "Masukkan nama mu: ";
     cin >> name;
     player.setName(name);
     cout << "selamat bermain di Engimon Factory " << player.getName() << " !"
@@ -130,7 +130,7 @@ void Game::run() {
     do {
         string input;
         this->printMap();
-        cout << "Masukkan input : ";
+        cout << "Masukkan input: ";
         cin >> input;
         if (input.length() != 1) {
             cout << "Masukan salah, silakan ulangi masukan" << endl;
