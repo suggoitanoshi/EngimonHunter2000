@@ -1,40 +1,65 @@
 #ifndef PLAYER_HPP
 #define PLAYER_HPP
-
 #include <string>
 #include <tuple>
+
+#include "../impl/Inventory.cpp"
+#include "Engimon.hpp"
+#include "Item.hpp"
 
 using namespace std;
 
 class Player {
 protected:
     string name;
-    bool isEngiActive;  // kyknya masuk game aja
-    // Engimon activeEngi; kyknya masuk game juga
-    // Inventory<Engimon>[] listEngimon;
-    // Inventory<SkillItem>[] listSkill;
+    bool isEngiActive;
+    Engimon activeEngi;
+    Inventory<Engimon> listEngimon;
+    Inventory<Item> listItem;
     tuple<int, int> position;
     char dir;
 
 public:
-    Player(string _name, int x, int y);
+    // constructors
+    Player(string, int, int);
     Player();
 
+    // getters
     string getName() const;
-    void setName(string _name);
-
     bool isEngimonActive() const;
-    // Engimon getActiveEngimon() const;
-    // void switchEngimon(Engimon engi);
-
+    Engimon getActiveEngimon() const;
     tuple<int, int> getPosition() const;
     int getPositionX() const;
     int getPositionY() const;
-    void setPositionX(int x);
-    void setPositionY(int y);
-
     char getDir() const;
-    void setDir(char _dir);
+
+    // setters
+    void setName(string);
+    void setPosition(tuple<int, int>);
+    void setPositionX(int);
+    void setPositionY(int);
+    void setDir(char);
+    void setActiveEngiPos();
+
+    // methods
+    void checkActiveEngimon();
+    void switchEngimon(Engimon);
+    void showEngimon(Engimon);
+    void showEngimon() const;
+    void showItem() const;
+    void useItem(Engimon, Item);
+    void interact();
+};
+
+class PlayerException : exception {
+private:
+    const int msgID;
+    static string msg[];
+
+public:
+    PlayerException(int);
+    const char* what();
+    void bruh();
 };
 
 #endif
