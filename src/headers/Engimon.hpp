@@ -7,6 +7,7 @@
 
 #ifndef _ENGIMON_HPP_
 #define _ENGIMON_HPP_
+#include <hash_map>
 #include <string>
 #include <tuple>
 #include <vector>
@@ -20,15 +21,18 @@ class EngimonSpecies {
 protected:
     // Nama spesies
     string species;
+    string slogan;
+    Skill starterSkill;
     // Elemen yang dimiliki
     vector<Elements> element;
 
 public:
     const static unsigned maxCumulExp = 10000;
     const static unsigned maxSkills = 4;
-    // konstruktor & destruktor
-    EngimonSpecies(string ospec, vector<Elements> oelem);
-    // ~EngimonSpecies();
+    // con, ccon, dest
+    EngimonSpecies(string ospec, string oslogan, vector<Elements> oelem, Skill oskill);
+    EngimonSpecies(const EngimonSpecies &ES);
+    virtual ~EngimonSpecies();
 };
 
 class Engimon : EngimonSpecies {
@@ -42,29 +46,34 @@ private:
     tuple<int, int> location;
 
 public:
+    const static unsigned defaultLevel = 1;
     // konstruktor & destruktor
-    Engimon();
-    Engimon(string name);
-    Engimon(string name, tuple<string, string> parents[2]);
+    Engimon(EngimonSpecies ES);  // untuk wild engimon (namanya=nama spesies)
+    Engimon(EngimonSpecies ES,
+            string oname);  // untuk engimon player dengan custom name
+    Engimon(EngimonSpecies ES, string oname,
+            tuple<string, string> oparents[2]);  // untuk hasil breeding
     ~Engimon();
 
     // getter
     string getName();
     int getLvl();
-    // int getExp();
     string getSpecies();
     vector<Elements> getElements();
     unsigned getElementCount();
     tuple<int, int> getPosition();
     string getSkills(int index);
+    int getSkillsCount();
 
     // setter
     void setPos();
     void setSkills(int index, Skill oskill);
+    void setLevel(); // untuk breeding
 
     // methods
     void addExp(int exp);
     unsigned getBattlePower();
+    void getEngiInfo();
 };
 
 #endif
