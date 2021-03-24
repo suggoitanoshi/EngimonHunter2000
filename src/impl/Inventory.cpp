@@ -31,26 +31,32 @@ public:
      * Menghapus item `item` pertama
      */
     void removeItem(T item) {
+        int i;
+        try{
+            i = getFirstItemIndex(item);
+            this->subtractItem();
+            this->cont.erase(cont.begin()+i);
+        }
+        catch(InventoryException e){
+            throw e;
+        }
+    }
+    /**
+     * Dapatkan index item `item` pertama
+     */
+    int getFirstItemIndex(T item){
         size_t i;
-        bool found;
-        if (this->getTotalItemCount() > 0) {
+        if(this->getTotalItemCount() > 0){
             i = 0;
-            found = 0;
-            while (i < this->cont.size()) {
-                if (this->cont.at(i) == item) {
-                    this->subtractItem();
-                    this->cont.erase(cont.begin() + i);
-                    found = 1;
-                    break;
+            while(i < this->cont.size()){
+                if(this->cont.at(i) == item){
+                    return i;
                 }
                 i++;
             }
-            if (!found) {
-                throw InventoryException(2);  // inventory tidak punya item
-            }
-        } else {
-            throw InventoryException(1);  // inventory kosong
+            throw InventoryException(2);
         }
+        else throw InventoryException(1);
     }
     /**
      * menampilkan isi inventory
