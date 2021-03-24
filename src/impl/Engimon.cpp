@@ -37,10 +37,16 @@ Engimon::Engimon(EngimonSpecies ES, string oname) : EngimonSpecies(ES) {
 Engimon::Engimon(EngimonSpecies ES, string oname,
                  tuple<string, string> oparents[2])
     : EngimonSpecies(ES) {
+        Engimon(ES, oname, oparents, vector<Skill>{ES.getStarterSkill()});
+}
+
+Engimon::Engimon(EngimonSpecies ES, string oname,
+                 tuple<string, string> oparents[2], vector<Skill> skills)
+    : EngimonSpecies(ES) {
     name = oname;
     parents[0] = oparents[0];
     parents[1] = oparents[1];
-    skill.push_back(starterSkill);
+    skill.insert(skill.end(), skills.begin(), skills.end());
     lvl = defaultLevel;
     exp = 0;
     cexp = 0;
@@ -64,7 +70,7 @@ string Engimon::getSpecies() { return this->species; }
 vector<Elements> Engimon::getElements() { return element; }
 unsigned Engimon::getElementCount() { return element.size(); }
 tuple<int, int> Engimon::getPosition() { return location; }
-string Engimon::getSkills(int index) { return skill[index].getName(); }
+Skill Engimon::getSkills(int index) { return skill[index]; }
 int Engimon::getSkillsCount() { return skill.size(); }
 void Engimon::setSkills(int index, Skill oskill) { skill[index] = oskill; }
 

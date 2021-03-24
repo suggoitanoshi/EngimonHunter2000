@@ -35,6 +35,8 @@ public:
             string oname);  // untuk engimon player dengan custom name
     Engimon(EngimonSpecies ES, string oname,
             tuple<string, string> oparents[2]);  // untuk hasil breeding
+    Engimon(EngimonSpecies ES, string oname,
+            tuple<string, string> oparents[2], vector<Skill> skills);  // untuk hasil breeding
     Engimon(const Engimon&);
 
     // getter
@@ -44,7 +46,7 @@ public:
     vector<Elements> getElements();
     unsigned getElementCount();
     tuple<int, int> getPosition();
-    string getSkills(int index);
+    Skill getSkills(int index);
     int getSkillsCount();
 
     // setter
