@@ -3,7 +3,8 @@
 Player::Player()
     : name("yee"),
       // engimon pertama akan dikonstruk di sini
-      // inventory dikonstruk di sini
+      listEngimon(),
+      listItem(),
       position(make_tuple(1, 1)),
       dir('a') {}
 
@@ -24,13 +25,13 @@ Engimon Player::getEngimonFromString(string engi) {
 }
 
 Item Player::getItemFromString(string _item) {
-    // if (listItem.getItemCount() == 0) throw InventoryException(1);
-    // for (int i = 0; i < listItem.getItemCount(); i++) {
-    //     if (_item.compare(listItem[i].getName()) == 0) {
-    //         return listItem[i];
-    //     }
-    // }
-    // throw PlayerException(1);
+    if (listItem.getItemCount() == 0) throw InventoryException(1);
+    for (int i = 0; i < listItem.getItemCount(); i++) {
+        if (_item.compare(listItem[i].getName()) == 0) {
+            return listItem[i];
+        }
+    }
+    throw PlayerException(1);
 }
 
 int Player::getEngimonIdxFromString(string engi) {
@@ -52,14 +53,14 @@ void Player::setDir(char _dir) { dir = _dir; }
 void Player::checkActiveEngimon() { showEngimon(activeEngi); }
 
 void Player::switchEngimon(string engi) {
-    // int beforeEngi = listEngimon.getFirstItemIndex(activeEngi);
-    // int afterEngi = getEngimonIdxFromString(engi);
-    // listEngimon[beforeEngi].setPos(); Jadiin (-1, -1)
+    int beforeEngi = listEngimon.getFirstItemIndex(activeEngi);
+    int afterEngi = getEngimonIdxFromString(engi);
+    listEngimon[beforeEngi].setPos(-1, -1);
     // listEngimon[afterEngi].setPos(activeEngi.getPosition());
-    // activeEngi = engi;
+    activeEngi = getEngimonFromString(engi);
 }
 
-void Player::showEngimon(Engimon engi) {}
+void Player::showEngimon(Engimon engi) { cout << engi; }
 void Player::showEngimon(string engi) {
     showEngimon(getEngimonFromString(engi));
 }
@@ -77,7 +78,7 @@ void Player::interact() {}
 // exception
 PlayerException::PlayerException(int x) : msgID(x) {}
 const char* PlayerException::what() { return msg[msgID].c_str(); }
-void PlayerException::bruh() { std::cout << what() << std::endl; }
+void PlayerException::bruh() { cout << what() << endl; }
 string PlayerException::msg[] = {
     "Tidak ada Engimon tersebut di dalam Inventory",
     "Tidak ada Item Skill tersebut di dalam Inventory"};

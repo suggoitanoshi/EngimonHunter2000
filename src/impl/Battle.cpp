@@ -4,11 +4,11 @@
 
 using namespace std;
 
-Battle ::Battle() {}
+Battle::Battle() {}
 
-void Battle ::setEngimonWinner() {}
+void Battle::setEngimonWinner() {}
 
-double Battle ::getAdvantage(Elements A, Elements B) {
+double Battle::getAdvantage(Elements A, Elements B) {
     if (A == FIRE) {
         if (B == FIRE) {
             return 1;

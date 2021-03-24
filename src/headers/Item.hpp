@@ -40,6 +40,7 @@ public:
 
     // getters
     unsigned getQuantity() const;
+    string getName() const;
 
     // setters
     void setQuantity(unsigned);
@@ -48,15 +49,15 @@ public:
     void learn(Engimon);
 };
 
-    class ItemException : std::exception {
-    private:
-        const int msgID;
-        static std::string msg[];
+class ItemException : exception {
+private:
+    const int msgID;
+    static string msg[];
 
-    public:
-        ItemException(int);
-        const char* what();
-        void bruh();
+public:
+    ItemException(int);
+    const char* what();
+    void bruh();
 };
 
 #endif

@@ -71,6 +71,8 @@ ostream& operator<<(ostream& os, const Item& src) {
 
 unsigned Item::getQuantity() const { return quantity; }
 
+string Item::getName() const { return Skill::getName(); }
+
 void Item::setQuantity(unsigned _quantity) { quantity = _quantity; }
 
 void Item::learn(Engimon e) {

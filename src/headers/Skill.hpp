@@ -21,7 +21,7 @@ using namespace std;
  */
 class Skill {
 protected:
-    std::string name;
+    string name;
     unsigned basePower;
     unsigned masteryLevel;
     vector<Elements> elements;  // elemen yang dapat mempelajari skill ini
@@ -40,7 +40,7 @@ public:
     virtual bool operator==(const Skill&);
 
     // getters
-    std::string getName() const;
+    string getName() const;
     unsigned getBasePower() const;
     unsigned getMasteryLevel() const;
     vector<Elements> getElements() const;
@@ -49,10 +49,10 @@ public:
     void setMasteryLevel(unsigned);
 };
 
-class SkillException : std::exception {
+class SkillException : exception {
 private:
     const int msgID;
-    static std::string msg[];
+    static string msg[];
 
 public:
     SkillException(int);
