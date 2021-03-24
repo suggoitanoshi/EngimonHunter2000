@@ -5,6 +5,7 @@
 
 #include "Engimon.hpp"
 #include "Skill.hpp"
+#include "exception"
 
 using namespace std;
 
@@ -13,17 +14,37 @@ private:
     unordered_map<string, Skill> skillDex;
     unordered_map<string, EngimonSpecies> engiDex;
 
+    void readEngiDex(const string);
+    void readSkillDex(const string);
+
 public:
     // konstruktor
     Dex();
+    Dex(const string engiData, const string skillData);
 
     // getter
-    Skill getSkill(string skillname);
-    EngimonSpecies getEngi(string enginame);
+    Skill getSkill(const string skillname) const;
+    EngimonSpecies getEngi(const string enginame) const;
+
+    // kalo kons ngeganggu apus aja, tapi sebisa mungkin nambah elemen lewat
+    // fungsi `add`
+    const unordered_map<string, Skill> getSkillDex() const;
+    const unordered_map<string, EngimonSpecies> getEngiDex() const;
 
     // setter
-    void addSkill(string skillname, Skill skill);
-    void addEngi(string enginame, EngimonSpecies engimon);
+    void addSkill(const string skillname, const Skill skill);
+    void addEngi(const string enginame, const EngimonSpecies engimon);
+};
+
+class DexException : exception {
+private:
+    const int msgID;
+    static string msg[];
+
+public:
+    DexException(int);
+    const char* what();
+    void bruh();
 };
 
 #endif

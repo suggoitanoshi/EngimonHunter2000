@@ -9,12 +9,12 @@ TEST(Parser, ParseFileNotFound) {
 }
 
 TEST(Parser, ParseFileExists) {
-    Parser p2("data/Engimons.csv", ',');
+    Parser p2("data/Test_Engimons.csv", ',');
     std::vector<std::vector<std::string>> res;
     ASSERT_NO_THROW(p2.parse());
     res = p2.parse();
     ASSERT_EQ(res.size(), 1);
-    ASSERT_EQ(res[0].size(), 4);
+    ASSERT_EQ(res[0].size(), 5);
     EXPECT_EQ(res[0][0], "Picakhu");
     EXPECT_EQ(res[0][1], "Pica Pica khu!");
     EXPECT_EQ(res[0][2], "THUNDAAA");
