@@ -16,7 +16,7 @@
 #include "Skill.hpp"
 using namespace std;
 
-class Engimon : EngimonSpecies {
+class Engimon : public EngimonSpecies {
 private:
     string name;
     tuple<string, string> parents[2];
