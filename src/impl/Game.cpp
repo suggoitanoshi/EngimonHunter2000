@@ -30,8 +30,10 @@ void Game ::printGameIntro() {
     cout << "           Siapa nama mu?" << endl << endl;
     cout << "Masukkan nama mu : ";
     cin >> this->playerName;
-    cout << "selamat bermain di Engimon Factory "<< this->playerName <<" !"<<endl;
-    cout << "============================================================\n\n" << endl;
+    cout << "selamat bermain di Engimon Factory " << this->playerName << " !"
+         << endl;
+    cout << "============================================================\n\n"
+         << endl;
 }
 
 void Game ::readMap() {
@@ -54,8 +56,9 @@ void Game ::readMap() {
     }
 }
 
-void Game :: printMap(){
-    cout <<"--------------------------P E T A--------------------------"<<endl;
+void Game ::printMap() {
+    cout << "--------------------------P E T A--------------------------"
+         << endl;
     for (int i = 0; i < 15; i++) {
         for (int j = 0; j < 32; j++) {
             if (j == this->player.getPositionX() &&
@@ -85,103 +88,19 @@ void Game :: printMap(){
         }
         cout << endl;
     }
-    cout <<"------------------------C O M M A N D-----------------------"<<endl;
+    cout << "------------------------C O M M A N D-----------------------"
+         << endl;
     cout << "     W:atas  A:kiri  S:bawah  D:kanan  X:Keluar game" << endl;
-    cout <<"------------------------------------------------------------"<<endl;
-    cout << "1. Lihat list engimon saya | 2. Lihat seluruh engimon"<<endl;
-    cout << "3. Ganti active engimon    | 4. Lihat list skill item saya" <<endl;
-    cout << "5. Gunakan skill item      | 6. Lakukan breeding"<<endl;
-    cout << "7. Lakukan Battle"<<endl;
-    cout <<"------------------------------------------------------------"<<endl;
+    cout << "------------------------------------------------------------"
+         << endl;
+    cout << "1. Lihat list engimon saya | 2. Lihat seluruh engimon" << endl;
+    cout << "3. Ganti active engimon    | 4. Lihat list skill item saya"
+         << endl;
+    cout << "5. Gunakan skill item      | 6. Lakukan breeding" << endl;
+    cout << "7. Lakukan Battle" << endl;
+    cout << "------------------------------------------------------------"
+         << endl;
 }
-
-// double Game :: getAdvantage(Elements A, Elements B){
-//     if (A==FIRE){
-//         if (B==FIRE){
-//             return 1;
-//         }
-//         else if (B==WATER){
-//             return 0;
-//         }
-//         else if (B==ELECTRIC){
-//             return 1;
-//         }
-//         else if (B==GROUND){
-//             return 0.5;
-//         }
-//         else if (B==ICE){
-//             return 2;
-//         }
-//     }
-//     else if (A==WATER){
-//         if (B==FIRE){
-//             return 2;
-//         }
-//         else if (B==WATER){
-//             return 1;
-//         }
-//         else if (B==ELECTRIC){
-//             return 0;
-//         }
-//         else if (B==GROUND){
-//             return 1;
-//         }
-//         else if (B==ICE){
-//             return 1;
-//         }
-//     }
-//     else if (A==ELECTRIC){
-//         if (B==FIRE){
-//             return 1;
-//         }
-//         else if (B==WATER){
-//             return 2;
-//         }
-//         else if (B==ELECTRIC){
-//             return 1;
-//         }
-//         else if (B==GROUND){
-//             return 0;
-//         }
-//         else if (B==ICE){
-//             return 1.5;
-//         }
-//     }
-//     else if (A==GROUND){
-//         if (B==FIRE){
-//             return 1.5;
-//         }
-//         else if (B==WATER){
-//             return 1;
-//         }
-//         else if (B==ELECTRIC){
-//             return 2;
-//         }
-//         else if (B==GROUND){
-//             return 1;
-//         }
-//         else if (B==ICE){
-//             return 0;
-//         }
-//     }
-//     else if (A==ICE){
-//         if (B==FIRE){
-//             return 0;
-//         }
-//         else if (B==WATER){
-//             return 1;
-//         }
-//         else if (B==ELECTRIC){
-//             return 0.5;
-//         }
-//         else if (B==GROUND){
-//             return 2;
-//         }
-//         else if (B==ICE){
-//             return 1;
-//         }
-//     }
-// }
 
 // double Game :: checkAdvantage(Engimon A, Engimon B){
 
@@ -219,8 +138,8 @@ void Game ::run() {
         this->printMap();
         cout << "Masukkan input : ";
         cin >> input;
-        if (input.length()!=1){
-            cout << "Masukan salah, silakan ulangi masukan"<<endl;
+        if (input.length() != 1) {
+            cout << "Masukan salah, silakan ulangi masukan" << endl;
         }
 
         if ((char)tolower(input[0]) == 'w') {
@@ -265,11 +184,12 @@ void Game ::run() {
             }
         } else if ((char)tolower(input[0]) == 'x') {
             this->setIsExit(true);
+        } else {
+            cout << "Masukan salah, silakan ulangi masukan" << endl;
         }
-        else{
-            cout << "Masukan salah, silakan ulangi masukan"<<endl;
-        }
-        cout << "\n============================================================\n" << endl;
+        cout << "\n============================================================"
+                "\n"
+             << endl;
     } while (this->getIsExit() == false);
     cout << "makasih dah main kk" << endl;
 }
