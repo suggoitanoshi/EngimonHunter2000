@@ -27,7 +27,7 @@ private:
 
 public:
     // constructors and destructors
-    Item(const string, const unsigned, const unsigned, const set<Elements>&,
+    Item(const string, const unsigned, const unsigned, const vector<Elements>&,
          unsigned);
     Item(const string, const unsigned, const unsigned, const Elements,
          unsigned);

@@ -10,7 +10,7 @@
 
 #include <exception>
 #include <string>
-#include <set>
+#include <vector>
 
 using namespace std;
 
@@ -24,13 +24,13 @@ protected:
     std::string name;
     unsigned basePower;
     unsigned masteryLevel;
-    set<Elements> elements;  // elemen yang dapat mempelajari skill ini
+    vector<Elements> elements;  // elemen yang dapat mempelajari skill ini
 
 public:
     // constructors
     Skill();
     Skill(const std::string, const unsigned _basePower,
-          const unsigned _masteryLevel, const set<Elements>&);
+          const unsigned _masteryLevel, const vector<Elements>&);
     Skill(const std::string, const unsigned _basePower,
           const unsigned _masteryLevel, const Elements);
     Skill(const Skill&);
@@ -43,7 +43,7 @@ public:
     std::string getName() const;
     unsigned getBasePower() const;
     unsigned getMasteryLevel() const;
-    set<Elements> getElements() const;
+    vector<Elements> getElements() const;
 
     // setters
     void setMasteryLevel(unsigned);

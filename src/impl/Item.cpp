@@ -18,7 +18,7 @@
 using namespace std;
 
 Item::Item(const string _name, const unsigned _basePower,
-           const unsigned _masteryLevel, const set<Elements>& _elements,
+           const unsigned _masteryLevel, const vector<Elements>& _elements,
            unsigned _quantity)
     : Skill(_name, _basePower, _masteryLevel, _elements) {
     quantity = _quantity;
@@ -52,13 +52,13 @@ bool Item::operator==(const Item& sblh) {
 }
 
 ostream& operator<<(ostream& os, const Item& src) {
-    set<Elements> els = src.getElements();
+    vector<Elements> els = src.getElements();
     os << "Name\t:" << src.getName() << "\n";
     os << "Base power\t: " << src.getBasePower() << "\n";
     os << "Mastery level\t: " << src.getMasteryLevel() << "\n";
     os << "Element(s)\t: ";
     size_t i = 0;
-    for (set<Elements>::iterator it = els.begin(); it != els.end(); ++it) {
+    for (vector<Elements>::iterator it = els.begin(); it != els.end(); ++it) {
         os << *it << endl;
         if (i != (els.size() - 1)) {
             os << ", ";
