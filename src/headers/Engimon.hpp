@@ -48,15 +48,17 @@ public:
     int getSkillsCount();
 
     // setter
-    void setPos();
+    void setPos(int x, int y);
     void setSkills(int index, Skill oskill);
-    void setLevel();  // untuk breeding
+    void setLevel(int level);  // untuk breeding
 
     // methods
     void addExp(int exp);
-    unsigned getBattlePower();
+    unsigned getBattlePower(int elmtAdv);
     void getEngiInfo();
-    bool operator==(const Engimon &);
+    bool operator==(const Engimon &Eng);
+    bool operator==(const string &oname);
+    Engimon& operator=(const Engimon &Eng);
 };
 
 #endif
