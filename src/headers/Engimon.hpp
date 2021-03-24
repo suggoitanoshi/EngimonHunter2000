@@ -24,8 +24,8 @@ protected:
     vector<Elements> element;
 
 public:
-    const static unsigned MAX_CEXP = 10000;
-    const static unsigned MAX_SKILLS = 4;
+    const static unsigned maxCumulExp = 10000;
+    const static unsigned maxSkills = 4;
     // konstruktor & destruktor
     EngimonSpecies(string ospec, vector<Elements> oelem);
     // ~EngimonSpecies();

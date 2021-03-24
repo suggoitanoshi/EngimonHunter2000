@@ -15,7 +15,7 @@ Skill::Skill(const std::string _name, const unsigned _basePower,
              const std::vector<Elements>& _elements)
     : name(_name), basePower(_basePower), masteryLevel(_masteryLevel) {
     if (_elements.size() == 0) {
-        throw SkillExp(0);
+        throw SkillException(0);
     } else {
         elements = _elements;
     }
@@ -42,7 +42,8 @@ void Skill::setMasteryLevel(unsigned _masteryLevel) {
     masteryLevel = _masteryLevel;
 }
 
-// bagian SkillExp
-SkillExp::SkillExp(int x) : msgID(x) {}
-void SkillExp::what() const { std::cout << msg[msgID] << std::endl; }
-std::string SkillExp::msg[] = {"Element tidak valid"};
+// bagian SkillException
+SkillException::SkillException(int x) : msgID(x) {}
+const char* SkillException::what() { return msg[msgID].c_str(); }
+const void SkillException::bruh() { std::cout << what() << std::endl; }
+std::string SkillException::msg[] = {"Element tidak valid"};

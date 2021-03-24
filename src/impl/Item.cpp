@@ -42,11 +42,11 @@ void Item::setQuantity(unsigned _quantity) { quantity = _quantity; }
 
 void Item::learn(Engimon e) {
     bool compatible = false;
-    vector<Elements> engiElements = e.getElements();
+    //vector<Elements> engiElements = e.getElements();
 
     // Mengecek mastery level item
     if (masteryLevel != 1) {
-        throw ItemExp(0);
+        throw ItemException(0);
     }
 
     // Mengecek kecocokan skill item dengan engimon
@@ -61,7 +61,7 @@ void Item::learn(Engimon e) {
     }
 
     if (!compatible) {
-        throw ItemExp(1);
+        throw ItemException(1);
     }
     */
 
@@ -69,7 +69,7 @@ void Item::learn(Engimon e) {
     /*
     for (int i = 0; i < (int)e.getSkillsCount(); i++) {
         if (e.getSkills(i) == name) {
-            throw ItemExp(2);
+            throw ItemException(2);
         }
     }
     */
@@ -84,7 +84,7 @@ void Item::learn(Engimon e) {
         cin >> j;
 
         if (j < 1 || j > e.skills.size()) {
-            throw ItemExp(3);
+            throw ItemException(3);
         }
 
         e.setSkills(j-1, name);
@@ -95,9 +95,10 @@ void Item::learn(Engimon e) {
     quantity--;
 }
 
-ItemExp::ItemExp(int x) : msgID(x) {}
-void ItemExp::bruh() const { cout << msg[msgID] << endl; }
-string ItemExp::msg[] = {"Mastery level item bukan 1",
-                         "Skill item tidak cocok dengan Engimon",
-                         "Skill item sudah pernah dipelajari",
-                         "Input pilihan untuk mengganti skill di luar batas"};
+ItemException::ItemException(int x) : msgID(x) {}
+const char* ItemException::what() { return msg[msgID].c_str(); }
+const void ItemException::bruh() { cout << what() << endl; }
+string ItemException::msg[] = {
+    "Mastery level item bukan 1", "Skill item tidak cocok dengan Engimon",
+    "Skill item sudah pernah dipelajari",
+    "Input pilihan untuk mengganti skill di luar batas"};

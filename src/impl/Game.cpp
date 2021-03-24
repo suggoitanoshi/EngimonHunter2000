@@ -1,17 +1,18 @@
 #include "../headers/Game.hpp"
-#include "../headers/Player.hpp"
+
 #include <iostream>
+
+#include "../headers/Player.hpp"
 
 using namespace std;
 
-Game :: Game(){
-    this->isExitGame=false;
+Game ::Game() {
+    this->isExitGame = false;
     this->player = Player();
-    this->playerName = "josep";   
+    this->playerName = "josep";
 }
 
-void Game :: printGameIntro(){
-
+void Game ::printGameIntro() {
     cout << "░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░" << endl;
     cout << "░░░░░░░░░░░░░█████████░░░░░░░░░░░░░░░░░░" << endl;
     cout << "░░░░░░░░░░███████████████░░░░░░░░░░░░░░░" << endl;
@@ -26,18 +27,19 @@ void Game :: printGameIntro(){
     cout << "░░░░░░░░░░░░░██████████░░░░░░░░░░░░░░░░░" << endl;
     cout << "░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░" << endl;
     cout << "Selamat datang di Engimon Factory ^_^" << endl;
-    cout << "           Siapa nama mu?" <<endl<< endl;
-    cout<< "Masukkan nama mu : ";
+    cout << "           Siapa nama mu?" << endl << endl;
+    cout << "Masukkan nama mu : ";
     cin >> this->playerName;
-    cout << "selamat bermain di Engimon Factory "<< this->playerName <<" !"<<endl;
-    cout<<"\n===========================================\n\n";
+    cout << "selamat bermain di Engimon Factory " << this->playerName << " !"
+         << endl;
+    cout << "\n===========================================\n\n";
 }
 
-void Game :: readMap(){
+void Game ::readMap() {
     int i, j;
     ifstream f;
     string linemap;
-    f.open("../file/map.txt");
+    f.open("data/map.txt");
     if (f.is_open()) {
         j = 0;
         while (getline(f, linemap)) {
@@ -53,23 +55,28 @@ void Game :: readMap(){
     }
 }
 
-void Game :: printMap(){
-    cout <<"------------P E T A-------------"<<endl;
+void Game ::printMap() {
+    cout << "------------P E T A-------------" << endl;
     for (int i = 0; i < 15; i++) {
         for (int j = 0; j < 32; j++) {
-            if (j == this->player.getPositionX() && i == this->player.getPositionY()) {
+            if (j == this->player.getPositionX() &&
+                i == this->player.getPositionY()) {
                 cout << 'P';
-            } else if (j == this->player.getPositionX() + 1 && i == this->player.getPositionY() &&
-                        this->player.getDir() == 'a') {
+            } else if (j == this->player.getPositionX() + 1 &&
+                       i == this->player.getPositionY() &&
+                       this->player.getDir() == 'a') {
                 cout << 'X';
-            } else if (j == this->player.getPositionX() && i == this->player.getPositionY()+ 1 &&
-                        this->player.getDir() == 'w') {
+            } else if (j == this->player.getPositionX() &&
+                       i == this->player.getPositionY() + 1 &&
+                       this->player.getDir() == 'w') {
                 cout << 'X';
-            } else if (j == this->player.getPositionX() - 1 && i == this->player.getPositionY() &&
-                        this->player.getDir() == 'd') {
+            } else if (j == this->player.getPositionX() - 1 &&
+                       i == this->player.getPositionY() &&
+                       this->player.getDir() == 'd') {
                 cout << 'X';
-            } else if (j == this->player.getPositionX() && i == this->player.getPositionY() - 1 &&
-                        this->player.getDir() == 's') {
+            } else if (j == this->player.getPositionX() &&
+                       i == this->player.getPositionY() - 1 &&
+                       this->player.getDir() == 's') {
                 cout << 'X';
             }
 
@@ -79,9 +86,9 @@ void Game :: printMap(){
         }
         cout << endl;
     }
-    cout <<"----------------C O M M A N D---------------"<<endl;
+    cout << "----------------C O M M A N D---------------" << endl;
     cout << "W:atas A:kiri S:bawah D:kanan X:Keluar game" << endl;
-    cout <<"--------------------------------------------"<<endl;
+    cout << "--------------------------------------------" << endl;
 }
 
 // double Game :: getAdvantage(Elements A, Elements B){
@@ -184,28 +191,21 @@ void Game :: printMap(){
 
 // }
 
-bool Game :: getIsExit(){
-    return this->isExitGame;
-}
+bool Game ::getIsExit() { return this->isExitGame; }
 
-Player Game :: getPlayer(){
-    return this->player;
-}
+Player Game ::getPlayer() { return this->player; }
 
 // list<Engimon> Game :: getWildEngimon(){
 //     return this->wildEngimons;
 // }
 
-void Game :: setIsExit(bool x){
-    this->isExitGame = x;
-}
+void Game ::setIsExit(bool x) { this->isExitGame = x; }
 
 // void Game :: addWildEngimon(Engimon X){
 //     this->wildEngimons.push_back(X);
 // }
 
-void Game :: run(){
-
+void Game ::run() {
     this->printGameIntro();
     this->player.setName(this->playerName);
     this->readMap();
@@ -259,6 +259,6 @@ void Game :: run(){
             this->setIsExit(true);
         }
         cout << "\n===========================================\n" << endl;
-    } while (this->getIsExit() == false);
+    } while (!this->isExitGame);
     cout << "makasih dah main kk" << endl;
-} 
+}

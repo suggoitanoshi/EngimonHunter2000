@@ -32,7 +32,6 @@ public:
     Item(const string, const unsigned, const unsigned, const Elements,
          unsigned);
     Item(const Item&);
-    // ~Item();
 
     // getters
     unsigned getQuantity() const;
@@ -44,14 +43,15 @@ public:
     void learn(Engimon);
 };
 
-class ItemExp {
+class ItemException : std::exception {
 private:
     const int msgID;
     static std::string msg[];
 
 public:
-    ItemExp(int);
-    void bruh() const;
+    ItemException(int);
+    const char* what();
+    const void bruh();
 };
 
 #endif

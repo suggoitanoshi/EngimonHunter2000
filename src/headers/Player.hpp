@@ -35,7 +35,6 @@ public:
 
     char getDir() const;
     void setDir(char _dir);
-
 };
 
 #endif

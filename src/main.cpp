@@ -11,5 +11,10 @@
 
 int main() {
     Game g = Game();
-    g.run();
+    try {
+        g.run();
+    } catch (...) {
+        std::cout << "jia hahaha rusak" << std::endl;
+        return 1;
+    }
 }
