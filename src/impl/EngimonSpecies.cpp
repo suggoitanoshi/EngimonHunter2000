@@ -23,3 +23,5 @@ EngimonSpecies &EngimonSpecies::operator=(const EngimonSpecies &ES) {
 
     return *this;
 }
+
+const Skill& EngimonSpecies::getStarterSkill(){ return starterSkill; }

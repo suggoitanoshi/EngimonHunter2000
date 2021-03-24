@@ -29,6 +29,7 @@ public:
                    Skill oskill);
     EngimonSpecies(const EngimonSpecies &ES);
     EngimonSpecies &operator=(const EngimonSpecies &ES);
+    const Skill& getStarterSkill();
 };
 
 #endif
