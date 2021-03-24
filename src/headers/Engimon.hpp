@@ -59,6 +59,7 @@ public:
     bool operator==(const Engimon &Eng);
     bool operator==(const string &oname);
     Engimon &operator=(const Engimon &Eng);
+    friend ostream& operator<<(ostream& os, const Engimon& src);
 };
 
 #endif

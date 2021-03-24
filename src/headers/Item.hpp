@@ -32,7 +32,7 @@ public:
     Item(const string, const unsigned, const unsigned, const Elements,
          unsigned);
     Item(const Item&);
-    
+
     // operator
     Item& operator=(const Item&);
     bool operator==(const Item&);

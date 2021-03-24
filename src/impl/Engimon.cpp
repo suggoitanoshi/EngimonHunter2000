@@ -131,3 +131,19 @@ Engimon &Engimon::operator=(const Engimon &Eng) {
     }
     return *this;
 }
+
+ostream& operator<<(ostream& os, const Engimon& src) {
+    vector<Elements> els = src.element;
+    os << "Name\t:" << src.name << "\n";
+    os << "Experience\t: " << src.exp << "\n";
+    os << "Cumulative Experience/Maximum\t: " << src.cexp << src.maxCumulExp << "\n";
+    os << "Element(s)\t: ";
+    for (size_t i = 0; i < els.size(); i++) {
+        os << els[i] << endl;
+        if (i != els.size() - 1) {
+            os << ", ";
+        }
+    }
+    os << "\n";
+    return os;
+}
