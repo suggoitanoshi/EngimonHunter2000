@@ -11,12 +11,12 @@
 #include <vector>
 
 // Bagian Constructor
-Skill::Skill() {
-    name = "";
-    basePower = 0;
-    masteryLevel = 0;
-    elements = std::vector<Elements>();
-}
+//Skill::Skill() {
+    //name = "";
+    //basePower = 0;
+    //masteryLevel = 0;
+    //elements = std::vector<Elements>();
+//}
 
 Skill::Skill(const std::string _name, const unsigned _basePower,
              const unsigned _masteryLevel,
