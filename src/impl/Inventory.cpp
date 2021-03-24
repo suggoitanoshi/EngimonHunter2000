@@ -32,31 +32,31 @@ public:
      */
     void removeItem(T item) {
         int i;
-        try{
+        try {
             i = getFirstItemIndex(item);
             this->subtractItem();
-            this->cont.erase(cont.begin()+i);
-        }
-        catch(InventoryException e){
+            this->cont.erase(cont.begin() + i);
+        } catch (InventoryException e) {
             throw e;
         }
     }
     /**
      * Dapatkan index item `item` pertama
      */
-    int getFirstItemIndex(T item){
+    int getFirstItemIndex(T item) {
         size_t i;
-        if(this->getTotalItemCount() > 0){
+        if (this->getTotalItemCount() > 0) {
             i = 0;
-            while(i < this->cont.size()){
-                if(this->cont.at(i) == item){
+            while (i < this->cont.size()) {
+                if (this->cont.at(i) == item) {
                     return i;
                 }
                 i++;
             }
             throw InventoryException(2);
+        } else {
+            throw InventoryException(1);
         }
-        else throw InventoryException(1);
     }
     /**
      * menampilkan isi inventory
@@ -64,7 +64,7 @@ public:
     void showInventory() const {
         size_t i = 0;
         for (i = 0; i < this->cont.size(); i++) {
-            std::cout << this->cont.at(i) << std::endl;
+            //std::cout << this->cont.at(i) << std::endl;
         }
     }
     /**
