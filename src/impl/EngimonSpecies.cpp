@@ -1,25 +1,33 @@
 #include "../headers/EngimonSpecies.hpp"
 
+EngimonSpecies::EngimonSpecies() {
+    species = "Picakhu";
+    slogan = "Pica Pica Khu!";
+    element.push_back(ELECTRIC);
+}
+
 EngimonSpecies::EngimonSpecies(string ospec, string oslogan,
                                vector<Elements> oelem, Skill oskill)
     : starterSkill(oskill) {
-    this->species = ospec;
-    this->slogan = oslogan;
+    species = ospec;
+    slogan = oslogan;
     element = oelem;
 }
 
 EngimonSpecies::EngimonSpecies(const EngimonSpecies &ES)
     : starterSkill(ES.starterSkill) {
-    this->species = ES.species;
-    this->slogan = ES.slogan;
+    species = ES.species;
+    slogan = ES.slogan;
     element = ES.element;
 }
 
 EngimonSpecies &EngimonSpecies::operator=(const EngimonSpecies &ES) {
-    this->species = ES.species;
-    this->slogan = ES.slogan;
-    this->starterSkill = ES.starterSkill;
-    this->element = ES.element;
+    species = ES.species;
+    slogan = ES.slogan;
+    starterSkill = ES.starterSkill;
+    element = ES.element;
 
     return *this;
 }
+
+string EngimonSpecies::getSpecies() { return species; }

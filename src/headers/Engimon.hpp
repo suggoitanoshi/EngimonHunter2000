@@ -40,7 +40,6 @@ public:
     // getter
     string getName();
     int getLvl();
-    string getSpecies();
     vector<Elements> getElements();
     unsigned getElementCount();
     tuple<int, int> getPosition();
