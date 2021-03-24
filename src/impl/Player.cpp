@@ -48,7 +48,6 @@ void Player::setPosition(tuple<int, int> pos) { position = pos; }
 void Player::setPositionX(int x) { get<0>(position) = x; }
 void Player::setPositionY(int y) { get<1>(position) = y; }
 void Player::setDir(char _dir) { dir = _dir; }
-void Player::setActiveEngiPos() {}
 
 void Player::checkActiveEngimon() { showEngimon(activeEngi); }
 

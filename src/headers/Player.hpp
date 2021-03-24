@@ -40,7 +40,6 @@ public:
     void setPositionX(int);
     void setPositionY(int);
     void setDir(char);
-    void setActiveEngiPos();
 
     // methods
     void checkActiveEngimon();
