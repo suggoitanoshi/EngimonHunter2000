@@ -30,7 +30,7 @@ void Game :: printGameIntro(){
     cout<< "Masukkan nama mu : ";
     cin >> this->playerName;
     cout << "selamat bermain di Engimon Factory "<< this->playerName <<" !"<<endl;
-    cout<<"\n===========================================\n\n";
+    cout << "============================================================\n\n" << endl;
 }
 
 void Game :: readMap(){
@@ -54,7 +54,7 @@ void Game :: readMap(){
 }
 
 void Game :: printMap(){
-    cout <<"------------P E T A-------------"<<endl;
+    cout <<"--------------------------P E T A--------------------------"<<endl;
     for (int i = 0; i < 15; i++) {
         for (int j = 0; j < 32; j++) {
             if (j == this->player.getPositionX() && i == this->player.getPositionY()) {
@@ -79,9 +79,14 @@ void Game :: printMap(){
         }
         cout << endl;
     }
-    cout <<"----------------C O M M A N D---------------"<<endl;
-    cout << "W:atas A:kiri S:bawah D:kanan X:Keluar game" << endl;
-    cout <<"--------------------------------------------"<<endl;
+    cout <<"------------------------C O M M A N D-----------------------"<<endl;
+    cout << "     W:atas  A:kiri  S:bawah  D:kanan  X:Keluar game" << endl;
+    cout <<"------------------------------------------------------------"<<endl;
+    cout << "1. Lihat list engimon saya | 2. Lihat seluruh engimon"<<endl;
+    cout << "3. Ganti active engimon    | 4. Lihat list skill item saya" <<endl;
+    cout << "5. Gunakan skill item      | 6. Lakukan breeding"<<endl;
+    cout << "7. Lakukan Battle"<<endl;
+    cout <<"------------------------------------------------------------"<<endl;
 }
 
 // double Game :: getAdvantage(Elements A, Elements B){
@@ -211,11 +216,15 @@ void Game :: run(){
     this->readMap();
 
     do {
-        char input;
+        string input;
         this->printMap();
         cout << "Masukkan input : ";
         cin >> input;
-        if ((char)tolower(input) == 'w') {
+        if (input.length()!=1){
+            cout << "Masukan salah, silakan ulangi masukan"<<endl;
+        }
+
+        if ((char)tolower(input[0]) == 'w') {
             try {
                 if (this->player.getPositionY() - 1 == 0) {
                     throw(this->player.getPositionY());
@@ -225,7 +234,7 @@ void Game :: run(){
             } catch (int num) {
                 cout << "Aduh nabrak xixixi" << endl;
             }
-        } else if ((char)tolower(input) == 'a') {
+        } else if ((char)tolower(input[0]) == 'a') {
             try {
                 if (this->player.getPositionX() - 1 == 0) {
                     throw(this->player.getPositionX());
@@ -235,7 +244,7 @@ void Game :: run(){
             } catch (int num) {
                 cout << "Aduh nabrak xixixi" << endl;
             }
-        } else if ((char)tolower(input) == 's') {
+        } else if ((char)tolower(input[0]) == 's') {
             try {
                 if (this->player.getPositionY() + 1 == 14) {
                     throw(this->player.getPositionY());
@@ -245,7 +254,7 @@ void Game :: run(){
             } catch (int num) {
                 cout << "Aduh nabrak xixixi" << endl;
             }
-        } else if ((char)tolower(input) == 'd') {
+        } else if ((char)tolower(input[0]) == 'd') {
             try {
                 if (this->player.getPositionX() + 1 == 31) {
                     throw(this->player.getPositionX());
@@ -255,10 +264,13 @@ void Game :: run(){
             } catch (int num) {
                 cout << "Aduh nabrak xixixi" << endl;
             }
-        } else if ((char)tolower(input) == 'x') {
+        } else if ((char)tolower(input[0]) == 'x') {
             this->setIsExit(true);
         }
-        cout << "\n===========================================\n" << endl;
+        else{
+            cout << "Masukan salah, silakan ulangi masukan"<<endl;
+        }
+        cout << "\n============================================================\n" << endl;
     } while (this->getIsExit() == false);
     cout << "makasih dah main kk" << endl;
 } 

@@ -7,8 +7,6 @@
 #include <string>
 #include <tuple>
 #include <list>
-#include <iterator>
-#include <map>
 
 #include "./Player.hpp"
 #include "./Engimon.hpp"
