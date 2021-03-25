@@ -27,14 +27,17 @@ public:
     void bruh();
 };
 
-enum Elements {
-    ELECTRIC,
-    FIRE,
-    GROUND,
-    ICE,
-    WATER,
-};
+struct Elements {
+    enum el {
+        ELECTRIC,
+        FIRE,
+        GROUND,
+        ICE,
+        WATER,
+    };
 
-Elements getElement(const string);
+    static el getElement(const string&);
+    static string getName(const el);
+};
 
 #endif

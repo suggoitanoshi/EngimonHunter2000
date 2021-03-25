@@ -28,11 +28,6 @@ private:
     void printMap();
     void readMap();
 
-    // battle
-    // double getAdvantage(Elements A, Elements B);
-    // double checkAdvantage(Engimon A, Engimon B);
-    // void battle(Engimon A, Engimon B);
-
     // spawn wild engimon
     // void spawnWildEngimon();
 

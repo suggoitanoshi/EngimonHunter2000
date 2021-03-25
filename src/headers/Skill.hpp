@@ -24,15 +24,15 @@ protected:
     string name;
     unsigned basePower;
     unsigned masteryLevel;
-    vector<Elements> elements;  // elemen yang dapat mempelajari skill ini
+    vector<Elements::el> elements;  // elemen yang dapat mempelajari skill ini
 
 public:
     // constructors
     Skill();
     Skill(const std::string, const unsigned _basePower,
-          const unsigned _masteryLevel, const vector<Elements>&);
+          const unsigned _masteryLevel, const vector<Elements::el>&);
     Skill(const std::string, const unsigned _basePower,
-          const unsigned _masteryLevel, const Elements);
+          const unsigned _masteryLevel, const Elements::el);
     Skill(const Skill&);
     Skill& operator=(const Skill&);
 
@@ -43,7 +43,7 @@ public:
     string getName() const;
     unsigned getBasePower() const;
     unsigned getMasteryLevel() const;
-    vector<Elements> getElements() const;
+    vector<Elements::el> getElements() const;
 
     // setters
     void setMasteryLevel(unsigned);

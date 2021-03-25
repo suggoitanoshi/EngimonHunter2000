@@ -10,32 +10,32 @@
 #include "../src/headers/Item.hpp"
 
 TEST(Item, ConstructorVector) {
-    vector<Elements> el;
+    vector<Elements::el> el;
     EXPECT_THROW(Item("test 1", 0, 100, el, 10), SkillException);
 
-    EXPECT_NO_THROW(Item("test 1", 0, 100, ELECTRIC, 10));
+    EXPECT_NO_THROW(Item("test 1", 0, 100, Elements::ELECTRIC, 10));
 
-    el.push_back(ELECTRIC);
-    el.push_back(FIRE);
+    el.push_back(Elements::ELECTRIC);
+    el.push_back(Elements::FIRE);
     ASSERT_NO_THROW(Item("test 1", 0, 100, el, 10));
 
     Item t1("test 1", 0, 100, el, 10);
 
     EXPECT_EQ(t1.getName(), "test 1");
     EXPECT_EQ(t1.getQuantity(), 10);
-    EXPECT_EQ(t1.getElements()[0], ELECTRIC);
+    EXPECT_EQ(t1.getElements()[0], Elements::ELECTRIC);
 }
 
 TEST(Item, ConstructorElement) {
-    Item t1("test 1", 0, 100, ELECTRIC, 10);
+    Item t1("test 1", 0, 100, Elements::ELECTRIC, 10);
 
     EXPECT_EQ(t1.getName(), "test 1");
     EXPECT_EQ(t1.getQuantity(), 10);
-    EXPECT_EQ(t1.getElements()[0], ELECTRIC);
+    EXPECT_EQ(t1.getElements()[0], Elements::ELECTRIC);
 }
 
 TEST(Item, CopyConstructor) {
-    Item t1("test 1", 100, 1, vector<Elements>{ELECTRIC, FIRE, GROUND}, 10);
+    Item t1("test 1", 100, 1, vector<Elements::el>{Elements::ELECTRIC, Elements::FIRE, Elements::GROUND}, 10);
     ASSERT_NO_THROW(Item t2(t1));
     Item t2(t1);
 
@@ -45,7 +45,7 @@ TEST(Item, CopyConstructor) {
 }
 
 TEST(Item, OperatorEq) {
-    Item t1("test 1", 100, 1, vector<Elements>{ELECTRIC, FIRE, GROUND}, 10);
+    Item t1("test 1", 100, 1, vector<Elements::el>{Elements::ELECTRIC, Elements::FIRE, Elements::GROUND}, 10);
     Item t2(t1);
     Item t3(t1);
     t3.setQuantity(5);
