@@ -28,9 +28,9 @@ private:
 
 public:
     // constructors and destructors
-    Item(const string, const unsigned, const unsigned, const vector<Elements>&,
-         unsigned);
-    Item(const string, const unsigned, const unsigned, const Elements,
+    Item(const string, const unsigned, const unsigned,
+         const vector<Elements::el>&, unsigned);
+    Item(const string, const unsigned, const unsigned, const Elements::el,
          unsigned);
     Item(const Skill&, unsigned);
     Item(const Item&);

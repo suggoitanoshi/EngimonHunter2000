@@ -117,7 +117,6 @@ void Engimon::getEngiInfo() {
     for (size_t i = 0; i < getSkills().size(); i++) {
         cout << skills[i].getName() << endl;
         cout << skills[i].getBasePower() << endl;
-        // cout << skill[i].getElements() << endl;
         cout << skills[i].getMasteryLevel() << endl;
     }
 }
@@ -144,14 +143,14 @@ Engimon& Engimon::operator=(const Engimon& Eng) {
 }
 
 ostream& operator<<(ostream& os, const Engimon& src) {
-    vector<Elements> els = src.element;
+    vector<Elements::el> els = src.element;
     os << "Name\t: " << src.name << "\n";
     os << "Experience\t: " << src.exp << "\n";
     os << "Cumulative Experience/Maximum\t: " << src.cexp << src.maxCumulExp
        << "\n";
     os << "Element(s)\t: ";
     for (size_t i = 0; i < els.size(); i++) {
-        os << els[i] << endl;
+        os << Elements::getName(els[i]) << endl;
         if (i != els.size() - 1) {
             os << ", ";
         }

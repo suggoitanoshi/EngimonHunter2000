@@ -270,7 +270,7 @@ Engimon& Game::kawin(Engimon& bapak, Engimon& emak) {
     bapak.setLevel(bapak.getLvl() - 30);
     emak.setLevel(emak.getLvl() - 30);
     // kasus sama
-    Elements elementBapak, elementEmak;
+    Elements::el elementBapak, elementEmak;
     if (bapak.getElements().size() == 2)
         elementBapak = bapak.getElements().at(rand() % 2);
     else

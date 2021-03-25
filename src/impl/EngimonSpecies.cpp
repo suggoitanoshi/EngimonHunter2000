@@ -3,11 +3,11 @@
 EngimonSpecies::EngimonSpecies() {
     species = "Picakhu";
     slogan = "Pica Pica Khu!";
-    element.push_back(ELECTRIC);
+    element.push_back(Elements::ELECTRIC);
 }
 
 EngimonSpecies::EngimonSpecies(string ospec, string oslogan,
-                               vector<Elements> oelem, Skill oskill)
+                               vector<Elements::el> oelem, Skill oskill)
     : starterSkill(oskill) {
     species = ospec;
     slogan = oslogan;
@@ -30,7 +30,7 @@ EngimonSpecies &EngimonSpecies::operator=(const EngimonSpecies &ES) {
     return *this;
 }
 
-vector<Elements> EngimonSpecies::getElements() const { return element; }
+vector<Elements::el> EngimonSpecies::getElements() const { return element; }
 
 Skill EngimonSpecies::getStarterSkill() const { return starterSkill; }
 string EngimonSpecies::getSpecies() const { return species; }

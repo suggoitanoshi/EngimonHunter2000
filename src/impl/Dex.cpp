@@ -28,7 +28,7 @@ void Dex::readEngiDex(const string path) {
         string engiName;
         string engiSlogan;
         string firstSkillName;
-        vector<Elements> elements;
+        vector<Elements::el> elements;
         for (string metadata : engimon) {
             switch (i) {
                 case 0:
@@ -42,7 +42,7 @@ void Dex::readEngiDex(const string path) {
                     break;
                 default:  // elements
                     try {
-                        elements.push_back(getElement(metadata));
+                        elements.push_back(Elements::getElement(metadata));
                     } catch (ElementsException) {
                         throw DexException(1);
                     }
@@ -56,9 +56,9 @@ void Dex::readEngiDex(const string path) {
 
         // hapus duplikat
         sort(elements.begin(), elements.end());
-        vector<Elements>::iterator it =
+        vector<Elements::el>::iterator it =
             unique(elements.begin(), elements.end());
-        elements = vector<Elements>(elements.begin(), it);
+        elements = vector<Elements::el>(elements.begin(), it);
 
         try {
             Skill firstSkill(skillDex[firstSkillName]);  // throws out_of_range
@@ -79,7 +79,7 @@ void Dex::readSkillDex(const string path) {
         int i = 0;
         string skillName;
         unsigned skillBasePower;
-        vector<Elements> elements;
+        vector<Elements::el> elements;
 
         for (string metadata : engimon) {
             switch (i) {
@@ -91,7 +91,7 @@ void Dex::readSkillDex(const string path) {
                     break;
                 default:
                     try {
-                        elements.push_back(getElement(metadata));
+                        elements.push_back(Elements::getElement(metadata));
                     } catch (ElementsException) {
                         throw DexException(1);
                     }
@@ -104,9 +104,9 @@ void Dex::readSkillDex(const string path) {
 
         // hapus duplikat
         sort(elements.begin(), elements.end());
-        vector<Elements>::iterator it =
+        vector<Elements::el>::iterator it =
             unique(elements.begin(), elements.end());
-        elements = vector<Elements>(elements.begin(), it);
+        elements = vector<Elements::el>(elements.begin(), it);
 
         skillDex.emplace(skillName,
                          Skill(skillName, skillBasePower, 1, elements));

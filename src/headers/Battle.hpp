@@ -20,7 +20,7 @@ public:
     void setEngimonB(Engimon other);
     void setEngimonWinner();
     // battle
-    double getAdvantage(Elements A, Elements B);
+    double getAdvantage(Elements::el A, Elements::el B);
     void checkAdvantage();
     void runBattle();
 };

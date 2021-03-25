@@ -19,14 +19,14 @@
 using namespace std;
 
 Item::Item(const string _name, const unsigned _basePower,
-           const unsigned _masteryLevel, const vector<Elements>& _elements,
+           const unsigned _masteryLevel, const vector<Elements::el>& _elements,
            unsigned _quantity)
     : Skill(_name, _basePower, _masteryLevel, _elements) {
     quantity = _quantity;
 }
 
 Item::Item(const string _name, const unsigned _basePower,
-           const unsigned _masteryLevel, const Elements _elements,
+           const unsigned _masteryLevel, const Elements::el _elements,
            unsigned _quantity)
     : Skill(_name, _basePower, _masteryLevel, _elements) {
     quantity = _quantity;
@@ -57,14 +57,15 @@ bool Item::operator==(const Item& sblh) {
 }
 
 ostream& operator<<(ostream& os, const Item& src) {
-    vector<Elements> els = src.getElements();
+    vector<Elements::el> els = src.getElements();
     os << "Name\t:" << src.getName() << "\n";
     os << "Base power\t: " << src.getBasePower() << "\n";
     os << "Mastery level\t: " << src.getMasteryLevel() << "\n";
     os << "Element(s)\t: ";
     size_t i = 0;
-    for (vector<Elements>::iterator it = els.begin(); it != els.end(); ++it) {
-        os << *it;
+    for (vector<Elements::el>::iterator it = els.begin(); it != els.end();
+         ++it) {
+        os << Elements::getName(*it);
         if (i != (els.size() - 1)) {
             os << ", ";
             ++i;
@@ -109,9 +110,9 @@ void Item::learn(Engimon& e, const Dex& dex) {
     }
 
     // Mengecek jumlah skills yang telah dilajari
-    if (e.getSkillsCount() == (int)e.maxSkills) {
+    if (e.getSkillsCount() == e.maxSkills) {
         int old;
-        for (int i = 0; (int)e.maxSkills; i++) {
+        for (int i = 0; e.maxSkills; i++) {
             cout << i + 1 << ". " << e.getSkillByIndex(i).getName() << endl;
         }
         cout << "Pilih nomor skill untuk diganti dengan skill baru: ";
