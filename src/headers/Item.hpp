@@ -21,7 +21,7 @@ using namespace std;
  * Class untuk item skill yang (dapat) dimiliki Player dan dipelajari oleh
  * Engimon
  */
-class Item : Skill {
+class Item : public Skill {
 private:
     unsigned quantity;
 
@@ -40,7 +40,6 @@ public:
 
     // getters
     unsigned getQuantity() const;
-    string getName() const;
 
     // setters
     void setQuantity(unsigned);

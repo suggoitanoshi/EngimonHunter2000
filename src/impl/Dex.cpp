@@ -153,7 +153,10 @@ const unordered_map<string, EngimonSpecies> Dex::getEngiDex() const {
 DexException::DexException(int id) : msgID(id) {}
 const char* DexException::what() { return msg[msgID].c_str(); }
 void DexException::bruh() { cout << what() << endl; }
-string DexException::msg[] = {
-    "Format file invalid", "Element invalid",    "First skill Engimon invalid.",
-    "Skill tidak ada.",    "Engimon tidak ada.", "Skill sudah ada.",
-    "Engimon sudah ada."};
+string DexException::msg[] = {"Format file invalid.",
+                              "Element invalid.",
+                              "First skill Engimon invalid.",
+                              "Skill tidak ada.",
+                              "Engimon tidak ada.",
+                              "Skill sudah ada.",
+                              "Engimon sudah ada."};
