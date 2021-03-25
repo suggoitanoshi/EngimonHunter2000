@@ -38,6 +38,7 @@ struct Elements {
 
     static el getElement(const string&);
     static string getName(const el);
+    static double getElementalAdvantage(const Elements::el, const Elements::el);
 };
 
 #endif

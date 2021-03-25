@@ -11,86 +11,22 @@ Battle :: Battle(){
     pwrB = 0;
 }
 
-double Battle::getAdvantage(Elements::el A, Elements::el B) {
-    if (A == Elements::FIRE) {
-        if (B == Elements::FIRE) {
-            return 1;
-        } else if (B == Elements::WATER) {
-            return 0;
-        } else if (B == Elements::ELECTRIC) {
-            return 1;
-        } else if (B == Elements::GROUND) {
-            return 0.5;
-        } else {  // B == Elements::ICE
-            return 2;
-        }
-    } else if (A == Elements::WATER) {
-        if (B == Elements::FIRE) {
-            return 2;
-        } else if (B == Elements::WATER) {
-            return 1;
-        } else if (B == Elements::ELECTRIC) {
-            return 0;
-        } else if (B == Elements::GROUND) {
-            return 1;
-        } else {  // B == Elements::ICE
-            return 1;
-        }
-    } else if (A == Elements::ELECTRIC) {
-        if (B == Elements::FIRE) {
-            return 1;
-        } else if (B == Elements::WATER) {
-            return 2;
-        } else if (B == Elements::ELECTRIC) {
-            return 1;
-        } else if (B == Elements::GROUND) {
-            return 0;
-        } else {  // B == Elements::ICE
-            return 1.5;
-        }
-    } else if (A == Elements::GROUND) {
-        if (B == Elements::FIRE) {
-            return 1.5;
-        } else if (B == Elements::WATER) {
-            return 1;
-        } else if (B == Elements::ELECTRIC) {
-            return 2;
-        } else if (B == Elements::GROUND) {
-            return 1;
-        } else {  // B == Elements::ICE
-            return 0;
-        }
-    } else {  // A == Elements::ICE
-        if (B == Elements::FIRE) {
-            return 0;
-        } else if (B == Elements::WATER) {
-            return 1;
-        } else if (B == Elements::ELECTRIC) {
-            return 0.5;
-        } else if (B == Elements::GROUND) {
-            return 2;
-        } else {  // B == Elements::ICE
-            return 1;
-        }
-    }
-}
-
 void Battle :: checkAdvantage(Engimon A, Engimon B){
     vector<Elements::el> elA = A.getElements();
     vector<Elements::el> elB = B.getElements();
 
     for (Elements::el elemA : elA){
         for (Elements::el elemB : elB){
-            if (getAdvantage(elemA,elemB)>=advA){
-                advA = getAdvantage(elemA, elemB);
+            if (Elements::getElementalAdvantage(elemA,elemB)>=advA){
+                advA = Elements::getElementalAdvantage(elemA, elemB);
             }
         }
     }
 
     for (Elements::el elemB2 : elB){
         for (Elements::el elemA2 : elA){
-            if (getAdvantage(elemB2,elemA2)>=advB){
-                advB = getAdvantage(elemB2, elemA2);
+            if (Elements::getElementalAdvantage(elemB2,elemA2)>=advB){
+                advB = Elements::getElementalAdvantage(elemB2, elemA2);
             }
         }
     }
