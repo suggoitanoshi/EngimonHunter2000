@@ -115,7 +115,7 @@ void Game::printMap() {
 }
 
 Engimon Game::makeRandomEngimon() const {
-    int idx = rand() % wildEngimonCount;
+    int idx = rand() % dex.getEngiDex().size();
     EngimonSpecies engieSpecies;
 
     // dapetin spesies engimonnya
@@ -163,7 +163,6 @@ void Game::spawnWildEngimon(unsigned count) {
     unordered_map<string, EngimonSpecies> engies = dex.getEngiDex();
     // dapetin tile kosong
     vector<tuple<int, int>> freeSpaces = getEmptyMapTile();
-    vector<bool> visited(false, freeSpaces.size());
 
     count =
         (count < getEmptyMapTile().size()) ? count : getEmptyMapTile().size();
@@ -174,7 +173,8 @@ void Game::spawnWildEngimon(unsigned count) {
         Engimon engie = makeRandomEngimon();
 
         // taruh engimon di map
-        for (size_t i = 0; i < freeSpaces.size(); ++i) {
+        bool isPlaced = false;
+        for (unsigned j = 0; !isPlaced && j < (mapX * mapY); ++j) {
             unsigned randIdx = rand() % freeSpaces.size();
             tuple<int, int> pos = freeSpaces[randIdx];
             vector<Elements::el> engieEl = engie.getElements();
@@ -195,22 +195,27 @@ void Game::spawnWildEngimon(unsigned count) {
                             'E' * (engieEl[0] == Elements::ELECTRIC);
             }
 
-            if (map[get<0>(pos)][get<1>(pos)].getTileChar() == 'o') {
-                if (engieChar == 'F' || engieChar == 'G' || engieChar == 'E' ||
-                    engieChar == 'L') {
-                    continue;
+            // cek tipe tyle
+            if (map[get<0>(pos)][get<1>(pos)].getType() == MapTile::WATER) {
+                if (!(engieChar == 'F' || engieChar == 'G' || engieChar == 'E' ||
+                    engieChar == 'L')) {
+                    map[get<0>(pos)][get<1>(pos)] = engieChar;
+                    freeSpaces.erase(freeSpaces.begin() + randIdx);
+                    isPlaced = true;
                 }
-                map[get<0>(pos)][get<1>(pos)] = engieChar;
-                freeSpaces.erase(freeSpaces.begin() + randIdx);
-                break;
             } else {  // char-nya: '-'
                 if (engieChar == 'F' || engieChar == 'G' || engieChar == 'E' ||
                     engieChar == 'L') {
                     map[get<0>(pos)][get<1>(pos)] = engieChar;
                     freeSpaces.erase(freeSpaces.begin() + randIdx);
-                    break;
+                    isPlaced = true;
                 }
             }
+        }
+
+        if (!isPlaced) {
+            // error
+            --i; // ga diitung langkah ini
         }
     }
 }
