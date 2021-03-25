@@ -64,6 +64,7 @@ public:
     void showInventory() const {
         size_t i = 0;
         for (i = 0; i < this->cont.size(); i++) {
+            cout << i+1 << ". ";
             cout << this->cont.at(i) << endl;
         }
     }

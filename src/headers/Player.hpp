@@ -51,13 +51,15 @@ public:
     void addEngimon(string);
     void removeEngimon(Engimon);
     void removeEngimon(string);
+    void showItem(Item);
+    void showItem(string);
     void showItem() const;
     void useItem(string, string, const Dex&);
     void addItem(Item);
     void addItem(string);
     void removeItem(Item);
     void removeItem(string);
-    void interact();
+    void interact() const;
 };
 
 class PlayerException : exception {

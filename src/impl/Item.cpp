@@ -57,22 +57,7 @@ bool Item::operator==(const Item& sblh) const {
 }
 
 ostream& operator<<(ostream& os, const Item& src) {
-    vector<Elements::el> els = src.getElements();
     os << "Name\t:" << src.getName() << "\n";
-    os << "Base power\t: " << src.getBasePower() << "\n";
-    os << "Mastery level\t: " << src.getMasteryLevel() << "\n";
-    os << "Element(s)\t: ";
-    size_t i = 0;
-    for (vector<Elements::el>::iterator it = els.begin(); it != els.end();
-         ++it) {
-        os << Elements::getName(*it);
-        if (i != (els.size() - 1)) {
-            os << ", ";
-            ++i;
-        }
-    }
-    os << "\n";
-    os << "Quantity\t: " << src.getQuantity() << "\n";
     return os;
 }
 
@@ -127,6 +112,25 @@ void Item::learn(Engimon& e, const Dex& dex) {
         e.setSkills(e.getSkillsCount(), dex.getSkill(name));
     }
     quantity--;
+}
+
+void Item::showItem() const {
+    vector<Elements::el> els = getElements();
+    cout << "Name\t: " << getName() << "\n";
+    cout << "Base power\t: " << getBasePower() << "\n";
+    cout << "Mastery level\t: " << getMasteryLevel() << "\n";
+    cout << "Element(s)\t: ";
+    size_t i = 0;
+    for (vector<Elements::el>::iterator it = els.begin(); it != els.end();
+         ++it) {
+        cout << Elements::getName(*it);
+        if (i != (els.size() - 1)) {
+            cout << ", ";
+            ++i;
+        }
+    }
+    cout << "\n";
+    cout << "Quantity\t: " << getQuantity() << "\n";
 }
 
 ItemException::ItemException(int x) : msgID(x) {}
