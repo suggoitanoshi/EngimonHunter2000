@@ -8,6 +8,11 @@ Parser::Parser(std::string _filePath, char _delim)
 std::vector<std::string> Parser::parseLine(std::string line) const {
     std::string currentSubstr;
     std::vector<std::string> parseResult;
+
+    if (*(line.end()-1) == '\r') {
+        line.pop_back();
+    }
+
     for (std::string::iterator c = line.begin(); c != line.end(); ++c) {
         if (*c == delim) {
             parseResult.push_back(currentSubstr);
