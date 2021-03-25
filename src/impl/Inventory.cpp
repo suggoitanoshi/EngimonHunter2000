@@ -4,6 +4,7 @@
 #include "../headers/InventoryException.hpp"
 #include "iostream"
 #include "vector"
+#include "algorithm"
 
 template <class T>
 class Inventory : BaseInventory {
@@ -21,8 +22,10 @@ public:
      */
     void addItem(T item) {
         if (this->getTotalItemCount() < this->getMaxCapacity()) {
+            if(std::find(cont.begin(), cont.end(), item) == cont.end()){
+                this->cont.push_back(item);
+            }
             this->incrementItem();
-            this->cont.push_back(item);
         } else {
             throw InventoryException(0);  // inventory tidak cukup
         }

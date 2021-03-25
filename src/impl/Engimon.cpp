@@ -151,7 +151,8 @@ void Engimon::showEngimon() const {
     vector<Elements::el> els = getElements();
     cout << "Name\t: " << name << "\n";
     cout << "Experience\t: " << exp << "\n";
-    cout << "Cumulative Experience/Maximum\t: " << exp << "/" << maxCumulExp << "\n";
+    cout << "Cumulative Experience/Maximum\t: " << exp << "/" << maxCumulExp
+         << "\n";
     cout << "Element(s)\t: ";
     for (size_t i = 0; i < els.size(); i++) {
         cout << Elements::getName(els[i]) << endl;

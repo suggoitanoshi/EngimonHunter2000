@@ -19,7 +19,6 @@ private:
 public:
     Battle();
     // battle
-    double getAdvantage(Elements::el A, Elements::el B);
     void checkAdvantage(Engimon A, Engimon B);
     void runBattle(Engimon A, Engimon B);
 };
