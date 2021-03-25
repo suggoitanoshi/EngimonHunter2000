@@ -1,8 +1,12 @@
 #include "../headers/Game.hpp"
 
-#include <stdlib.h>
-
+#include <algorithm>
+#include <cstdlib>
+#include <ctime>
 #include <iostream>
+#include <tuple>
+#include <unordered_map>
+#include <utility>
 
 #include "../headers/BreedingException.hpp"
 #include "../headers/Dex.hpp"
@@ -11,6 +15,7 @@
 using namespace std;
 
 Game::Game() {
+    srand(time(0));
     this->isExitGame = false;
     player = Player();
     dex = Dex();
@@ -46,7 +51,7 @@ void Game::readMap() {
     int i, j;
     ifstream f;
     string linemap;
-    f.open("../data/map.txt");
+    f.open("data/map.txt");
     if (f.is_open()) {
         j = 0;
         while (getline(f, linemap)) {
@@ -55,6 +60,15 @@ void Game::readMap() {
                 if (c != '\0' && c != '\n' && c != '\r') {
                     map[i][j] = c;
                     i++;
+                    //map[i][j].setTileChar(c);
+                    //if (c == '-') {
+                        //map[i][j].setType(MapTile::GRASSLAND);
+                    //} else if (c == '*') {
+                        //map[i][j].setType(MapTile::EDGE);
+                    //} else { // c == 'o'
+                        //map[i][j].setType(MapTile::WATER);
+                    //}
+                    //map[i][j].makeUnOccupied();
                 }
             }
             j++;
@@ -108,21 +122,105 @@ void Game::printMap() {
          << endl;
 }
 
-// void Game :: spawnWildEngimon(){
+Engimon Game::makeRandomEngimon() const {
+    int idx = rand() % wildEngimonCount;
+    EngimonSpecies engieSpecies;
 
-// }
+    // dapetin spesies engimonnya
+    for (pair<string, EngimonSpecies> a : dex.getEngiDex()) {
+        if (idx == 0)
+            engieSpecies = a.second;
+        idx--;
+    }
 
-// list<Engimon> Game :: getWildEngimon(){
-//     return this->wildEngimons;
-// }
+    Engimon engie(engieSpecies);
+    engie.addExp(((rand() % 20) + 1) * 100); // karena tiap level butuh 100 exp dan sementara dibikin random 1 sampe 20
 
-// void Game :: addWildEngimon(Engimon X){
-//     this->wildEngimons.push_back(X);
-// }
+    // dapetin 4 move acak
+    for (size_t i = 0; i < min(dex.getEngiDex().size(), (size_t) 4); ++i) {
+        idx = rand() % dex.getEngiDex().size();
+        for (pair<string, Skill> a : dex.getSkillDex()) {
+            if (idx == 0) {
+                // belom cek tipe, do it later
+                engie.setSkills(i, a.second);
+                break;
+            }
+            idx--;
+        }
+    }
+
+    return engie;
+}
+
+vector<tuple<int, int>> Game::getEmptyMapTile() {
+    vector<tuple<int, int>> ret;
+
+    for (int y = 0; y < 16; ++y) {
+        for (int x = 0; x < 32; ++x) {
+            char tmp = map[x][y];
+            if (tmp == 'o' || tmp == '-') {
+                ret.push_back(make_tuple(x,y));
+            }
+        }
+    }
+
+    return ret;
+}
+
+void Game::spawnWildEngimon(unsigned count) {
+    unordered_map<string, EngimonSpecies> engies = dex.getEngiDex();
+    vector<tuple<int, int>> freeSpaces = getEmptyMapTile();
+
+    count = (count < getEmptyMapTile().size()) ? count : getEmptyMapTile().size();
+
+    for (size_t i = 0; i < count; ++i) {
+        Engimon engie = makeRandomEngimon();
+
+        for (vector<tuple<int, int>>::iterator it = freeSpaces.begin(); it != freeSpaces.end(); ++it) {
+            tuple<int, int> pos = *it;
+            vector<Elements::el> engieEl = engie.getElements();
+            char engieChar = 0;
+
+            if (engieEl.size() == 2) {
+                engieChar = 'S' * ((engieEl[0] == Elements::ICE && engieEl[1] == Elements::WATER) ||
+                               (engieEl[0] == Elements::WATER && engieEl[1] == Elements::ICE)) +
+                            'N' * ((engieEl[0] == Elements::WATER && engieEl[1] == Elements::GROUND) ||
+                                   (engieEl[0] == Elements::GROUND && engieEl[1] == Elements::WATER)) +
+                            'L' * ((engieEl[0] == Elements::FIRE && engieEl[1] == Elements::ELECTRIC) ||
+                                   (engieEl[0] == Elements::ELECTRIC && engieEl[1] == Elements::FIRE));
+            } else { // ukurannya 1
+                engieChar = 'F' * (engieEl[0] == Elements::FIRE) +
+                            'I' * (engieEl[0] == Elements::ICE) +
+                            'W' * (engieEl[0] == Elements::WATER) +
+                            'G' * (engieEl[0] == Elements::GROUND) +
+                            'E' * (engieEl[0] == Elements::ELECTRIC);
+            }
+
+            if (map[get<0>(pos)][get<1>(pos)] == 'o') {
+                if (engieChar == 'F' || engieChar == 'G' || engieChar == 'E' ||
+                    engieChar == 'L') {
+                    continue;
+                }
+
+                map[get<0>(pos)][get<1>(pos)] = engieChar;
+                freeSpaces.erase(it);
+                break;
+            } else { // char-nya: '-'
+                if (engieChar == 'F' || engieChar == 'G' || engieChar == 'E' ||
+                    engieChar == 'L') {
+                    map[get<0>(pos)][get<1>(pos)] = engieChar;
+                    freeSpaces.erase(it);
+                    break;
+                }
+            }
+        }
+    }
+}
 
 void Game::run() {
     printGameIntro();
     this->readMap();
+    this->spawnWildEngimon(wildEngimonCount);
 
     do {
         string input;

@@ -107,7 +107,7 @@ void Item::learn(Engimon& e, const Dex& dex) {
             throw ItemException(3);
         }
 
-        // e.setSkills(old + 1, e.getSkillByIndex(i));
+        e.setSkills(old - 1, dex.getSkill(name));
     } else {
         e.setSkills(e.getSkillsCount(), dex.getSkill(name));
     }
