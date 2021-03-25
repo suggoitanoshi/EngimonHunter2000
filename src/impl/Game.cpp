@@ -116,6 +116,7 @@ void Game::printMap() {
 
 Engimon Game::makeRandomEngimon() const {
     int idx = rand() % dex.getEngiDex().size();
+    bool compat;
     EngimonSpecies engieSpecies;
 
     // dapetin spesies engimonnya
@@ -135,7 +136,17 @@ Engimon Game::makeRandomEngimon() const {
         for (pair<string, Skill> a : dex.getSkillDex()) {
             if (idx == 0) {
                 // belom cek tipe, do it later
-                engie.setSkills(i, a.second);
+                // cek elemen
+                compat = 0;
+                for(Elements::el engieEl: engie.getElements()){
+                    for(Elements::el skillEl: a.second.getElements()){
+                        compat &= engieEl == skillEl;
+                        if(compat) break;
+                    }
+                    if(compat) break;
+                }
+                if(compat)
+                    engie.setSkills(i, a.second);
                 break;
             }
             idx--;
