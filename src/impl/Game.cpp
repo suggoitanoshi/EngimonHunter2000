@@ -131,24 +131,27 @@ Engimon Game::makeRandomEngimon() const {
                         // random 1 sampe 20
 
     // dapetin 4 move acak
-    for (size_t i = 0; i < min(dex.getEngiDex().size(), (size_t)4);) {
-        idx = rand() % dex.getEngiDex().size();
-        for (pair<string, Skill> a : dex.getSkillDex()) {
+    unordered_map<string, Skill> filtered;
+    for (pair<string, Skill> a : dex.getSkillDex()) {
+        // cek elemen
+        compat = 0;
+        for (Elements::el engieEl : engie.getElements()) {
+            for (Elements::el skillEl : a.second.getElements()) {
+                compat |= engieEl == skillEl;
+                if (compat){
+                    filtered.emplace(a.first, a.second);
+                    break;
+                }
+            }
+            if (compat) break;
+        }
+    }
+    for (size_t i = 0; i < min(filtered.size(), (size_t)4); i++) {
+        idx = rand() % filtered.size();
+        for (pair<string, Skill> a : filtered) {
             if (idx == 0) {
                 // belom cek tipe, do it later
-                // cek elemen
-                compat = 0;
-                for (Elements::el engieEl : engie.getElements()) {
-                    for (Elements::el skillEl : a.second.getElements()) {
-                        compat |= engieEl == skillEl;
-                        if (compat) break;
-                    }
-                    if (compat) break;
-                }
-                if (compat){
-                    engie.setSkills(i, a.second);
-                    ++i;
-                }
+                engie.setSkills(i, a.second);
                 break;
             }
             idx--;
