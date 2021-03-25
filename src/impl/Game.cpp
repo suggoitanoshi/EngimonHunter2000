@@ -3,10 +3,12 @@
 #include <stdlib.h>
 
 #include <iostream>
+#include<algorithm>
 
 #include "../headers/BreedingException.hpp"
 #include "../headers/Dex.hpp"
 #include "../headers/Player.hpp"
+#include "../headers/Battle.hpp"
 
 using namespace std;
 
@@ -312,8 +314,26 @@ Engimon& Game::kawin(Engimon& bapak, Engimon& emak) {
             spesies = dex.getEngi(emak.getSpecies());
     } else {
         // Hitung Element Advantage
-        // STUB
-        spesies = dex.getEngi(bapak.getSpecies());
+
+        double advBapak = Elements::getElementalAdvantage(elementBapak, elementEmak);
+        double advEmak = Elements::getElementalAdvantage(elementEmak, elementBapak);
+        if(advBapak > advEmak){
+            spesies = dex.getEngi(bapak.getSpecies());
+        }
+        else if(advEmak > advBapak){
+            spesies = dex.getEngi(emak.getSpecies());
+        }
+        else{
+            for(pair<string, EngimonSpecies> esMap: dex.getEngiDex()){
+                vector<Elements::el> el = esMap.second.getElements();
+                if(std::find(el.begin(), el.end(), elementBapak) != el.end()){
+                    if(std::find(el.begin(), el.end(), elementEmak) != el.end()){
+                        spesies = esMap.second;
+                        break;
+                    }
+                }
+            }
+        }
     }
     std::cin >> name;
     tuple<string, string> parents[2] = {
