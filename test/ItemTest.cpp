@@ -61,7 +61,7 @@ TEST(Item, Learn) {
 
     ASSERT_NO_THROW(t.learn(e, d));
     EXPECT_EQ(t.getQuantity(), 9);
-    EXPCET_EQ(e.getSkillsCount(), 2);
+    EXPECT_EQ(e.getSkillsCount(), 2);
     EXPECT_EQ(e.getSkillByIndex(1).getName(), d.getSkill("Tackle").getName());
     EXPECT_EQ(e.getSkillByIndex(1).getBasePower(),
               d.getSkill("Tackle").getBasePower());
