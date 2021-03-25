@@ -60,13 +60,13 @@ TEST(Item, Learn) {
     Item t(d.getSkill("Tackle"), 10);
 
     ASSERT_NO_THROW(t.learn(e, d));
-    t.learn(e, d);
     EXPECT_EQ(t.getQuantity(), 9);
-    EXPECT_EQ(e.getSkillByIndex(0).getName(), d.getSkill("Tackle").getName());
-    EXPECT_EQ(e.getSkillByIndex(0).getBasePower(),
+    EXPCET_EQ(e.getSkillsCount(), 2);
+    EXPECT_EQ(e.getSkillByIndex(1).getName(), d.getSkill("Tackle").getName());
+    EXPECT_EQ(e.getSkillByIndex(1).getBasePower(),
               d.getSkill("Tackle").getBasePower());
-    EXPECT_EQ(e.getSkillByIndex(0).getElements(),
+    EXPECT_EQ(e.getSkillByIndex(1).getElements(),
               d.getSkill("Tackle").getElements());
-    EXPECT_EQ(e.getSkillByIndex(0).getMasteryLevel(),
+    EXPECT_EQ(e.getSkillByIndex(1).getMasteryLevel(),
               d.getSkill("Tackle").getMasteryLevel());
 }
