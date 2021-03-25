@@ -145,7 +145,7 @@ Engimon& Engimon::operator=(const Engimon& Eng) {
 
 ostream& operator<<(ostream& os, const Engimon& src) {
     vector<Elements> els = src.element;
-    os << "Name\t:" << src.name << "\n";
+    os << "Name\t: " << src.name << "\n";
     os << "Experience\t: " << src.exp << "\n";
     os << "Cumulative Experience/Maximum\t: " << src.cexp << src.maxCumulExp
        << "\n";

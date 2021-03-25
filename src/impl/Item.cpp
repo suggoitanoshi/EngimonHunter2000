@@ -32,6 +32,10 @@ Item::Item(const string _name, const unsigned _basePower,
     quantity = _quantity;
 }
 
+Item::Item(const Skill& s, unsigned _quantity) : Skill(s) {
+    quantity = _quantity;
+}
+
 Item::Item(const Item& src)
     : Skill(src.name, src.basePower, src.masteryLevel, src.elements) {
     quantity = src.quantity;
@@ -60,9 +64,10 @@ ostream& operator<<(ostream& os, const Item& src) {
     os << "Element(s)\t: ";
     size_t i = 0;
     for (vector<Elements>::iterator it = els.begin(); it != els.end(); ++it) {
-        os << *it << endl;
+        os << *it;
         if (i != (els.size() - 1)) {
             os << ", ";
+            ++i;
         }
     }
     os << "\n";

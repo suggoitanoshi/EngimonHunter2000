@@ -32,6 +32,7 @@ public:
          unsigned);
     Item(const string, const unsigned, const unsigned, const Elements,
          unsigned);
+    Item(const Skill&, unsigned);
     Item(const Item&);
 
     // operator
