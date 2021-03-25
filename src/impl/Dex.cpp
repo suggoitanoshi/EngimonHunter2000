@@ -50,15 +50,15 @@ void Dex::readEngiDex(const string path) {
             ++i;
         }
 
-        if (elements.size() == 0) {
-            throw DexException(1);
-        }
-
         // hapus duplikat
         sort(elements.begin(), elements.end());
         vector<Elements::el>::iterator it =
             unique(elements.begin(), elements.end());
         elements = vector<Elements::el>(elements.begin(), it);
+
+        if (elements.size() == 0 || elements.size() > 2) {
+            throw DexException(1);
+        }
 
         try {
             Skill firstSkill(skillDex[firstSkillName]);  // throws out_of_range
@@ -107,6 +107,10 @@ void Dex::readSkillDex(const string path) {
         vector<Elements::el>::iterator it =
             unique(elements.begin(), elements.end());
         elements = vector<Elements::el>(elements.begin(), it);
+
+        if (elements.size() == 0) {
+            throw DexException(1);
+        }
 
         skillDex.emplace(skillName,
                          Skill(skillName, skillBasePower, 1, elements));

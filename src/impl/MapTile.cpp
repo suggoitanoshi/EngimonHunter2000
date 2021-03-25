@@ -78,7 +78,7 @@ void MapTile::setTileChar() {
         occupied = false;
     } else if (type == EDGE) {
         tileChar = '*';
-        occupied = false;
+        occupied = true;
     } else if (type == OCCUPIED_W) {
         tileChar = 'W';
         occupied = true;
@@ -117,7 +117,7 @@ void MapTile::setType() {
         occupied = false;
     } else if (tileChar == '*') {
         type = EDGE;
-        occupied = false;
+        occupied = true;
     } else if (tileChar == 'W') {
         type = OCCUPIED_W;
         occupied = true;
