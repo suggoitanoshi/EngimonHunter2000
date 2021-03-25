@@ -35,7 +35,10 @@ TEST(Item, ConstructorElement) {
 }
 
 TEST(Item, CopyConstructor) {
-    Item t1("test 1", 100, 1, vector<Elements::el>{Elements::ELECTRIC, Elements::FIRE, Elements::GROUND}, 10);
+    Item t1("test 1", 100, 1,
+            vector<Elements::el>{Elements::ELECTRIC, Elements::FIRE,
+                                 Elements::GROUND},
+            10);
     ASSERT_NO_THROW(Item t2(t1));
     Item t2(t1);
 
@@ -45,7 +48,10 @@ TEST(Item, CopyConstructor) {
 }
 
 TEST(Item, OperatorEq) {
-    Item t1("test 1", 100, 1, vector<Elements::el>{Elements::ELECTRIC, Elements::FIRE, Elements::GROUND}, 10);
+    Item t1("test 1", 100, 1,
+            vector<Elements::el>{Elements::ELECTRIC, Elements::FIRE,
+                                 Elements::GROUND},
+            10);
     Item t2(t1);
     Item t3(t1);
     t3.setQuantity(5);
