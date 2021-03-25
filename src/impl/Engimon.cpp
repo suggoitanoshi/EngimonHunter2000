@@ -78,7 +78,7 @@ vector<Skill> Engimon::getSkills() { return skills; }
 Skill Engimon::getSkillByIndex(int index) { return skills[index]; }
 int Engimon::getSkillsCount() { return skills.size(); }
 
-void Engimon::setSkills(int index, Skill oskill) { skills[index] = oskill; }
+void Engimon::setSkills(int index, Skill oskill) { skills.insert(skills.begin()+index, oskill); }
 void Engimon::setPos(int x, int y) {
     get<0>(location) = x;
     get<0>(location) = y;
