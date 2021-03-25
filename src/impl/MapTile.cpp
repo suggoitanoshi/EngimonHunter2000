@@ -103,6 +103,12 @@ void MapTile::setTileChar() {
     } else if (type == OCCUPIED_N) {
         tileChar = 'N';
         occupied = true;
+    } else if (type == ACTIVE_ENGI) {
+        tileChar = 'X';
+        occupied = true;
+    } else if (type == PLAYER) {
+        tileChar = 'P';
+        occupied = true;
     } else {
         // error
     }
@@ -141,6 +147,12 @@ void MapTile::setType() {
         occupied = true;
     } else if (tileChar == 'N') {
         type = OCCUPIED_N;
+        occupied = true;
+    } else if (tileChar == 'X') {
+        type = ACTIVE_ENGI;
+        occupied = true;
+    } else if (tileChar == 'P') {
+        type = PLAYER;
         occupied = true;
     } else {
         // error

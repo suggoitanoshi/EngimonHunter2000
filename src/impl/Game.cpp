@@ -150,8 +150,7 @@ vector<tuple<int, int>> Game::getEmptyMapTile() {
 
     for (int y = 0; y < 16; ++y) {
         for (int x = 0; x < 32; ++x) {
-            char tmp = map[x][y].getTileChar();
-            if (tmp == 'o' || tmp == '-') {
+            if (!map[x][y].isOccupied()) {
                 ret.push_back(make_tuple(x, y));
             }
         }
@@ -162,23 +161,28 @@ vector<tuple<int, int>> Game::getEmptyMapTile() {
 
 void Game::spawnWildEngimon(unsigned count) {
     unordered_map<string, EngimonSpecies> engies = dex.getEngiDex();
+    // dapetin tile kosong
     vector<tuple<int, int>> freeSpaces = getEmptyMapTile();
+    vector<bool> visited(false, freeSpaces.size());
 
     count =
         (count < getEmptyMapTile().size()) ? count : getEmptyMapTile().size();
 
+    // bikin `count` jumlah engimon lalu taruh di map
     for (size_t i = 0; i < count; ++i) {
+        // bikin engimon random
         Engimon engie = makeRandomEngimon();
 
-        for (vector<tuple<int, int>>::iterator it = freeSpaces.begin();
-             it != freeSpaces.end(); ++it) {
-            tuple<int, int> pos = *it;
+        // taruh engimon di map
+        for (size_t i = 0; i < freeSpaces.size(); ++i) {
+            unsigned randIdx = rand() % freeSpaces.size();
+            tuple<int, int> pos = freeSpaces[randIdx];
             vector<Elements::el> engieEl = engie.getElements();
             char engieChar = 0;
 
             if (engieEl.size() == 2) {
                 engieChar = 'S' * ((engieEl[0] == Elements::ICE && engieEl[1] == Elements::WATER) ||
-                               (engieEl[0] == Elements::WATER && engieEl[1] == Elements::ICE)) |
+                                   (engieEl[0] == Elements::WATER && engieEl[1] == Elements::ICE)) |
                             'N' * ((engieEl[0] == Elements::WATER && engieEl[1] == Elements::GROUND) ||
                                    (engieEl[0] == Elements::GROUND && engieEl[1] == Elements::WATER)) |
                             'L' * ((engieEl[0] == Elements::FIRE && engieEl[1] == Elements::ELECTRIC) ||
@@ -196,16 +200,14 @@ void Game::spawnWildEngimon(unsigned count) {
                     engieChar == 'L') {
                     continue;
                 }
-
                 map[get<0>(pos)][get<1>(pos)] = engieChar;
-                freeSpaces.erase(it);
+                freeSpaces.erase(freeSpaces.begin() + randIdx);
                 break;
             } else {  // char-nya: '-'
                 if (engieChar == 'F' || engieChar == 'G' || engieChar == 'E' ||
                     engieChar == 'L') {
-
                     map[get<0>(pos)][get<1>(pos)] = engieChar;
-                    freeSpaces.erase(it);
+                    freeSpaces.erase(freeSpaces.begin() + randIdx);
                     break;
                 }
             }

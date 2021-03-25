@@ -16,6 +16,8 @@ public:
         OCCUPIED_L, // fire/electric
         OCCUPIED_S, // water/ice
         OCCUPIED_N, // ground/water
+        PLAYER,
+        ACTIVE_ENGI,
     };
 
     /**
