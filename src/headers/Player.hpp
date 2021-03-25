@@ -29,10 +29,10 @@ public:
     int getPositionX() const;
     int getPositionY() const;
     char getDir() const;
-    Engimon getEngimonFromString(string);
-    Item getItemFromString(string);
-    int getEngimonIdxFromString(string);
-    int getItemIdxFromString(string);
+    Engimon getEngimonFromName(string);
+    Item getItemFromName(string);
+    int getEngimonIdxFromName(string);
+    int getItemIdxFromName(string);
 
     // setters
     void setName(string);
