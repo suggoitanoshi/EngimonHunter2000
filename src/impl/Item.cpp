@@ -11,6 +11,7 @@
 #include <string>
 #include <vector>
 
+#include "../headers/Dex.hpp"
 #include "../headers/Elements.hpp"
 #include "../headers/Engimon.hpp"
 #include "../headers/Skill.hpp"
@@ -73,9 +74,8 @@ unsigned Item::getQuantity() const { return quantity; }
 
 void Item::setQuantity(unsigned _quantity) { quantity = _quantity; }
 
-void Item::learn(Engimon e) {
+void Item::learn(Engimon e, const Dex& dex) {
     bool compatible = false;
-    // vector<Elements> engiElements = e.getElements();
 
     // Mengecek mastery level item
     if (masteryLevel != 1) {
@@ -83,10 +83,9 @@ void Item::learn(Engimon e) {
     }
 
     // Mengecek kecocokan skill item dengan engimon
-    /*
     for (int i = 0; i < (int)e.getElementCount(); i++) {
-        for (int j = 0; j < (int)elements.size(); j++) {
-            if (engiElements[i].getName == elements[j]) {
+        for (int j = 0; j < (int)e.getElements().size(); j++) {
+            if (e.getElements()[i] == elements[j]) {
                 compatible = true;
                 break;
             }
@@ -96,32 +95,31 @@ void Item::learn(Engimon e) {
     if (!compatible) {
         throw ItemException(1);
     }
-    */
 
     // Mengecek apakah skill sudah dipelajari atau belum
-    /*
-    for (int i = 0; i < (int)e.getSkillsCount(); i++) {
-        if (e.getSkills(i) == name) {
+    for (int i = 0; i < e.getSkillsCount(); i++) {
+        if (e.getSkills(i).getName() == name) {
             throw ItemException(2);
         }
     }
-    */
 
     // Mengecek jumlah skills yang telah dilajari
-    /*
-    if (e.getSkillsCount() = MAX_SKILLS) {
-        string old;
-        for (int i = 0; (int)MAX_SKILLS; i++) {
-            cout << i+1 << ". "<< e.getSkills(i) << endl;
+    if (e.getSkillsCount() == (int)e.maxSkills) {
+        int old;
+        for (int i = 0; (int)e.maxSkills; i++) {
+            cout << i + 1 << ". " << e.getSkills(i).getName() << endl;
         }
-        cout << "Pilih nama skill untuk diganti dengan skill baru: ";
+        cout << "Pilih nomor skill untuk diganti dengan skill baru: ";
         cin >> old;
 
-        e.setSkills(old, name);
+        if (old > (int)e.maxSkills || old < 1) {
+            throw ItemException(3);
+        }
+
+        // e.setSkills(old + 1, e.getSkillByIndex(i));
     } else {
-        e.setSkills(name);
+        e.setSkills(e.getSkillsCount(), dex.getSkill(name));
     }
-    */
     quantity--;
 }
 

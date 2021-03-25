@@ -67,9 +67,9 @@ void Player::showEngimon(string engiName) {
 void Player::showEngimon() const { listEngimon.showInventory(); }
 void Player::showItem() const { listItem.showInventory(); }
 
-void Player::useItem(string engiName, string _item) {
+void Player::useItem(string engiName, string _item, const Dex& dex) {
     int idxItem = getItemIdxFromName(_item);
-    listItem[idxItem].learn(getEngimonFromName(engiName));
+    listItem[idxItem].learn(getEngimonFromName(engiName), dex);
     listItem.removeItem(getItemFromName(_item));
 }
 

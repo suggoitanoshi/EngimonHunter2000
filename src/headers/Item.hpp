@@ -11,6 +11,7 @@
 #include <string>
 #include <vector>
 
+#include "Dex.hpp"
 #include "Elements.hpp"
 #include "Engimon.hpp"
 #include "Skill.hpp"
@@ -45,7 +46,7 @@ public:
     void setQuantity(unsigned);
 
     // methods
-    void learn(Engimon);
+    void learn(Engimon, const Dex&);
 };
 
 class ItemException : exception {

@@ -48,7 +48,7 @@ public:
     void showEngimon(string);
     void showEngimon() const;
     void showItem() const;
-    void useItem(string, string);
+    void useItem(string, string, const Dex&);
     void interact();
 };
 
