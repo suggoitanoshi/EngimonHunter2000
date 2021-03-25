@@ -131,22 +131,24 @@ Engimon Game::makeRandomEngimon() const {
                         // random 1 sampe 20
 
     // dapetin 4 move acak
-    for (size_t i = 0; i < min(dex.getEngiDex().size(), (size_t)4); ++i) {
+    for (size_t i = 0; i < min(dex.getEngiDex().size(), (size_t)4);) {
         idx = rand() % dex.getEngiDex().size();
         for (pair<string, Skill> a : dex.getSkillDex()) {
             if (idx == 0) {
                 // belom cek tipe, do it later
                 // cek elemen
                 compat = 0;
-                for(Elements::el engieEl: engie.getElements()){
-                    for(Elements::el skillEl: a.second.getElements()){
-                        compat &= engieEl == skillEl;
-                        if(compat) break;
+                for (Elements::el engieEl : engie.getElements()) {
+                    for (Elements::el skillEl : a.second.getElements()) {
+                        compat |= engieEl == skillEl;
+                        if (compat) break;
                     }
-                    if(compat) break;
+                    if (compat) break;
                 }
-                if(compat)
+                if (compat){
                     engie.setSkills(i, a.second);
+                    ++i;
+                }
                 break;
             }
             idx--;
@@ -192,13 +194,19 @@ void Game::spawnWildEngimon(unsigned count) {
             char engieChar = 0;
 
             if (engieEl.size() == 2) {
-                engieChar = 'S' * ((engieEl[0] == Elements::ICE && engieEl[1] == Elements::WATER) ||
-                                   (engieEl[0] == Elements::WATER && engieEl[1] == Elements::ICE)) |
-                            'N' * ((engieEl[0] == Elements::WATER && engieEl[1] == Elements::GROUND) ||
-                                   (engieEl[0] == Elements::GROUND && engieEl[1] == Elements::WATER)) |
-                            'L' * ((engieEl[0] == Elements::FIRE && engieEl[1] == Elements::ELECTRIC) ||
-                                   (engieEl[0] == Elements::ELECTRIC && engieEl[1] == Elements::FIRE));
-            } else { // ukurannya 1
+                engieChar = 'S' * ((engieEl[0] == Elements::ICE &&
+                                    engieEl[1] == Elements::WATER) ||
+                                   (engieEl[0] == Elements::WATER &&
+                                    engieEl[1] == Elements::ICE)) |
+                            'N' * ((engieEl[0] == Elements::WATER &&
+                                    engieEl[1] == Elements::GROUND) ||
+                                   (engieEl[0] == Elements::GROUND &&
+                                    engieEl[1] == Elements::WATER)) |
+                            'L' * ((engieEl[0] == Elements::FIRE &&
+                                    engieEl[1] == Elements::ELECTRIC) ||
+                                   (engieEl[0] == Elements::ELECTRIC &&
+                                    engieEl[1] == Elements::FIRE));
+            } else {  // ukurannya 1
                 engieChar = 'F' * (engieEl[0] == Elements::FIRE) |
                             'I' * (engieEl[0] == Elements::ICE) |
                             'W' * (engieEl[0] == Elements::WATER) |
@@ -208,8 +216,8 @@ void Game::spawnWildEngimon(unsigned count) {
 
             // cek tipe tyle
             if (map[get<0>(pos)][get<1>(pos)].getType() == MapTile::WATER) {
-                if (!(engieChar == 'F' || engieChar == 'G' || engieChar == 'E' ||
-                    engieChar == 'L')) {
+                if (!(engieChar == 'F' || engieChar == 'G' ||
+                      engieChar == 'E' || engieChar == 'L')) {
                     map[get<0>(pos)][get<1>(pos)] = engieChar;
                     freeSpaces.erase(freeSpaces.begin() + randIdx);
                     isPlaced = true;
@@ -226,7 +234,7 @@ void Game::spawnWildEngimon(unsigned count) {
 
         if (!isPlaced) {
             // error
-            --i; // ga diitung langkah ini
+            --i;  // ga diitung langkah ini
         }
     }
 }
