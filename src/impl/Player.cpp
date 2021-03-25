@@ -65,15 +65,35 @@ void Player::showEngimon(string engiName) {
     showEngimon(getEngimonFromName(engiName));
 }
 void Player::showEngimon() const { listEngimon.showInventory(); }
+
+void Player::removeEngimon(Engimon engi) { listEngimon.removeItem(engi); }
+
+void Player::removeEngimon(string engi) {
+    Engimon temp = getEngimonFromName(engi);
+    removeEngimon(temp);
+}
+
 void Player::showItem() const { listItem.showInventory(); }
 
 void Player::useItem(string engiName, string _item, const Dex& dex) {
     int idxItem = getItemIdxFromName(_item);
     listItem[idxItem].learn(getEngimonFromName(engiName), dex);
-    listItem.removeItem(getItemFromName(_item));
+    if (listItem[idxItem].getQuantity() == 0) {
+        removeItem(listItem[idxItem]);
+    }
 }
 
-void Player::interact() {}
+void Player::removeItem(Item _item) { listItem.removeItem(_item); }
+
+void Player::removeItem(string _item) {
+    Item temp = getItemFromName(_item);
+    removeItem(temp);
+}
+
+void Player::interact() {
+    int idxEngi = listEngimon.getFirstItemIndex(activeEngi);
+    // cout << listEngimon[idxEngi].EngimonSpecies();
+}
 
 // exception
 PlayerException::PlayerException(int x) : msgID(x) {}

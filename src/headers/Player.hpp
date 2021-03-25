@@ -47,8 +47,12 @@ public:
     void showEngimon(Engimon);
     void showEngimon(string);
     void showEngimon() const;
+    void removeEngimon(Engimon);
+    void removeEngimon(string);
     void showItem() const;
     void useItem(string, string, const Dex&);
+    void removeItem(Item);
+    void removeItem(string);
     void interact();
 };
 
