@@ -11,18 +11,17 @@ using namespace std;
 
 class Battle {
 private:
-    string winner;
+    double advA;
+    double advB;
+    double pwrA;
+    double pwrB;
 
 public:
     Battle();
-    // Setter
-    void setEngimonA(Engimon other);
-    void setEngimonB(Engimon other);
-    void setEngimonWinner();
     // battle
     double getAdvantage(Elements::el A, Elements::el B);
-    void checkAdvantage();
-    void runBattle();
+    void checkAdvantage(Engimon A, Engimon B);
+    void runBattle(Engimon A, Engimon B);
 };
 
 #endif

@@ -46,7 +46,7 @@ void Game::readMap() {
     int i, j;
     ifstream f;
     string linemap;
-    f.open("data/map.txt");
+    f.open("../data/map.txt");
     if (f.is_open()) {
         j = 0;
         while (getline(f, linemap)) {
@@ -108,14 +108,6 @@ void Game::printMap() {
          << endl;
 }
 
-// double Game :: checkAdvantage(Engimon A, Engimon B){
-
-// }
-
-// void Game :: battle(Engimon A, Engimon B){
-
-// }
-
 // void Game :: spawnWildEngimon(){
 
 // }
@@ -140,57 +132,90 @@ void Game::run() {
         if (input.length() != 1) {
             cout << "Masukan salah, silakan ulangi masukan" << endl;
         }
+        else{
+            if ((char)tolower(input[0]) == 'w') {
+                try {
+                    if (this->player.getPositionY() - 1 == 0) {
+                        throw(this->player.getPositionY());
+                    }
+                    this->player.setPositionY(this->player.getPositionY() - 1);
+                    this->player.setDir('w');
+                } catch (int num) {
+                    cout << "Kamu tidak bisa bergerak ke situ" << endl;
+                }
+            } else if ((char)tolower(input[0]) == 'a') {
+                try {
+                    if (this->player.getPositionX() - 1 == 0) {
+                        throw(this->player.getPositionX());
+                    }
+                    this->player.setPositionX(this->player.getPositionX() - 1);
+                    this->player.setDir('a');
+                } catch (int num) {
+                    cout << "Kamu tidak bisa bergerak ke situ" << endl;
+                }
+            } else if ((char)tolower(input[0]) == 's') {
+                try {
+                    if (this->player.getPositionY() + 1 == 14) {
+                        throw(this->player.getPositionY());
+                    }
+                    this->player.setPositionY(this->player.getPositionY() + 1);
+                    this->player.setDir('s');
+                } catch (int num) {
+                    cout << "Kamu tidak bisa bergerak ke situ" << endl;
+                }
+            } else if ((char)tolower(input[0]) == 'd') {
+                try {
+                    if (this->player.getPositionX() + 1 == 31) {
+                        throw(this->player.getPositionX());
+                    }
+                    this->player.setPositionX(this->player.getPositionX() + 1);
+                    this->player.setDir('d');
+                } catch (int num) {
+                    cout << "Kamu tidak bisa bergerak ke situ" << endl;
+                }
+            } else if ((char)tolower(input[0]) == 'x') {
+                this->isExitGame = true;
+            }
+            else if ((char)tolower(input[0]) == '1'){
 
-        if ((char)tolower(input[0]) == 'w') {
-            try {
-                if (this->player.getPositionY() - 1 == 0) {
-                    throw(this->player.getPositionY());
-                }
-                this->player.setPositionY(this->player.getPositionY() - 1);
-                this->player.setDir('w');
-            } catch (int num) {
-                cout << "Aduh nabrak xixixi" << endl;
             }
-        } else if ((char)tolower(input[0]) == 'a') {
-            try {
-                if (this->player.getPositionX() - 1 == 0) {
-                    throw(this->player.getPositionX());
-                }
-                this->player.setPositionX(this->player.getPositionX() - 1);
-                this->player.setDir('a');
-            } catch (int num) {
-                cout << "Aduh nabrak xixixi" << endl;
+            else if ((char)tolower(input[0]) == '2'){
+                
             }
-        } else if ((char)tolower(input[0]) == 's') {
-            try {
-                if (this->player.getPositionY() + 1 == 14) {
-                    throw(this->player.getPositionY());
-                }
-                this->player.setPositionY(this->player.getPositionY() + 1);
-                this->player.setDir('s');
-            } catch (int num) {
-                cout << "Aduh nabrak xixixi" << endl;
+            else if ((char)tolower(input[0]) == '3'){
+                
             }
-        } else if ((char)tolower(input[0]) == 'd') {
-            try {
-                if (this->player.getPositionX() + 1 == 31) {
-                    throw(this->player.getPositionX());
-                }
-                this->player.setPositionX(this->player.getPositionX() + 1);
-                this->player.setDir('d');
-            } catch (int num) {
-                cout << "Aduh nabrak xixixi" << endl;
+            else if ((char)tolower(input[0]) == '4'){
+                
             }
-        } else if ((char)tolower(input[0]) == 'x') {
-            this->isExitGame = true;
-        } else {
-            cout << "Masukan salah, silakan ulangi masukan" << endl;
+            else if ((char)tolower(input[0]) == '5'){
+                
+            }
+            else if ((char)tolower(input[0]) == '6'){
+                
+            }
+            else if ((char)tolower(input[0]) == '7'){
+                
+            }
+            else{
+                cout << "Masukan salah, silakan ulangi masukan"<<endl;
+            }
         }
-        cout << "\n============================================================"
-                "\n"
-             << endl;
-    } while (!this->isExitGame);
-    cout << "makasih dah main kk" << endl;
+        cout << "\n============================================================\n" << endl;
+    } while (this->isExitGame == false);
+
+    cout << "Terima kasih sudah bermain di Engimon Factory!" << endl << endl;
+    cout << "                 C R E D I T S                "<<endl;
+    cout << "=============================================="<<endl;
+    cout << "|              y e e wangy wangy             |"<<endl;
+    cout << "=============================================="<<endl;
+    cout << "|       13519116 Jeane Mikha Erwansyah       |"<<endl;
+    cout << "|          13519118 Cynthia Rusadi           |"<<endl;
+    cout << "|       13519124 Fransiskus Febryan S.       |"<<endl;
+    cout << "|            13519131 Hera Shafira           |"<<endl;
+    cout << "|             13519163 Alvin Wilta           |"<<endl;
+    cout << "|           13519164 Josep Marcello          |"<<endl;
+    cout << "=============================================="<<endl;
 }
 
 Engimon& Game::kawin(Engimon& bapak, Engimon& emak) {
