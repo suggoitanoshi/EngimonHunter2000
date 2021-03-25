@@ -77,6 +77,16 @@ TEST(Skill, OperatorAssign) {
     EXPECT_EQ(s1.getElements()[1], s2.getElements()[1]);
 }
 
+TEST(Skill, OperatorEqual) {
+    std::vector<Elements::el> vec;
+    vec.push_back(Elements::FIRE);
+    vec.push_back(Elements::ELECTRIC);
+
+    Skill s1("test 1", 100, 0, vec);
+    Skill s2(s1);
+    EXPECT_EQ(s1 == s2, true);
+}
+
 // nguji setter Skill
 TEST(Skill, Setter) {
     Skill s1("test 1", 100, 0, Elements::ELECTRIC);

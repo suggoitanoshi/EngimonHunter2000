@@ -37,7 +37,7 @@ public:
 
     // operator
     Item& operator=(const Item&);
-    bool operator==(const Item&);
+    bool operator==(const Item&) const;
     friend ostream& operator<<(ostream& os, const Item& src);
 
     // getters

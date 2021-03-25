@@ -37,7 +37,7 @@ public:
     Skill& operator=(const Skill&);
 
     // operators
-    bool operator==(const Skill&);
+    bool operator==(const Skill&) const;
 
     // getters
     string getName() const;

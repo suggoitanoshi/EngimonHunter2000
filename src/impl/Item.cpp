@@ -50,7 +50,7 @@ Item& Item::operator=(const Item& src) {
     return *this;
 }
 
-bool Item::operator==(const Item& sblh) {
+bool Item::operator==(const Item& sblh) const {
     return name == sblh.name && basePower == sblh.basePower &&
            masteryLevel == sblh.masteryLevel && elements == sblh.elements &&
            quantity == sblh.quantity;

@@ -50,7 +50,7 @@ Skill& Skill::operator=(const Skill& src) {
     return *this;
 }
 
-bool Skill::operator==(const Skill& sblh) {
+bool Skill::operator==(const Skill& sblh) const {
     return name == sblh.name && basePower == sblh.basePower &&
            masteryLevel == sblh.masteryLevel && elements == sblh.elements;
 }

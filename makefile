@@ -11,7 +11,7 @@ CXX_FLAGS = -std=c++14\
 			-Wshadow
 else
 CXX_FLAGS = -std=c++14\
-			-Os\
+			-O0\
 			-Wall\
 			-Wextra\
 			-Wshadow\

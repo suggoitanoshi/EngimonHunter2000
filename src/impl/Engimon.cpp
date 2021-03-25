@@ -78,7 +78,9 @@ vector<Skill> Engimon::getSkills() { return skills; }
 Skill Engimon::getSkillByIndex(int index) { return skills[index]; }
 int Engimon::getSkillsCount() { return skills.size(); }
 
-void Engimon::setSkills(int index, Skill oskill) { skills.insert(skills.begin()+index, oskill); }
+void Engimon::setSkills(int index, Skill oskill) {
+    skills.insert(skills.begin() + index, oskill);
+}
 void Engimon::setPos(int x, int y) {
     get<0>(location) = x;
     get<0>(location) = y;
@@ -121,11 +123,9 @@ void Engimon::getEngiInfo() {
     }
 }
 
-bool Engimon::operator==(const Engimon& Eng) {
+bool Engimon::operator==(const Engimon& Eng) const {
     return (name == Eng.name && species == Eng.species);
 }
-
-bool Engimon::operator==(const string& oname) { return (name == oname); }
 
 Engimon& Engimon::operator=(const Engimon& Eng) {
     if (this != &Eng) {
