@@ -46,6 +46,7 @@ public:
     tuple<int, int> getPosition();
     vector<Skill> getSkills();
     Skill getSkillByIndex(int index);
+    int getSkillsCount();
 
     // setter
     void setPos(int x, int y);

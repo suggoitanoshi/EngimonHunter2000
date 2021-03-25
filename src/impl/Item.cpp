@@ -98,7 +98,7 @@ void Item::learn(Engimon e, const Dex& dex) {
 
     // Mengecek apakah skill sudah dipelajari atau belum
     for (int i = 0; i < e.getSkillsCount(); i++) {
-        if (e.getSkills(i).getName() == name) {
+        if (e.getSkillByIndex(i).getName() == name) {
             throw ItemException(2);
         }
     }
@@ -107,7 +107,7 @@ void Item::learn(Engimon e, const Dex& dex) {
     if (e.getSkillsCount() == (int)e.maxSkills) {
         int old;
         for (int i = 0; (int)e.maxSkills; i++) {
-            cout << i + 1 << ". " << e.getSkills(i).getName() << endl;
+            cout << i + 1 << ". " << e.getSkillByIndex(i).getName() << endl;
         }
         cout << "Pilih nomor skill untuk diganti dengan skill baru: ";
         cin >> old;

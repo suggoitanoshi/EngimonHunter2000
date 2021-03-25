@@ -76,6 +76,7 @@ unsigned Engimon::getElementCount() { return element.size(); }
 tuple<int, int> Engimon::getPosition() { return location; }
 vector<Skill> Engimon::getSkills() { return skills; }
 Skill Engimon::getSkillByIndex(int index) { return skills[index]; }
+int Engimon::getSkillsCount() { return skills.size(); }
 
 void Engimon::setSkills(int index, Skill oskill) { skills[index] = oskill; }
 void Engimon::setPos(int x, int y) {
