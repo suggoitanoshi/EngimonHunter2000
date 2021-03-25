@@ -70,7 +70,7 @@ public:
     /**
      * operator indexing
      */
-    T operator[](int i) {
+    T& operator[](int i) {
         try {
             return this->cont.at(i);
         } catch (const out_of_range& e) {

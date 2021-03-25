@@ -14,7 +14,7 @@ tuple<int, int> Player::getPosition() const { return position; }
 int Player::getPositionX() const { return get<0>(position); }
 int Player::getPositionY() const { return get<1>(position); }
 char Player::getDir() const { return dir; }
-Engimon Player::getEngimonFromName(string engiName) {
+Engimon& Player::getEngimonFromName(string engiName) {
     if (listEngimon.getItemCount() == 0) throw InventoryException(1);
     for (int i = 0; i < listEngimon.getItemCount(); i++) {
         if (engiName.compare(listEngimon[i].getName()) == 0) {
@@ -24,7 +24,7 @@ Engimon Player::getEngimonFromName(string engiName) {
     throw PlayerException(0);
 }
 
-Item Player::getItemFromName(string _itemName) {
+Item& Player::getItemFromName(string _itemName) {
     if (listItem.getItemCount() == 0) throw InventoryException(1);
     for (int i = 0; i < listItem.getItemCount(); i++) {
         if (_itemName.compare(listItem[i].getName()) == 0) {

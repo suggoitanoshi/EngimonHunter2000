@@ -47,7 +47,7 @@ public:
     void setQuantity(unsigned);
 
     // methods
-    void learn(Engimon, const Dex&);
+    void learn(Engimon&, const Dex&);
 };
 
 class ItemException : exception {

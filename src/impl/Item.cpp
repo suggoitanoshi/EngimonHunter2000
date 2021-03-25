@@ -79,7 +79,7 @@ unsigned Item::getQuantity() const { return quantity; }
 
 void Item::setQuantity(unsigned _quantity) { quantity = _quantity; }
 
-void Item::learn(Engimon e, const Dex& dex) {
+void Item::learn(Engimon& e, const Dex& dex) {
     bool compatible = false;
 
     // Mengecek mastery level item
