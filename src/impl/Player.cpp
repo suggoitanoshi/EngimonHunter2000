@@ -66,6 +66,13 @@ void Player::showEngimon(string engiName) {
 }
 void Player::showEngimon() const { listEngimon.showInventory(); }
 
+void Player::addEngimon(Engimon engi) { listEngimon.addItem(engi); }
+
+void Player::addEngimon(string engi) {
+    Engimon temp = getEngimonFromName(engi);
+    addEngimon(temp);
+}
+
 void Player::removeEngimon(Engimon engi) { listEngimon.removeItem(engi); }
 
 void Player::removeEngimon(string engi) {
@@ -81,6 +88,13 @@ void Player::useItem(string engiName, string _item, const Dex& dex) {
     if (listItem[idxItem].getQuantity() == 0) {
         removeItem(listItem[idxItem]);
     }
+}
+
+void Player::addItem(Item _item) { listItem.addItem(_item); }
+
+void Player::addItem(string _item) {
+    Item temp = getItemFromName(_item);
+    addItem(temp);
 }
 
 void Player::removeItem(Item _item) { listItem.removeItem(_item); }
