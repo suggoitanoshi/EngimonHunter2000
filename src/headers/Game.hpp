@@ -18,8 +18,8 @@ using namespace std;
 class Game {
 private:
     static const unsigned wildEngimonCount = 10;
-    //MapTile map[32][16];
-    char map[32][16];
+    MapTile map[32][16];
+    //char map[32][16];
     bool isExitGame;
     Player player;
     Dex dex;

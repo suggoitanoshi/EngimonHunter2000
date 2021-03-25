@@ -48,30 +48,21 @@ void Game::printGameIntro() {
 }
 
 void Game::readMap() {
-    int i, j;
+    int x, y;
     ifstream f;
     string linemap;
     f.open("data/map.txt");
     if (f.is_open()) {
-        j = 0;
+        y = 0;
         while (getline(f, linemap)) {
-            i = 0;
+            x = 0;
             for (char& c : linemap) {
                 if (c != '\0' && c != '\n' && c != '\r') {
-                    map[i][j] = c;
-                    i++;
-                    //map[i][j].setTileChar(c);
-                    //if (c == '-') {
-                        //map[i][j].setType(MapTile::GRASSLAND);
-                    //} else if (c == '*') {
-                        //map[i][j].setType(MapTile::EDGE);
-                    //} else { // c == 'o'
-                        //map[i][j].setType(MapTile::WATER);
-                    //}
-                    //map[i][j].makeUnOccupied();
+                    map[x][y] = c;
+                    x++;
                 }
             }
-            j++;
+            y++;
         }
     }
 }
@@ -157,7 +148,7 @@ vector<tuple<int, int>> Game::getEmptyMapTile() {
 
     for (int y = 0; y < 16; ++y) {
         for (int x = 0; x < 32; ++x) {
-            char tmp = map[x][y];
+            char tmp = map[x][y].getTileChar();
             if (tmp == 'o' || tmp == '-') {
                 ret.push_back(make_tuple(x,y));
             }
@@ -183,20 +174,20 @@ void Game::spawnWildEngimon(unsigned count) {
 
             if (engieEl.size() == 2) {
                 engieChar = 'S' * ((engieEl[0] == Elements::ICE && engieEl[1] == Elements::WATER) ||
-                               (engieEl[0] == Elements::WATER && engieEl[1] == Elements::ICE)) +
+                               (engieEl[0] == Elements::WATER && engieEl[1] == Elements::ICE)) |
                             'N' * ((engieEl[0] == Elements::WATER && engieEl[1] == Elements::GROUND) ||
-                                   (engieEl[0] == Elements::GROUND && engieEl[1] == Elements::WATER)) +
+                                   (engieEl[0] == Elements::GROUND && engieEl[1] == Elements::WATER)) |
                             'L' * ((engieEl[0] == Elements::FIRE && engieEl[1] == Elements::ELECTRIC) ||
                                    (engieEl[0] == Elements::ELECTRIC && engieEl[1] == Elements::FIRE));
             } else { // ukurannya 1
-                engieChar = 'F' * (engieEl[0] == Elements::FIRE) +
-                            'I' * (engieEl[0] == Elements::ICE) +
-                            'W' * (engieEl[0] == Elements::WATER) +
-                            'G' * (engieEl[0] == Elements::GROUND) +
+                engieChar = 'F' * (engieEl[0] == Elements::FIRE) |
+                            'I' * (engieEl[0] == Elements::ICE) |
+                            'W' * (engieEl[0] == Elements::WATER) |
+                            'G' * (engieEl[0] == Elements::GROUND) |
                             'E' * (engieEl[0] == Elements::ELECTRIC);
             }
 
-            if (map[get<0>(pos)][get<1>(pos)] == 'o') {
+            if (map[get<0>(pos)][get<1>(pos)].getTileChar() == 'o') {
                 if (engieChar == 'F' || engieChar == 'G' || engieChar == 'E' ||
                     engieChar == 'L') {
                     continue;
@@ -208,6 +199,7 @@ void Game::spawnWildEngimon(unsigned count) {
             } else { // char-nya: '-'
                 if (engieChar == 'F' || engieChar == 'G' || engieChar == 'E' ||
                     engieChar == 'L') {
+
                     map[get<0>(pos)][get<1>(pos)] = engieChar;
                     freeSpaces.erase(it);
                     break;
