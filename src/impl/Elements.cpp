@@ -43,7 +43,7 @@ string Elements::getName(const Elements::el e) {
     return ret;
 }
 
-double Elements::getElementalAdvantage(const el A, const el B){
+double Elements::getElementalAdvantage(const el A, const el B) {
     if (A == Elements::FIRE) {
         if (B == Elements::FIRE) {
             return 1;
@@ -106,8 +106,6 @@ double Elements::getElementalAdvantage(const el A, const el B){
         }
     }
 }
-
-
 
 ElementsException::ElementsException(int id) : msgID(id) {}
 const char* ElementsException::what() { return msg[msgID].c_str(); }
