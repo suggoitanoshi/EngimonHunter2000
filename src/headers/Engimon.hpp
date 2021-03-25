@@ -44,8 +44,8 @@ public:
     int getLvl();
     unsigned getElementCount();
     tuple<int, int> getPosition();
-    Skill getSkills(int index);
-    int getSkillsCount();
+    vector<Skill> getSkills();
+    Skill getSkillByIndex(int index);
 
     // setter
     void setPos(int x, int y);

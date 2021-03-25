@@ -74,10 +74,10 @@ string Engimon::getName() { return name; }
 int Engimon::getLvl() { return lvl; }
 unsigned Engimon::getElementCount() { return element.size(); }
 tuple<int, int> Engimon::getPosition() { return location; }
-Skill Engimon::getSkills(int index) { return skills[index]; }
-int Engimon::getSkillsCount() { return skills.size(); }
-void Engimon::setSkills(int index, Skill oskill) { skills[index] = oskill; }
+vector<Skill> Engimon::getSkills() { return skills; }
+Skill Engimon::getSkillByIndex(int index) { return skills[index]; }
 
+void Engimon::setSkills(int index, Skill oskill) { skills[index] = oskill; }
 void Engimon::setPos(int x, int y) {
     get<0>(location) = x;
     get<0>(location) = y;
@@ -104,7 +104,7 @@ void Engimon::addExp(int oexp) {
 }
 unsigned Engimon::getBattlePower(int elmtAdv) {
     unsigned sum = 0;
-    for (int i = 0; i < getSkillsCount(); i++) {
+    for (size_t i = 0; i < getSkills().size(); i++) {
         sum += skills[i].getBasePower() * skills[i].getMasteryLevel();
     }
     return (lvl * elmtAdv);
@@ -113,7 +113,7 @@ void Engimon::getEngiInfo() {
     cout << name << endl;
     cout << get<0>(parents[0]) << get<1>(parents[0]) << endl;
     cout << get<0>(parents[1]) << get<1>(parents[1]) << endl;
-    for (int i = 0; i < getSkillsCount(); i++) {
+    for (size_t i = 0; i < getSkills().size(); i++) {
         cout << skills[i].getName() << endl;
         cout << skills[i].getBasePower() << endl;
         // cout << skill[i].getElements() << endl;

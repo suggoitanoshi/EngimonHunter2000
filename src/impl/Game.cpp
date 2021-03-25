@@ -209,15 +209,16 @@ Engimon& Game::kawin(Engimon& bapak, Engimon& emak) {
     indexSkillAnak = 0;
     skillBapakTerambil = 0;
     skillEmakTerambil = 0;
-    while (indexSkillAnak < 4 && (skillEmakTerambil < bapak.getSkillsCount() ||
-                                  skillEmakTerambil < emak.getSkillsCount())) {
-        skillSekarang = bapak.getSkills(0);
+    while (indexSkillAnak < 4 &&
+           (skillEmakTerambil < (int) bapak.getSkills().size() ||
+            skillEmakTerambil < (int) emak.getSkills().size())) {
+        skillSekarang = bapak.getSkills()[0];
         bapakTerambil = 1;
         emakTerambil = 0;
         for (indexSkillOrangtua = 1;
-             indexSkillOrangtua < bapak.getSkillsCount();
+             indexSkillOrangtua < (int) bapak.getSkills().size();
              indexSkillOrangtua++) {
-            skillSekarang = bapak.getSkills(indexSkillOrangtua);
+            skillSekarang = bapak.getSkills()[indexSkillOrangtua];
             pembanding = 0;
             pernahTerambil = 0;
             while (pembanding < indexSkillAnak && !pernahTerambil) {
@@ -230,9 +231,10 @@ Engimon& Game::kawin(Engimon& bapak, Engimon& emak) {
                 skillYangDiambil[indexSkillAnak] = skillSekarang;
             }
         }
-        for (indexSkillOrangtua = 0; indexSkillOrangtua < emak.getSkillsCount();
+        for (indexSkillOrangtua = 0;
+             indexSkillOrangtua < (int) emak.getSkills().size();
              indexSkillOrangtua++) {
-            skillSekarang = emak.getSkills(indexSkillOrangtua);
+            skillSekarang = emak.getSkills()[indexSkillOrangtua];
             pembanding = 0;
             pernahTerambil = 0;
             while (pembanding < indexSkillAnak && !pernahTerambil) {
