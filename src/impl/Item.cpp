@@ -89,7 +89,7 @@ void Item::learn(Engimon e, const Dex& dex) {
 
     // Mengecek kecocokan skill item dengan engimon
     for (int i = 0; i < (int)e.getElementCount(); i++) {
-        for (int j = 0; j < (int)e.getElements().size(); j++) {
+        for (int j = 0; j < (int)elements.size(); j++) {
             if (e.getElements()[i] == elements[j]) {
                 compatible = true;
                 break;
