@@ -60,6 +60,8 @@ public:
     bool operator==(const Engimon &Eng) const;
     Engimon &operator=(const Engimon &Eng);
     friend ostream &operator<<(ostream &os, const Engimon &src);
+    void showEngimon() const;
+    void interact() const;
 };
 
 #endif

@@ -143,18 +143,26 @@ Engimon& Engimon::operator=(const Engimon& Eng) {
 }
 
 ostream& operator<<(ostream& os, const Engimon& src) {
-    vector<Elements::el> els = src.element;
     os << "Name\t: " << src.name << "\n";
-    os << "Experience\t: " << src.exp << "\n";
-    os << "Cumulative Experience/Maximum\t: " << src.cexp << src.maxCumulExp
-       << "\n";
-    os << "Element(s)\t: ";
+    return os;
+}
+
+void Engimon::showEngimon() const {
+    vector<Elements::el> els = getElements();
+    cout << "Name\t: " << name << "\n";
+    cout << "Experience\t: " << exp << "\n";
+    cout << "Cumulative Experience/Maximum\t: " << exp << "/" << maxCumulExp << "\n";
+    cout << "Element(s)\t: ";
     for (size_t i = 0; i < els.size(); i++) {
-        os << Elements::getName(els[i]) << endl;
+        cout << Elements::getName(els[i]) << endl;
         if (i != els.size() - 1) {
-            os << ", ";
+            cout << ", ";
         }
     }
-    os << "\n";
-    return os;
+    cout << "\n";
+}
+
+void Engimon::interact() const {
+    cout << name << ": ";
+    cout << slogan << "\n";
 }

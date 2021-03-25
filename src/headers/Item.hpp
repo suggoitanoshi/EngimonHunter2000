@@ -48,6 +48,7 @@ public:
 
     // methods
     void learn(Engimon&, const Dex&);
+    void showItem() const;
 };
 
 class ItemException : exception {

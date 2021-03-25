@@ -10,9 +10,11 @@ Player::Player()
 
 string Player::getName() const { return name; }
 Engimon Player::getActiveEngimon() const { return activeEngi; }
+
 tuple<int, int> Player::getPosition() const { return position; }
 int Player::getPositionX() const { return get<0>(position); }
 int Player::getPositionY() const { return get<1>(position); }
+
 char Player::getDir() const { return dir; }
 Engimon& Player::getEngimonFromName(string engiName) {
     if (listEngimon.getItemCount() == 0) throw InventoryException(1);
@@ -45,42 +47,62 @@ int Player::getItemIdxFromName(string _itemName) {
 }
 
 void Player::setName(string _name) { name = _name; }
+
 void Player::setPosition(tuple<int, int> pos) { position = pos; }
 void Player::setPositionX(int x) { get<0>(position) = x; }
 void Player::setPositionY(int y) { get<1>(position) = y; }
+
 void Player::setDir(char _dir) { dir = _dir; }
 
 void Player::checkActiveEngimon() { showEngimon(activeEngi); }
 
 void Player::switchEngimon(string engiName) {
     int beforeEngi = listEngimon.getFirstItemIndex(activeEngi);
-    int afterEngi = getEngimonIdxFromName(engiName);
     listEngimon[beforeEngi].setPos(-1, -1);
-    // listEngimon[afterEngi].setPos(activeEngi.getPosition());
-    activeEngi = getEngimonFromName(engiName);
+
+    tuple<int, int> currPos = activeEngi.getPosition();
+    int afterEngi = getEngimonIdxFromName(engiName);
+    listEngimon[afterEngi].setPos(get<0>(currPos), get<1>(currPos));
+
+    activeEngi = listEngimon[afterEngi];
 }
 
-void Player::showEngimon(Engimon engi) { cout << engi; }
+void Player::showEngimon(Engimon engi) {
+    int idx = listEngimon.getFirstItemIndex(engi);
+    listEngimon[idx].showEngimon();
+}
 void Player::showEngimon(string engiName) {
     showEngimon(getEngimonFromName(engiName));
 }
-void Player::showEngimon() const { listEngimon.showInventory(); }
+void Player::showEngimon() const { 
+    cout << "Engimon di dalam Inventory: " << endl;
+    listEngimon.showInventory();
+}
 
 void Player::addEngimon(Engimon engi) { listEngimon.addItem(engi); }
-
 void Player::addEngimon(string engi) {
     Engimon temp = getEngimonFromName(engi);
     addEngimon(temp);
 }
 
 void Player::removeEngimon(Engimon engi) { listEngimon.removeItem(engi); }
-
 void Player::removeEngimon(string engi) {
     Engimon temp = getEngimonFromName(engi);
     removeEngimon(temp);
 }
 
-void Player::showItem() const { listItem.showInventory(); }
+void Player::showItem(Item _item) {
+    int idx = listItem.getFirstItemIndex(_item);
+    listItem[idx].showItem();
+}
+void Player::showItem(string _item) {
+    Item temp = getItemFromName(_item);
+    showItem(temp);
+}
+void Player::showItem() const { 
+    cout << "Skill Item di dalam Inventory: " << endl;
+    listItem.showInventory();
+}
 
 void Player::useItem(string engiName, string _item, const Dex& dex) {
     int idxItem = getItemIdxFromName(_item);
@@ -91,23 +113,18 @@ void Player::useItem(string engiName, string _item, const Dex& dex) {
 }
 
 void Player::addItem(Item _item) { listItem.addItem(_item); }
-
 void Player::addItem(string _item) {
     Item temp = getItemFromName(_item);
     addItem(temp);
 }
 
 void Player::removeItem(Item _item) { listItem.removeItem(_item); }
-
 void Player::removeItem(string _item) {
     Item temp = getItemFromName(_item);
     removeItem(temp);
 }
 
-void Player::interact() {
-    int idxEngi = listEngimon.getFirstItemIndex(activeEngi);
-    // cout << listEngimon[idxEngi].EngimonSpecies();
-}
+void Player::interact() const { activeEngi.interact(); }
 
 // exception
 PlayerException::PlayerException(int x) : msgID(x) {}

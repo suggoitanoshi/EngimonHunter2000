@@ -1,18 +1,22 @@
 #include "../headers/Game.hpp"
 
-#include <stdlib.h>
-
+#include <algorithm>
+#include <cstdlib>
+#include <ctime>
 #include <iostream>
-#include<algorithm>
+#include <tuple>
+#include <unordered_map>
+#include <utility>
 
+#include "../headers/Battle.hpp"
 #include "../headers/BreedingException.hpp"
 #include "../headers/Dex.hpp"
 #include "../headers/Player.hpp"
-#include "../headers/Battle.hpp"
 
 using namespace std;
 
 Game::Game() {
+    srand(time(0));
     this->isExitGame = false;
     player = Player();
     dex = Dex();
@@ -48,7 +52,7 @@ void Game::readMap() {
     int i, j;
     ifstream f;
     string linemap;
-    f.open("../data/map.txt");
+    f.open("data/map.txt");
     if (f.is_open()) {
         j = 0;
         while (getline(f, linemap)) {
@@ -57,6 +61,15 @@ void Game::readMap() {
                 if (c != '\0' && c != '\n' && c != '\r') {
                     map[i][j] = c;
                     i++;
+                    // map[i][j].setTileChar(c);
+                    // if (c == '-') {
+                    // map[i][j].setType(MapTile::GRASSLAND);
+                    //} else if (c == '*') {
+                    // map[i][j].setType(MapTile::EDGE);
+                    //} else { // c == 'o'
+                    // map[i][j].setType(MapTile::WATER);
+                    //}
+                    // map[i][j].makeUnOccupied();
                 }
             }
             j++;
@@ -110,21 +123,114 @@ void Game::printMap() {
          << endl;
 }
 
-// void Game :: spawnWildEngimon(){
+Engimon Game::makeRandomEngimon() const {
+    int idx = rand() % wildEngimonCount;
+    EngimonSpecies engieSpecies;
 
-// }
+    // dapetin spesies engimonnya
+    for (pair<string, EngimonSpecies> a : dex.getEngiDex()) {
+        if (idx == 0) engieSpecies = a.second;
+        idx--;
+    }
 
-// list<Engimon> Game :: getWildEngimon(){
-//     return this->wildEngimons;
-// }
+    Engimon engie(engieSpecies);
+    engie.addExp(((rand() % 20) + 1) *
+                 100);  // karena tiap level butuh 100 exp dan sementara dibikin
+                        // random 1 sampe 20
 
-// void Game :: addWildEngimon(Engimon X){
-//     this->wildEngimons.push_back(X);
-// }
+    // dapetin 4 move acak
+    for (size_t i = 0; i < min(dex.getEngiDex().size(), (size_t)4); ++i) {
+        idx = rand() % dex.getEngiDex().size();
+        for (pair<string, Skill> a : dex.getSkillDex()) {
+            if (idx == 0) {
+                // belom cek tipe, do it later
+                engie.setSkills(i, a.second);
+                break;
+            }
+            idx--;
+        }
+    }
+
+    return engie;
+}
+
+vector<tuple<int, int>> Game::getEmptyMapTile() {
+    vector<tuple<int, int>> ret;
+
+    for (int y = 0; y < 16; ++y) {
+        for (int x = 0; x < 32; ++x) {
+            char tmp = map[x][y];
+            if (tmp == 'o' || tmp == '-') {
+                ret.push_back(make_tuple(x, y));
+            }
+        }
+    }
+
+    return ret;
+}
+
+void Game::spawnWildEngimon(unsigned count) {
+    unordered_map<string, EngimonSpecies> engies = dex.getEngiDex();
+    vector<tuple<int, int>> freeSpaces = getEmptyMapTile();
+
+    count =
+        (count < getEmptyMapTile().size()) ? count : getEmptyMapTile().size();
+
+    for (size_t i = 0; i < count; ++i) {
+        Engimon engie = makeRandomEngimon();
+
+        for (vector<tuple<int, int>>::iterator it = freeSpaces.begin();
+             it != freeSpaces.end(); ++it) {
+            tuple<int, int> pos = *it;
+            vector<Elements::el> engieEl = engie.getElements();
+            char engieChar = 0;
+
+            if (engieEl.size() == 2) {
+                engieChar = 'S' * ((engieEl[0] == Elements::ICE &&
+                                    engieEl[1] == Elements::WATER) ||
+                                   (engieEl[0] == Elements::WATER &&
+                                    engieEl[1] == Elements::ICE)) +
+                            'N' * ((engieEl[0] == Elements::WATER &&
+                                    engieEl[1] == Elements::GROUND) ||
+                                   (engieEl[0] == Elements::GROUND &&
+                                    engieEl[1] == Elements::WATER)) +
+                            'L' * ((engieEl[0] == Elements::FIRE &&
+                                    engieEl[1] == Elements::ELECTRIC) ||
+                                   (engieEl[0] == Elements::ELECTRIC &&
+                                    engieEl[1] == Elements::FIRE));
+            } else {  // ukurannya 1
+                engieChar = 'F' * (engieEl[0] == Elements::FIRE) +
+                            'I' * (engieEl[0] == Elements::ICE) +
+                            'W' * (engieEl[0] == Elements::WATER) +
+                            'G' * (engieEl[0] == Elements::GROUND) +
+                            'E' * (engieEl[0] == Elements::ELECTRIC);
+            }
+
+            if (map[get<0>(pos)][get<1>(pos)] == 'o') {
+                if (engieChar == 'F' || engieChar == 'G' || engieChar == 'E' ||
+                    engieChar == 'L') {
+                    continue;
+                }
+
+                map[get<0>(pos)][get<1>(pos)] = engieChar;
+                freeSpaces.erase(it);
+                break;
+            } else {  // char-nya: '-'
+                if (engieChar == 'F' || engieChar == 'G' || engieChar == 'E' ||
+                    engieChar == 'L') {
+                    map[get<0>(pos)][get<1>(pos)] = engieChar;
+                    freeSpaces.erase(it);
+                    break;
+                }
+            }
+        }
+    }
+}
 
 void Game::run() {
     printGameIntro();
     this->readMap();
+    this->spawnWildEngimon(wildEngimonCount);
 
     do {
         string input;
@@ -133,8 +239,7 @@ void Game::run() {
         cin >> input;
         if (input.length() != 1) {
             cout << "Masukan salah, silakan ulangi masukan" << endl;
-        }
-        else{
+        } else {
             if ((char)tolower(input[0]) == 'w') {
                 try {
                     if (this->player.getPositionY() - 1 == 0) {
@@ -177,47 +282,34 @@ void Game::run() {
                 }
             } else if ((char)tolower(input[0]) == 'x') {
                 this->isExitGame = true;
-            }
-            else if ((char)tolower(input[0]) == '1'){
-
-            }
-            else if ((char)tolower(input[0]) == '2'){
-                
-            }
-            else if ((char)tolower(input[0]) == '3'){
-                
-            }
-            else if ((char)tolower(input[0]) == '4'){
-                
-            }
-            else if ((char)tolower(input[0]) == '5'){
-                
-            }
-            else if ((char)tolower(input[0]) == '6'){
-                
-            }
-            else if ((char)tolower(input[0]) == '7'){
-                
-            }
-            else{
-                cout << "Masukan salah, silakan ulangi masukan"<<endl;
+            } else if ((char)tolower(input[0]) == '1') {
+            } else if ((char)tolower(input[0]) == '2') {
+            } else if ((char)tolower(input[0]) == '3') {
+            } else if ((char)tolower(input[0]) == '4') {
+            } else if ((char)tolower(input[0]) == '5') {
+            } else if ((char)tolower(input[0]) == '6') {
+            } else if ((char)tolower(input[0]) == '7') {
+            } else {
+                cout << "Masukan salah, silakan ulangi masukan" << endl;
             }
         }
-        cout << "\n============================================================\n" << endl;
+        cout << "\n============================================================"
+                "\n"
+             << endl;
     } while (this->isExitGame == false);
 
     cout << "Terima kasih sudah bermain di Engimon Factory!" << endl << endl;
-    cout << "                 C R E D I T S                "<<endl;
-    cout << "=============================================="<<endl;
-    cout << "|              y e e wangy wangy             |"<<endl;
-    cout << "=============================================="<<endl;
-    cout << "|       13519116 Jeane Mikha Erwansyah       |"<<endl;
-    cout << "|          13519118 Cynthia Rusadi           |"<<endl;
-    cout << "|       13519124 Fransiskus Febryan S.       |"<<endl;
-    cout << "|            13519131 Hera Shafira           |"<<endl;
-    cout << "|             13519163 Alvin Wilta           |"<<endl;
-    cout << "|           13519164 Josep Marcello          |"<<endl;
-    cout << "=============================================="<<endl;
+    cout << "                 C R E D I T S                " << endl;
+    cout << "==============================================" << endl;
+    cout << "|              y e e wangy wangy             |" << endl;
+    cout << "==============================================" << endl;
+    cout << "|       13519116 Jeane Mikha Erwansyah       |" << endl;
+    cout << "|          13519118 Cynthia Rusadi           |" << endl;
+    cout << "|       13519124 Fransiskus Febryan S.       |" << endl;
+    cout << "|            13519131 Hera Shafira           |" << endl;
+    cout << "|             13519163 Alvin Wilta           |" << endl;
+    cout << "|           13519164 Josep Marcello          |" << endl;
+    cout << "==============================================" << endl;
 }
 
 Engimon& Game::kawin(Engimon& bapak, Engimon& emak) {
@@ -237,13 +329,13 @@ Engimon& Game::kawin(Engimon& bapak, Engimon& emak) {
     skillBapakTerambil = 0;
     skillEmakTerambil = 0;
     while (indexSkillAnak < 4 &&
-           (skillEmakTerambil < (int) bapak.getSkills().size() ||
-            skillEmakTerambil < (int) emak.getSkills().size())) {
+           (skillEmakTerambil < (int)bapak.getSkills().size() ||
+            skillEmakTerambil < (int)emak.getSkills().size())) {
         skillSekarang = bapak.getSkills()[0];
         bapakTerambil = 1;
         emakTerambil = 0;
         for (indexSkillOrangtua = 1;
-             indexSkillOrangtua < (int) bapak.getSkills().size();
+             indexSkillOrangtua < (int)bapak.getSkills().size();
              indexSkillOrangtua++) {
             skillSekarang = bapak.getSkills()[indexSkillOrangtua];
             pembanding = 0;
@@ -259,7 +351,7 @@ Engimon& Game::kawin(Engimon& bapak, Engimon& emak) {
             }
         }
         for (indexSkillOrangtua = 0;
-             indexSkillOrangtua < (int) emak.getSkills().size();
+             indexSkillOrangtua < (int)emak.getSkills().size();
              indexSkillOrangtua++) {
             skillSekarang = emak.getSkills()[indexSkillOrangtua];
             pembanding = 0;
@@ -315,19 +407,20 @@ Engimon& Game::kawin(Engimon& bapak, Engimon& emak) {
     } else {
         // Hitung Element Advantage
 
-        double advBapak = Elements::getElementalAdvantage(elementBapak, elementEmak);
-        double advEmak = Elements::getElementalAdvantage(elementEmak, elementBapak);
-        if(advBapak > advEmak){
+        double advBapak =
+            Elements::getElementalAdvantage(elementBapak, elementEmak);
+        double advEmak =
+            Elements::getElementalAdvantage(elementEmak, elementBapak);
+        if (advBapak > advEmak) {
             spesies = dex.getEngi(bapak.getSpecies());
-        }
-        else if(advEmak > advBapak){
+        } else if (advEmak > advBapak) {
             spesies = dex.getEngi(emak.getSpecies());
-        }
-        else{
-            for(pair<string, EngimonSpecies> esMap: dex.getEngiDex()){
+        } else {
+            for (pair<string, EngimonSpecies> esMap : dex.getEngiDex()) {
                 vector<Elements::el> el = esMap.second.getElements();
-                if(std::find(el.begin(), el.end(), elementBapak) != el.end()){
-                    if(std::find(el.begin(), el.end(), elementEmak) != el.end()){
+                if (std::find(el.begin(), el.end(), elementBapak) != el.end()) {
+                    if (std::find(el.begin(), el.end(), elementEmak) !=
+                        el.end()) {
                         spesies = esMap.second;
                         break;
                     }
