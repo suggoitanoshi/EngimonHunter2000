@@ -27,6 +27,7 @@ private:
     // Move player logi
     void movePlayerDelta(int dx, int dy);
     void engimonFollowPlayer(int x, int y);
+    void moveEngimonDelta(int dx, int dy, Engimon&);
 
     // spawn wild engimon
     /// dapetin list tempat kosong di map
@@ -37,6 +38,7 @@ private:
     /// hanya sebanyak n engimon yang ditaro lalu tambahin ke vector
     //  wildEngimons
     void spawnWildEngimon(unsigned);
+    void moveWildEngimons();
 
 public:
     Game();

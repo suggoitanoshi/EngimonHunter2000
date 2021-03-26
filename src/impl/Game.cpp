@@ -96,6 +96,46 @@ void Game::movePlayerDelta(int dx, int dy) {
     engimonFollowPlayer(oldx, oldy);
 }
 
+void Game::moveEngimonDelta(int dx, int dy, Engimon& engie) {
+    int newx, newy, oldx, oldy;
+    oldx = get<0>(engie.getPosition());
+    oldy = get<1>(engie.getPosition());
+    newx = oldx + dx;
+    newy = oldy + dy;
+    if (!map.isFree(newx, newy)) {
+        throw GameException(0);
+    }
+    MapTile::TileType curType = map.getTile(oldx, oldy).getType();
+    MapTile::TileType nextType = map.getTile(newx, newy).getType();
+
+    bool canMove;
+    switch (curType) {
+        case MapTile::OCCUPIED_E:
+        case MapTile::OCCUPIED_F:
+        case MapTile::OCCUPIED_G:
+        case MapTile::OCCUPIED_L:
+            // do smth
+            canMove = nextType == MapTile::GRASSLAND;
+            break;
+        case MapTile::OCCUPIED_W:
+        case MapTile::OCCUPIED_I:
+        case MapTile::OCCUPIED_S:
+            canMove = nextType == MapTile::WATER;
+            break;
+        default: // ground/water
+            canMove = curType == MapTile::OCCUPIED_N;
+    }
+
+    if (canMove) {
+        engie.setPos(newx, newy);
+        // ganti tipe tile
+        map.setTileToOriginal(oldx, oldy);
+        map.setTile(newx, newy, curType);
+    } else {
+        throw GameException(0);
+    }
+}
+
 Engimon Game::makeRandomEngimon() const {
     int idx = rand() % dex.getEngiDex().size();
     bool compat;
@@ -236,11 +276,38 @@ void Game::spawnWildEngimon(unsigned count) {
     }
 }
 
+void Game::moveWildEngimons() {
+    for (Engimon& engie : wildEngimons) {
+        int randIdx = rand() % 3;
+
+        if (rand() % 2) { // move x
+            int possibleDX[] = { -1, 0, 1 };
+            int dx = possibleDX[randIdx];
+            if (dx == 0) continue;
+            else moveEngimonDelta(dx, 0, engie);
+        } else { // move y
+            int possibleDY[] = { -1, 0, 1 };
+            int dy = possibleDY[randIdx];
+            if (dy == 0) continue;
+            else moveEngimonDelta(0, dy, engie);
+        }
+    }
+}
+
 void Game::run() {
     printGameIntro();
     this->spawnWildEngimon(wildEngimonCount);
+    int countTurn = 0;
 
     do {
+        if (countTurn % 3 == 0) {
+            try {
+                moveWildEngimons();
+            } catch (GameException&) {
+                // do nothing
+            }
+        }
+
         string input;
         map.printMap();
         printCommandHelp();
@@ -357,11 +424,12 @@ void Game::run() {
                         cout << "Masukan salah, ulangi masukan" << endl;
                         break;
                 }
+                countTurn++;
             } catch (GameException& e) {
                 cout << "Kamu tidak bisa bergerak ke situ" << endl;
             }
         }
-        cout << "\n============================================================"
+        cout << "============================================================"
                 "\n"
              << endl;
     } while (this->isExitGame == false);
