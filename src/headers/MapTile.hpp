@@ -42,12 +42,14 @@ public:
     void makeUnOccupied();
     void setType(TileType);
     void setTileChar(char);
+    void toOriginalType();
 
     friend ostream& operator<<(ostream& os, const MapTile& src);
 
 private:
-    bool occupied;  // always unoccupied on initialization
+    bool occupied;  // always unoccupied if type is WATER or GRASSLAND
     TileType type;
+    TileType originalType; // harusnya const
     char tileChar;
 
     void setTileChar();

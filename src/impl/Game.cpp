@@ -17,10 +17,10 @@ using namespace std;
 Game::Game() {
     srand(time(0));
     this->isExitGame = false;
+    player.setPosition(make_tuple(1, 1));
+    player.getActiveEngimon().setPos(2, 1);
     map.setTile(1, 1, MapTile::PLAYER);       // buat player
     map.setTile(2, 1, MapTile::ACTIVE_ENGI);  // buat active engimon
-    // player = Player();
-    // dex = Dex();
 }
 
 void Game::printGameIntro() {
@@ -64,15 +64,32 @@ void Game::printCommandHelp() {
          << endl;
 }
 
+void Game::engimonFollowPlayer(int x, int y) {
+    int oldx, oldy;
+    oldx = get<0>(player.getActiveEngimon().getPosition());
+    oldy = get<1>(player.getActiveEngimon().getPosition());
+    cout << oldx << '\t' << oldy << std::endl;
+    // x dan y baru pasti kosong karena tempat lama player
+    player.getActiveEngimon().setPos(x, y);
+    map.setTileToOriginal(oldx, oldy);
+    map.setTile(x, y, MapTile::ACTIVE_ENGI);
+}
+
 void Game::movePlayerDelta(int dx, int dy) {
-    int newx, newy;
-    newx = this->player.getPositionX() + dx;
-    newy = this->player.getPositionY() + dy;
-    if (newx < 1 || newx > 30 || newy < 1 || newy > 14) {
+    int newx, newy, oldx, oldy;
+    oldx = this->player.getPositionX();
+    oldy = this->player.getPositionY();
+    newx = oldx + dx;
+    newy = oldy + dy;
+    if (!map.isFree(newx, newy)) {
         throw GameException(0);
     }
     this->player.setPositionX(newx);
     this->player.setPositionY(newy);
+    // ganti tipe tile
+    map.setTileToOriginal(oldx, oldy);
+    map.setTile(newx, newy, MapTile::PLAYER);
+    engimonFollowPlayer(oldx, oldy);
 }
 
 Engimon Game::makeRandomEngimon() const {
@@ -126,7 +143,7 @@ vector<tuple<int, int>> Game::getEmptyMapTile() const {
     vector<tuple<int, int>> ret;
     for (int y = 0; y < 16; ++y) {
         for (int x = 0; x < 32; ++x) {
-            if (!map.getTile(x, y).isOccupied()) {
+            if (map.isFree(x, y)) {
                 ret.push_back(make_tuple(x, y));
             }
         }
@@ -158,24 +175,31 @@ void Game::spawnWildEngimon(unsigned count) {
 
             // cari tipenya
             if (engieEl.size() == 2) {
-                engieChar = 'S' * ((engieEl[0] == Elements::ICE &&
-                                    engieEl[1] == Elements::WATER) ||
-                                   (engieEl[0] == Elements::WATER &&
-                                    engieEl[1] == Elements::ICE)) |
-                            'N' * ((engieEl[0] == Elements::WATER &&
-                                    engieEl[1] == Elements::GROUND) ||
-                                   (engieEl[0] == Elements::GROUND &&
-                                    engieEl[1] == Elements::WATER)) |
-                            'L' * ((engieEl[0] == Elements::FIRE &&
-                                    engieEl[1] == Elements::ELECTRIC) ||
-                                   (engieEl[0] == Elements::ELECTRIC &&
-                                    engieEl[1] == Elements::FIRE));
+                if (((engieEl[0] == Elements::ICE &&
+                      engieEl[1] == Elements::WATER) ||
+                     (engieEl[0] == Elements::WATER &&
+                      engieEl[1] == Elements::ICE))) {
+                    engieChar = 'S';
+                } else if (((engieEl[0] == Elements::WATER &&
+                             engieEl[1] == Elements::GROUND) ||
+                            (engieEl[0] == Elements::GROUND &&
+                             engieEl[1] == Elements::WATER))) {
+                    engieChar = 'N';
+                } else {
+                    engieChar = 'L';
+                }
             } else {  // ukurannya 1
-                engieChar = 'F' * (engieEl[0] == Elements::FIRE) |
-                            'I' * (engieEl[0] == Elements::ICE) |
-                            'W' * (engieEl[0] == Elements::WATER) |
-                            'G' * (engieEl[0] == Elements::GROUND) |
-                            'E' * (engieEl[0] == Elements::ELECTRIC);
+                if (engieEl[0] == Elements::FIRE) {
+                    engieChar = 'F';
+                } else if (engieEl[0] == Elements::ICE) {
+                    engieChar = 'I';
+                } else if (engieEl[0] == Elements::WATER) {
+                    engieChar = 'W';
+                } else if (engieEl[0] == Elements::GROUND) {
+                    engieChar = 'G';
+                } else {
+                    engieChar = 'E';
+                }
             }
 
             // cek tipe tyle lalu ganti tipenya kalau cocok
@@ -210,7 +234,8 @@ void Game::run() {
 
     do {
         string input;
-        map.printMap(player);
+        map.printMap();
+        printCommandHelp();
         cout << "Masukkan input: ";
         cin >> input;
         if (input.length() != 1) {
@@ -243,24 +268,26 @@ void Game::run() {
                         break;
                     case '2':
                         // List engimon dex
+                        dex.showEngimons();
                         break;
                     case '3':
                         this->player.showEngimon();
                         cout << "Masukkan nama engimon: ";
                         cin >> input;
-                        try{
+                        try {
                             this->player.switchEngimon(input);
-                        }
-                        catch(InventoryException e){
+                        } catch (InventoryException& e) {
                             cout << e.what() << endl;
                         }
                         // Ganti active engi
                         break;
                     case '4':
                         // Lihat skill item dimiliki
+                        player.showItem();
                         break;
                     case '5':
                         // Pakai skill item
+                        player.showItem();
                         break;
                     case '6': {
                         // Breeding

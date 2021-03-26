@@ -1,33 +1,36 @@
 #include "../headers/MapTile.hpp"
 
 MapTile::MapTile() {
-    occupied = false;
+    occupied = true;
     type = EDGE;
+    originalType = EDGE;
     tileChar = '*';
 }
 
 MapTile::MapTile(TileType _type) {
-    occupied = false;
     type = _type;
     setTileChar();
+    originalType = type;
 }
 
 MapTile::MapTile(char _tileChar) {
-    occupied = false;
     tileChar = _tileChar;
     setType();
+    originalType = type;
 }
 
 MapTile::MapTile(const MapTile& src) {
     occupied = src.occupied;
     type = src.type;
     tileChar = src.tileChar;
+    originalType = src.originalType;
 }
 
 MapTile& MapTile::operator=(const MapTile& src) {
     occupied = src.occupied;
     type = src.type;
     tileChar = src.tileChar;
+    originalType = src.originalType;
 
     return *this;
 }
@@ -51,6 +54,11 @@ MapTile& MapTile::operator=(char _tileChar) {
     return *this;
 }
 
+void MapTile::toOriginalType() {
+    type = originalType;
+    setTileChar();
+}
+
 void MapTile::makeOccupied() {
     occupied = true;
 }
@@ -70,92 +78,114 @@ void MapTile::setTileChar(char _tileChar) {
 }
 
 void MapTile::setTileChar() {
-    if (type == GRASSLAND) {
-        tileChar = '-';
-        occupied = false;
-    } else if (type == WATER) {
-        tileChar = 'o';
-        occupied = false;
-    } else if (type == EDGE) {
-        tileChar = '*';
-        occupied = true;
-    } else if (type == OCCUPIED_W) {
-        tileChar = 'W';
-        occupied = true;
-    } else if (type == OCCUPIED_F) {
-        tileChar = 'F';
-        occupied = true;
-    } else if (type == OCCUPIED_G) {
-        tileChar = 'G';
-        occupied = true;
-    } else if (type == OCCUPIED_E) {
-        tileChar = 'E';
-        occupied = true;
-    } else if (type == OCCUPIED_I) {
-        tileChar = 'I';
-        occupied = true;
-    } else if (type == OCCUPIED_L) {
-        tileChar = 'L';
-        occupied = true;
-    } else if (type == OCCUPIED_S) {
-        tileChar = 'S';
-        occupied = true;
-    } else if (type == OCCUPIED_N) {
-        tileChar = 'N';
-        occupied = true;
-    } else if (type == ACTIVE_ENGI) {
-        tileChar = 'X';
-        occupied = true;
-    } else if (type == PLAYER) {
-        tileChar = 'P';
-        occupied = true;
-    } else {
-        // error
+    switch (type) {
+        case GRASSLAND:
+            tileChar = '-';
+            occupied = false;
+            break;
+        case WATER:
+            tileChar = 'o';
+            occupied = false;
+            break;
+        case EDGE:
+            tileChar = '*';
+            occupied = true;
+            break;
+        case OCCUPIED_W:
+            tileChar = 'W';
+            occupied = true;
+            break;
+        case OCCUPIED_F:
+            tileChar = 'F';
+            occupied = true;
+            break;
+        case OCCUPIED_G:
+            tileChar = 'G';
+            occupied = true;
+            break;
+        case OCCUPIED_E:
+            tileChar = 'E';
+            occupied = true;
+            break;
+        case OCCUPIED_I:
+            tileChar = 'I';
+            occupied = true;
+            break;
+        case OCCUPIED_L:
+            tileChar = 'L';
+            occupied = true;
+            break;
+        case OCCUPIED_S:
+            tileChar = 'S';
+            occupied = true;
+            break;
+        case OCCUPIED_N:
+            tileChar = 'N';
+            occupied = true;
+            break;
+        case PLAYER:
+            tileChar = 'P';
+            occupied = true;
+            break;
+        default: // ACTIVE_ENGI
+            tileChar = 'X';
+            occupied = true;
     }
 }
 
 void MapTile::setType() {
-    if (tileChar == 'o') {
-        type = WATER;
-        occupied = false;
-    } else if (tileChar == '-') {
-        type = GRASSLAND;
-        occupied = false;
-    } else if (tileChar == '*') {
-        type = EDGE;
-        occupied = true;
-    } else if (tileChar == 'W') {
-        type = OCCUPIED_W;
-        occupied = true;
-    } else if (tileChar == 'F') {
-        type = OCCUPIED_F;
-        occupied = true;
-    } else if (tileChar == 'G') {
-        type = OCCUPIED_G;
-        occupied = true;
-    } else if (tileChar == 'E') {
-        type = OCCUPIED_E;
-        occupied = true;
-    } else if (tileChar == 'I') {
-        type = OCCUPIED_I;
-        occupied = true;
-    } else if (tileChar == 'L') {
-        type = OCCUPIED_L;
-        occupied = true;
-    } else if (tileChar == 'S') {
-        type = OCCUPIED_S;
-        occupied = true;
-    } else if (tileChar == 'N') {
-        type = OCCUPIED_N;
-        occupied = true;
-    } else if (tileChar == 'X') {
-        type = ACTIVE_ENGI;
-        occupied = true;
-    } else if (tileChar == 'P') {
-        type = PLAYER;
-        occupied = true;
-    } else {
-        // error
+    switch (tileChar) {
+        case '-':
+            type = GRASSLAND;
+            occupied = false;
+            break;
+        case 'o':
+            type = WATER;
+            occupied = false;
+            break;
+        case '*':
+            type = EDGE;
+            occupied = true;
+            break;
+        case 'W':
+            type = OCCUPIED_W;
+            occupied = true;
+            break;
+        case 'F':
+            type = OCCUPIED_F;
+            occupied = true;
+            break;
+        case 'G':
+            type = OCCUPIED_G;
+            occupied = true;
+            break;
+        case 'E':
+            type = OCCUPIED_E;
+            occupied = true;
+            break;
+        case 'I':
+            type = OCCUPIED_I;
+            occupied = true;
+            break;
+        case 'L':
+            type = OCCUPIED_L;
+            occupied = true;
+            break;
+        case 'S':
+            type = OCCUPIED_S;
+            occupied = true;
+            break;
+        case 'N':
+            type = OCCUPIED_N;
+            occupied = true;
+            break;
+        case 'P':
+            type = PLAYER;
+            occupied = true;
+            break;
+        default: // ACTIVE_ENGI
+            type = ACTIVE_ENGI;
+            occupied = true;
     }
 }
 

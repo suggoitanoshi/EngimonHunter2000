@@ -2,14 +2,14 @@
 
 Player::Player()
     : name("yee"),
-      // engimon pertama akan dikonstruk di sini
-      listEngimon(),
-      listItem(),
       position(make_tuple(1, 1)),
-      dir('a') {}
+      // constructor objek lain udah immplied
+      dir('a') {
+    addEngimon(activeEngi);
+}
 
 string Player::getName() const { return name; }
-Engimon Player::getActiveEngimon() const { return activeEngi; }
+Engimon& Player::getActiveEngimon() { return activeEngi; }
 
 tuple<int, int> Player::getPosition() const { return position; }
 int Player::getPositionX() const { return get<0>(position); }
@@ -70,7 +70,7 @@ void Player::switchEngimon(string engiName) {
 void Player::showEngimon(string engiName) {
     getEngimonFromName(engiName).showEngimon();
 }
-void Player::showEngimon() const { 
+void Player::showEngimon() const {
     cout << "Engimon di dalam Inventory: " << endl;
     listEngimon.showInventory();
 }
@@ -91,7 +91,7 @@ void Player::showItem(string _item) {
     Item temp = getItemFromName(_item);
     temp.showItem();
 }
-void Player::showItem() const { 
+void Player::showItem() const {
     cout << "Skill Item di dalam Inventory: " << endl;
     listItem.showInventory();
 }

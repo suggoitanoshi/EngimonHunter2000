@@ -24,7 +24,7 @@ public:
 
     // getters
     string getName() const;
-    Engimon getActiveEngimon() const;
+    Engimon& getActiveEngimon();
     tuple<int, int> getPosition() const;
     int getPositionX() const;
     int getPositionY() const;

@@ -13,9 +13,11 @@ public:
     void setTile(unsigned x, unsigned y, MapTile::TileType);
     void setTile(unsigned x, unsigned y, char);
     void setTile(unsigned x, unsigned y, MapTile&);
+    void setTileToOriginal(unsigned x, unsigned y);
 
-    void printMap(const Player&) const;
+    void printMap() const;
     void legends() const;
+    bool isFree(const unsigned x, const unsigned y) const;
 
 private:
     MapTile tiles[mapX][mapY];

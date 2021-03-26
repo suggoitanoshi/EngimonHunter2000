@@ -24,7 +24,8 @@ private:
     void printCommandHelp();
 
     // Move player logi
-    void movePlayerDelta(int, int);
+    void movePlayerDelta(int dx, int dy);
+    void engimonFollowPlayer(int x, int y);
 
     // spawn wild engimon
     /// dapetin list tempat kosong di map

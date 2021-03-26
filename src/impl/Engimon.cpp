@@ -83,7 +83,7 @@ void Engimon::setSkills(int index, Skill oskill) {
 }
 void Engimon::setPos(int x, int y) {
     get<0>(location) = x;
-    get<0>(location) = y;
+    get<1>(location) = y;
 }
 void Engimon::setLevel(int level) {
     if (lvl - level < 0) {
