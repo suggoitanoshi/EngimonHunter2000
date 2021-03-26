@@ -2,10 +2,9 @@
 
 #include <algorithm>
 #include <cstdlib>
-#include <ctime>
+#include <fstream>
 #include <iostream>
 #include <tuple>
-#include <unordered_map>
 #include <utility>
 
 #include "../headers/Battle.hpp"
@@ -18,8 +17,10 @@ using namespace std;
 Game::Game() {
     srand(time(0));
     this->isExitGame = false;
-    player = Player();
-    dex = Dex();
+    map.setTile(1, 1, MapTile::PLAYER);       // buat player
+    map.setTile(2, 1, MapTile::ACTIVE_ENGI);  // buat active engimon
+    // player = Player();
+    // dex = Dex();
 }
 
 void Game::printGameIntro() {
@@ -48,61 +49,7 @@ void Game::printGameIntro() {
          << endl;
 }
 
-void Game::readMap() {
-    int x, y;
-    ifstream f;
-    string linemap;
-    f.open("data/map.txt");
-    if (f.is_open()) {
-        y = 0;
-        while (getline(f, linemap)) {
-            x = 0;
-            for (char& c : linemap) {
-                if (c != '\0' && c != '\n' && c != '\r') {
-                    map[x][y] = c;
-                    x++;
-                }
-            }
-            y++;
-        }
-    }
-}
-
-void Game::printMap() {
-    cout << "--------------------------P E T A--------------------------"
-         << endl;
-    for (int i = 0; i < 15; i++) {
-        for (int j = 0; j < 32; j++) {
-            if (j == this->player.getPositionX() &&
-                i == this->player.getPositionY()) {
-                cout << 'P';
-            } else if (j == this->player.getPositionX() + 1 &&
-                       i == this->player.getPositionY() &&
-                       this->player.getDir() == 'a') {
-                cout << 'X';
-            } else if (j == this->player.getPositionX() &&
-                       i == this->player.getPositionY() + 1 &&
-                       this->player.getDir() == 'w') {
-                cout << 'X';
-            } else if (j == this->player.getPositionX() - 1 &&
-                       i == this->player.getPositionY() &&
-                       this->player.getDir() == 'd') {
-                cout << 'X';
-            } else if (j == this->player.getPositionX() &&
-                       i == this->player.getPositionY() - 1 &&
-                       this->player.getDir() == 's') {
-                cout << 'X';
-            }
-
-            else {
-                cout << map[j][i];
-            }
-        }
-        cout << endl;
-    }
-}
-
-void Game::printCommandHelp(){
+void Game::printCommandHelp() {
     cout << "------------------------C O M M A N D-----------------------"
          << endl;
     cout << "     W:atas  A:kiri  S:bawah  D:kanan  X:Keluar game" << endl;
@@ -117,11 +64,11 @@ void Game::printCommandHelp(){
          << endl;
 }
 
-void Game::movePlayerDelta(int dx, int dy){
+void Game::movePlayerDelta(int dx, int dy) {
     int newx, newy;
-    newx = this->player.getPositionX()+dx;
-    newy = this->player.getPositionY()+dy;
-    if(newx < 1 || newx > 30 || newy < 1 || newy > 14){
+    newx = this->player.getPositionX() + dx;
+    newy = this->player.getPositionY() + dy;
+    if (newx < 1 || newx > 30 || newy < 1 || newy > 14) {
         throw GameException(0);
     }
     this->player.setPositionX(newx);
@@ -152,7 +99,7 @@ Engimon Game::makeRandomEngimon() const {
         for (Elements::el engieEl : engie.getElements()) {
             for (Elements::el skillEl : a.second.getElements()) {
                 compat |= engieEl == skillEl;
-                if (compat){
+                if (compat) {
                     filtered.emplace(a.first, a.second);
                     break;
                 }
@@ -175,12 +122,11 @@ Engimon Game::makeRandomEngimon() const {
     return engie;
 }
 
-vector<tuple<int, int>> Game::getEmptyMapTile() {
+vector<tuple<int, int>> Game::getEmptyMapTile() const {
     vector<tuple<int, int>> ret;
-
     for (int y = 0; y < 16; ++y) {
         for (int x = 0; x < 32; ++x) {
-            if (!map[x][y].isOccupied()) {
+            if (!map.getTile(x, y).isOccupied()) {
                 ret.push_back(make_tuple(x, y));
             }
         }
@@ -204,12 +150,13 @@ void Game::spawnWildEngimon(unsigned count) {
 
         // taruh engimon di map
         bool isPlaced = false;
-        for (unsigned j = 0; !isPlaced && j < (mapX * mapY); ++j) {
+        for (unsigned j = 0; !isPlaced && j < (Map::mapX * Map::mapY); ++j) {
             unsigned randIdx = rand() % freeSpaces.size();
             tuple<int, int> pos = freeSpaces[randIdx];
             vector<Elements::el> engieEl = engie.getElements();
             char engieChar = 0;
 
+            // cari tipenya
             if (engieEl.size() == 2) {
                 engieChar = 'S' * ((engieEl[0] == Elements::ICE &&
                                     engieEl[1] == Elements::WATER) ||
@@ -231,18 +178,19 @@ void Game::spawnWildEngimon(unsigned count) {
                             'E' * (engieEl[0] == Elements::ELECTRIC);
             }
 
-            // cek tipe tyle
-            if (map[get<0>(pos)][get<1>(pos)].getType() == MapTile::WATER) {
+            // cek tipe tyle lalu ganti tipenya kalau cocok
+            if (map.getTile(get<0>(pos), get<1>(pos)).getType() ==
+                MapTile::WATER) {
                 if (!(engieChar == 'F' || engieChar == 'G' ||
                       engieChar == 'E' || engieChar == 'L')) {
-                    map[get<0>(pos)][get<1>(pos)] = engieChar;
+                    map.setTile(get<0>(pos), get<1>(pos), engieChar);
                     freeSpaces.erase(freeSpaces.begin() + randIdx);
                     isPlaced = true;
                 }
             } else {  // char-nya: '-'
                 if (engieChar == 'F' || engieChar == 'G' || engieChar == 'E' ||
                     engieChar == 'L') {
-                    map[get<0>(pos)][get<1>(pos)] = engieChar;
+                    map.setTile(get<0>(pos), get<1>(pos), engieChar);
                     freeSpaces.erase(freeSpaces.begin() + randIdx);
                     isPlaced = true;
                 }
@@ -258,19 +206,18 @@ void Game::spawnWildEngimon(unsigned count) {
 
 void Game::run() {
     printGameIntro();
-    this->readMap();
     this->spawnWildEngimon(wildEngimonCount);
 
     do {
         string input;
-        this->printMap();
+        map.printMap(player);
         cout << "Masukkan input: ";
         cin >> input;
         if (input.length() != 1) {
             cout << "Masukan salah, silakan ulangi masukan" << endl;
         } else {
-            try{
-                switch(tolower(input[0])){
+            try {
+                switch (tolower(input[0])) {
                     case 'w':
                         this->player.setDir('w');
                         movePlayerDelta(0, -1);
@@ -315,12 +262,11 @@ void Game::run() {
                     case '5':
                         // Pakai skill item
                         break;
-                    case '6':
-                        {
+                    case '6': {
                         // Breeding
                         Engimon A, B, HasilKawin;
                         this->player.showEngimon();
-                        try{
+                        try {
                             cout << "Pilih engimon 1: ";
                             cin >> input;
                             A = player.getEngimonFromName(input);
@@ -329,15 +275,13 @@ void Game::run() {
                             B = player.getEngimonFromName(input);
                             HasilKawin = kawin(A, B);
                             this->player.addEngimon(HasilKawin);
-                        }
-                        catch(InventoryException &e){
+                        } catch (InventoryException& e) {
                             cout << e.what() << endl;
-                        }
-                        catch(BreedingException &e){
+                        } catch (BreedingException& e) {
                             cout << e.what() << endl;
                         }
                         break;
-                        }
+                    }
                     case '7':
                         // Battle
                         break;
@@ -345,8 +289,7 @@ void Game::run() {
                         cout << "Masukan salah, ulangi masukan" << endl;
                         break;
                 }
-            }
-            catch(GameException& e){
+            } catch (GameException& e) {
                 cout << "Kamu tidak bisa bergerak ke situ" << endl;
             }
         }
@@ -494,10 +437,7 @@ Engimon& Game::kawin(Engimon& bapak, Engimon& emak) {
     return *anjay;
 }
 
-const string GameException::msg[] = {
-    "Pergerakan tidak valid"};
+const string GameException::msg[] = {"Pergerakan tidak valid"};
 
 GameException::GameException(int id) : exceptionID(id) {}
-const char* GameException::what() {
-    return msg[this->exceptionID].c_str();
-}
+const char* GameException::what() { return msg[this->exceptionID].c_str(); }
