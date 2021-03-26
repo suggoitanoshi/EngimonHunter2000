@@ -59,7 +59,7 @@ bool Battle ::runBattle(Engimon& A, Engimon& B) {
     sleep(3);
 
     if (pwrA >= pwrB) {
-        cout << "-------------------S E L A M A T-----------------" << endl;
+        cout << "----------------------------S E L A M A T--------------------------" << endl;
         cout << "                                   .''.          " << endl;
         cout << "       .''.      .        *''*    :_\\/_:     .   " << endl;
         cout << "      :_\\/_:   _\\(/_  .:.*_\\/_*   : /\\ :  .'.:.'." << endl;
@@ -67,23 +67,23 @@ bool Battle ::runBattle(Engimon& A, Engimon& B) {
         cout << " :_\\/_:'.:::.    ' *''*    * '.\'/.'_\\(/_'.':'.' " << endl;
         cout << " : /\\ : :::::     *_\\/_*     -= o =- /)\\    '  * " << endl;
         cout << "  '..'  ':::'     * /\\ *     .'/.\'.  ' .        " << endl;
-        cout << "-------------------------------------------------" << endl;
+        cout << "-------------------------------------------------------------------" << endl;
         cout << A.getName() << " berhasil menang melawan " << B.getName()
              << endl;
         cout << "Sekarang " << B.getName() << " ada di inventory mu!" << endl;
     } else {
-        cout << "--------------------- R.I.P. ---------------------" << endl;
-        cout << "                             .                    " << endl;
-        cout << "                            -|-                   " << endl;
-        cout << "                             |                    " << endl;
-        cout << "                         .-'~~~`-.                " << endl;
-        cout << "                       .'         `.              " << endl;
-        cout << "                       |  R  I  P  |              " << endl;
-        cout << "                       |           |              " << endl;
-        cout << "                       |           |              " << endl;
-        cout << "                     \\|           |//            " << endl;
-        cout << "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^" << endl;
-        cout << "-------------------------------------------------" << endl;
+        cout << "------------------------------R.I.P. ------------------------------" << endl;
+        cout << "                                .                    " << endl;
+        cout << "                               -|-                   " << endl;
+        cout << "                                |                    " << endl;
+        cout << "                            .-'~~~`-.                " << endl;
+        cout << "                          .'         `.              " << endl;
+        cout << "                          |  R  I  P  |              " << endl;
+        cout << "                          |           |              " << endl;
+        cout << "                          |           |              " << endl;
+        cout << "                        \\\\|           |//            " << endl;
+        cout << "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^" << endl;
+        cout << "-------------------------------------------------------------------" << endl;
         cout << A.getName() << " kalah melawan " << B.getName() << endl;
         cout << "Sekarang " << A.getName() << " dihapus dari inventory mu"
              << endl;

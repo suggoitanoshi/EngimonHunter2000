@@ -519,7 +519,7 @@ void Game::run() {
                 cout << "Kamu tidak bisa bergerak ke situ" << endl;
             }
         }
-        cout << "============================================================"
+        cout << "==================================================================="
                 "\n"
              << endl;
     } while (this->isExitGame == false);
