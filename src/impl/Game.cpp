@@ -68,7 +68,6 @@ void Game::engimonFollowPlayer(int x, int y) {
     int oldx, oldy;
     oldx = get<0>(player.getActiveEngimon().getPosition());
     oldy = get<1>(player.getActiveEngimon().getPosition());
-    cout << oldx << '\t' << oldy << std::endl;
     // x dan y baru pasti kosong karena tempat lama player
     player.getActiveEngimon().setPos(x, y);
     map.setTileToOriginal(oldx, oldy);
@@ -208,6 +207,7 @@ void Game::spawnWildEngimon(unsigned count) {
                 if (!(engieChar == 'F' || engieChar == 'G' ||
                       engieChar == 'E' || engieChar == 'L')) {
                     map.setTile(get<0>(pos), get<1>(pos), engieChar);
+                    engie.setPos(get<0>(pos), get<1>(pos));
                     freeSpaces.erase(freeSpaces.begin() + randIdx);
                     isPlaced = true;
                 }
@@ -215,6 +215,7 @@ void Game::spawnWildEngimon(unsigned count) {
                 if (engieChar == 'F' || engieChar == 'G' || engieChar == 'E' ||
                     engieChar == 'L') {
                     map.setTile(get<0>(pos), get<1>(pos), engieChar);
+                    engie.setPos(get<0>(pos), get<1>(pos));
                     freeSpaces.erase(freeSpaces.begin() + randIdx);
                     isPlaced = true;
                 }
@@ -224,6 +225,8 @@ void Game::spawnWildEngimon(unsigned count) {
         if (!isPlaced) {
             // error
             --i;  // ga diitung langkah ini
+        } else {
+            wildEngimons.push_back(engie);
         }
     }
 }

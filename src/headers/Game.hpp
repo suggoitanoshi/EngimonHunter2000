@@ -34,7 +34,8 @@ private:
     /// bikin engimon random, belom dimasukin ke game
     Engimon makeRandomEngimon() const;
     /// taro n engimon-engimon liar di map, kalo tempat kosong < n maka
-    /// hanya sebanyak n engimon yang ditaro
+    /// hanya sebanyak n engimon yang ditaro lalu tambahin ke vector
+    //  wildEngimons
     void spawnWildEngimon(unsigned);
 
 public:

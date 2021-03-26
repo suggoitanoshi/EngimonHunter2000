@@ -149,18 +149,19 @@ ostream& operator<<(ostream& os, const Engimon& src) {
 
 void Engimon::showEngimon() const {
     vector<Elements::el> els = getElements();
-    cout << "Name\t: " << name << "\n";
-    cout << "Experience\t: " << exp << "\n";
+    cout << "Name\t\t\t\t: " << name << "\n";
+    cout << "Level\t\t\t\t: " << lvl << "\n";
+    cout << "Experience\t\t\t: " << exp << "\n";
     cout << "Cumulative Experience/Maximum\t: " << exp << "/" << maxCumulExp
          << "\n";
-    cout << "Element(s)\t: ";
+    cout << "Element(s)\t\t\t: ";
     for (size_t i = 0; i < els.size(); i++) {
-        cout << Elements::getName(els[i]) << endl;
+        cout << Elements::getName(els[i]);
         if (i != els.size() - 1) {
             cout << ", ";
         }
     }
-    cout << "\n";
+    cout << endl;
 }
 
 void Engimon::interact() const {
