@@ -21,6 +21,7 @@ Game::Game() {
     player.getActiveEngimon().setPos(2, 1);
     map.setTile(1, 1, MapTile::PLAYER);       // buat player
     map.setTile(2, 1, MapTile::ACTIVE_ENGI);  // buat active engimon
+    player.addItem(Item(dex.getSkill("Tackle"), 10));
 }
 
 void Game::printGameIntro() {
@@ -274,8 +275,7 @@ void Game::run() {
                         try {
                             this->player.showEngimon();
                             break;
-                        }
-                        catch (InventoryException& e) {
+                        } catch (InventoryException& e) {
                             cout << e.what() << endl;
                         }
                     case '2':
@@ -288,7 +288,7 @@ void Game::run() {
                         cout << "Masukkan nama engimon: ";
                         cin >> input;
                         try {
-                            this->player.switchEngimon(input);
+                            this->player.switchEngimon(atoi(input.c_str()) - 1);
                         } catch (InventoryException& e) {
                             cout << e.what() << endl;
                         }
@@ -298,10 +298,9 @@ void Game::run() {
                         try {
                             this->player.itemIsEmpty();
                             this->player.showItem();
-                        }
-                        catch (InventoryException& e) {
+                        } catch (InventoryException& e) {
                             cout << e.what() << endl;
-                        } 
+                        }
                         break;
                     case '5':
                         // Pakai skill item
@@ -312,12 +311,10 @@ void Game::run() {
                                 cout << "Pilih item skill: ";
                                 cin >> input;
                                 // this->player.useItem(input);
-                            }
-                            catch (ItemException& e) {
+                            } catch (ItemException& e) {
                                 cout << e.what() << endl;
                             }
-                        }
-                        catch (InventoryException& e) {
+                        } catch (InventoryException& e) {
                             cout << e.what() << endl;
                         }
                         break;
@@ -351,9 +348,8 @@ void Game::run() {
                             this->player.showEngimon();
                             cout << "Pilih engimon: ";
                             cin >> input;
-                            this->player.showEngimon(input);
-                        }
-                        catch (InventoryException& e) {
+                            this->player.showEngimon(atoi(input.c_str()) - 1);
+                        } catch (InventoryException& e) {
                             cout << e.what() << endl;
                         }
                         break;
