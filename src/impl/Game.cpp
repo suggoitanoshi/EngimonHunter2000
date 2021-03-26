@@ -16,11 +16,19 @@ using namespace std;
 
 Game::Game() {
     srand(time(0));
+
+    int pX = rand() % Map::mapX, pY = rand()  % Map::mapY;
+    pX = pX == 0 ? 1 : pX == Map::mapX - 1 ? Map::mapX - 2 : pX;
+    pY = pY == 0 ? 1 : pY == Map::mapY - 1 ? Map::mapY - 2 : pY;
+    int eX = pX == 1 ? 2 : pX - 1;
+    int eY = pY;
+
     this->isExitGame = false;
-    player.setPosition(make_tuple(1, 1));
-    player.getActiveEngimon().setPos(2, 1);
-    map.setTile(1, 1, MapTile::PLAYER);       // buat player
-    map.setTile(2, 1, MapTile::ACTIVE_ENGI);  // buat active engimon
+    player.setPosition(make_tuple(pX, pY));
+    player.getActiveEngimon().setPos(eX, eY);
+    map.setTile(pX, pY, MapTile::PLAYER);       // buat player
+    map.setTile(eX, eY, MapTile::ACTIVE_ENGI);  // buat active engimon
+
     player.addItem(Item(dex.getSkill("Tackle"), 10));
 }
 
@@ -122,7 +130,7 @@ void Game::moveEngimonDelta(int dx, int dy, Engimon& engie) {
         case MapTile::OCCUPIED_S:
             canMove = nextType == MapTile::WATER;
             break;
-        default: // ground/water
+        default:  // ground/water
             canMove = curType == MapTile::OCCUPIED_N;
     }
 
@@ -277,20 +285,16 @@ void Game::spawnWildEngimon(unsigned count) {
 }
 
 void Game::moveWildEngimons() {
+    int possibleD[] = {-1, 0, 1};
     for (Engimon& engie : wildEngimons) {
         int randIdx = rand() % 3;
+        int d = possibleD[randIdx];
+        int isEven = rand() % 2 == 0;
 
-        if (rand() % 2) { // move x
-            int possibleDX[] = { -1, 0, 1 };
-            int dx = possibleDX[randIdx];
-            if (dx == 0) continue;
-            else moveEngimonDelta(dx, 0, engie);
-        } else { // move y
-            int possibleDY[] = { -1, 0, 1 };
-            int dy = possibleDY[randIdx];
-            if (dy == 0) continue;
-            else moveEngimonDelta(0, dy, engie);
-        }
+        if (!d)
+            continue;
+        else
+            moveEngimonDelta(d * isEven, d * !isEven, engie);
     }
 }
 
