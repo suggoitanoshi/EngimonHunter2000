@@ -55,11 +55,10 @@ public:
     // methods
     void addExp(int exp);
     unsigned getBattlePower(int elmtAdv);
-    void getEngiInfo();
     bool operator==(const Engimon &Eng) const;
     Engimon &operator=(const Engimon &Eng);
     friend ostream &operator<<(ostream &os, const Engimon &src);
-    void showEngimon() const;
+    void showEngimon();
     void interact() const;
 };
 

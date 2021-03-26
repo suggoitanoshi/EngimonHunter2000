@@ -46,7 +46,7 @@ public:
     void checkActiveEngimon();
     void switchEngimon(int);
     void showEngimon(int);
-    void showEngimon() const;
+    void showEngimon();
     void addEngimon(Engimon);
     void addEngimon(string);
     void removeEngimon(Engimon);
