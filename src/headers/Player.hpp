@@ -43,7 +43,7 @@ public:
 
     // methods
     void checkActiveEngimon();
-    void switchEngimon(string);
+    void switchEngimon(int);
     void showEngimon(int);
     void showEngimon() const;
     void addEngimon(Engimon);

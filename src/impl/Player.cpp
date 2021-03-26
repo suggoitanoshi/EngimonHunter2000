@@ -56,15 +56,14 @@ void Player::setDir(char _dir) { dir = _dir; }
 
 void Player::checkActiveEngimon() { activeEngi.showEngimon(); }
 
-void Player::switchEngimon(string engiName) {
+void Player::switchEngimon(int engi) {
     int beforeEngi = listEngimon.getFirstItemIndex(activeEngi);
     listEngimon[beforeEngi].setPos(-1, -1);
 
     tuple<int, int> currPos = activeEngi.getPosition();
-    int afterEngi = getEngimonIdxFromName(engiName);
-    listEngimon[afterEngi].setPos(get<0>(currPos), get<1>(currPos));
+    listEngimon[engi].setPos(get<0>(currPos), get<1>(currPos));
 
-    activeEngi = listEngimon[afterEngi];
+    activeEngi = listEngimon[engi];
 }
 
 void Player::showEngimon(int engi) { listEngimon[engi].showEngimon(); }
