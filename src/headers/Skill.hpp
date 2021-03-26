@@ -28,9 +28,15 @@ protected:
 
 public:
     // constructors
-    Skill();
-    Skill(const std::string, const unsigned _basePower,
-          const unsigned _masteryLevel, const vector<Elements::el>&);
+    Skill(const std::string = "THUNDAAA", const unsigned _basePower = 40,
+          const unsigned _masteryLevel = 1,
+          const vector<Elements::el>& = vector<Elements::el>{
+              Elements::ELECTRIC}); // default constructor
+        // default values are:
+        // name = THUNDAAA
+        // basePower = 40
+        // masteryLevel = 1
+        // elements = { ELECTRIC }
     Skill(const std::string, const unsigned _basePower,
           const unsigned _masteryLevel, const Elements::el);
     Skill(const Skill&);
