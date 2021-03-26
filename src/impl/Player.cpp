@@ -94,11 +94,10 @@ void Player::showItem() const {
     listItem.showInventory();
 }
 
-void Player::useItem(string engiName, string _item, const Dex& dex) {
-    int idxItem = getItemIdxFromName(_item);
-    listItem[idxItem].learn(getEngimonFromName(engiName), dex);
-    if (listItem[idxItem].getQuantity() == 0) {
-        removeItem(listItem[idxItem]);
+void Player::useItem(int engi, int _item, const Dex& dex) {
+    listItem[_item].learn(listEngimon[engi], dex);
+    if (listItem[_item].getQuantity() == 0) {
+        removeItem(listItem[_item]);
     }
 }
 

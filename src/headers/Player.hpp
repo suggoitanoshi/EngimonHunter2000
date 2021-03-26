@@ -53,7 +53,7 @@ public:
     void showItem(string);
     void showItem(int);
     void showItem() const;
-    void useItem(string, string, const Dex&);
+    void useItem(int, int, const Dex&);
     void addItem(Item);
     void addItem(string);
     void removeItem(Item);
