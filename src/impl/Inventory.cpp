@@ -37,8 +37,15 @@ public:
         if(std::find(cont.begin(), cont.end(), item) == cont.end()){
             addItem(item);
         }
-        this->incrementItem();
-        items++;
+        else{
+            if(this->getTotalItemCount() < this->getMaxCapacity()){
+                this->incrementItem();
+                items++;
+            }
+            else{
+                throw InventoryException(0);
+            }
+        }
     }
     /**
      * Menghapus item `item` pertama
