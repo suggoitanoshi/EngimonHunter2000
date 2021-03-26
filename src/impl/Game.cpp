@@ -306,8 +306,28 @@ void Game::run() {
                         // Pakai skill item
                         break;
                     case '6':
+                        {
                         // Breeding
+                        Engimon A, B, HasilKawin;
+                        this->player.showEngimon();
+                        try{
+                            cout << "Pilih engimon 1: ";
+                            cin >> input;
+                            A = player.getEngimonFromName(input);
+                            cout << "Pilih engimon 2: ";
+                            cin >> input;
+                            B = player.getEngimonFromName(input);
+                            HasilKawin = kawin(A, B);
+                            this->player.addEngimon(HasilKawin);
+                        }
+                        catch(InventoryException &e){
+                            cout << e.what() << endl;
+                        }
+                        catch(BreedingException &e){
+                            cout << e.what() << endl;
+                        }
                         break;
+                        }
                     case '7':
                         // Battle
                         break;
@@ -455,7 +475,8 @@ Engimon& Game::kawin(Engimon& bapak, Engimon& emak) {
             }
         }
     }
-    std::cin >> name;
+    cout << "Masukkan nama engimon: " << endl;
+    cin >> name;
     tuple<string, string> parents[2] = {
         make_tuple(bapak.getName(), bapak.getSpecies()),
         make_tuple(emak.getName(), emak.getSpecies())};
