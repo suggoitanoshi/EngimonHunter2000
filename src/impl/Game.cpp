@@ -7,6 +7,12 @@
 #include <tuple>
 #include <utility>
 
+#ifdef _WIN32
+#include <Windows.h>
+#else
+#include <unistd.h>
+#endif
+
 #include "../headers/Battle.hpp"
 #include "../headers/BreedingException.hpp"
 #include "../headers/Dex.hpp"
@@ -17,7 +23,7 @@ using namespace std;
 Game::Game() {
     srand(time(0));
 
-    int pX = rand() % mapX, pY = rand()  % mapY;
+    int pX = rand() % mapX, pY = rand() % mapY;
     pX = pX == 0 ? 1 : pX == mapX - 1 ? mapX - 1 : pX;
     pY = pY == 0 ? 1 : pY == mapY - 1 ? mapY + 1 : pY;
     int eX = pX == 1 ? 2 : pX - 1;
@@ -465,6 +471,9 @@ Engimon& Game::kawin(Engimon& bapak, Engimon& emak) {
         (unsigned)emak.getLvl() < 30 + emak.defaultLevel) {
         throw BreedingException(0);
     }
+
+    sleep(3);
+
     indexSkillAnak = 0;
     skillBapakTerambil = 0;
     skillEmakTerambil = 0;
