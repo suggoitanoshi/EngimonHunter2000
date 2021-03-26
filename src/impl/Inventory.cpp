@@ -50,13 +50,23 @@ public:
     /**
      * Menghapus item `item` pertama
      */
-    void removeItem(T item) {
+    void removeItem(T& item) {
         int i;
         try {
             i = getFirstItemIndex(item);
             this->subtractItem();
+            items--;
             this->cont.erase(cont.begin() + i);
         } catch (InventoryException&) {
+            throw;
+        }
+    }
+    void removeItemNoDupe(T& item){
+        try{
+            getFirstItemIndex(item);
+            this->subtractItem();
+            items--;
+        }catch(InventoryException&){
             throw;
         }
     }
