@@ -59,7 +59,8 @@ void Game::printCommandHelp() {
     cout << "3. Ganti active engimon    | 4. Lihat list skill item saya"
          << endl;
     cout << "5. Gunakan skill item      | 6. Lakukan breeding" << endl;
-    cout << "7. Lakukan Battle" << endl;
+    cout << "7. Lakukan Battle          | 8. Lihat data lengkap Engimon"
+         << endl;
     cout << "------------------------------------------------------------"
          << endl;
 }
@@ -270,13 +271,19 @@ void Game::run() {
                         break;
                     case '1':
                         // List engimon dimiliki
-                        this->player.showEngimon();
-                        break;
+                        try {
+                            this->player.showEngimon();
+                            break;
+                        }
+                        catch (InventoryException& e) {
+                            cout << e.what() << endl;
+                        }
                     case '2':
                         // List engimon dex
                         dex.showEngimons();
                         break;
                     case '3':
+                        // Ganti active engi
                         this->player.showEngimon();
                         cout << "Masukkan nama engimon: ";
                         cin >> input;
@@ -285,15 +292,34 @@ void Game::run() {
                         } catch (InventoryException& e) {
                             cout << e.what() << endl;
                         }
-                        // Ganti active engi
                         break;
                     case '4':
                         // Lihat skill item dimiliki
-                        player.showItem();
+                        try {
+                            this->player.itemIsEmpty();
+                            this->player.showItem();
+                        }
+                        catch (InventoryException& e) {
+                            cout << e.what() << endl;
+                        } 
                         break;
                     case '5':
                         // Pakai skill item
-                        player.showItem();
+                        try {
+                            this->player.itemIsEmpty();
+                            try {
+                                this->player.showItem();
+                                cout << "Pilih item skill: ";
+                                cin >> input;
+                                // this->player.useItem(input);
+                            }
+                            catch (ItemException& e) {
+                                cout << e.what() << endl;
+                            }
+                        }
+                        catch (InventoryException& e) {
+                            cout << e.what() << endl;
+                        }
                         break;
                     case '6': {
                         // Breeding
@@ -317,6 +343,19 @@ void Game::run() {
                     }
                     case '7':
                         // Battle
+                        break;
+                    case '8':
+                        // Lihat data lengkap Engimon
+                        try {
+                            this->player.engimonIsEmpty();
+                            this->player.showEngimon();
+                            cout << "Pilih engimon: ";
+                            cin >> input;
+                            this->player.showEngimon(input);
+                        }
+                        catch (InventoryException& e) {
+                            cout << e.what() << endl;
+                        }
                         break;
                     default:
                         cout << "Masukan salah, ulangi masukan" << endl;

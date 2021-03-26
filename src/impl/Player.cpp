@@ -46,10 +46,6 @@ int Player::getItemIdxFromName(string _itemName) {
     return listItem.getFirstItemIndex(temp);
 }
 
-bool Player::isEngimonEmpty() const { return listEngimon.getItemCount() == 0; }
-bool Player::isItemEmpty() const { return listItem.getItemCount() == 0; }
-bool Player::isInventoryFull() const { return listEngimon.isFull(); }
-
 void Player::setName(string _name) { name = _name; }
 
 void Player::setPosition(tuple<int, int> pos) { position = pos; }
@@ -121,6 +117,16 @@ void Player::removeItem(string _item) {
 }
 
 void Player::interact() const { activeEngi.interact(); }
+
+void Player::engimonIsEmpty() {
+    if (listEngimon.getItemCount() == 0) throw InventoryException(1);
+}
+void Player::itemIsEmpty() {
+    if (listItem.getItemCount() == 0) throw InventoryException(1);
+}
+void Player::inventoryIsFull() {
+    if (!listItem.isFull()) throw InventoryException(0);
+}
 
 // exception
 PlayerException::PlayerException(int x) : msgID(x) {}

@@ -33,9 +33,6 @@ public:
     Item& getItemFromName(string);
     int getEngimonIdxFromName(string);
     int getItemIdxFromName(string);
-    bool isEngimonEmpty() const;
-    bool isItemEmpty() const;
-    bool isInventoryFull() const;
 
     // setters
     void setName(string);
@@ -61,6 +58,9 @@ public:
     void removeItem(Item);
     void removeItem(string);
     void interact() const;
+    void engimonIsEmpty();
+    void itemIsEmpty();
+    void inventoryIsFull();
 };
 
 class PlayerException : exception {
