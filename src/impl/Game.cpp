@@ -243,6 +243,7 @@ void Game::run() {
                         break;
                     case '2':
                         // List engimon dex
+                        this->dex.showEngimons();
                         break;
                     case '3':
                         this->player.showEngimon();
