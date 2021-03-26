@@ -44,14 +44,12 @@ public:
     // methods
     void checkActiveEngimon();
     void switchEngimon(string);
-    void showEngimon(Engimon);
     void showEngimon(string);
     void showEngimon() const;
     void addEngimon(Engimon);
     void addEngimon(string);
     void removeEngimon(Engimon);
     void removeEngimon(string);
-    void showItem(Item);
     void showItem(string);
     void showItem() const;
     void useItem(string, string, const Dex&);

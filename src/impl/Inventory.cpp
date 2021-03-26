@@ -11,23 +11,40 @@ class Inventory : BaseInventory {
 private:
     /* data */
     vector<T> cont;
+    int items;
 
 public:
     /**
      * Konstruktor Inventory
      */
-    Inventory() : BaseInventory() { this->cont = vector<T>(); }
+    Inventory() : BaseInventory() {
+        this->cont = vector<T>();
+        items = 0;
+    }
     /**
      * Tambah item ke inventory
      */
-    void addItem(T item) {
+    void addItem(T& item) {
         if (this->getTotalItemCount() < this->getMaxCapacity()) {
-            if(std::find(cont.begin(), cont.end(), item) == cont.end()){
-                this->cont.push_back(item);
-            }
+            this->cont.push_back(item);
             this->incrementItem();
+            items++;
         } else {
             throw InventoryException(0);  // inventory tidak cukup
+        }
+    }
+    void addItemNoDupe(T& item){
+        if(std::find(cont.begin(), cont.end(), item) == cont.end()){
+            addItem(item);
+        }
+        else{
+            if(this->getTotalItemCount() < this->getMaxCapacity()){
+                this->incrementItem();
+                items++;
+            }
+            else{
+                throw InventoryException(0);
+            }
         }
     }
     /**
@@ -84,7 +101,9 @@ public:
     /**
      * mengembalikan jumlah item di inventory ini
      */
-    int getItemCount() const { return this->cont.size(); }
+    int getItemCount() const { return items; }
+
+    bool isFull() const { return this->getTotalItemCount() == this->getMaxCapacity(); }
 
     ~Inventory() {
         int i;
