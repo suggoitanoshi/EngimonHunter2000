@@ -17,9 +17,9 @@ using namespace std;
 Game::Game() {
     srand(time(0));
 
-    int pX = rand() % Map::mapX, pY = rand()  % Map::mapY;
-    pX = pX == 0 ? 1 : pX == Map::mapX - 1 ? Map::mapX - 2 : pX;
-    pY = pY == 0 ? 1 : pY == Map::mapY - 1 ? Map::mapY - 2 : pY;
+    int pX = rand() % mapX, pY = rand()  % mapY;
+    pX = pX == 0 ? 1 : pX == mapX - 1 ? mapX - 1 : pX;
+    pY = pY == 0 ? 1 : pY == mapY - 1 ? mapY + 1 : pY;
     int eX = pX == 1 ? 2 : pX - 1;
     int eY = pY;
 
@@ -219,7 +219,7 @@ void Game::spawnWildEngimon(unsigned count) {
 
         // taruh engimon di map
         bool isPlaced = false;
-        for (unsigned j = 0; !isPlaced && j < (Map::mapX * Map::mapY); ++j) {
+        for (unsigned j = 0; !isPlaced && j < (mapX * mapY); ++j) {
             unsigned randIdx = rand() % freeSpaces.size();
             tuple<int, int> pos = freeSpaces[randIdx];
             vector<Elements::el> engieEl = engie.getElements();

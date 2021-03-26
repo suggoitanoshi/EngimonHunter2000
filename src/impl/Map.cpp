@@ -6,12 +6,16 @@
 
 using namespace std;
 
-Map::Map() : Map("data/map.txt") {}
+Map::Map() : Map("data/map.txt", 32, 16) {}
 
-Map::Map(string path) {
+Map::Map(string path, unsigned lenx, unsigned leny) {
     int x, y;
     ifstream f;
     string linemap;
+
+    vector<MapTile> tmp(leny);
+    tiles = vector<vector<MapTile>>(lenx, tmp);
+
     f.open(path);
     if (f.is_open()) {
         y = 0;
@@ -26,6 +30,9 @@ Map::Map(string path) {
             y++;
         }
     }
+
+    mapX = lenx;
+    mapY = leny;
 }
 
 void Map::setTile(unsigned x, unsigned y, MapTile::TileType type) {
