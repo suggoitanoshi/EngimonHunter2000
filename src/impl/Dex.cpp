@@ -1,9 +1,11 @@
 #include "../headers/Dex.hpp"
 
 #include <algorithm>
+#include <cstdio>
 #include <cstdlib>
 #include <iostream>
 #include <string>
+#include <utility>
 
 using namespace std;
 
@@ -147,6 +149,17 @@ void Dex::addEngi(string enginame, EngimonSpecies engimon) {
         throw DexException(6);
     }
     engiDex.emplace(enginame, engimon);
+}
+
+void Dex::showEngimons() const {
+    unsigned no = 1;
+    for (pair<string, EngimonSpecies> engi : engiDex) {
+        char buff[7];
+        sprintf(buff, "%03d. ",no++);
+        string formattedNo = buff;
+        cout << formattedNo << engi.first << '\n';
+    }
+    cout << endl;
 }
 
 const unordered_map<string, Skill> Dex::getSkillDex() const { return skillDex; }
