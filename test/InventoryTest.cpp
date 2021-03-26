@@ -21,7 +21,8 @@ TEST(Inventory, IntInventoryConstructor) {
 // uji tambah item
 TEST(Inventory, IntInventoryAddItem) {
     Inventory<int> inv = Inventory<int>();
-    EXPECT_NO_THROW(inv.addItem(0));
+    int item = 0;
+    EXPECT_NO_THROW(inv.addItem(item));
     EXPECT_EQ(inv.getItemCount(), 1);
     EXPECT_EQ(BaseInventory::getTotalItemCount(), 1);
 }
@@ -31,7 +32,8 @@ TEST(Inventory, IntInventoryFullAddItem) {
     for (int i = 0; i < BaseInventory::getMaxCapacity(); i++) {
         BaseInventory::incrementItem();
     }
-    EXPECT_THROW(inv.addItem(0), InventoryException);
+    int item = 0;
+    EXPECT_THROW(inv.addItem(item), InventoryException);
     for (int i = 0; i < BaseInventory::getMaxCapacity(); i++) {
         BaseInventory::subtractItem();
     }
@@ -39,28 +41,33 @@ TEST(Inventory, IntInventoryFullAddItem) {
 // uji hapus item
 TEST(Inventory, IntInventoryRemoveItem) {
     Inventory<int> inv = Inventory<int>();
-    inv.addItem(0);
-    EXPECT_NO_THROW(inv.removeItem(0));
+    int item = 0;
+    inv.addItem(item);
+    EXPECT_NO_THROW(inv.removeItem(item));
     EXPECT_EQ(inv.getItemCount(), 0);
     EXPECT_EQ(BaseInventory::getTotalItemCount(), 0);
 }
 // uji inventory kosong
 TEST(Inventory, IntInventoryEmptyRemoveItem) {
     Inventory<int> inv = Inventory<int>();
-    EXPECT_THROW(inv.removeItem(0), InventoryException);
+    int item = 0;
+    EXPECT_THROW(inv.removeItem(item), InventoryException);
 }
 // uji hapus item yang tidak ada
 TEST(Inventory, IntInventoryNonexistentRemoveItem) {
     Inventory<int> inv = Inventory<int>();
-    inv.addItem(0);
-    inv.addItem(1);
-    EXPECT_THROW(inv.removeItem(2), InventoryException);
+    int item1 = 0, item2 = 1;
+    int invaliditem = 2;
+    inv.addItem(item1);
+    inv.addItem(item2);
+    EXPECT_THROW(inv.removeItem(invaliditem), InventoryException);
 }
 // uji pengambilan elemen ke-i
 TEST(Inventory, IntInventoryBracketOperator) {
     Inventory<int> inv = Inventory<int>();
+    int items[5] = {0, 2, 4, 6, 8};
     for (int i = 0; i < 5; i++) {
-        inv.addItem(i * 2);
+        inv.addItem(items[i]);
     }
     for (int i = 4; i >= 0; i--) {
         EXPECT_EQ(inv[i], i * 2);
@@ -76,8 +83,9 @@ TEST(Inventory, IntInventoryBracketOperatorInvalid) {
 TEST(Inventory, IntInventoryTwoInstance) {
     Inventory<int> inv1 = Inventory<int>();
     Inventory<int> inv2 = Inventory<int>();
-    inv1.addItem(0);
-    inv2.addItem(0);
+    int item = 0;
+    inv1.addItem(item);
+    inv2.addItem(item);
     EXPECT_EQ(inv1.getItemCount(), 1);
     EXPECT_EQ(inv2.getItemCount(), 1);
     EXPECT_EQ(BaseInventory::getTotalItemCount(), 2);
@@ -86,9 +94,10 @@ TEST(Inventory, IntInventoryTwoInstance) {
 TEST(Inventory, IntInventoryTwoInstanceRemove) {
     Inventory<int> inv1 = Inventory<int>();
     Inventory<int> inv2 = Inventory<int>();
-    inv1.addItem(0);
-    inv2.addItem(0);
-    inv2.removeItem(0);
+    int item = 0;
+    inv1.addItem(item);
+    inv2.addItem(item);
+    inv2.removeItem(item);
     EXPECT_EQ(inv1.getItemCount(), 1);
     EXPECT_EQ(inv2.getItemCount(), 0);
     EXPECT_EQ(BaseInventory::getTotalItemCount(), 1);
@@ -97,8 +106,10 @@ TEST(Inventory, IntInventoryTwoInstanceRemove) {
 TEST(Inventory, InventoryMultipleType) {
     Inventory<int> inv1 = Inventory<int>();
     Inventory<float> inv2 = Inventory<float>();
-    inv1.addItem(0);
-    inv2.addItem(0);
+    int item1 = 0;
+    float item2 = 0;
+    inv1.addItem(item1);
+    inv2.addItem(item2);
     EXPECT_EQ(inv1.getItemCount(), 1);
     EXPECT_EQ(inv2.getItemCount(), 1);
     EXPECT_EQ(BaseInventory::getTotalItemCount(), 2);
@@ -107,9 +118,11 @@ TEST(Inventory, InventoryMultipleType) {
 TEST(Inventory, InventoryMultipleTypeRemove) {
     Inventory<int> inv1 = Inventory<int>();
     Inventory<float> inv2 = Inventory<float>();
-    inv1.addItem(0);
-    inv2.addItem(0);
-    inv2.removeItem(0);
+    int item1 = 0;
+    float item2 = 0;
+    inv1.addItem(item1);
+    inv2.addItem(item2);
+    inv2.removeItem(item2);
     EXPECT_EQ(inv1.getItemCount(), 1);
     EXPECT_EQ(inv2.getItemCount(), 0);
     EXPECT_EQ(BaseInventory::getTotalItemCount(), 1);

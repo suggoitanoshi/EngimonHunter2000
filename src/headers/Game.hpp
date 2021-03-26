@@ -16,6 +16,7 @@ private:
     Player player;
     Dex dex;
     Map map;
+    vector<Engimon> wildEngimons;
 
     // map & input handling
     void printGameIntro();

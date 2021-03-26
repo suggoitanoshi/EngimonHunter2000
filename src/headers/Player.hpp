@@ -33,6 +33,9 @@ public:
     Item& getItemFromName(string);
     int getEngimonIdxFromName(string);
     int getItemIdxFromName(string);
+    bool isEngimonEmpty() const;
+    bool isItemEmpty() const;
+    bool isInventoryFull() const;
 
     // setters
     void setName(string);

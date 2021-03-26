@@ -46,6 +46,10 @@ int Player::getItemIdxFromName(string _itemName) {
     return listItem.getFirstItemIndex(temp);
 }
 
+bool Player::isEngimonEmpty() const { return listEngimon.getItemCount() == 0; }
+bool Player::isItemEmpty() const { return listItem.getItemCount() == 0; }
+bool Player::isInventoryFull() const { return listEngimon.isFull(); }
+
 void Player::setName(string _name) { name = _name; }
 
 void Player::setPosition(tuple<int, int> pos) { position = pos; }
@@ -104,13 +108,13 @@ void Player::useItem(string engiName, string _item, const Dex& dex) {
     }
 }
 
-void Player::addItem(Item _item) { listItem.addItem(_item); }
+void Player::addItem(Item _item) { listItem.addItemNoDupe(_item); }
 void Player::addItem(string _item) {
     Item temp = getItemFromName(_item);
     addItem(temp);
 }
 
-void Player::removeItem(Item _item) { listItem.removeItem(_item); }
+void Player::removeItem(Item _item) { listItem.removeItemNoDupe(_item); }
 void Player::removeItem(string _item) {
     Item temp = getItemFromName(_item);
     removeItem(temp);
