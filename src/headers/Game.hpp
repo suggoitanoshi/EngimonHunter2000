@@ -40,6 +40,8 @@ private:
     void spawnWildEngimon(unsigned);
     void moveWildEngimons();
 
+    void battle();
+
 public:
     Game();
 

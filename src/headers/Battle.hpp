@@ -20,7 +20,7 @@ public:
     Battle();
     // battle
     void checkAdvantage(Engimon A, Engimon B);
-    void runBattle(Engimon A, Engimon B);
+    bool runBattle(Engimon& A, Engimon& B);
 };
 
 #endif

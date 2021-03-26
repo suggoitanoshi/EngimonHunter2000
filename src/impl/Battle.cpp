@@ -32,7 +32,7 @@ void Battle :: checkAdvantage(Engimon A, Engimon B){
     }
 }
 
-void Battle :: runBattle(Engimon A, Engimon B){
+bool Battle :: runBattle(Engimon& A, Engimon& B){
     checkAdvantage(A,B);
     pwrA = A.getLvl()*advA;
     for (auto& skillA : A.getSkills()){
@@ -74,4 +74,5 @@ void Battle :: runBattle(Engimon A, Engimon B){
         cout << "Sekarang "<< A.getName()<<" dihapus dari inventory mu"<<endl;
         cout << "Semoga amal ibadah "<<A.getName()<<" diterima oleh Yang Maha Kuasa"<<endl;
     }
+    return pwrA >= pwrB;
 }
