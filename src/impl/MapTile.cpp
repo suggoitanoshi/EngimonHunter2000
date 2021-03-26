@@ -129,7 +129,7 @@ void MapTile::setTileChar() {
             break;
         default: // ACTIVE_ENGI
             tileChar = 'X';
-            occupied = true;
+            occupied = false;
     }
 }
 
@@ -185,7 +185,7 @@ void MapTile::setType() {
             break;
         default: // ACTIVE_ENGI
             type = ACTIVE_ENGI;
-            occupied = true;
+            occupied = false;
     }
 }
 

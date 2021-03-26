@@ -70,7 +70,10 @@ void Game::engimonFollowPlayer(int x, int y) {
     oldy = get<1>(player.getActiveEngimon().getPosition());
     // x dan y baru pasti kosong karena tempat lama player
     player.getActiveEngimon().setPos(x, y);
-    map.setTileToOriginal(oldx, oldy);
+    if (map.getTile(oldx, oldy).getTileChar() !=
+        'P') {  // biar bisa "tukeran" posisi sama player
+        map.setTileToOriginal(oldx, oldy);
+    }
     map.setTile(x, y, MapTile::ACTIVE_ENGI);
 }
 
@@ -234,6 +237,10 @@ void Game::spawnWildEngimon(unsigned count) {
 void Game::run() {
     printGameIntro();
     this->spawnWildEngimon(wildEngimonCount);
+
+    for (Engimon e : wildEngimons) {
+        e.showEngimon();
+    }
 
     do {
         string input;
