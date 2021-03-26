@@ -29,6 +29,7 @@ public:
     int getPositionX() const;
     int getPositionY() const;
     char getDir() const;
+    Engimon& getEngimonById(int);
     Engimon& getEngimonFromName(string);
     Item& getItemFromName(string);
     int getEngimonIdxFromName(string);

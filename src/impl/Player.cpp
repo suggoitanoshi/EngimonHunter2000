@@ -16,6 +16,9 @@ int Player::getPositionX() const { return get<0>(position); }
 int Player::getPositionY() const { return get<1>(position); }
 
 char Player::getDir() const { return dir; }
+Engimon& Player::getEngimonById(int idx){
+    return listEngimon[idx];
+}
 Engimon& Player::getEngimonFromName(string engiName) {
     if (listEngimon.getItemCount() == 0) throw InventoryException(1);
     for (int i = 0; i < listEngimon.getItemCount(); i++) {
