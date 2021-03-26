@@ -11,17 +11,6 @@
 
 #include "../headers/Dex.hpp"
 
-Engimon::Engimon() : EngimonSpecies() {
-    name = species;
-    parents[0] = make_tuple("Wild", species);
-    parents[1] = make_tuple("Wild", species);
-    skills.push_back(starterSkill);
-    lvl = defaultLevel;
-    exp = 0;
-    cexp = 0;
-    location = make_tuple(-1, -1);
-}
-
 Engimon::Engimon(EngimonSpecies ES) : EngimonSpecies(ES) {
     name = species;
     parents[0] = make_tuple("Wild", species);

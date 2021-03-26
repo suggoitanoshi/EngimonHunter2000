@@ -25,9 +25,10 @@ public:
     const static unsigned maxCumulExp = 10000;
     const static unsigned maxSkills = 4;
     // con, ccon, dest
-    EngimonSpecies();
-    EngimonSpecies(string ospec, string oslogan, vector<Elements::el> oelem,
-                   Skill oskill);
+    EngimonSpecies(
+        string ospec = "Picakhu", string oslogan = "Pica Pica Khu!",
+        vector<Elements::el> oelem = vector<Elements::el>{Elements::ELECTRIC},
+        Skill oskill = Skill());
     EngimonSpecies(const EngimonSpecies &ES);
     EngimonSpecies &operator=(const EngimonSpecies &ES);
 

@@ -1,11 +1,5 @@
 #include "../headers/EngimonSpecies.hpp"
 
-EngimonSpecies::EngimonSpecies() {
-    species = "Picakhu";
-    slogan = "Pica Pica Khu!";
-    element.push_back(Elements::ELECTRIC);
-}
-
 EngimonSpecies::EngimonSpecies(string ospec, string oslogan,
                                vector<Elements::el> oelem, Skill oskill)
     : starterSkill(oskill) {
@@ -15,11 +9,7 @@ EngimonSpecies::EngimonSpecies(string ospec, string oslogan,
 }
 
 EngimonSpecies::EngimonSpecies(const EngimonSpecies &ES)
-    : starterSkill(ES.starterSkill) {
-    species = ES.species;
-    slogan = ES.slogan;
-    element = ES.element;
-}
+    : EngimonSpecies(ES.species, ES.slogan, ES.element, ES.starterSkill) {}
 
 EngimonSpecies &EngimonSpecies::operator=(const EngimonSpecies &ES) {
     species = ES.species;
