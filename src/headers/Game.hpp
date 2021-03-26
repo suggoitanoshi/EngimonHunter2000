@@ -11,7 +11,10 @@ using namespace std;
 // dipisah jd hpp cpp nanti kalo dah fix
 class Game {
 private:
+    static const unsigned mapX = 32;
+    static const unsigned mapY = 16;
     static const unsigned wildEngimonCount = 10;
+
     bool isExitGame;
     Player player;
     Dex dex;

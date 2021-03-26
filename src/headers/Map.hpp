@@ -1,13 +1,14 @@
+#include <vector>
+
 #include "MapTile.hpp"
 #include "Player.hpp"
 
+using namespace std;
+
 class Map {
 public:
-    static const unsigned mapX = 32;
-    static const unsigned mapY = 16;
-
     Map();        // readMap
-    Map(string);  // readMap
+    Map(string, unsigned leny, unsigned lenx);  // readMap
     MapTile getTile(unsigned x, unsigned y) const;
 
     void setTile(unsigned x, unsigned y, MapTile::TileType);
@@ -20,5 +21,8 @@ public:
     bool isFree(const unsigned x, const unsigned y) const;
 
 private:
-    MapTile tiles[mapX][mapY];
+    vector<vector<MapTile>> tiles;
+
+    unsigned mapX;
+    unsigned mapY;
 };

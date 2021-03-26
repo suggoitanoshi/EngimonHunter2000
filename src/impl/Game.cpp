@@ -7,6 +7,12 @@
 #include <tuple>
 #include <utility>
 
+#ifdef _WIN32
+#include <Windows.h>
+#else
+#include <unistd.h>
+#endif
+
 #include "../headers/Battle.hpp"
 #include "../headers/BreedingException.hpp"
 #include "../headers/Dex.hpp"
@@ -16,11 +22,19 @@ using namespace std;
 
 Game::Game() {
     srand(time(0));
+
+    int pX = rand() % mapX, pY = rand() % mapY;
+    pX = pX == 0 ? 1 : pX == mapX - 1 ? mapX - 2 : pX;
+    pY = pY == 0 ? 1 : pY == mapY - 1 ? mapY + 2 : pY;
+    int eX = pX == 1 ? 2 : pX - 1;
+    int eY = pY;
+
     this->isExitGame = false;
-    player.setPosition(make_tuple(1, 1));
-    player.getActiveEngimon().setPos(2, 1);
-    map.setTile(1, 1, MapTile::PLAYER);       // buat player
-    map.setTile(2, 1, MapTile::ACTIVE_ENGI);  // buat active engimon
+    player.setPosition(make_tuple(pX, pY));
+    player.getActiveEngimon().setPos(eX, eY);
+    map.setTile(pX, pY, MapTile::PLAYER);       // buat player
+    map.setTile(eX, eY, MapTile::ACTIVE_ENGI);  // buat active engimon
+
     player.addItem(Item(dex.getSkill("Tackle"), 10));
 }
 
@@ -51,19 +65,23 @@ void Game::printGameIntro() {
 }
 
 void Game::printCommandHelp() {
-    cout << "------------------------C O M M A N D-----------------------"
-         << endl;
+    cout
+        << "--------------------------C O M M A N D----------------------------"
+        << endl;
     cout << "     W:atas  A:kiri  S:bawah  D:kanan  X:Keluar game" << endl;
-    cout << "------------------------------------------------------------"
+    cout
+        << "-------------------------------------------------------------------"
+        << endl;
+    cout << "1. Lihat list engimon pemain | 2. Lihat seluruh engimon" << endl;
+    cout << "3. Ganti active engimon      | 4. Lihat list skill item pemain"
          << endl;
-    cout << "1. Lihat list engimon saya | 2. Lihat seluruh engimon" << endl;
-    cout << "3. Ganti active engimon    | 4. Lihat list skill item saya"
-         << endl;
-    cout << "5. Gunakan skill item      | 6. Lakukan breeding" << endl;
-    cout << "7. Lakukan Battle          | 8. Lihat data lengkap Engimon"
-         << endl;
-    cout << "------------------------------------------------------------"
-         << endl;
+    cout << "5. Gunakan skill item        | 6. Lakukan breeding" << endl;
+    cout
+        << "7. Lakukan Battle            | 8. Lihat data lengkap Engimon pemain"
+        << endl;
+    cout
+        << "-------------------------------------------------------------------"
+        << endl;
 }
 
 void Game::engimonFollowPlayer(int x, int y) {
@@ -122,7 +140,7 @@ void Game::moveEngimonDelta(int dx, int dy, Engimon& engie) {
         case MapTile::OCCUPIED_S:
             canMove = nextType == MapTile::WATER;
             break;
-        default: // ground/water
+        default:  // ground/water
             canMove = curType == MapTile::OCCUPIED_N;
     }
 
@@ -211,7 +229,7 @@ void Game::spawnWildEngimon(unsigned count) {
 
         // taruh engimon di map
         bool isPlaced = false;
-        for (unsigned j = 0; !isPlaced && j < (Map::mapX * Map::mapY); ++j) {
+        for (unsigned j = 0; !isPlaced && j < (mapX * mapY); ++j) {
             unsigned randIdx = rand() % freeSpaces.size();
             tuple<int, int> pos = freeSpaces[randIdx];
             vector<Elements::el> engieEl = engie.getElements();
@@ -277,20 +295,16 @@ void Game::spawnWildEngimon(unsigned count) {
 }
 
 void Game::moveWildEngimons() {
+    int possibleD[] = {-1, 0, 1};
     for (Engimon& engie : wildEngimons) {
         int randIdx = rand() % 3;
+        int d = possibleD[randIdx];
+        int isEven = rand() % 2 == 0;
 
-        if (rand() % 2) { // move x
-            int possibleDX[] = { -1, 0, 1 };
-            int dx = possibleDX[randIdx];
-            if (dx == 0) continue;
-            else moveEngimonDelta(dx, 0, engie);
-        } else { // move y
-            int possibleDY[] = { -1, 0, 1 };
-            int dy = possibleDY[randIdx];
-            if (dy == 0) continue;
-            else moveEngimonDelta(0, dy, engie);
-        }
+        if (!d)
+            continue;
+        else
+            moveEngimonDelta(d * isEven, d * !isEven, engie);
     }
 }
 
@@ -512,6 +526,9 @@ Engimon& Game::kawin(Engimon& bapak, Engimon& emak) {
         (unsigned)emak.getLvl() < 30 + emak.defaultLevel) {
         throw BreedingException(0);
     }
+
+    sleep(3);
+
     indexSkillAnak = 0;
     skillBapakTerambil = 0;
     skillEmakTerambil = 0;

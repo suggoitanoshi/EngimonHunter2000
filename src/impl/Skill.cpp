@@ -11,13 +11,6 @@
 #include <vector>
 
 // Bagian Constructor
-Skill::Skill() {
-    name = "THUNDAAA";
-    basePower = 40;
-    masteryLevel = 1;
-    elements.push_back(Elements::ELECTRIC);
-}
-
 Skill::Skill(const string _name, const unsigned _basePower,
              const unsigned _masteryLevel,
              const vector<Elements::el>& _elements)
@@ -31,15 +24,11 @@ Skill::Skill(const string _name, const unsigned _basePower,
 
 Skill::Skill(const string _name, const unsigned _basePower,
              const unsigned _masteryLevel, const Elements::el _elements)
-    : name(_name), basePower(_basePower), masteryLevel(_masteryLevel) {
-    elements.push_back(_elements);
+    : Skill(_name, _basePower, _masteryLevel, vector<Elements::el>{_elements}) {
 }
 
 Skill::Skill(const Skill& src)
-    : name(src.name),
-      basePower(src.basePower),
-      masteryLevel(src.masteryLevel),
-      elements(src.elements) {}
+    : Skill(src.name, src.basePower, src.masteryLevel, src.elements) {}
 
 Skill& Skill::operator=(const Skill& src) {
     name = src.name;
