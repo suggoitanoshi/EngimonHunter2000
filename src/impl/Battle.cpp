@@ -51,6 +51,11 @@ bool Battle ::runBattle(Engimon& A, Engimon& B) {
         pwrB = pwrB + skillB.getBasePower() * skillB.getMasteryLevel();
     }
 
+    cout << "Engimon pemain: " << '\n';
+    A.showEngimon();
+    cout << '\n' << "Engimon liar: " << '\n';
+    B.showEngimon();
+
     sleep(3);
 
     if (pwrA >= pwrB) {
@@ -85,28 +90,5 @@ bool Battle ::runBattle(Engimon& A, Engimon& B) {
         cout << "Semoga amal ibadah " << A.getName()
              << " diterima oleh Yang Maha Kuasa" << endl;
     }
-<<<<<<< HEAD
-    else {
-        cout << "--------------------- R.I.P. ---------------------" << endl;
-        cout << "                             .                    " << endl;
-        cout << "                            -|-                   " << endl;
-        cout << "                             |                    " << endl;
-        cout << "                         .-'~~~`-.                " << endl;
-        cout << "                       .'         `.              " << endl;
-        cout << "                       |  R  I  P  |              " << endl;
-        cout << "                       |           |              " << endl;
-        cout << "                       |           |              " << endl;
-        cout << "                     \\|           |//            " << endl;
-        cout << "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^" << endl;
-        cout << "-------------------------------------------------" << endl;
-        cout << A.getName() << " kalah melawan " << B.getName() << endl;
-        cout << "Sekarang " << A.getName() << " dihapus dari inventory mu"
-             << endl;
-        cout << "Semoga amal ibadah " << A.getName()
-             << " diterima oleh Yang Maha Kuasa" << endl;
-    }
     return pwrA >= pwrB;
 }
-== == == =
-}
->>>>>>> f59858ca061271132974c8ad1b950acb1fc2657a

@@ -148,34 +148,42 @@ void MapTile::setType() {
             occupied = true;
             break;
         case 'W':
+        case 'w':
             type = OCCUPIED_W;
             occupied = true;
             break;
         case 'F':
+        case 'f':
             type = OCCUPIED_F;
             occupied = true;
             break;
         case 'G':
+        case 'g':
             type = OCCUPIED_G;
             occupied = true;
             break;
         case 'E':
+        case 'e':
             type = OCCUPIED_E;
             occupied = true;
             break;
         case 'I':
+        case 'i':
             type = OCCUPIED_I;
             occupied = true;
             break;
         case 'L':
+        case 'l':
             type = OCCUPIED_L;
             occupied = true;
             break;
         case 'S':
+        case 's':
             type = OCCUPIED_S;
             occupied = true;
             break;
         case 'N':
+        case 'n':
             type = OCCUPIED_N;
             occupied = true;
             break;

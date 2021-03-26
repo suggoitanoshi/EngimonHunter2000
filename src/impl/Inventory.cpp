@@ -95,8 +95,9 @@ public:
         size_t i = 0;
         for (i = 0; i < this->cont.size(); i++) {
             cout << i+1 << ". ";
-            cout << this->cont.at(i) << endl;
+            cout << this->cont.at(i);
         }
+        cout << endl;
     }
     /**
      * operator indexing

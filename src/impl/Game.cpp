@@ -23,9 +23,9 @@ using namespace std;
 Game::Game() {
     srand(time(0));
 
-    int pX = rand() % mapX, pY = rand() % mapY;
-    pX = pX == 0 ? 1 : pX == mapX - 1 ? mapX - 2 : pX;
-    pY = pY == 0 ? 1 : pY == mapY - 1 ? mapY + 2 : pY;
+    unsigned pX = rand() % mapX, pY = rand() % mapY;
+    pX = pX == 0 ? 1 : pX >= mapX - 1 ? mapX - 2 : pX;
+    pY = pY == 0 ? 1 : pY >= mapY - 1 ? mapY + 2 : pY;
     int eX = pX == 1 ? 2 : pX - 1;
     int eY = pY;
 
@@ -34,6 +34,13 @@ Game::Game() {
     player.getActiveEngimon().setPos(eX, eY);
     map.setTile(pX, pY, MapTile::PLAYER);       // buat player
     map.setTile(eX, eY, MapTile::ACTIVE_ENGI);  // buat active engimon
+
+    wildEngimonLevelBound = (unsigned)player.getActiveEngimon().getLvl();
+    wildEngimonCaptilizeTileCharLevelBound =
+        (unsigned)(player.getActiveEngimon().getLvl() / 2) + 1;
+    wildEngimonMoveSetBound = (unsigned)player.getActiveEngimon().getLvl() / 25;
+
+    spawnWildEngimon(wildEngimonCount);
 
     player.addItem(Item(dex.getSkill("Tackle"), 10));
 }
@@ -166,11 +173,10 @@ Engimon Game::makeRandomEngimon() const {
     }
 
     Engimon engie(engieSpecies);
-    engie.addExp(((rand() % 20) + 1) *
+    engie.addExp((rand() % wildEngimonLevelBound) *
                  100);  // karena tiap level butuh 100 exp dan sementara dibikin
-                        // random 1 sampe 20
+                        // random 1 sampe 100
 
-    // dapetin 4 move acak
     unordered_map<string, Skill> filtered;
     for (pair<string, Skill> a : dex.getSkillDex()) {
         // cek elemen
@@ -186,7 +192,10 @@ Engimon Game::makeRandomEngimon() const {
             if (compat) break;
         }
     }
-    for (size_t i = 0; i < min(filtered.size(), (size_t)4); i++) {
+
+    // dapetin n move acak
+    for (size_t i = 0;
+         i < min(filtered.size(), (size_t)wildEngimonMoveSetBound); i++) {
         idx = rand() % filtered.size();
         for (pair<string, Skill> a : filtered) {
             if (idx == 0) {
@@ -310,9 +319,9 @@ void Game::moveWildEngimons() {
 
 void Game::battle() {
     vector<Engimon> surroundingEngi;
-    unsigned char dx, dy;
+    int dx, dy;
     Engimon& engi = wildEngimons[0];
-    int i;
+    size_t i;
     for (Engimon& e : wildEngimons) {
         dx = get<0>(e.getPosition()) - player.getPositionX();
         dx = abs(dx);
@@ -360,10 +369,14 @@ void Game::battle() {
 
 void Game::run() {
     printGameIntro();
-    this->spawnWildEngimon(wildEngimonCount);
     int countTurn = 0;
 
     do {
+        wildEngimonLevelBound = (unsigned)player.getActiveEngimon().getLvl();
+        wildEngimonCaptilizeTileCharLevelBound =
+            (unsigned)(player.getActiveEngimon().getLvl() / 2) + 1;
+
+        spawnWildEngimon(wildEngimonCount - wildEngimons.size());
         if (countTurn % 3 == 0) {
             try {
                 moveWildEngimons();

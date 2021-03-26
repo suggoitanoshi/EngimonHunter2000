@@ -15,6 +15,9 @@ private:
     static const unsigned mapY = 16;
     static const unsigned wildEngimonCount = 10;
 
+    unsigned wildEngimonLevelBound;
+    unsigned wildEngimonMoveSetBound;
+    unsigned wildEngimonCaptilizeTileCharLevelBound;
     bool isExitGame;
     Player player;
     Dex dex;
