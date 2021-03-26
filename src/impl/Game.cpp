@@ -82,6 +82,9 @@ void Game::printCommandHelp() {
         << "7. Lakukan Battle            | 8. Lihat data lengkap Engimon pemain"
         << endl;
     cout
+        << "9. Interaksi dengan Engimon"
+        << endl;
+    cout
         << "-------------------------------------------------------------------"
         << endl;
 }
@@ -509,6 +512,10 @@ void Game::run() {
                         } catch (InventoryException& e) {
                             cout << e.what() << endl;
                         }
+                        break;
+                    case '9':
+                        // Interaksi
+                        this->player.interact();
                         break;
                     default:
                         cout << "Masukan salah, ulangi masukan" << endl;
