@@ -6,6 +6,7 @@ Player::Player()
       position(make_tuple(1, 1)),
       dir('a') {
     addEngimon(Engimon());
+    activeEngi = 0;
 }
 
 string Player::getName() const { return name; }
