@@ -158,7 +158,7 @@ void Game::moveEngimonDelta(int dx, int dy, Engimon& engie) {
 
 Engimon Game::makeRandomEngimon() const {
     int idx = rand() % dex.getEngiDex().size();
-    bool compat;
+    bool compat = false;
     EngimonSpecies engieSpecies;
 
     // dapetin spesies engimonnya
@@ -175,10 +175,9 @@ Engimon Game::makeRandomEngimon() const {
     unordered_map<string, Skill> filtered;
     for (pair<string, Skill> a : dex.getSkillDex()) {
         // cek elemen
-        compat = 0;
         for (Elements::el engieEl : engie.getElements()) {
             for (Elements::el skillEl : a.second.getElements()) {
-                compat |= engieEl == skillEl;
+                compat = engieEl == skillEl;
                 if (compat) {
                     filtered.emplace(a.first, a.second);
                     break;
@@ -399,22 +398,27 @@ void Game::run() {
         } else {
             try {
                 switch (tolower(input[0])) {
+                    case 'W':
                     case 'w':
                         this->player.setDir('w');
                         movePlayerDelta(0, -1);
                         break;
+                    case 'A':
                     case 'a':
                         this->player.setDir('a');
                         movePlayerDelta(-1, 0);
                         break;
+                    case 'S':
                     case 's':
                         this->player.setDir('s');
                         movePlayerDelta(0, 1);
                         break;
+                    case 'D':
                     case 'd':
                         this->player.setDir('d');
                         movePlayerDelta(1, 0);
                         break;
+                    case 'X':
                     case 'x':
                         this->isExitGame = true;
                         break;

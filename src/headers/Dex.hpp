@@ -35,6 +35,7 @@ public:
     const unordered_map<string, Skill> getSkillDex() const;
     const unordered_map<string, EngimonSpecies> getEngiDex() const;
     void showEngimons() const;
+    void showSkills() const;
 };
 
 class DexException : exception {
