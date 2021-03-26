@@ -69,11 +69,6 @@ void Item::setQuantity(unsigned _quantity) { quantity = _quantity; }
 void Item::learn(Engimon& e, const Dex& dex) {
     bool compatible = false;
 
-    // Mengecek mastery level item
-    if (masteryLevel != 1) {
-        throw ItemException(0);
-    }
-
     // Mengecek kecocokan skill item dengan engimon
     for (int i = 0; i < (int)e.getElementCount(); i++) {
         for (int j = 0; j < (int)elements.size(); j++) {
@@ -91,14 +86,23 @@ void Item::learn(Engimon& e, const Dex& dex) {
     // Mengecek apakah skill sudah dipelajari atau belum
     for (int i = 0; i < e.getSkillsCount(); i++) {
         if (e.getSkillByIndex(i).getName() == name) {
-            throw ItemException(2);
+            // throw ItemException(2);
+            Skill& temp = e.getSkillByIndex(i);
+            temp.setMasteryLevel(temp.getMasteryLevel() + masteryLevel);
+            quantity--;
+            return;
         }
     }
-
+    
+    // Mengecek mastery level item
+    if (masteryLevel != 1) {
+        throw ItemException(0);
+    }
+    
     // Mengecek jumlah skills yang telah dilajari
     if (e.getSkillsCount() == e.maxSkills) {
         int old;
-        for (int i = 0; e.maxSkills; i++) {
+        for (int i = 0; i < (int)e.maxSkills; i++) {
             cout << i + 1 << ". " << e.getSkillByIndex(i).getName() << endl;
         }
         cout << "Pilih nomor skill untuk diganti dengan skill baru: ";

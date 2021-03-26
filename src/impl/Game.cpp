@@ -389,6 +389,7 @@ void Game::run() {
         }
 
         string input;
+        int input2;
         map.printMap();
         printCommandHelp();
         cout << "Masukkan input: ";
@@ -450,14 +451,22 @@ void Game::run() {
                         }
                         break;
                     case '5':
+                        try {
+                            this->player.engimonIsEmpty();
+                            this->player.showEngimon();
+                            cout << "Pilih engimon: ";
+                            cin >> input;
+                        } catch (InventoryException& e) {
+                            cout << e.what() << endl;
+                        }
                         // Pakai skill item
                         try {
                             this->player.itemIsEmpty();
                             try {
                                 this->player.showItem();
                                 cout << "Pilih item skill: ";
-                                cin >> input;
-                                // this->player.useItem(input);
+                                cin >> input2;
+                                this->player.useItem(atoi(input.c_str()) - 1, input2 - 1, dex);
                             } catch (ItemException& e) {
                                 cout << e.what() << endl;
                             }
