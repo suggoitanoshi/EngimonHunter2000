@@ -145,10 +145,8 @@ void Engimon::showEngimon() {
     }
     cout << endl;
     // getEngiInfo();
-    cout << "Parent 1\t\t\t: " << get<0>(parents[0]) << " "
-         << get<1>(parents[0]) << endl;
-    cout << "Parent 2\t\t\t: " << get<0>(parents[1]) << " "
-         << get<1>(parents[1]) << endl;
+    cout << "Parent 1\t\t\t: " << get<0>(parents[0]) << " " << get<1>(parents[0]) << endl;
+    cout << "Parent 2\t\t\t: " << get<0>(parents[1]) << " " << get<1>(parents[1]) << endl;
 
     for (size_t i = 0; i < getSkills().size(); i++) {
         cout << endl;

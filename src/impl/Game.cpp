@@ -82,6 +82,9 @@ void Game::printCommandHelp() {
         << "7. Lakukan Battle            | 8. Lihat data lengkap Engimon pemain"
         << endl;
     cout
+        << "9. Interaksi dengan Engimon"
+        << endl;
+    cout
         << "-------------------------------------------------------------------"
         << endl;
 }
@@ -437,7 +440,7 @@ void Game::run() {
                     case '3':
                         // Ganti active engi
                         this->player.showEngimon();
-                        cout << "Masukkan nama engimon: ";
+                        cout << "Pilih engimon: ";
                         cin >> input;
                         try {
                             this->player.switchEngimon(atoi(input.c_str()) - 1);
@@ -514,13 +517,17 @@ void Game::run() {
                             cout << e.what() << endl;
                         }
                         break;
+                    case '9':
+                        // Interaksi
+                        this->player.interact();
+                        break;
                     default:
                         cout << "Masukan salah, ulangi masukan" << endl;
                         break;
                 }
                 countTurn++;
             } catch (GameException& e) {
-                cout << "Kamu tidak bisa bergerak ke situ" << endl;
+                cout << e.what() << endl;
             }
         }
         cout << "==================================================================="
