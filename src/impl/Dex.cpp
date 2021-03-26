@@ -1,6 +1,7 @@
 #include "../headers/Dex.hpp"
 
 #include <algorithm>
+#include <cstdint>
 #include <cstdio>
 #include <cstdlib>
 #include <iostream>
@@ -11,11 +12,7 @@ using namespace std;
 
 #include "../../include/Parser.hpp"
 
-Dex::Dex() {
-    readEngiDex("data/Engimons.csv");
-    readSkillDex("data/Skills.csv");
-}
-
+Dex::Dex() : Dex("data/Engimons.csv", "data/Skills.csv") {}
 Dex::Dex(const string engiData, const string skillData) {
     readEngiDex(engiData);
     readSkillDex(skillData);
@@ -80,7 +77,7 @@ void Dex::readSkillDex(const string path) {
     for (vector<string> engimon : engimons) {
         int i = 0;
         string skillName;
-        unsigned skillBasePower;
+        int skillBasePower = INT32_MIN;
         vector<Elements::el> elements;
 
         for (string metadata : engimon) {
@@ -100,7 +97,7 @@ void Dex::readSkillDex(const string path) {
             }
             ++i;
         }
-        if (elements.size() == 0 || skillBasePower == 0) {
+        if (elements.size() == 0 || skillBasePower == INT32_MIN) {
             throw DexException(0);
         }
 
@@ -155,9 +152,21 @@ void Dex::showEngimons() const {
     unsigned no = 1;
     for (pair<string, EngimonSpecies> engi : engiDex) {
         char buff[7];
-        sprintf(buff, "%03d. ",no++);
+        sprintf(buff, "%03d. ", no++);
         string formattedNo = buff;
-        cout << formattedNo << engi.first << '\n';
+        cout << formattedNo << engi.first;
+        cout << "\t\t";
+
+        int i = 0;
+        for (Elements::el el : engi.second.getElements()) {
+            cout << Elements::getName(el);
+            if ((size_t)i < engi.second.getElements().size() - 1) {
+                cout << ", ";
+            }
+            ++i;
+        }
+
+        cout << '\n';
     }
     cout << endl;
 }

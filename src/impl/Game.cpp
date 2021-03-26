@@ -24,8 +24,8 @@ Game::Game() {
     srand(time(0));
 
     int pX = rand() % mapX, pY = rand() % mapY;
-    pX = pX == 0 ? 1 : pX == mapX - 1 ? mapX - 1 : pX;
-    pY = pY == 0 ? 1 : pY == mapY - 1 ? mapY + 1 : pY;
+    pX = pX == 0 ? 1 : pX == mapX - 1 ? mapX - 2 : pX;
+    pY = pY == 0 ? 1 : pY == mapY - 1 ? mapY + 2 : pY;
     int eX = pX == 1 ? 2 : pX - 1;
     int eY = pY;
 
@@ -65,19 +65,23 @@ void Game::printGameIntro() {
 }
 
 void Game::printCommandHelp() {
-    cout << "------------------------C O M M A N D-----------------------"
-         << endl;
+    cout
+        << "--------------------------C O M M A N D----------------------------"
+        << endl;
     cout << "     W:atas  A:kiri  S:bawah  D:kanan  X:Keluar game" << endl;
-    cout << "------------------------------------------------------------"
+    cout
+        << "-------------------------------------------------------------------"
+        << endl;
+    cout << "1. Lihat list engimon pemain | 2. Lihat seluruh engimon" << endl;
+    cout << "3. Ganti active engimon      | 4. Lihat list skill item pemain"
          << endl;
-    cout << "1. Lihat list engimon saya | 2. Lihat seluruh engimon" << endl;
-    cout << "3. Ganti active engimon    | 4. Lihat list skill item saya"
-         << endl;
-    cout << "5. Gunakan skill item      | 6. Lakukan breeding" << endl;
-    cout << "7. Lakukan Battle          | 8. Lihat data lengkap Engimon"
-         << endl;
-    cout << "------------------------------------------------------------"
-         << endl;
+    cout << "5. Gunakan skill item        | 6. Lakukan breeding" << endl;
+    cout
+        << "7. Lakukan Battle            | 8. Lihat data lengkap Engimon pemain"
+        << endl;
+    cout
+        << "-------------------------------------------------------------------"
+        << endl;
 }
 
 void Game::engimonFollowPlayer(int x, int y) {
