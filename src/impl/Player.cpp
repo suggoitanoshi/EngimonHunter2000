@@ -1,12 +1,7 @@
 #include "../headers/Player.hpp"
 
-Player::Player()
-    : name("yee"),
-      // engimon pertama akan dikonstruk di sini
-      listEngimon(),
-      listItem(),
-      position(make_tuple(1, 1)),
-      dir('a') {}
+Player::Player() : name("yee"), activeEngi(EngimonSpecies()),
+listEngimon(), listItem(), position(make_tuple(1, 1)), dir('a') {}
 
 string Player::getName() const { return name; }
 Engimon Player::getActiveEngimon() const { return activeEngi; }
@@ -46,6 +41,10 @@ int Player::getItemIdxFromName(string _itemName) {
     return listItem.getFirstItemIndex(temp);
 }
 
+bool Player::isEngimonEmpty() const { return listEngimon.getItemCount() == 0; }
+bool Player::isItemEmpty() const { return listItem.getItemCount() == 0; }
+bool Player::isInventoryFull() const { return listEngimon.isFull(); }
+
 void Player::setName(string _name) { name = _name; }
 
 void Player::setPosition(tuple<int, int> pos) { position = pos; }
@@ -70,7 +69,7 @@ void Player::switchEngimon(string engiName) {
 void Player::showEngimon(string engiName) {
     getEngimonFromName(engiName).showEngimon();
 }
-void Player::showEngimon() const { 
+void Player::showEngimon() const {
     cout << "Engimon di dalam Inventory: " << endl;
     listEngimon.showInventory();
 }
@@ -91,7 +90,7 @@ void Player::showItem(string _item) {
     Item temp = getItemFromName(_item);
     temp.showItem();
 }
-void Player::showItem() const { 
+void Player::showItem() const {
     cout << "Skill Item di dalam Inventory: " << endl;
     listItem.showInventory();
 }
@@ -104,13 +103,13 @@ void Player::useItem(string engiName, string _item, const Dex& dex) {
     }
 }
 
-void Player::addItem(Item _item) { listItem.addItem(_item); }
+void Player::addItem(Item _item) { listItem.addItemNoDupe(_item); }
 void Player::addItem(string _item) {
     Item temp = getItemFromName(_item);
     addItem(temp);
 }
 
-void Player::removeItem(Item _item) { listItem.removeItem(_item); }
+void Player::removeItem(Item _item) { listItem.removeItemNoDupe(_item); }
 void Player::removeItem(string _item) {
     Item temp = getItemFromName(_item);
     removeItem(temp);
