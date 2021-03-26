@@ -436,7 +436,7 @@ void Game::run() {
                     case '3':
                         // Ganti active engi
                         this->player.showEngimon();
-                        cout << "Masukkan nama engimon: ";
+                        cout << "Pilih engimon: ";
                         cin >> input;
                         try {
                             this->player.switchEngimon(atoi(input.c_str()) - 1);
