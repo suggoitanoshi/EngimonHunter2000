@@ -117,6 +117,17 @@ void Game::printCommandHelp(){
          << endl;
 }
 
+void Game::movePlayerDelta(int dx, int dy){
+    int newx, newy;
+    newx = this->player.getPositionX()+dx;
+    newy = this->player.getPositionY()+dy;
+    if(newx < 1 || newx > 30 || newy < 1 || newy > 14){
+        throw GameException(0);
+    }
+    this->player.setPositionX(newx);
+    this->player.setPositionY(newy);
+}
+
 Engimon Game::makeRandomEngimon() const {
     int idx = rand() % dex.getEngiDex().size();
     bool compat;
@@ -258,57 +269,55 @@ void Game::run() {
         if (input.length() != 1) {
             cout << "Masukan salah, silakan ulangi masukan" << endl;
         } else {
-            if ((char)tolower(input[0]) == 'w') {
-                try {
-                    if (this->player.getPositionY() - 1 == 0) {
-                        throw(this->player.getPositionY());
-                    }
-                    this->player.setPositionY(this->player.getPositionY() - 1);
-                    this->player.setDir('w');
-                } catch (int num) {
-                    cout << "Kamu tidak bisa bergerak ke situ" << endl;
+            try{
+                switch(tolower(input[0])){
+                    case 'w':
+                        this->player.setDir('w');
+                        movePlayerDelta(0, -1);
+                        break;
+                    case 'a':
+                        this->player.setDir('a');
+                        movePlayerDelta(-1, 0);
+                        break;
+                    case 's':
+                        this->player.setDir('s');
+                        movePlayerDelta(0, 1);
+                        break;
+                    case 'd':
+                        this->player.setDir('d');
+                        movePlayerDelta(1, 0);
+                        break;
+                    case 'x':
+                        this->isExitGame = true;
+                        break;
+                    case '1':
+                        // List engimon dimiliki
+                        break;
+                    case '2':
+                        // List engimon dex
+                        break;
+                    case '3':
+                        // Ganti active engi
+                        break;
+                    case '4':
+                        // Lihat skill item dimiliki
+                        break;
+                    case '5':
+                        // Pakai skill item
+                        break;
+                    case '6':
+                        // Breeding
+                        break;
+                    case '7':
+                        // Battle
+                        break;
+                    default:
+                        cout << "Masukan salah, ulangi masukan" << endl;
+                        break;
                 }
-            } else if ((char)tolower(input[0]) == 'a') {
-                try {
-                    if (this->player.getPositionX() - 1 == 0) {
-                        throw(this->player.getPositionX());
-                    }
-                    this->player.setPositionX(this->player.getPositionX() - 1);
-                    this->player.setDir('a');
-                } catch (int num) {
-                    cout << "Kamu tidak bisa bergerak ke situ" << endl;
-                }
-            } else if ((char)tolower(input[0]) == 's') {
-                try {
-                    if (this->player.getPositionY() + 1 == 14) {
-                        throw(this->player.getPositionY());
-                    }
-                    this->player.setPositionY(this->player.getPositionY() + 1);
-                    this->player.setDir('s');
-                } catch (int num) {
-                    cout << "Kamu tidak bisa bergerak ke situ" << endl;
-                }
-            } else if ((char)tolower(input[0]) == 'd') {
-                try {
-                    if (this->player.getPositionX() + 1 == 31) {
-                        throw(this->player.getPositionX());
-                    }
-                    this->player.setPositionX(this->player.getPositionX() + 1);
-                    this->player.setDir('d');
-                } catch (int num) {
-                    cout << "Kamu tidak bisa bergerak ke situ" << endl;
-                }
-            } else if ((char)tolower(input[0]) == 'x') {
-                this->isExitGame = true;
-            } else if ((char)tolower(input[0]) == '1') {
-            } else if ((char)tolower(input[0]) == '2') {
-            } else if ((char)tolower(input[0]) == '3') {
-            } else if ((char)tolower(input[0]) == '4') {
-            } else if ((char)tolower(input[0]) == '5') {
-            } else if ((char)tolower(input[0]) == '6') {
-            } else if ((char)tolower(input[0]) == '7') {
-            } else {
-                cout << "Masukan salah, silakan ulangi masukan" << endl;
+            }
+            catch(GameException& e){
+                cout << "Kamu tidak bisa bergerak ke situ" << endl;
             }
         }
         cout << "\n============================================================"
@@ -452,4 +461,12 @@ Engimon& Game::kawin(Engimon& bapak, Engimon& emak) {
         make_tuple(emak.getName(), emak.getSpecies())};
     Engimon* anjay = new Engimon(spesies, name, parents, skillYangDiambil);
     return *anjay;
+}
+
+const string GameException::msg[] = {
+    "Pergerakan tidak valid"};
+
+GameException::GameException(int id) : exceptionID(id) {}
+const char* GameException::what() {
+    return msg[this->exceptionID].c_str();
 }

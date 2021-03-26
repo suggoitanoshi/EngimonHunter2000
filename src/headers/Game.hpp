@@ -34,6 +34,9 @@ private:
     // print command manual
     void printCommandHelp();
 
+    // Move player logi
+    void movePlayerDelta(int, int);
+
     // spawn wild engimon
     /// dapetin list tempat kosong di map
     vector<tuple<int, int>> getEmptyMapTile();
@@ -50,6 +53,16 @@ public:
     void run();
 
     Engimon& kawin(Engimon&, Engimon&);
+};
+
+class GameException : exception {
+private:
+    const int exceptionID;
+    static const string msg[];
+
+public:
+    GameException(int);
+    const char* what();
 };
 
 #endif
