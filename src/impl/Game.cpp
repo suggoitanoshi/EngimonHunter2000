@@ -100,6 +100,9 @@ void Game::printMap() {
         }
         cout << endl;
     }
+}
+
+void Game::printCommandHelp(){
     cout << "------------------------C O M M A N D-----------------------"
          << endl;
     cout << "     W:atas  A:kiri  S:bawah  D:kanan  X:Keluar game" << endl;

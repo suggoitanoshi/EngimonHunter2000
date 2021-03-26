@@ -31,6 +31,9 @@ private:
     void printMap();
     void readMap();
 
+    // print command manual
+    void printCommandHelp();
+
     // spawn wild engimon
     /// dapetin list tempat kosong di map
     vector<tuple<int, int>> getEmptyMapTile();
