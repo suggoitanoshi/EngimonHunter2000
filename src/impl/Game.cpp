@@ -480,11 +480,11 @@ void Game::run() {
                         this->player.showEngimon();
                         try {
                             cout << "Pilih engimon 1: ";
-                            cin >> input;
-                            A = player.getEngimonFromName(input);
+                            cin >> input2;
+                            A = player.getEngimonById(input2-1);
                             cout << "Pilih engimon 2: ";
-                            cin >> input;
-                            B = player.getEngimonFromName(input);
+                            cin >> input2;
+                            B = player.getEngimonById(input2-1);
                             HasilKawin = kawin(A, B);
                             this->player.addEngimon(HasilKawin);
                         } catch (InventoryException& e) {
