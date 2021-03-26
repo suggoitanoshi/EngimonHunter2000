@@ -73,7 +73,7 @@ public:
     /**
      * Dapatkan index item `item` pertama
      */
-    int getFirstItemIndex(T item) {
+    int getFirstItemIndex(T& item) {
         size_t i;
         if (this->getTotalItemCount() > 0) {
             i = 0;
