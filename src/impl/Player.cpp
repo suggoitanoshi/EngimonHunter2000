@@ -70,7 +70,7 @@ void Player::switchEngimon(int engi) {
 }
 
 void Player::showEngimon(int idx) { listEngimon[idx].showEngimon(); }
-void Player::showEngimon() const {
+void Player::showEngimon() {
     cout << "Engimon di dalam Inventory: " << endl;
     listEngimon.showInventory();
 }
