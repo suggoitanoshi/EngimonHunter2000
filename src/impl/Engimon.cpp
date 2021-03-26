@@ -92,7 +92,7 @@ void Engimon::addExp(int oexp) {
     }
     if (cexp >= maxCumulExp) {
         delete this;
-        // throw "Engimon dihapus dari program";
+        throw "Engimon dihapus dari program";
     }
 }
 unsigned Engimon::getBattlePower(int elmtAdv) {

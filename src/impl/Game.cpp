@@ -221,7 +221,7 @@ vector<tuple<int, int>> Game::getEmptyMapTile() const {
 void Game::spawnWildEngimon(unsigned count) {
     wildEngimonLevelBound = (unsigned)player.getActiveEngimon().getLvl() + 5;
     wildEngimonCaptilizeTileCharLevelBound =
-        (unsigned)(player.getActiveEngimon().getLvl() / 2) + 1;
+        (unsigned)player.getActiveEngimon().getLvl();
     wildEngimonMoveSetBound = (unsigned)player.getActiveEngimon().getLvl() / 25;
 
     unordered_map<string, EngimonSpecies> engies = dex.getEngiDex();
@@ -335,6 +335,7 @@ void Game::battle() {
             surroundingEngi.push_back(e);
         }
     }
+
     if (surroundingEngi.size() == 0)
         throw GameException(1);
     else if (surroundingEngi.size() == 1)
@@ -348,15 +349,18 @@ void Game::battle() {
         }
         cin >> i;
         if (i > surroundingEngi.size()) throw GameException(2);
+        i--;
         engi = surroundingEngi[i];
     }
+
     Battle b;
     bool succ = b.runBattle(this->player.getActiveEngimon(), engi);
     if (succ) {
         this->player.addEngimon(Engimon(engi));
         for (it = wildEngimons.begin(); !(*it == engi); ++it)
             ;
-        map.setTileToOriginal(get<0>(it->getPosition()), get<1>(it->getPosition()));
+        map.setTileToOriginal(get<0>(it->getPosition()),
+                              get<1>(it->getPosition()));
         player.getActiveEngimon().addExp(it->getLvl() * 4);
         wildEngimons.erase(it);
     } else {
@@ -375,7 +379,7 @@ void Game::run() {
     int countTurn = 0;
 
     do {
-        //spawnWildEngimon(wildEngimonCount - wildEngimons.size());
+        // spawnWildEngimon(wildEngimonCount - wildEngimons.size());
         if (countTurn % 3 == 0) {
             try {
                 moveWildEngimons();

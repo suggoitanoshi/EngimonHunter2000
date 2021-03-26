@@ -2,8 +2,8 @@
 
 Player::Player()
     : name("yee"),
-      position(make_tuple(1, 1)),
       // constructor objek lain udah immplied
+      position(make_tuple(1, 1)),
       dir('a') {
     addEngimon(activeEngi);
 }
@@ -66,7 +66,7 @@ void Player::switchEngimon(int engi) {
     activeEngi = listEngimon[engi];
 }
 
-void Player::showEngimon(int engi) { listEngimon[engi].showEngimon(); }
+void Player::showEngimon(int idx) { listEngimon[idx].showEngimon(); }
 void Player::showEngimon() const {
     cout << "Engimon di dalam Inventory: " << endl;
     listEngimon.showInventory();

@@ -12,9 +12,9 @@ using namespace std;
 class Player {
 protected:
     string name;
-    Engimon activeEngi;
     Inventory<Engimon> listEngimon;
     Inventory<Item> listItem;
+    Engimon activeEngi;
     tuple<int, int> position;
     char dir;
 
