@@ -5,11 +5,11 @@ Player::Player()
       // constructor objek lain udah immplied
       position(make_tuple(1, 1)),
       dir('a') {
-    addEngimon(activeEngi);
+    addEngimon(Engimon());
 }
 
 string Player::getName() const { return name; }
-Engimon& Player::getActiveEngimon() { return activeEngi; }
+Engimon& Player::getActiveEngimon() { return listEngimon[activeEngi]; }
 
 tuple<int, int> Player::getPosition() const { return position; }
 int Player::getPositionX() const { return get<0>(position); }
@@ -57,16 +57,15 @@ void Player::setPositionY(int y) { get<1>(position) = y; }
 
 void Player::setDir(char _dir) { dir = _dir; }
 
-void Player::checkActiveEngimon() { activeEngi.showEngimon(); }
+void Player::checkActiveEngimon() { listEngimon[activeEngi].showEngimon(); }
 
 void Player::switchEngimon(int engi) {
-    int beforeEngi = listEngimon.getFirstItemIndex(activeEngi);
-    listEngimon[beforeEngi].setPos(-1, -1);
+    tuple<int, int> currPos = listEngimon[activeEngi].getPosition();
+    listEngimon[activeEngi].setPos(-1, -1);
 
-    tuple<int, int> currPos = activeEngi.getPosition();
     listEngimon[engi].setPos(get<0>(currPos), get<1>(currPos));
 
-    activeEngi = listEngimon[engi];
+    activeEngi = engi;
 }
 
 void Player::showEngimon(int idx) { listEngimon[idx].showEngimon(); }
@@ -81,7 +80,7 @@ void Player::addEngimon(string engi) {
     addEngimon(temp);
 }
 
-void Player::removeEngimon(Engimon engi) { listEngimon.removeItem(engi); }
+void Player::removeEngimon(Engimon& engi) { listEngimon.removeItem(engi); }
 void Player::removeEngimon(string engi) {
     Engimon temp = getEngimonFromName(engi);
     removeEngimon(temp);
@@ -116,7 +115,7 @@ void Player::removeItem(string _item) {
     removeItem(temp);
 }
 
-void Player::interact() const { activeEngi.interact(); }
+void Player::interact() { listEngimon[activeEngi].interact(); }
 
 void Player::engimonIsEmpty() {
     if (listEngimon.getItemCount() == 0) throw InventoryException(1);

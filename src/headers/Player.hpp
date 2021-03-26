@@ -14,7 +14,7 @@ protected:
     string name;
     Inventory<Engimon> listEngimon;
     Inventory<Item> listItem;
-    Engimon activeEngi;
+    int activeEngi;
     tuple<int, int> position;
     char dir;
 
@@ -49,7 +49,7 @@ public:
     void showEngimon();
     void addEngimon(Engimon);
     void addEngimon(string);
-    void removeEngimon(Engimon);
+    void removeEngimon(Engimon&);
     void removeEngimon(string);
     void showItem(string);
     void showItem(int);
@@ -59,7 +59,7 @@ public:
     void addItem(string);
     void removeItem(Item);
     void removeItem(string);
-    void interact() const;
+    void interact();
     void engimonIsEmpty();
     void itemIsEmpty();
     void inventoryIsFull();
