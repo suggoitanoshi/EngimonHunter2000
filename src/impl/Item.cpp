@@ -57,7 +57,8 @@ bool Item::operator==(const Item& sblh) const {
 }
 
 ostream& operator<<(ostream& os, const Item& src) {
-    os << "Name\t:" << src.getName() << "\n";
+    os <<  src.getName();
+    os << "\t(" << src.quantity << ")\n";
     return os;
 }
 
