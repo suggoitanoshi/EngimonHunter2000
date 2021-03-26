@@ -238,10 +238,6 @@ void Game::run() {
     printGameIntro();
     this->spawnWildEngimon(wildEngimonCount);
 
-    for (Engimon e : wildEngimons) {
-        e.showEngimon();
-    }
-
     do {
         string input;
         map.printMap();

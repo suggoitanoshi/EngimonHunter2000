@@ -97,12 +97,13 @@ void Engimon::setLevel(int level) {
 void Engimon::addExp(int oexp) {
     exp += oexp;
     cexp += oexp;
-    if (exp >= 100) {
+    while (exp >= 100) {
         exp -= 100;
         lvl++;
     }
     if (cexp >= maxCumulExp) {
-        throw "Engimon dihapus dari program";
+        delete this;
+        //throw "Engimon dihapus dari program";
     }
 }
 unsigned Engimon::getBattlePower(int elmtAdv) {
@@ -152,7 +153,7 @@ void Engimon::showEngimon() const {
     cout << "Name\t\t\t\t: " << name << "\n";
     cout << "Level\t\t\t\t: " << lvl << "\n";
     cout << "Experience\t\t\t: " << exp << "\n";
-    cout << "Cumulative Experience/Maximum\t: " << exp << "/" << maxCumulExp
+    cout << "Cumulative Experience/Maximum\t: " << cexp << "/" << maxCumulExp
          << "\n";
     cout << "Element(s)\t\t\t: ";
     for (size_t i = 0; i < els.size(); i++) {
