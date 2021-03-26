@@ -67,9 +67,7 @@ void Player::switchEngimon(string engiName) {
     activeEngi = listEngimon[afterEngi];
 }
 
-void Player::showEngimon(string engiName) {
-    getEngimonFromName(engiName).showEngimon();
-}
+void Player::showEngimon(int engi) { listEngimon[engi].showEngimon(); }
 void Player::showEngimon() const {
     cout << "Engimon di dalam Inventory: " << endl;
     listEngimon.showInventory();
@@ -91,6 +89,7 @@ void Player::showItem(string _item) {
     Item temp = getItemFromName(_item);
     temp.showItem();
 }
+void Player::showItem(int _item) { listItem[_item].showItem(); }
 void Player::showItem() const {
     cout << "Skill Item di dalam Inventory: " << endl;
     listItem.showInventory();
