@@ -308,51 +308,51 @@ void Game::moveWildEngimons() {
     }
 }
 
-void Game::battle(){
+void Game::battle() {
     vector<Engimon> surroundingEngi;
     unsigned char dx, dy;
     Engimon& engi = wildEngimons[0];
     int i;
-    for(Engimon& e: wildEngimons){
+    for (Engimon& e : wildEngimons) {
         dx = get<0>(e.getPosition()) - player.getPositionX();
         dx = abs(dx);
         dy = get<1>(e.getPosition()) - player.getPositionY();
         dy = abs(dy);
-        if((dx == 1 && dy == 0) || (dy == 1 && dx == 0)){
+        if ((dx == 1 && dy == 0) || (dy == 1 && dx == 0)) {
             surroundingEngi.push_back(e);
         }
     }
-    if(surroundingEngi.size() == 0) throw GameException(1);
-    else if(surroundingEngi.size() == 1) engi = surroundingEngi[0];
-    else{ // surroundingEngi.size() > 1
+    if (surroundingEngi.size() == 0)
+        throw GameException(1);
+    else if (surroundingEngi.size() == 1)
+        engi = surroundingEngi[0];
+    else {  // surroundingEngi.size() > 1
         cout << "Pilih engimon: " << endl;
-        for(i = 0; i < surroundingEngi.size(); i++){
+        for (i = 0; i < surroundingEngi.size(); i++) {
             Engimon& e = surroundingEngi[i];
-            cout << i+1 << ". ";
+            cout << i + 1 << ". ";
             cout << e.getName() << "(" << e.getLvl() << ")" << endl;
         }
         cin >> i;
-        if(i > surroundingEngi.size()) throw GameException(2);
+        if (i > surroundingEngi.size()) throw GameException(2);
         engi = surroundingEngi[i];
     }
     Battle b;
     bool succ = b.runBattle(this->player.getActiveEngimon(), engi);
-    if(succ){
+    if (succ) {
         this->player.addEngimon(engi);
         i = 0;
-        while(i < wildEngimons.size()){
-            if(wildEngimons[i] == engi) break;
+        while (i < wildEngimons.size()) {
+            if (wildEngimons[i] == engi) break;
             i++;
         }
         wildEngimons.erase(wildEngimons.begin() + i);
-    }
-    else{
+    } else {
         this->player.removeEngimon(this->player.getActiveEngimon());
-        try{
+        try {
             this->player.switchEngimon(0);
-        }
-        catch(InventoryException& e){
-            cout << "Game Over~"<< endl;
+        } catch (InventoryException& e) {
+            cout << "Game Over~" << endl;
             this->isExitGame = 1;
         }
     }
@@ -641,7 +641,9 @@ Engimon& Game::kawin(Engimon& bapak, Engimon& emak) {
     return *anjay;
 }
 
-const string GameException::msg[] = {"Pergerakan tidak valid", "Tidak ada engimon di sekitar", "Pilihan tidak valid"};
+const string GameException::msg[] = {"Pergerakan tidak valid",
+                                     "Tidak ada engimon di sekitar",
+                                     "Pilihan tidak valid"};
 
 GameException::GameException(int id) : exceptionID(id) {}
 const char* GameException::what() { return msg[this->exceptionID].c_str(); }
