@@ -103,6 +103,8 @@ public:
      */
     int getItemCount() const { return items; }
 
+    bool isFull() const { return this->getTotalItemCount() == this->getMaxCapacity(); }
+
     ~Inventory() {
         int i;
         for (i = 0; i < this->getItemCount(); i++) {
