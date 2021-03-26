@@ -92,7 +92,7 @@ void Engimon::addExp(int oexp) {
     }
     if (cexp >= maxCumulExp) {
         delete this;
-        //throw "Engimon dihapus dari program";
+        // throw "Engimon dihapus dari program";
     }
 }
 unsigned Engimon::getBattlePower(int elmtAdv) {
@@ -114,7 +114,9 @@ void Engimon::getEngiInfo() {
 }
 
 bool Engimon::operator==(const Engimon& Eng) const {
-    return (name == Eng.name && species == Eng.species);
+    return name == Eng.name && species == Eng.species && cexp == Eng.cexp &&
+           skills == Eng.skills && parents == Eng.parents && lvl == Eng.lvl &&
+           exp == Eng.exp && location == Eng.location;
 }
 
 Engimon& Engimon::operator=(const Engimon& Eng) {
@@ -141,7 +143,7 @@ void Engimon::showEngimon() const {
     vector<Elements::el> els = getElements();
     cout << "Name\t\t\t\t: " << name << "\n";
     cout << "Level\t\t\t\t: " << lvl << "\n";
-    cout << "Experience\t\t\t: " << exp << "\n";
+    cout << "Experience\t\t\t: " << exp << "/" << 100 << "\n";
     cout << "Cumulative Experience/Maximum\t: " << cexp << "/" << maxCumulExp
          << "\n";
     cout << "Element(s)\t\t\t: ";

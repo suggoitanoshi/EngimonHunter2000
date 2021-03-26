@@ -35,11 +35,6 @@ Game::Game() {
     map.setTile(pX, pY, MapTile::PLAYER);       // buat player
     map.setTile(eX, eY, MapTile::ACTIVE_ENGI);  // buat active engimon
 
-    wildEngimonLevelBound = (unsigned)player.getActiveEngimon().getLvl();
-    wildEngimonCaptilizeTileCharLevelBound =
-        (unsigned)(player.getActiveEngimon().getLvl() / 2) + 1;
-    wildEngimonMoveSetBound = (unsigned)player.getActiveEngimon().getLvl() / 25;
-
     spawnWildEngimon(wildEngimonCount);
 
     player.addItem(Item(dex.getSkill("Tackle"), 10));
@@ -224,6 +219,11 @@ vector<tuple<int, int>> Game::getEmptyMapTile() const {
 }
 
 void Game::spawnWildEngimon(unsigned count) {
+    wildEngimonLevelBound = (unsigned)player.getActiveEngimon().getLvl() + 5;
+    wildEngimonCaptilizeTileCharLevelBound =
+        (unsigned)(player.getActiveEngimon().getLvl() / 2) + 1;
+    wildEngimonMoveSetBound = (unsigned)player.getActiveEngimon().getLvl() / 25;
+
     unordered_map<string, EngimonSpecies> engies = dex.getEngiDex();
     // dapetin tile kosong
     vector<tuple<int, int>> freeSpaces = getEmptyMapTile();
@@ -243,6 +243,8 @@ void Game::spawnWildEngimon(unsigned count) {
             tuple<int, int> pos = freeSpaces[randIdx];
             vector<Elements::el> engieEl = engie.getElements();
             char engieChar = 0;
+            bool isCapitilized = (unsigned)engie.getLvl() >=
+                                 wildEngimonCaptilizeTileCharLevelBound;
 
             // cari tipenya
             if (engieEl.size() == 2) {
@@ -250,26 +252,26 @@ void Game::spawnWildEngimon(unsigned count) {
                       engieEl[1] == Elements::WATER) ||
                      (engieEl[0] == Elements::WATER &&
                       engieEl[1] == Elements::ICE))) {
-                    engieChar = 'S';
+                    engieChar = 'S' * isCapitilized + 's' * !isCapitilized;
                 } else if (((engieEl[0] == Elements::WATER &&
                              engieEl[1] == Elements::GROUND) ||
                             (engieEl[0] == Elements::GROUND &&
                              engieEl[1] == Elements::WATER))) {
-                    engieChar = 'N';
+                    engieChar = 'N' * isCapitilized + 'n' * !isCapitilized;
                 } else {
-                    engieChar = 'L';
+                    engieChar = 'L' * isCapitilized + 'l' * !isCapitilized;
                 }
             } else {  // ukurannya 1
                 if (engieEl[0] == Elements::FIRE) {
-                    engieChar = 'F';
+                    engieChar = 'F' * isCapitilized + 'f' * !isCapitilized;
                 } else if (engieEl[0] == Elements::ICE) {
-                    engieChar = 'I';
+                    engieChar = 'I' * isCapitilized + 'i' * !isCapitilized;
                 } else if (engieEl[0] == Elements::WATER) {
-                    engieChar = 'W';
+                    engieChar = 'W' * isCapitilized + 'w' * !isCapitilized;
                 } else if (engieEl[0] == Elements::GROUND) {
-                    engieChar = 'G';
+                    engieChar = 'G' * isCapitilized + 'g' * !isCapitilized;
                 } else {
-                    engieChar = 'E';
+                    engieChar = 'E' * isCapitilized + 'e' * !isCapitilized;
                 }
             }
 
@@ -322,6 +324,8 @@ void Game::battle() {
     int dx, dy;
     Engimon& engi = wildEngimons[0];
     size_t i;
+    vector<Engimon>::iterator it;
+
     for (Engimon& e : wildEngimons) {
         dx = get<0>(e.getPosition()) - player.getPositionX();
         dx = abs(dx);
@@ -340,7 +344,7 @@ void Game::battle() {
         for (i = 0; i < surroundingEngi.size(); i++) {
             Engimon& e = surroundingEngi[i];
             cout << i + 1 << ". ";
-            cout << e.getName() << "(" << e.getLvl() << ")" << endl;
+            cout << e.getName() << " (" << e.getLvl() << ")" << endl;
         }
         cin >> i;
         if (i > surroundingEngi.size()) throw GameException(2);
@@ -349,13 +353,12 @@ void Game::battle() {
     Battle b;
     bool succ = b.runBattle(this->player.getActiveEngimon(), engi);
     if (succ) {
-        this->player.addEngimon(engi);
-        i = 0;
-        while (i < wildEngimons.size()) {
-            if (wildEngimons[i] == engi) break;
-            i++;
-        }
-        wildEngimons.erase(wildEngimons.begin() + i);
+        this->player.addEngimon(Engimon(engi));
+        for (it = wildEngimons.begin(); !(*it == engi); ++it)
+            ;
+        map.setTileToOriginal(get<0>(it->getPosition()), get<1>(it->getPosition()));
+        player.getActiveEngimon().addExp(it->getLvl() * 4);
+        wildEngimons.erase(it);
     } else {
         this->player.removeEngimon(this->player.getActiveEngimon());
         try {
@@ -372,11 +375,7 @@ void Game::run() {
     int countTurn = 0;
 
     do {
-        wildEngimonLevelBound = (unsigned)player.getActiveEngimon().getLvl();
-        wildEngimonCaptilizeTileCharLevelBound =
-            (unsigned)(player.getActiveEngimon().getLvl() / 2) + 1;
-
-        spawnWildEngimon(wildEngimonCount - wildEngimons.size());
+        //spawnWildEngimon(wildEngimonCount - wildEngimons.size());
         if (countTurn % 3 == 0) {
             try {
                 moveWildEngimons();
