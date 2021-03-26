@@ -292,11 +292,21 @@ void Game::run() {
                         break;
                     case '1':
                         // List engimon dimiliki
+                        this->player.showEngimon();
                         break;
                     case '2':
                         // List engimon dex
                         break;
                     case '3':
+                        this->player.showEngimon();
+                        cout << "Masukkan nama engimon: ";
+                        cin >> input;
+                        try{
+                            this->player.switchEngimon(input);
+                        }
+                        catch(InventoryException e){
+                            cout << e.what() << endl;
+                        }
                         // Ganti active engi
                         break;
                     case '4':
