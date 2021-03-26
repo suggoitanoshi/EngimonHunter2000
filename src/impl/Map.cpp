@@ -52,8 +52,8 @@ void Map::setTileToOriginal(unsigned x, unsigned y) {
 void Map::printMap() const {
     cout << "--------------------------P E T A--------------------------"
          << endl;
-    for (int i = 0; i < 15; i++) {
-        for (int j = 0; j < 32; j++) {
+    for (int i = 0; (unsigned)i < mapY; i++) {
+        for (int j = 0; (unsigned)j < mapX; j++) {
             cout << tiles[j][i];
         }
         cout << endl;
