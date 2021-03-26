@@ -516,7 +516,7 @@ void Game::run() {
                 }
                 countTurn++;
             } catch (GameException& e) {
-                cout << "Kamu tidak bisa bergerak ke situ" << endl;
+                cout << e.what() << endl;
             }
         }
         cout << "==================================================================="
