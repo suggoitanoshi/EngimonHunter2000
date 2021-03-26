@@ -1,0 +1,117 @@
+\hypertarget{classEngimon}{}\doxysection{Engimon Class Reference}
+\label{classEngimon}\index{Engimon@{Engimon}}
+
+
+Inheritance diagram for Engimon\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=187pt]{dd/da3/classEngimon__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for Engimon\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=550pt]{da/d13/classEngimon__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classEngimon_a3c82ce46c12c5d4ceb548ce805f96bd1}{Engimon}} (\mbox{\hyperlink{classEngimonSpecies}{Engimon\+Species}} ES=\mbox{\hyperlink{classEngimonSpecies}{Engimon\+Species}}())
+\item 
+\mbox{\Hypertarget{classEngimon_a1997c9156be7a5e08b217a9c08a3d13b}\label{classEngimon_a1997c9156be7a5e08b217a9c08a3d13b}} 
+{\bfseries Engimon} (\mbox{\hyperlink{classEngimonSpecies}{Engimon\+Species}} ES, string oname)
+\item 
+\mbox{\Hypertarget{classEngimon_aa26b425f80e2c2252671a875bb3c4ae3}\label{classEngimon_aa26b425f80e2c2252671a875bb3c4ae3}} 
+{\bfseries Engimon} (\mbox{\hyperlink{classEngimonSpecies}{Engimon\+Species}} ES, string oname, tuple$<$ string, string $>$ oparents\mbox{[}2\mbox{]})
+\item 
+\mbox{\Hypertarget{classEngimon_a83c48a172bb866a691001979422034e6}\label{classEngimon_a83c48a172bb866a691001979422034e6}} 
+{\bfseries Engimon} (\mbox{\hyperlink{classEngimonSpecies}{Engimon\+Species}} ES, string oname, tuple$<$ string, string $>$ oparents\mbox{[}2\mbox{]}, vector$<$ \mbox{\hyperlink{classSkill}{Skill}} $>$ skills)
+\item 
+\mbox{\Hypertarget{classEngimon_a6cf733b338f2ff2c1e40247521dcd131}\label{classEngimon_a6cf733b338f2ff2c1e40247521dcd131}} 
+{\bfseries Engimon} (const \mbox{\hyperlink{classEngimon}{Engimon}} \&)
+\item 
+\mbox{\Hypertarget{classEngimon_ab73717630ac47190899b4e4c7a3c8940}\label{classEngimon_ab73717630ac47190899b4e4c7a3c8940}} 
+string {\bfseries get\+Name} ()
+\item 
+\mbox{\Hypertarget{classEngimon_a089805ce96832fa5536b1b8c8cd409af}\label{classEngimon_a089805ce96832fa5536b1b8c8cd409af}} 
+int {\bfseries get\+Lvl} ()
+\item 
+\mbox{\Hypertarget{classEngimon_aadf8a9fe2904940410401128181be75d}\label{classEngimon_aadf8a9fe2904940410401128181be75d}} 
+unsigned {\bfseries get\+Element\+Count} ()
+\item 
+\mbox{\Hypertarget{classEngimon_a4de1bb7d5633a3ff0d08b63ba710b7c1}\label{classEngimon_a4de1bb7d5633a3ff0d08b63ba710b7c1}} 
+tuple$<$ int, int $>$ {\bfseries get\+Position} ()
+\item 
+\mbox{\Hypertarget{classEngimon_a6534b0f5c1af3765697cc3d73c893515}\label{classEngimon_a6534b0f5c1af3765697cc3d73c893515}} 
+vector$<$ \mbox{\hyperlink{classSkill}{Skill}} $>$ {\bfseries get\+Skills} ()
+\item 
+\mbox{\Hypertarget{classEngimon_aebd838ac28fa49ce96bab9bcea306974}\label{classEngimon_aebd838ac28fa49ce96bab9bcea306974}} 
+\mbox{\hyperlink{classSkill}{Skill}} \& {\bfseries get\+Skill\+By\+Index} (int index)
+\item 
+\mbox{\Hypertarget{classEngimon_a2feaee626685afbea31699807cdaa884}\label{classEngimon_a2feaee626685afbea31699807cdaa884}} 
+int {\bfseries get\+Skills\+Count} ()
+\item 
+\mbox{\Hypertarget{classEngimon_aeb44e9ebffbdada90a9454acff16a77d}\label{classEngimon_aeb44e9ebffbdada90a9454acff16a77d}} 
+void {\bfseries set\+Pos} (int x, int y)
+\item 
+\mbox{\Hypertarget{classEngimon_a2908e5baeb9b493710fdc6fa24c7c2b8}\label{classEngimon_a2908e5baeb9b493710fdc6fa24c7c2b8}} 
+void {\bfseries set\+Skills} (int index, \mbox{\hyperlink{classSkill}{Skill}} oskill)
+\item 
+\mbox{\Hypertarget{classEngimon_a9b15b095c321cb1d345ecdc0f56f1f3c}\label{classEngimon_a9b15b095c321cb1d345ecdc0f56f1f3c}} 
+void {\bfseries set\+Level} (int level)
+\item 
+\mbox{\Hypertarget{classEngimon_a55ce2d06b79b22c734b02530e7f4dd00}\label{classEngimon_a55ce2d06b79b22c734b02530e7f4dd00}} 
+void {\bfseries add\+Exp} (int exp)
+\item 
+\mbox{\Hypertarget{classEngimon_a3b0c3884a00678216a8734ee82bdc08f}\label{classEngimon_a3b0c3884a00678216a8734ee82bdc08f}} 
+unsigned {\bfseries get\+Battle\+Power} (int elmt\+Adv)
+\item 
+\mbox{\Hypertarget{classEngimon_a8f4b5153cfac2d4fd1f998b2d985c995}\label{classEngimon_a8f4b5153cfac2d4fd1f998b2d985c995}} 
+bool {\bfseries operator==} (const \mbox{\hyperlink{classEngimon}{Engimon}} \&Eng) const
+\item 
+\mbox{\Hypertarget{classEngimon_af12c9108075a9f7a605522b9eeb9a774}\label{classEngimon_af12c9108075a9f7a605522b9eeb9a774}} 
+\mbox{\hyperlink{classEngimon}{Engimon}} \& {\bfseries operator=} (const \mbox{\hyperlink{classEngimon}{Engimon}} \&Eng)
+\item 
+\mbox{\Hypertarget{classEngimon_a0a6e64e7e0b07233af99f1022453fe31}\label{classEngimon_a0a6e64e7e0b07233af99f1022453fe31}} 
+void {\bfseries show\+Engimon} ()
+\item 
+\mbox{\Hypertarget{classEngimon_a254bde7a74919cea2328798330a9bfc4}\label{classEngimon_a254bde7a74919cea2328798330a9bfc4}} 
+void {\bfseries interact} () const
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classEngimon_abe74c253a17fa4cc3642e90495002a11}\label{classEngimon_abe74c253a17fa4cc3642e90495002a11}} 
+static const unsigned {\bfseries default\+Level} = 1
+\end{DoxyCompactItemize}
+\doxysubsection*{Friends}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classEngimon_a0a6400e9f536a7e8a31e19fdb7053a35}\label{classEngimon_a0a6400e9f536a7e8a31e19fdb7053a35}} 
+ostream \& {\bfseries operator$<$$<$} (ostream \&os, const \mbox{\hyperlink{classEngimon}{Engimon}} \&src)
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classEngimon_a3c82ce46c12c5d4ceb548ce805f96bd1}\label{classEngimon_a3c82ce46c12c5d4ceb548ce805f96bd1}} 
+\index{Engimon@{Engimon}!Engimon@{Engimon}}
+\index{Engimon@{Engimon}!Engimon@{Engimon}}
+\doxysubsubsection{\texorpdfstring{Engimon()}{Engimon()}}
+{\footnotesize\ttfamily Engimon\+::\+Engimon (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classEngimonSpecies}{Engimon\+Species}}}]{ES = {\ttfamily \mbox{\hyperlink{classEngimonSpecies}{Engimon\+Species}}()} }\end{DoxyParamCaption})}
+
+Engimon.\+cpp y e e wangy wangy
+
+Implementasi class \mbox{\hyperlink{classEngimon}{Engimon}} dan Species\+Engimon 
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+src/headers/Engimon.\+hpp\item 
+src/impl/Engimon.\+cpp\end{DoxyCompactItemize}

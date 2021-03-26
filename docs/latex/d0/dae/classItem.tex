@@ -1,0 +1,75 @@
+\hypertarget{classItem}{}\doxysection{Item Class Reference}
+\label{classItem}\index{Item@{Item}}
+
+
+{\ttfamily \#include $<$Item.\+hpp$>$}
+
+
+
+Inheritance diagram for Item\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=184pt]{d1/d2b/classItem__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for Item\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=184pt]{de/d8d/classItem__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classItem_ac70b57ff6d61c9f4cfdbc26a885c4bfb}\label{classItem_ac70b57ff6d61c9f4cfdbc26a885c4bfb}} 
+{\bfseries Item} (const string, const unsigned, const unsigned, const vector$<$ Elements\+::el $>$ \&, unsigned)
+\item 
+\mbox{\Hypertarget{classItem_a2d4cdf417a63d8e2adafb266e355cf16}\label{classItem_a2d4cdf417a63d8e2adafb266e355cf16}} 
+{\bfseries Item} (const string, const unsigned, const unsigned, const Elements\+::el, unsigned)
+\item 
+\mbox{\Hypertarget{classItem_af485a0b94c768f384f9ae0f96b08666d}\label{classItem_af485a0b94c768f384f9ae0f96b08666d}} 
+{\bfseries Item} (const \mbox{\hyperlink{classSkill}{Skill}} \&, unsigned)
+\item 
+\mbox{\Hypertarget{classItem_afc899efe46f7dc6d85e461cb2ca9ebaf}\label{classItem_afc899efe46f7dc6d85e461cb2ca9ebaf}} 
+{\bfseries Item} (const \mbox{\hyperlink{classItem}{Item}} \&)
+\item 
+\mbox{\Hypertarget{classItem_aab3aff3a74232c4e346e3d30e5dc4c43}\label{classItem_aab3aff3a74232c4e346e3d30e5dc4c43}} 
+\mbox{\hyperlink{classItem}{Item}} \& {\bfseries operator=} (const \mbox{\hyperlink{classItem}{Item}} \&)
+\item 
+\mbox{\Hypertarget{classItem_a0ae93b22e2f07dab10d3032fcf3b7f1e}\label{classItem_a0ae93b22e2f07dab10d3032fcf3b7f1e}} 
+bool {\bfseries operator==} (const \mbox{\hyperlink{classItem}{Item}} \&) const
+\item 
+\mbox{\Hypertarget{classItem_a74f1cc0e5f3dc83b2985a4584d425d56}\label{classItem_a74f1cc0e5f3dc83b2985a4584d425d56}} 
+unsigned {\bfseries get\+Quantity} () const
+\item 
+\mbox{\Hypertarget{classItem_a6bf42fdb605456085882d01ba4a5136d}\label{classItem_a6bf42fdb605456085882d01ba4a5136d}} 
+void {\bfseries set\+Quantity} (unsigned)
+\item 
+\mbox{\Hypertarget{classItem_ad99c7a22d02ac8d59a962b7cc8caecc3}\label{classItem_ad99c7a22d02ac8d59a962b7cc8caecc3}} 
+void {\bfseries learn} (\mbox{\hyperlink{classEngimon}{Engimon}} \&, const \mbox{\hyperlink{classDex}{Dex}} \&)
+\item 
+\mbox{\Hypertarget{classItem_afc08e6466224c1e4d542023bc46117be}\label{classItem_afc08e6466224c1e4d542023bc46117be}} 
+void {\bfseries show\+Item} () const
+\end{DoxyCompactItemize}
+\doxysubsection*{Friends}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classItem_a6c58335972b66b7c4c1b3911b15ec238}\label{classItem_a6c58335972b66b7c4c1b3911b15ec238}} 
+ostream \& {\bfseries operator$<$$<$} (ostream \&os, const \mbox{\hyperlink{classItem}{Item}} \&src)
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+Class untuk item skill yang (dapat) dimiliki \mbox{\hyperlink{classPlayer}{Player}} dan dipelajari oleh \mbox{\hyperlink{classEngimon}{Engimon}} 
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+src/headers/Item.\+hpp\item 
+src/impl/Item.\+cpp\end{DoxyCompactItemize}

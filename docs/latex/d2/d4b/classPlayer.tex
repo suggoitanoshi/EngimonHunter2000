@@ -1,0 +1,150 @@
+\hypertarget{classPlayer}{}\doxysection{Player Class Reference}
+\label{classPlayer}\index{Player@{Player}}
+
+
+Collaboration diagram for Player\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=550pt]{dc/d25/classPlayer__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classPlayer_a4939193fc637f75bf7a11118334dae7e}\label{classPlayer_a4939193fc637f75bf7a11118334dae7e}} 
+string {\bfseries get\+Name} () const
+\item 
+\mbox{\Hypertarget{classPlayer_acf1a9bd6e01cb4b6093244d498909de1}\label{classPlayer_acf1a9bd6e01cb4b6093244d498909de1}} 
+\mbox{\hyperlink{classEngimon}{Engimon}} \& {\bfseries get\+Active\+Engimon} ()
+\item 
+\mbox{\Hypertarget{classPlayer_af6929374b560e7cee395e993b1b28302}\label{classPlayer_af6929374b560e7cee395e993b1b28302}} 
+tuple$<$ int, int $>$ {\bfseries get\+Position} () const
+\item 
+\mbox{\Hypertarget{classPlayer_ab8c53bcaa9c9028b926091f90706cdd2}\label{classPlayer_ab8c53bcaa9c9028b926091f90706cdd2}} 
+int {\bfseries get\+PositionX} () const
+\item 
+\mbox{\Hypertarget{classPlayer_acfa7e2e3507daff18978a23960c4b0fa}\label{classPlayer_acfa7e2e3507daff18978a23960c4b0fa}} 
+int {\bfseries get\+PositionY} () const
+\item 
+\mbox{\Hypertarget{classPlayer_a02bc92105df458a7a699a769d868845c}\label{classPlayer_a02bc92105df458a7a699a769d868845c}} 
+char {\bfseries get\+Dir} () const
+\item 
+\mbox{\Hypertarget{classPlayer_aaf881a7c7760509166e9f2ce4e2dadda}\label{classPlayer_aaf881a7c7760509166e9f2ce4e2dadda}} 
+\mbox{\hyperlink{classEngimon}{Engimon}} \& {\bfseries get\+Engimon\+By\+Id} (int)
+\item 
+\mbox{\Hypertarget{classPlayer_a6603eeadb4c8b01ab99e36e317484d43}\label{classPlayer_a6603eeadb4c8b01ab99e36e317484d43}} 
+\mbox{\hyperlink{classEngimon}{Engimon}} \& {\bfseries get\+Engimon\+From\+Name} (string)
+\item 
+\mbox{\Hypertarget{classPlayer_aa4c50b72db0ba0bcd49caf14fef2b62c}\label{classPlayer_aa4c50b72db0ba0bcd49caf14fef2b62c}} 
+\mbox{\hyperlink{classItem}{Item}} \& {\bfseries get\+Item\+From\+Name} (string)
+\item 
+\mbox{\Hypertarget{classPlayer_a04865ea18a6cc34d78555e48980da9c1}\label{classPlayer_a04865ea18a6cc34d78555e48980da9c1}} 
+int {\bfseries get\+Engimon\+Idx\+From\+Name} (string)
+\item 
+\mbox{\Hypertarget{classPlayer_a969498b46d18205ff8fcfe4ab544e1bf}\label{classPlayer_a969498b46d18205ff8fcfe4ab544e1bf}} 
+int {\bfseries get\+Item\+Idx\+From\+Name} (string)
+\item 
+\mbox{\Hypertarget{classPlayer_a8eaf43a2f2236b21d0101270ecca1483}\label{classPlayer_a8eaf43a2f2236b21d0101270ecca1483}} 
+void {\bfseries set\+Name} (string)
+\item 
+\mbox{\Hypertarget{classPlayer_acd92bcf84aa443064098ef9da56a60ec}\label{classPlayer_acd92bcf84aa443064098ef9da56a60ec}} 
+void {\bfseries set\+Position} (tuple$<$ int, int $>$)
+\item 
+\mbox{\Hypertarget{classPlayer_a2b9e2d42bb5f134160e3fbd103beff5a}\label{classPlayer_a2b9e2d42bb5f134160e3fbd103beff5a}} 
+void {\bfseries set\+PositionX} (int)
+\item 
+\mbox{\Hypertarget{classPlayer_a45856b2ceaf3109a4f33acc3f6d453ee}\label{classPlayer_a45856b2ceaf3109a4f33acc3f6d453ee}} 
+void {\bfseries set\+PositionY} (int)
+\item 
+\mbox{\Hypertarget{classPlayer_a1ad9c1f89ac60336a89e25a13d2a27fc}\label{classPlayer_a1ad9c1f89ac60336a89e25a13d2a27fc}} 
+void {\bfseries set\+Dir} (char)
+\item 
+\mbox{\Hypertarget{classPlayer_ac90ceaa04c6dc340ac401349226c7ac3}\label{classPlayer_ac90ceaa04c6dc340ac401349226c7ac3}} 
+void {\bfseries check\+Active\+Engimon} ()
+\item 
+\mbox{\Hypertarget{classPlayer_a2834640993ea2927eac6b5096942fca6}\label{classPlayer_a2834640993ea2927eac6b5096942fca6}} 
+void {\bfseries switch\+Engimon} (int)
+\item 
+\mbox{\Hypertarget{classPlayer_a44474e3189b33bb03095dd1be3a02b28}\label{classPlayer_a44474e3189b33bb03095dd1be3a02b28}} 
+void {\bfseries show\+Engimon} (int)
+\item 
+\mbox{\Hypertarget{classPlayer_a0b958d2058e8bf53232c124cea3c6f29}\label{classPlayer_a0b958d2058e8bf53232c124cea3c6f29}} 
+void {\bfseries show\+Engimon} ()
+\item 
+\mbox{\Hypertarget{classPlayer_aa986022d6bcc5a2dd074ef0df0fc5edd}\label{classPlayer_aa986022d6bcc5a2dd074ef0df0fc5edd}} 
+void {\bfseries add\+Engimon} (\mbox{\hyperlink{classEngimon}{Engimon}})
+\item 
+\mbox{\Hypertarget{classPlayer_a92341d650842fb3492482050dd19f0b5}\label{classPlayer_a92341d650842fb3492482050dd19f0b5}} 
+void {\bfseries add\+Engimon} (string)
+\item 
+\mbox{\Hypertarget{classPlayer_ac347630d1ef701c823a7a06694b0da61}\label{classPlayer_ac347630d1ef701c823a7a06694b0da61}} 
+void {\bfseries remove\+Engimon} (\mbox{\hyperlink{classEngimon}{Engimon}} \&)
+\item 
+\mbox{\Hypertarget{classPlayer_a58cecc471cc397c9f50404e5251d09f8}\label{classPlayer_a58cecc471cc397c9f50404e5251d09f8}} 
+void {\bfseries remove\+Engimon} (string)
+\item 
+\mbox{\Hypertarget{classPlayer_afa5bfd5090e28f58bb993755096a9907}\label{classPlayer_afa5bfd5090e28f58bb993755096a9907}} 
+void {\bfseries show\+Item} (string)
+\item 
+\mbox{\Hypertarget{classPlayer_a336c8b569131c35341bcefc430065d7f}\label{classPlayer_a336c8b569131c35341bcefc430065d7f}} 
+void {\bfseries show\+Item} (int)
+\item 
+\mbox{\Hypertarget{classPlayer_a013e930553febefe97a1ab9ab5e815b2}\label{classPlayer_a013e930553febefe97a1ab9ab5e815b2}} 
+void {\bfseries show\+Item} () const
+\item 
+\mbox{\Hypertarget{classPlayer_a5fae213dece2de66467970907f18cbfc}\label{classPlayer_a5fae213dece2de66467970907f18cbfc}} 
+void {\bfseries use\+Item} (int, int, const \mbox{\hyperlink{classDex}{Dex}} \&)
+\item 
+\mbox{\Hypertarget{classPlayer_a8209244967af2073876d5bf01a566d7d}\label{classPlayer_a8209244967af2073876d5bf01a566d7d}} 
+void {\bfseries add\+Item} (\mbox{\hyperlink{classItem}{Item}})
+\item 
+\mbox{\Hypertarget{classPlayer_aefbe74d1c5c6637123e7b5804d3bdbf1}\label{classPlayer_aefbe74d1c5c6637123e7b5804d3bdbf1}} 
+void {\bfseries add\+Item} (string)
+\item 
+\mbox{\Hypertarget{classPlayer_a849a4227340a60bd6d5166bf3c436f68}\label{classPlayer_a849a4227340a60bd6d5166bf3c436f68}} 
+void {\bfseries remove\+Item} (\mbox{\hyperlink{classItem}{Item}})
+\item 
+\mbox{\Hypertarget{classPlayer_a8416a124792a093daa5e69aebe8950a9}\label{classPlayer_a8416a124792a093daa5e69aebe8950a9}} 
+void {\bfseries remove\+Item} (string)
+\item 
+\mbox{\Hypertarget{classPlayer_a10bc8c26a58ca8c85cc1289b7817ff27}\label{classPlayer_a10bc8c26a58ca8c85cc1289b7817ff27}} 
+void {\bfseries interact} ()
+\item 
+\mbox{\Hypertarget{classPlayer_ad34623624fec77d42d9bcab9724cf236}\label{classPlayer_ad34623624fec77d42d9bcab9724cf236}} 
+void {\bfseries engimon\+Is\+Empty} ()
+\item 
+\mbox{\Hypertarget{classPlayer_ac6b61167b017a5291bc2e3645d630553}\label{classPlayer_ac6b61167b017a5291bc2e3645d630553}} 
+void {\bfseries item\+Is\+Empty} ()
+\item 
+\mbox{\Hypertarget{classPlayer_affa8cb90c63192b37a9ef31deedc5b55}\label{classPlayer_affa8cb90c63192b37a9ef31deedc5b55}} 
+void {\bfseries inventory\+Is\+Full} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classPlayer_acf0355128a99ee20ad9931b760fb2de1}\label{classPlayer_acf0355128a99ee20ad9931b760fb2de1}} 
+string {\bfseries name}
+\item 
+\mbox{\Hypertarget{classPlayer_ac19c05d3d3f78e200cea3692906f93b6}\label{classPlayer_ac19c05d3d3f78e200cea3692906f93b6}} 
+\mbox{\hyperlink{classInventory}{Inventory}}$<$ \mbox{\hyperlink{classEngimon}{Engimon}} $>$ {\bfseries list\+Engimon}
+\item 
+\mbox{\Hypertarget{classPlayer_a840c9671b360e9b4fa67cdef687d7025}\label{classPlayer_a840c9671b360e9b4fa67cdef687d7025}} 
+\mbox{\hyperlink{classInventory}{Inventory}}$<$ \mbox{\hyperlink{classItem}{Item}} $>$ {\bfseries list\+Item}
+\item 
+\mbox{\Hypertarget{classPlayer_a7bc0dd0070fb75ab71b275a679da4d19}\label{classPlayer_a7bc0dd0070fb75ab71b275a679da4d19}} 
+int {\bfseries active\+Engi}
+\item 
+\mbox{\Hypertarget{classPlayer_a9534a27b472a726e061be2e9779eb145}\label{classPlayer_a9534a27b472a726e061be2e9779eb145}} 
+tuple$<$ int, int $>$ {\bfseries position}
+\item 
+\mbox{\Hypertarget{classPlayer_a4ddecb647197b691c4d365232e6991ed}\label{classPlayer_a4ddecb647197b691c4d365232e6991ed}} 
+char {\bfseries dir}
+\end{DoxyCompactItemize}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+src/headers/Player.\+hpp\item 
+src/impl/Player.\+cpp\end{DoxyCompactItemize}

@@ -1,0 +1,100 @@
+\hypertarget{classMapTile}{}\doxysection{Map\+Tile Class Reference}
+\label{classMapTile}\index{MapTile@{MapTile}}
+
+
+Collaboration diagram for Map\+Tile\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=190pt]{df/d36/classMapTile__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classMapTile_a234a283a9118f249288d67f101735568}\label{classMapTile_a234a283a9118f249288d67f101735568}} 
+enum {\bfseries Tile\+Type} \{ \newline
+{\bfseries WATER}
+, {\bfseries GRASSLAND}
+, {\bfseries EDGE}
+, {\bfseries OCCUPIED\+\_\+W}
+, \newline
+{\bfseries OCCUPIED\+\_\+F}
+, {\bfseries OCCUPIED\+\_\+G}
+, {\bfseries OCCUPIED\+\_\+E}
+, {\bfseries OCCUPIED\+\_\+I}
+, \newline
+{\bfseries OCCUPIED\+\_\+L}
+, {\bfseries OCCUPIED\+\_\+S}
+, {\bfseries OCCUPIED\+\_\+N}
+, {\bfseries PLAYER}
+, \newline
+{\bfseries ACTIVE\+\_\+\+ENGI}
+ \}
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classMapTile_a40647e6d567d577778e81a81b7047217}{Map\+Tile}} ()
+\item 
+\mbox{\Hypertarget{classMapTile_abb0e3457fcdeccea6f89d717e34e1fc9}\label{classMapTile_abb0e3457fcdeccea6f89d717e34e1fc9}} 
+{\bfseries Map\+Tile} (Tile\+Type)
+\item 
+\mbox{\Hypertarget{classMapTile_a20b329056c84e973f83dda9ba39cec81}\label{classMapTile_a20b329056c84e973f83dda9ba39cec81}} 
+{\bfseries Map\+Tile} (char)
+\item 
+\mbox{\Hypertarget{classMapTile_a31af6e636675be74e1a1912040f32713}\label{classMapTile_a31af6e636675be74e1a1912040f32713}} 
+{\bfseries Map\+Tile} (const \mbox{\hyperlink{classMapTile}{Map\+Tile}} \&)
+\item 
+\mbox{\Hypertarget{classMapTile_a641b846bb1fa5ab32a98e97d2e46ead1}\label{classMapTile_a641b846bb1fa5ab32a98e97d2e46ead1}} 
+\mbox{\hyperlink{classMapTile}{Map\+Tile}} \& {\bfseries operator=} (const \mbox{\hyperlink{classMapTile}{Map\+Tile}} \&)
+\item 
+\mbox{\Hypertarget{classMapTile_a88922ee9127a157779421cc2018210a8}\label{classMapTile_a88922ee9127a157779421cc2018210a8}} 
+bool {\bfseries is\+Occupied} () const
+\item 
+\mbox{\Hypertarget{classMapTile_a8890354d5dffa4c303277ec4b3b603a7}\label{classMapTile_a8890354d5dffa4c303277ec4b3b603a7}} 
+Tile\+Type {\bfseries get\+Type} () const
+\item 
+\mbox{\Hypertarget{classMapTile_aab612b3346b1fe4f44b1a310f8c7d012}\label{classMapTile_aab612b3346b1fe4f44b1a310f8c7d012}} 
+char {\bfseries get\+Tile\+Char} () const
+\item 
+\mbox{\Hypertarget{classMapTile_a438d1ba0763048e5684e79e26f4f07b5}\label{classMapTile_a438d1ba0763048e5684e79e26f4f07b5}} 
+\mbox{\hyperlink{classMapTile}{Map\+Tile}} \& {\bfseries operator=} (char)
+\item 
+\mbox{\Hypertarget{classMapTile_a8d2a646ad678bae7b84092f5b8df6a7a}\label{classMapTile_a8d2a646ad678bae7b84092f5b8df6a7a}} 
+void {\bfseries make\+Occupied} ()
+\item 
+\mbox{\Hypertarget{classMapTile_a0658b2e62a026476a165e19da9da028c}\label{classMapTile_a0658b2e62a026476a165e19da9da028c}} 
+void {\bfseries make\+Un\+Occupied} ()
+\item 
+\mbox{\Hypertarget{classMapTile_ad5e37d629c8aeb10856bce4f52f52408}\label{classMapTile_ad5e37d629c8aeb10856bce4f52f52408}} 
+void {\bfseries set\+Type} (Tile\+Type)
+\item 
+\mbox{\Hypertarget{classMapTile_a5cbb694b1ecfad7f0186a9304746f690}\label{classMapTile_a5cbb694b1ecfad7f0186a9304746f690}} 
+void {\bfseries set\+Tile\+Char} (char)
+\item 
+\mbox{\Hypertarget{classMapTile_aec22caccc238e9f1208e224224f21180}\label{classMapTile_aec22caccc238e9f1208e224224f21180}} 
+void {\bfseries to\+Original\+Type} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Friends}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classMapTile_a77ff591e1da0e090be103ff80b8cdbdb}\label{classMapTile_a77ff591e1da0e090be103ff80b8cdbdb}} 
+ostream \& {\bfseries operator$<$$<$} (ostream \&os, const \mbox{\hyperlink{classMapTile}{Map\+Tile}} \&src)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classMapTile_a40647e6d567d577778e81a81b7047217}\label{classMapTile_a40647e6d567d577778e81a81b7047217}} 
+\index{MapTile@{MapTile}!MapTile@{MapTile}}
+\index{MapTile@{MapTile}!MapTile@{MapTile}}
+\doxysubsubsection{\texorpdfstring{MapTile()}{MapTile()}}
+{\footnotesize\ttfamily Map\+Tile\+::\+Map\+Tile (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+default constructor with default values\+: unoccupied edge 
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+src/headers/Map\+Tile.\+hpp\item 
+src/impl/Map\+Tile.\+cpp\end{DoxyCompactItemize}
