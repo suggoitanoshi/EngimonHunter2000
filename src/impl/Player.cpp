@@ -54,7 +54,7 @@ void Player::setPositionY(int y) { get<1>(position) = y; }
 
 void Player::setDir(char _dir) { dir = _dir; }
 
-void Player::checkActiveEngimon() { showEngimon(activeEngi); }
+void Player::checkActiveEngimon() { activeEngi.showEngimon(); }
 
 void Player::switchEngimon(string engiName) {
     int beforeEngi = listEngimon.getFirstItemIndex(activeEngi);
@@ -67,12 +67,8 @@ void Player::switchEngimon(string engiName) {
     activeEngi = listEngimon[afterEngi];
 }
 
-void Player::showEngimon(Engimon engi) {
-    int idx = listEngimon.getFirstItemIndex(engi);
-    listEngimon[idx].showEngimon();
-}
 void Player::showEngimon(string engiName) {
-    showEngimon(getEngimonFromName(engiName));
+    getEngimonFromName(engiName).showEngimon();
 }
 void Player::showEngimon() const { 
     cout << "Engimon di dalam Inventory: " << endl;
@@ -91,13 +87,9 @@ void Player::removeEngimon(string engi) {
     removeEngimon(temp);
 }
 
-void Player::showItem(Item _item) {
-    int idx = listItem.getFirstItemIndex(_item);
-    listItem[idx].showItem();
-}
 void Player::showItem(string _item) {
     Item temp = getItemFromName(_item);
-    showItem(temp);
+    temp.showItem();
 }
 void Player::showItem() const { 
     cout << "Skill Item di dalam Inventory: " << endl;
