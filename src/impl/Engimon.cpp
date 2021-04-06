@@ -18,15 +18,19 @@ Engimon::Engimon(EngimonSpecies ES) : EngimonSpecies(ES) {
     skills.push_back(starterSkill);
     lvl = defaultLevel;
     exp = 0;
-    cexp = 0;
+    cexp = (defaultLevel-1) * 100;
     location = make_tuple(-1, -1);
 }
 
 Engimon::Engimon(EngimonSpecies ES, string oname) : EngimonSpecies(ES) {
     tuple<string, string> oparents[2];
+    name = oname;
     oparents[0] = make_tuple("Wild", species);
     oparents[1] = make_tuple("Wild", species);
-    Engimon(ES, oname, oparents);
+    lvl = defaultLevel;
+    exp = 0;
+    cexp = (defaultLevel-1) * 100;
+    location = make_tuple(-1, -1);
 }
 
 Engimon::Engimon(EngimonSpecies ES, string oname,
@@ -44,7 +48,7 @@ Engimon::Engimon(EngimonSpecies ES, string oname,
     skills.insert(skills.end(), oskills.begin(), oskills.end());
     lvl = defaultLevel;
     exp = 0;
-    cexp = 0;
+    cexp = (defaultLevel-1) * 100;
     location = make_tuple(-1, -1);
 }
 
@@ -75,10 +79,11 @@ void Engimon::setPos(int x, int y) {
     get<1>(location) = y;
 }
 void Engimon::setLevel(int level) {
-    if (lvl - level < 0) {
+    if (level < 0) {
         throw "Level tidak cukup";
     } else {
-        lvl -= level;
+        cexp = level * 100;
+        lvl = level;
     }
 }  // untuk breeding
 
@@ -86,13 +91,13 @@ void Engimon::setLevel(int level) {
 void Engimon::addExp(int oexp) {
     exp += oexp;
     cexp += oexp;
+    if (cexp >= maxCumulExp) {
+        //delete this;
+        throw "Engimon dihapus dari program";
+    }
     while (exp >= 100) {
         exp -= 100;
         lvl++;
-    }
-    if (cexp >= maxCumulExp) {
-        delete this;
-        throw "Engimon dihapus dari program";
     }
 }
 unsigned Engimon::getBattlePower(int elmtAdv) {

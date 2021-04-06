@@ -6,6 +6,7 @@ Player::Player()
       position(make_tuple(1, 1)),
       dir('a') {
     addEngimon(Engimon());
+    addEngimon(Engimon());
     activeEngi = 0;
 }
 
@@ -104,10 +105,20 @@ void Player::useItem(int engi, int _item, const Dex& dex) {
     }
 }
 
-void Player::addItem(Item _item) { listItem.addItemNoDupe(_item); }
+void Player::addItem(Item _item) {
+    listItem.addItemNoDupe(_item);
+}
 void Player::addItem(string _item) {
-    Item temp = getItemFromName(_item);
-    addItem(temp);
+    Item *temp;
+    try {
+        temp = &getItemFromName(_item);
+        temp->setQuantity(temp->getQuantity() + 1);
+    } catch (...) {
+        Dex dex;
+        temp = (Item *) malloc(sizeof(Item));
+        *temp = Item(dex.getSkill(_item), 1);
+    }
+    addItem(*temp);
 }
 
 void Player::removeItem(Item _item) { listItem.removeItemNoDupe(_item); }

@@ -13,7 +13,7 @@ class Game {
 private:
     static const unsigned mapX = 32;
     static const unsigned mapY = 16;
-    static const unsigned wildEngimonCount = 10;
+    static const unsigned wildEngimonCount = 15;
 
     unsigned wildEngimonLevelBound;
     unsigned wildEngimonMoveSetBound;
@@ -23,6 +23,7 @@ private:
     Dex dex;
     Map map;
     vector<Engimon> wildEngimons;
+    int countTurn;
 
     // map & input handling
     void printGameIntro();

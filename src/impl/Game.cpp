@@ -1,6 +1,7 @@
 #include "../headers/Game.hpp"
 
 #include <algorithm>
+#include <cctype>
 #include <cstdlib>
 #include <fstream>
 #include <iostream>
@@ -30,14 +31,24 @@ Game::Game() {
     int eY = pY;
 
     this->isExitGame = false;
+
+    // spawn engimon wilds
+    spawnWildEngimon(wildEngimonCount);
+
     player.setPosition(make_tuple(pX, pY));
     player.getActiveEngimon().setPos(eX, eY);
     map.setTile(pX, pY, MapTile::PLAYER);       // buat player
     map.setTile(eX, eY, MapTile::ACTIVE_ENGI);  // buat active engimon
 
-    spawnWildEngimon(wildEngimonCount);
+    for (int i = 0; i < BaseInventory::getMaxCapacity() - 3; ++i) {
+        try {
+            player.addItem("Tackle");
+        } catch (InventoryException& e) {
+            cout << e.what() << endl;
+        }
+    }
 
-    player.addItem(Item(dex.getSkill("Tackle"), 10));
+    countTurn = 0;
 }
 
 void Game::printGameIntro() {
@@ -81,9 +92,7 @@ void Game::printCommandHelp() {
     cout
         << "7. Lakukan Battle            | 8. Lihat data lengkap Engimon pemain"
         << endl;
-    cout
-        << "9. Interaksi dengan Engimon"
-        << endl;
+    cout << "9. Interaksi dengan Engimon" << endl;
     cout
         << "-------------------------------------------------------------------"
         << endl;
@@ -171,9 +180,7 @@ Engimon Game::makeRandomEngimon() const {
     }
 
     Engimon engie(engieSpecies);
-    engie.addExp((rand() % wildEngimonLevelBound) *
-                 100);  // karena tiap level butuh 100 exp dan sementara dibikin
-                        // random 1 sampe 100
+    engie.setLevel(rand() % wildEngimonLevelBound);
 
     unordered_map<string, Skill> filtered;
     for (pair<string, Skill> a : dex.getSkillDex()) {
@@ -220,11 +227,23 @@ vector<tuple<int, int>> Game::getEmptyMapTile() const {
     return ret;
 }
 
+void putEngie(int x, int y, char c, Map& map, Engimon& engie,
+              bool isCapitilized, vector<tuple<int, int>>& freeSpaces,
+              int randIdx) {
+    if (isCapitilized) c = toupper(c);
+    map.setTile(x, y, c);
+    engie.setPos(x, y);
+    freeSpaces.erase(freeSpaces.begin() + randIdx);
+}
+
 void Game::spawnWildEngimon(unsigned count) {
     wildEngimonLevelBound = (unsigned)player.getActiveEngimon().getLvl() + 5;
     wildEngimonCaptilizeTileCharLevelBound =
         (unsigned)player.getActiveEngimon().getLvl();
     wildEngimonMoveSetBound = (unsigned)player.getActiveEngimon().getLvl() / 25;
+
+    wildEngimonLevelBound =
+        wildEngimonLevelBound > 60 ? 60 : wildEngimonLevelBound;
 
     unordered_map<string, EngimonSpecies> engies = dex.getEngiDex();
     // dapetin tile kosong
@@ -247,6 +266,7 @@ void Game::spawnWildEngimon(unsigned count) {
             char engieChar = 0;
             bool isCapitilized = (unsigned)engie.getLvl() >=
                                  wildEngimonCaptilizeTileCharLevelBound;
+            isCapitilized = false;
 
             // cari tipenya
             if (engieEl.size() == 2) {
@@ -254,45 +274,44 @@ void Game::spawnWildEngimon(unsigned count) {
                       engieEl[1] == Elements::WATER) ||
                      (engieEl[0] == Elements::WATER &&
                       engieEl[1] == Elements::ICE))) {
-                    engieChar = 'S' * isCapitilized + 's' * !isCapitilized;
+                    engieChar = 's';
                 } else if (((engieEl[0] == Elements::WATER &&
                              engieEl[1] == Elements::GROUND) ||
                             (engieEl[0] == Elements::GROUND &&
                              engieEl[1] == Elements::WATER))) {
-                    engieChar = 'N' * isCapitilized + 'n' * !isCapitilized;
+                    engieChar = 'n';
                 } else {
-                    engieChar = 'L' * isCapitilized + 'l' * !isCapitilized;
+                    engieChar = 'l';
                 }
             } else {  // ukurannya 1
                 if (engieEl[0] == Elements::FIRE) {
-                    engieChar = 'F' * isCapitilized + 'f' * !isCapitilized;
+                    engieChar = 'f';
                 } else if (engieEl[0] == Elements::ICE) {
-                    engieChar = 'I' * isCapitilized + 'i' * !isCapitilized;
+                    engieChar = 'i';
                 } else if (engieEl[0] == Elements::WATER) {
-                    engieChar = 'W' * isCapitilized + 'w' * !isCapitilized;
+                    engieChar = 'w';
                 } else if (engieEl[0] == Elements::GROUND) {
-                    engieChar = 'G' * isCapitilized + 'g' * !isCapitilized;
+                    engieChar = 'g';
                 } else {
-                    engieChar = 'E' * isCapitilized + 'e' * !isCapitilized;
+                    engieChar = 'e';
                 }
             }
 
             // cek tipe tyle lalu ganti tipenya kalau cocok
             if (map.getTile(get<0>(pos), get<1>(pos)).getType() ==
                 MapTile::WATER) {
-                if (!(engieChar == 'F' || engieChar == 'G' ||
-                      engieChar == 'E' || engieChar == 'L')) {
-                    map.setTile(get<0>(pos), get<1>(pos), engieChar);
-                    engie.setPos(get<0>(pos), get<1>(pos));
-                    freeSpaces.erase(freeSpaces.begin() + randIdx);
+                if (!(engieChar == 'f' || engieChar == 'g' ||
+                      engieChar == 'e' || engieChar == 'l')) {
+                    putEngie(get<0>(pos), get<1>(pos), engieChar, map, engie,
+                             isCapitilized, freeSpaces, randIdx);
                     isPlaced = true;
                 }
-            } else {  // char-nya: '-'
-                if (engieChar == 'F' || engieChar == 'G' || engieChar == 'E' ||
-                    engieChar == 'L') {
-                    map.setTile(get<0>(pos), get<1>(pos), engieChar);
-                    engie.setPos(get<0>(pos), get<1>(pos));
-                    freeSpaces.erase(freeSpaces.begin() + randIdx);
+            } else if (map.getTile(get<0>(pos), get<1>(pos)).getType() ==
+                       MapTile::GRASSLAND) {  // char-nya: '-'
+                if (engieChar == 'f' || engieChar == 'g' || engieChar == 'e' ||
+                    engieChar == 'l') {
+                    putEngie(get<0>(pos), get<1>(pos), engieChar, map, engie,
+                             isCapitilized, freeSpaces, randIdx);
                     isPlaced = true;
                 }
             }
@@ -365,6 +384,7 @@ void Game::battle() {
                               get<1>(it->getPosition()));
         player.getActiveEngimon().addExp(it->getLvl() * 4);
         wildEngimons.erase(it);
+        this->player.addItem("Tackle");
     } else {
         this->player.removeEngimon(this->player.getActiveEngimon());
         try {
@@ -378,10 +398,8 @@ void Game::battle() {
 
 void Game::run() {
     printGameIntro();
-    int countTurn = 0;
-
     do {
-        // spawnWildEngimon(wildEngimonCount - wildEngimons.size());
+        spawnWildEngimon(wildEngimonCount - wildEngimons.size());
         if (countTurn % 3 == 0) {
             try {
                 moveWildEngimons();
@@ -473,7 +491,8 @@ void Game::run() {
                                 this->player.showItem();
                                 cout << "Pilih item skill: ";
                                 cin >> input2;
-                                this->player.useItem(atoi(input.c_str()) - 1, input2 - 1, dex);
+                                this->player.useItem(atoi(input.c_str()) - 1,
+                                                     input2 - 1, dex);
                             } catch (ItemException& e) {
                                 cout << e.what() << endl;
                             }
@@ -488,10 +507,10 @@ void Game::run() {
                         try {
                             cout << "Pilih engimon 1: ";
                             cin >> input2;
-                            A = player.getEngimonById(input2-1);
+                            A = player.getEngimonById(input2 - 1);
                             cout << "Pilih engimon 2: ";
                             cin >> input2;
-                            B = player.getEngimonById(input2-1);
+                            B = player.getEngimonById(input2 - 1);
                             HasilKawin = kawin(A, B);
                             this->player.addEngimon(HasilKawin);
                         } catch (InventoryException& e) {
@@ -530,7 +549,8 @@ void Game::run() {
                 cout << e.what() << endl;
             }
         }
-        cout << "==================================================================="
+        cout << "=============================================================="
+                "====="
                 "\n"
              << endl;
     } while (this->isExitGame == false);
@@ -552,14 +572,15 @@ void Game::run() {
 Engimon& Game::kawin(Engimon& bapak, Engimon& emak) {
     std::string name;
     EngimonSpecies spesies;
-    vector<Skill> skillYangDiambil;
+    //vector<Skill> skillYangDiambil(bapak.getSkills().size() +
+                                   //emak.getSkills().size());
+    vector<Skill> skillYangDiambil = bapak.getSkills();
     Skill skillSekarang;
     int indexSkillAnak, indexSkillOrangtua, skillBapakTerambil,
         skillEmakTerambil, pembanding;
     bool bapakTerambil, emakTerambil, pernahTerambil;
     // uji level orangtua
-    if ((unsigned)bapak.getLvl() < 30 + bapak.defaultLevel ||
-        (unsigned)emak.getLvl() < 30 + emak.defaultLevel) {
+    if ((unsigned)bapak.getLvl() < 31 || (unsigned)emak.getLvl() < 31) {
         throw BreedingException(0);
     }
 
@@ -568,7 +589,8 @@ Engimon& Game::kawin(Engimon& bapak, Engimon& emak) {
     indexSkillAnak = 0;
     skillBapakTerambil = 0;
     skillEmakTerambil = 0;
-    while (indexSkillAnak < 4 &&
+    while ((unsigned)indexSkillAnak <
+               max(emak.getSkills().size(), bapak.getSkills().size()) &&
            (skillEmakTerambil < (int)bapak.getSkills().size() ||
             skillEmakTerambil < (int)emak.getSkills().size())) {
         skillSekarang = bapak.getSkills()[0];
@@ -583,6 +605,7 @@ Engimon& Game::kawin(Engimon& bapak, Engimon& emak) {
             while (pembanding < indexSkillAnak && !pernahTerambil) {
                 pernahTerambil = skillSekarang.getName() ==
                                  skillYangDiambil[pembanding].getName();
+                pembanding++;
             }
             if (!pernahTerambil &&
                 skillYangDiambil[indexSkillAnak].getMasteryLevel() <
@@ -624,6 +647,7 @@ Engimon& Game::kawin(Engimon& bapak, Engimon& emak) {
         }
         if (bapakTerambil) skillBapakTerambil++;
         if (emakTerambil) skillEmakTerambil++;
+        indexSkillAnak++;
     }
     // kurangi level orangtua
     bapak.setLevel(bapak.getLvl() - 30);

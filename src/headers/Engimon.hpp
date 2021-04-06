@@ -27,7 +27,7 @@ private:
     tuple<int, int> location;
 
 public:
-    const static unsigned defaultLevel = 1;
+    const static unsigned defaultLevel = 99;
     // konstruktor & destruktor
     Engimon(EngimonSpecies ES = EngimonSpecies());  // untuk wild engimon (namanya=nama spesies)
     Engimon(EngimonSpecies ES,

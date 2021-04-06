@@ -36,8 +36,7 @@ public:
     void addItemNoDupe(T& item){
         if(std::find(cont.begin(), cont.end(), item) == cont.end()){
             addItem(item);
-        }
-        else{
+        } else {
             if(this->getTotalItemCount() < this->getMaxCapacity()){
                 this->incrementItem();
                 items++;

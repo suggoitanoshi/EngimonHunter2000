@@ -1,5 +1,7 @@
 #include "../headers/MapTile.hpp"
 
+#include <iostream>
+
 MapTile::MapTile() {
     occupied = true;
     type = EDGE;

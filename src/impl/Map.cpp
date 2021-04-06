@@ -77,6 +77,6 @@ void Map::legends() const {
 }
 
 bool Map::isFree(const unsigned x, const unsigned y) const {
-    return x > 0 && x < mapX - 1 && y > 0 && y < mapY - 1 &&
+    return ((x > 0 && x < mapX - 1) && (y > 0 && y < mapY - 1)) &&
            !tiles[x][y].isOccupied();
 }
