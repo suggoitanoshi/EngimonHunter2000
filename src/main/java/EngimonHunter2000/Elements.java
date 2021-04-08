@@ -5,10 +5,8 @@ import java.util.Set;
 
 /**
  * @author y e e wangy wangy
- * Element untuk {@link EngimonHunter2000.modules.Skill}
- * {@link EngimonHunter2000.modules.EngimonSpecies}
- * dan {@link EngimonHunter2000.modules.Engimon}. Elements list tidak boleh
- * kosong.
+ * Element untuk {@link Skill} {@link EngimonSpecies} dan {@link Engimon}.
+ * Elements list tidak boleh kosong.
  */
 public class Elements {
     public enum El {
