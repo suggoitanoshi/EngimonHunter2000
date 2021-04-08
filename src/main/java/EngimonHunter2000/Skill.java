@@ -1,11 +1,7 @@
+package EngimonHunter2000;
+
 /**
- * Skill.java
  * @author y e e wangy wangy
- */
-
-package EngimonHunter2000.modules;
-
-/**
  * Class yang berisi Skill yang digunakan
  * {@link EngimonHunter2000.modules.EngimonSpecies} dan
  * {@link EngimonHunter2000.modules.Engimon}

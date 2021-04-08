@@ -1,17 +1,14 @@
-/**
- * Elements.java
- * @author y e e wangy wangy
- */
-
-package EngimonHunter2000.modules;
+package EngimonHunter2000;
 
 import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Element untuk {@link EngimonHunter2000.modules.Skill},
- * {@link EngimonHunter2000.modules.EngimonSpecies},
- * dan {@link EngimonHunter2000.modules.Engimon}
+ * @author y e e wangy wangy
+ * Element untuk {@link EngimonHunter2000.modules.Skill}
+ * {@link EngimonHunter2000.modules.EngimonSpecies}
+ * dan {@link EngimonHunter2000.modules.Engimon}. Elements list tidak boleh
+ * kosong.
  */
 public class Elements {
     public enum El {
@@ -33,43 +30,49 @@ public class Elements {
     }
 
     /**
-     * Constructor dengan menggunakan array of {@link El} yang sudah ditentukan.
+     * Constructor dengan menggunakan array of String yang sudah ditentukan.
      * @param elms array of {@link El} berisi element-element-nya
      */
-    public Elements(El[] elms) {
+    public Elements(El[] elms) throws ElementsException {
         elements = new HashSet<El>();
         for (El el : elms) {
             elements.add(el);
         }
+
+        if (elements.size() == 0) {
+            throw new ElementsException(0);
+        }
     }
 
-    // TODO: bikin exeption kalo ini kosong
     /**
-     * Constructor dengan menggunakan array of {@link String} yang berisi sudah
+     * Constructor dengan menggunakan array of String yang berisi sudah
      * nama-nama {@link El} sudah ditentukan. Jika semua nama {@link El} pada
      * elms invalid maka (harusnya keluar exception) akan menjadi {@link El}
      * dengan array kosong.
-     * @param elms array of {@link String} yang berisi nama-nama element
+     * @param elms array of String yang berisi nama-nama element
      */
-    public Elements(String[] elms) {
+    public Elements(String[] elms) throws ElementsException {
         elements = new HashSet<El>();
 
         for (String elStr : elms) {
-            El el = getElementFromString(elStr);
-            if (el == null) {
-                continue;
-            }
+                try {
+                    El el = getElementFromString(elStr);
+                    elements.add(el);
+                } catch (ElementsException _) {
+                    continue;
+                }
+        }
 
-
-            elements.add(el);
+        if (elements.size() == 0) {
+            throw new ElementsException(0);
         }
     }
 
     /**
      * Getter untuk attribute elements.
-     * @return {@link Set} of {@link El} yang merupakan atribut elements.
+     * @return Set of {@link El} yang merupakan atribut elements.
      */
-    public Set<El> getElements() {
+    public Set<El> getElementsList() {
         return this.elements;
     }
 
@@ -77,13 +80,12 @@ public class Elements {
         return a >= b ? a : b;
     }
 
-    // TODO: Harusnya exception aja
     /**
-     * Fungsi untuk mendapatkan {@link El} dari nama elemen ({@link String}).
-     * Tidak memerhatikan kapitalisme {@link String}. Jika {@link String} bukan
+     * Fungsi untuk mendapatkan {@link El} dari nama elemen (String).
+     * Tidak memerhatikan kapitalisme String. Jika String bukan
      * nama {@link El}, maka akan dikembalikan (harusnya exception) null.
      */
-    public static El getElementFromString(String el) {
+    public static El getElementFromString(String el) throws ElementsException {
         if (el.toLowerCase().equals("electric")) {
             return El.ELECTRIC;
         }
@@ -104,14 +106,14 @@ public class Elements {
             return El.WATER;
         }
 
-        return null;
+        throw new ElementsException(1);
     }
 
     /**
      * Mendapatkan elemental advantage antara {@link Elements} pemanggil dan
      * {@link Elements} lawan.
      * @param elLawan {@link Elements} "musuh"
-     * @return {@link Double} nilai elemental advanatage (atau disadvantage).
+     * @return Double nilai elemental advanatage (atau disadvantage).
      */
     public Double getElementalAdvantage(Elements elLawan) {
         Double maks = 0.0;
@@ -129,7 +131,7 @@ public class Elements {
      * {@link El} lain.
      * @param el1 {@link El} pertama
      * @param el2 {@link El} kedua
-     * @return {@link Double} Elemental advantage antara sebuah el1 dengan el2.
+     * @return Double Elemental advantage antara sebuah el1 dengan el2.
      */
     public static Double getElementalAdvantage(El el1, El el2) {
         switch (el1) {
