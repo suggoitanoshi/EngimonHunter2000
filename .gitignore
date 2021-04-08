@@ -1,2 +1,5 @@
 out/
 .vscode/
+target/
+docs/html
+docs/latex
