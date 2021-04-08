@@ -1,9 +1,9 @@
 package EngimonHunter2000;
 
 /**
- * @author y e e wangy wangy
  * Class yang berisi Skill yang digunakan pada {@link Dex}.
  * Class ini merupakan "asar/blueprint dari skill milik {@link Engimon}.
+ * @author y e e wangy wangy
  */
 public class Skill {
     private final String name;

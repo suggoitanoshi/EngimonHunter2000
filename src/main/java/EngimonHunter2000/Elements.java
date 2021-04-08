@@ -4,27 +4,32 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * @author y e e wangy wangy
  * Element untuk {@link Skill} {@link EngimonSpecies} dan {@link Engimon}.
  * Elements list tidak boleh kosong.
+ * @author y e e wangy wangy
  */
 public class Elements {
     public enum El {
+        /// Elemen electric
         ELECTRIC,
+        /// Elemen fire
         FIRE,
+        /// Elemen ground
         GROUND,
+        /// Elemen ice
         ICE,
+        /// Elemen water
         WATER,
     }
-    private Set<El> elements;
+    private Set<El> elementsList;
 
     /**
      * Default constructor untuk Elements. Tipe default adalah
      * {@link El}.ELECTRIC dengan hanya 1 elemen.
      */
     public Elements() {
-        elements = new HashSet<El>();
-        elements.add(El.ELECTRIC); // default Engimon and move has the type Electric
+        elementsList = new HashSet<El>();
+        elementsList.add(El.ELECTRIC); // default Engimon and move has the type Electric
     }
 
     /**
@@ -32,12 +37,12 @@ public class Elements {
      * @param elms array of {@link El} berisi element-element-nya
      */
     public Elements(El[] elms) throws ElementsException {
-        elements = new HashSet<El>();
+        elementsList = new HashSet<El>();
         for (El el : elms) {
-            elements.add(el);
+            elementsList.add(el);
         }
 
-        if (elements.size() == 0) {
+        if (elementsList.size() == 0) {
             throw new ElementsException(0);
         }
     }
@@ -50,18 +55,18 @@ public class Elements {
      * @param elms array of String yang berisi nama-nama element
      */
     public Elements(String[] elms) throws ElementsException {
-        elements = new HashSet<El>();
+        elementsList = new HashSet<El>();
 
         for (String elStr : elms) {
                 try {
                     El el = getElementFromString(elStr);
-                    elements.add(el);
+                    elementsList.add(el);
                 } catch (ElementsException _) {
                     continue;
                 }
         }
 
-        if (elements.size() == 0) {
+        if (elementsList.size() == 0) {
             throw new ElementsException(0);
         }
     }
@@ -71,7 +76,7 @@ public class Elements {
      * @return Set of {@link El} yang merupakan atribut elements.
      */
     public Set<El> getElementsList() {
-        return this.elements;
+        return elementsList;
     }
 
     private static Double max(Double a, Double b) {
@@ -115,8 +120,8 @@ public class Elements {
      */
     public Double getElementalAdvantage(Elements elLawan) {
         Double maks = 0.0;
-        for (El el1 : elements) {
-            for (El el2 : elLawan.elements) {
+        for (El el1 : elementsList) {
+            for (El el2 : elLawan.elementsList) {
                 maks = max(maks, getElementalAdvantage(el1, el2));
             }
         }

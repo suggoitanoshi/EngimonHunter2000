@@ -1,12 +1,12 @@
 package EngimonHunter2000;
 
 /**
- * @author y e e wangy wangy
  * Exception ketika terjadi kesalahan pada object class {@link Elements}
  * ID   : Alasan
  * -----|-------
  * 0    : Konstruktor menghasilkan list tanpa element
  * 1    : Konversi string ke element gagal karena nama element invalid
+ * @author y e e wangy wangy
  */
 public class ElementsException extends EngimonHunter2000Exception {
     private static final long serialVersionUID = 1L; // i think this is cursed
