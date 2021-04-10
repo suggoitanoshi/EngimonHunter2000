@@ -1,5 +1,7 @@
 package EngimonHunter2000;
 
+import java.util.Set;
+
 /**
  * Class yang berisi Skill yang digunakan pada {@link Dex}.
  * Class ini merupakan "asar/blueprint dari skill milik {@link Engimon}.
@@ -67,15 +69,27 @@ public class Skill {
         elements = el;
     }
 
+    /**
+     * Getter untuk nama skill
+     * @return nama skill
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * Getter untuk base power skill
+     * @return base power skill
+     */
     public int getBasePower() {
         return basePower;
     }
 
-    public Elements getElements() {
-        return elements;
+    /**
+     * Getter untuk {@link EngimonHunter2000.Elements.El} element skill
+     * @return {@link EngimonHunter2000.Elements.El} skill
+     */
+    public Set<Elements.El> getElements() {
+        return elements.getElementsList();
     }
 }

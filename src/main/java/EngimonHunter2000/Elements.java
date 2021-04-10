@@ -61,7 +61,7 @@ public class Elements {
                 try {
                     El el = getElementFromString(elStr);
                     elementsList.add(el);
-                } catch (ElementsException _) {
+                } catch (ElementsException jsakfasdhfkalsjfhaeksjfhkalfhklas) {
                     continue;
                 }
         }
@@ -87,6 +87,7 @@ public class Elements {
      * Fungsi untuk mendapatkan {@link El} dari nama elemen (String).
      * Tidak memerhatikan kapitalisme String. Jika String bukan
      * nama {@link El}, maka akan dikembalikan (harusnya exception) null.
+     * @return {@link El} "sebenarnya" dari string (nama)
      */
     public static El getElementFromString(String el) throws ElementsException {
         if (el.toLowerCase().equals("electric")) {
