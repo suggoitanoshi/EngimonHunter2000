@@ -13,6 +13,7 @@ public class Skill {
     private final Elements elements;
 
     /**
+     * @deprecated
      * Default constructor, menghasilkan skill THUNDAAA dengan detail:
      * nama: THUNDAAA
      * basePower: 40
@@ -32,7 +33,7 @@ public class Skill {
      * @param _masteryLevel masteryLevel skill
      * @param el element yang dapat membepalajari skill
      */
-    public Skill(String _name, int _basePower, Elements.El[] el)
+    public Skill(String _name, int _basePower, Elements.El... el)
         throws ElementsException {
         name = _name;
         basePower = _basePower;
@@ -47,7 +48,7 @@ public class Skill {
      * @param _masteryLevel masteryLevel skill
      * @param el element yang dapat membepalajari skill
      */
-    public Skill(String _name, int _basePower, String[] el)
+    public Skill(String _name, int _basePower, String... el)
         throws ElementsException {
         name = _name;
         basePower = _basePower;

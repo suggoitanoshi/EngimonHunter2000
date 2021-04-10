@@ -24,6 +24,7 @@ public class Elements {
     private Set<El> elementsList;
 
     /**
+     * @deprecated
      * Default constructor untuk Elements. Tipe default adalah
      * {@link El}.ELECTRIC dengan hanya 1 elemen.
      */
@@ -36,7 +37,7 @@ public class Elements {
      * Constructor dengan menggunakan array of String yang sudah ditentukan.
      * @param elms array of {@link El} berisi element-element-nya
      */
-    public Elements(El[] elms) throws ElementsException {
+    public Elements(El... elms) throws ElementsException {
         elementsList = new HashSet<El>();
         for (El el : elms) {
             elementsList.add(el);
@@ -54,7 +55,7 @@ public class Elements {
      * dengan array kosong.
      * @param elms array of String yang berisi nama-nama element
      */
-    public Elements(String[] elms) throws ElementsException {
+    public Elements(String... elms) throws ElementsException {
         elementsList = new HashSet<El>();
 
         for (String elStr : elms) {

@@ -12,6 +12,7 @@ public class SkillEngimon {
     private int masteryLevel;
 
     /**
+     * @deprecated
      * Default constructor with default skill metadata and mastery level 1.
      * See default Skill constructor for details.
      */
