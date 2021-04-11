@@ -4,13 +4,13 @@ import java.util.Set;
 
 /**
  * Class yang berisi Skill yang digunakan pada {@link Dex}.
- * Class ini merupakan "asar/blueprint dari skill milik {@link Engimon}.
- * @author y e e wangy wangy
+ * Class ini merupakan "blueprint" dari skill milik {@link Engimon}.
+ * @author Josep Marcello
  */
 public class Skill {
     private final String name;
     private final int basePower;
-    private final Elements elements;
+    private final ElementsList elements;
 
     /**
      * @deprecated
@@ -22,7 +22,7 @@ public class Skill {
     public Skill() {
         name = "THUNDAAA";
         basePower = 40;
-        elements = new Elements();
+        elements = new ElementsList();
     }
 
     /**
@@ -33,11 +33,11 @@ public class Skill {
      * @param _masteryLevel masteryLevel skill
      * @param el element yang dapat membepalajari skill
      */
-    public Skill(String _name, int _basePower, Elements.El... el)
-        throws ElementsException {
+    public Skill(String _name, int _basePower, Element... el)
+        throws ElementsListException {
         name = _name;
         basePower = _basePower;
-        elements = new Elements(el);
+        elements = new ElementsList(el);
     }
 
     /**
@@ -49,10 +49,10 @@ public class Skill {
      * @param el element yang dapat membepalajari skill
      */
     public Skill(String _name, int _basePower, String... el)
-        throws ElementsException {
+        throws ElementsListException {
         name = _name;
         basePower = _basePower;
-        elements = new Elements(el);
+        elements = new ElementsList(el);
     }
 
     /**
@@ -63,8 +63,8 @@ public class Skill {
      * @param _masteryLevel masteryLevel skill
      * @param el element yang dapat membepalajari skill
      */
-    public Skill(String _name, int _basePower, Elements el)
-        throws ElementsException {
+    public Skill(String _name, int _basePower, ElementsList el)
+        throws ElementsListException {
         name = _name;
         basePower = _basePower;
         elements = el;
@@ -87,10 +87,10 @@ public class Skill {
     }
 
     /**
-     * Getter untuk {@link EngimonHunter2000.Elements.El} element skill
-     * @return {@link EngimonHunter2000.Elements.El} skill
+     * Getter untuk {@link EngimonHunter2000.Element.El} element skill
+     * @return {@link EngimonHunter2000.Element.El} skill
      */
-    public Set<Elements.El> getElements() {
+    public Set<Element> getElements() {
         return elements.getElementsList();
     }
 }

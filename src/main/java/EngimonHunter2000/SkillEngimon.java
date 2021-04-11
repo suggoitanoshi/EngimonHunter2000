@@ -5,7 +5,7 @@ import java.util.Set;
 /**
  * Class for Engimon's skill. Uses {@link Skill} class to get the skill's
  * metadata (name, basepower, and elements).
- * @author Y e e Wangy Wangy
+ * @author Josep Marcello
  */
 public class SkillEngimon {
     private Skill metadata;
@@ -61,11 +61,11 @@ public class SkillEngimon {
     }
 
     /**
-     * Getter untuk mendapatkan {@link EngimonHunter2000.Elements.El} milik
+     * Getter untuk mendapatkan {@link EngimonHunter2000.Element.El} milik
      * skill (diambil dari metadata)
-     * @return {@link EngimonHunter2000.Elements.El} skill
+     * @return {@link EngimonHunter2000.Element.El} skill
      */
-    public Set<Elements.El> getElements() {
+    public Set<Element> getElements() {
         return metadata.getElements();
     }
 

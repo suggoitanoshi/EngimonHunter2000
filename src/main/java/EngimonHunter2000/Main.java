@@ -9,9 +9,9 @@ public class Main {
         System.out.println("Hello, world!");
         String[] a = {};
         try {
-            Elements e = new Elements(a);
+            ElementsList e = new ElementsList(a);
             System.out.println(e.getElementsList());
-        } catch (ElementsException f) {
+        } catch (ElementsListException f) {
             f.bruh();
         }
     }
