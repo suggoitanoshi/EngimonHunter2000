@@ -33,6 +33,20 @@
       <artifactId>junit-jupiter</artifactId>
       <scope>test</scope>
     </dependency>
+
+    <!-- https://mvnrepository.com/artifact/org.json/json -->
+    <!--<dependency>
+      <groupId>org.json</groupId>
+      <artifactId>json</artifactId>
+      <version>20210307</version>
+    </dependency>-->
+
+    <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-csv -->
+    <!--<dependency>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-csv</artifactId>
+      <version>1.8</version>
+    </dependency>-->
   </dependencies>
 
   <build>
