@@ -61,11 +61,11 @@ public enum Element {
             case ICE:
                 switch (el2) {
                     case FIRE:
-                        return 0.9;
+                        return 0.0;
                     case ELECTRIC:
                         return 0.5;
                     case GROUND:
-                        return 2.9;
+                        return 2.0;
                     default:
                         return 1.0;
                 }

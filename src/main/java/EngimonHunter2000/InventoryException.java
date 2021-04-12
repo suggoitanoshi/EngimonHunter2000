@@ -4,7 +4,7 @@ package EngimonHunter2000;
  * Exception ketika terjadi kesalahan pada {@link Inventory}
  * ID  : Alasan
  * ----|--------
- * 0   : Inventory Penuh 
+ * 0   : Inventory Penuh
  * 1   : Inventory Kosong
  * 2   : Item tidak ada di inventory
  * 3   : Indeks item tidak valid

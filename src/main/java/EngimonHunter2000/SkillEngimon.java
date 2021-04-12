@@ -2,6 +2,7 @@ package EngimonHunter2000;
 
 import java.util.Set;
 
+// TODO: Finish this!
 /**
  * Class for Engimon's skill. Uses {@link Skill} class to get the skill's
  * metadata (name, basepower, and elements).

@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
  */
 public class SkillTest {
     @Test
-    public void constructorWithEnum() throws EngimonHunter2000Exception {
+    public void constructorWithEnum() throws ElementsListException {
         Skill s = new Skill("THUNDAAA", 40, Element.ELECTRIC);
         assertAll("Harusnya menghasilkan skill default (THUNDAAA, power: 40, Elements: Electric)",
             () -> assertNotNull(s),
@@ -20,7 +20,7 @@ public class SkillTest {
     }
 
     @Test
-    public void constructorWithString() throws EngimonHunter2000Exception {
+    public void constructorWithString() throws ElementsListException {
         Skill s = new Skill("THUNDAAA", 40, "ElecTRic");
         assertAll("Harusnya menghasilkan skill default (THUNDAAA, power: 40, Elements: Electric)",
             () -> assertNotNull(s),
