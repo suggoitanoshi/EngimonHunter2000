@@ -17,5 +17,6 @@ public class Main {
 
         Dex skillDex = new SkillDex();
         skillDex.getDexDataFromFile("data/Skills.csv");
+        System.out.println(skillDex.toString());
     }
 }

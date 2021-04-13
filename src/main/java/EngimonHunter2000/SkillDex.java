@@ -15,7 +15,7 @@ import org.apache.commons.csv.CSVRecord;
  * @author Josep Marcello
  */
 public class SkillDex implements Dex<Skill> {
-    HashMap<String, Skill> dex;
+    private HashMap<String, Skill> dex;
 
     public SkillDex() {
         dex = new HashMap<String, Skill>();
@@ -92,6 +92,13 @@ public class SkillDex implements Dex<Skill> {
         } catch (IOException e) {
             throw new DexException(0);
         }
+
+        // close the reader
+        try {
+            in.close();
+        } catch (IOException e) {
+            // do nothing
+        }
     }
 
     public Map<String, Skill> getDex() {
@@ -100,6 +107,30 @@ public class SkillDex implements Dex<Skill> {
 
     @Override
     public String toString() {
-        return super.toString();
+        StringBuilder SB = new StringBuilder();
+
+        // cursed formatting
+        // i don't understand why it works or doesn't
+        int i = 1;
+        SB.append(String.format("No. %-20sBase Power\tElement\n", "Nama"));
+        for (Map.Entry<String, Skill> skill : dex.entrySet()) {
+            SB.append(String.format("%d%-3s%-20s", i, ".", skill.getKey()));
+            SB.append("\t");
+            SB.append(skill.getValue().getBasePower());
+            SB.append("\t[");
+            int j = 0;
+            int elsLen = skill.getValue().getElements().size();
+            for (Element el : skill.getValue().getElements()) {
+                SB.append(el.name());
+                if (j != elsLen -1) {
+                    SB.append(", ");
+                }
+                j++;
+            }
+            SB.append("]\n");
+            i++;
+        }
+
+        return SB.toString();
     }
 }

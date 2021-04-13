@@ -10,6 +10,7 @@ package EngimonHunter2000;
  * @author Josep Marcello
  */
 public class DexException extends EngimonHunter2000Exception {
+    private static final long serialVersionUID = 1L; // i think this is cursed
     private int msgID;
     private final String[] msgs = {
         "Parsing file gagal, terjadi IO Exception",
