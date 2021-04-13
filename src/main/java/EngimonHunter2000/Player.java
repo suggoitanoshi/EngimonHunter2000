@@ -10,20 +10,22 @@ package EngimonHunter2000;
 public class Player {
     // private Inventory<Engimon> listEngimon;
     // private Inventory<Item> listItem;
-    private int activeEngi;
+    // private Engimon activeEngi;
     private Position position;
     private char dir;
 
     // constructor
     Player() {
-        this.activeEngi = 0;
+        // this.listEngimon = new Inventory<Engimon>();
+        // this.listItem = new Inventory<Item>();
+        // this.activeEngi = 0;
         this.dir = 'a';
         this.position = new Position();
     }
 
     // getters
     // public Engimon getActiveEngimon() {
-
+    //     return this.activeEngi;
     // }
 
     public Position getPosition() {
@@ -31,11 +33,11 @@ public class Player {
     }
 
     public int getPositionX() {
-        return this.position.getLeft();
+        return this.position.getX();
     }
 
     public int getPositionY() {
-        return this.position.getRight();
+        return this.position.getY();
     }
 
     public char getDir() {
@@ -46,47 +48,17 @@ public class Player {
     //     return this.listEngimon[idx];
     // }
 
-    // public static Engimon getEngimonFromName(String engiName) throws InventoryException, PlayerException {
-    //     if (listEngimon.getItemCount() == 0) throw InventoryException(1);
-    //     for (int i = 0; i < listEngimon.getItemCount(); i++) {
-    //         if (engiName.equals(listEngimon.at(i).getName())) {
-    //             return listEngimon.at(i);
-    //         }
-    //     }
-    //     throw PlayerException(0);
-    // }
-
-    // public Item getItemFromName(String itemName) throws InventoryException, PlayerException {
-        // if (this.listItem.getItemCount() == 0) throw InventoryException(1);
-        // for (int i = 0; i < this.listItem.getItemCount(); i++) {
-        //     if (itemName.equals(this.listItem.at(i).getName())) {
-        //         return this.listEngimon.at(i);
-        //     }
-        // }
-        // throw PlayerException(1);
-    // }
-
-    // public int getEngimonIdxFromName(String engiName) {
-    //     Engimon temp = getEngimonFromName(engiName);
-    //     return this.listEngimon.getFirstItemIndex(temp);
-    // }
-
-    // public int getItemIdxFromName(String itemName) {
-    //     Item temp = getItemFromName(itemName);
-    //     return this.listItem.getFirstItemIndex(temp);
-    // }
-
     // setters
     public void setPosition(Position pos) {
-        this.position.setPair(pos);
+        this.position.setPosition(pos);
     }
 
     public void setPositionX(int pos) {
-        this.position.setLeft(pos);
+        this.position.setX(pos);
     }
 
     public void setPositionY(int pos) {
-        this.position.setRight(pos);
+        this.position.setY(pos);
     }
 
     public void setDir(char _dir) {
@@ -95,15 +67,15 @@ public class Player {
 
     // methods
     // public void checkActiveEngimon() {
-        // this.listEngimon[activeEngi].showEngimon();
+        // this.activeEngi.showEngimon();
     // }
 
     // public void switchEngimon(int engiIdx) {
-        // Position currPos = this.listEngimon[this.activeEngi].getPosition();
-        // this.listEngimon[this.activeEngi].setPair(-1, -1);
+    //     Position currPos = this.activeEngi.getPosition();
+    //     this.activeEngi.setPosition(-1, -1);
 
-        // this.listEngimon[engiIdx].setPair(currPos.getLeft(), currPos.getRight());
-        // this.activeEngi = engiIdx;
+    //     this.listEngimon[engiIdx].setPosition(currPos.getX(), currPos.getY());
+    //     this.activeEngi = this.listengimon[engiIdx];
     // }
 
     // specifically only one engimon
@@ -112,9 +84,10 @@ public class Player {
     // }
 
     // print all engimon in inventory
-    // public void showEngimon() {
-        // System.out.println("Engimon di dalam Inventory:");
-        // this.litEngimon.showInventory();
+    // public void showEngimon() throws InventoryException {
+    //     if (this.listEngimon.getItemCount() == 0) throw new InventoryException(1);
+    //     System.out.println("Engimon di dalam Inventory:");
+    //     this.listEngimon.showInventory();
     // }
 
     // public void changeEngimonName(int engiIdx, String newName) {
@@ -125,30 +98,12 @@ public class Player {
     //     this.listEngimon.addItem(engi);
     // }
 
-    // public void addEngimon(String engiName) {
-    //     Engimon temp = getEngimonFromName(engiName);
-    //     addEngimon(temp);
-    // }
-
-    // public void removeEngimon(Engimon engi) {
-    //     this.listEngimon.removeItem(engi);        
-    // }
-
-    // public void removeEngimon(String engiName) {
-    //     Engimon temp = getEngimonFromName(engiName);
-    //     removeEngimon(temp);
-    // }
-
-    // public void showItem(String itemName) {
-    //     Item temp = getItemFromName(itemName);
-    //     temp.showItem();
-    // }
-
     // public void showItem(int itemIdx) {
     //     this.listItem[itemIdx].showItem();
     // }
 
-    // public void showItem() {
+    // public void showItem() throws InventoryException {
+    //     if (this.listItem.getItemCount() == 0) throw new InventoryException(1);
     //     System.out.println("Skill Item di dalam Inventory:");
     //     this.listItem.showInventory();
     // }
@@ -164,45 +119,19 @@ public class Player {
     //     this.listItem.addItemNoDupe(item);
     // }
 
-    // public void addItem(String itemName) {
-    //     Item temp;
-    //     try {
-    //         temp = getItemFromName(itemName);
-    //         temp.setQuantity(temp.getQuantity() + 1);
-    //     }
-    //     catch (Exception e) {
-    //         Dex dex;
-    //         temp = Item(dex.getSkill(itemName), 1);
-    //     }
-    //     addItem(temp);
-    // }
-
     // public void removeItem(Item item) {
     //     this.listItem.removeItemNoDupe(item);
     // }
 
-    // public void removeItem(Item item, int n) {
-
-    // }
-
-    // public void removeItem(String itemName) {
-    //     Item temp = getItemFromName(itemName);
-    //     removeItem(temp);
-    // }
-
-    // public void removeItem(String item, int n) {
+    // public void removeItem(String itemIdx, int n) {
 
     // }
 
     // public void interact() {
-        // listEngimon[activeEngi].interact();
+    //     this.activeEngi.interact();
     // }
 
     // TODO: mikirin ini butuh apa kagak
-    // public void engimonIsEmpty() {
-
-    // }
-
     // public void itemIsEmpty() {
 
     // }

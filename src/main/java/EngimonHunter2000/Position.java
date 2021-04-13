@@ -30,12 +30,12 @@ class Position {
         this.posY = right;
     }
 
-    public void setPair(Position pair) {
-        this.posX = pair.posX;
-        this.posY = pair.posY;
+    public void setPosition(Position pos) {
+        this.posX = pos.posX;
+        this.posY = pos.posY;
     }
 
-    public void setPair(int left, int right) {
+    public void setPosition(int left, int right) {
         this.posX = left;
         this.posY = right;
     }
