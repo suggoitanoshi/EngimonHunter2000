@@ -2,60 +2,60 @@ package EngimonHunter2000;
 
 import java.util.Set;
 
-// TODO: Finish this!
 /**
- * Class for Engimon's skill. Uses {@link Skill} class to get the skill's
- * metadata (name, basepower, and elements).
+ * Class for Engimon's skill. This class shouldn't create a new skill, instead
+ * this class uses an existing {@link Skill} instance. Used in conjunction with
+ * {@link SkillDex} to get the existing skill instance.
  * @author Josep Marcello
  */
 public class SkillEngimon {
-    private Skill metadata;
+    private Skill skillInfo;
     private int masteryLevel;
 
     /**
-     * Construct a new engimon skill from a skill named `name` and 1 mastery
-     * level.
-     * @param name name of skill
+     * Construct a new engimon skill from an existing skill called _skillInfo
+     * with mastery level 1.
+     * @param _skillInfo existing skill data
      */
-    public SkillEngimon(String name) {
-        // implement get skill from name
+    public SkillEngimon(Skill _skillInfo) {
+        skillInfo = _skillInfo;
         masteryLevel = 1;
     }
 
     /**
-     * Construct a new engimon skill from a skill named `name` and specified
-     * mastery level `_masteryLevel`.
-     * @param name name of skill
+     * Construct a new engimon skill from an existing skill called _skillInfo
+     * with specified mastery level.
+     * @param _skillInfo existing skill data
      * @param _masteryLevel the masteryLevel for SkillEngimon
      */
-    public SkillEngimon(String name, int _masteryLevel) {
+    public SkillEngimon(Skill _skillInfo, int _masteryLevel) {
         // implement get skill from name
-        masteryLevel = _masteryLevel;
+        skillInfo = _skillInfo;
     }
 
     /**
-     * Getter untuk mendapatkan nama skill (diambil dari metadata)
+     * Getter untuk mendapatkan nama skill (diambil dari skillInfo)
      * @return nama skill
      */
     public String getName() {
-        return metadata.getName();
+        return skillInfo.getName();
     }
 
     /**
-     * Getter untuk mendapatkan base power skill (diambil dari metadata)
+     * Getter untuk mendapatkan base power skill (diambil dari skillInfo)
      * @return base power skill
      */
     public int getBasePower() {
-        return metadata.getBasePower();
+        return skillInfo.getBasePower();
     }
 
     /**
      * Getter untuk mendapatkan {@link EngimonHunter2000.Element.El} milik
-     * skill (diambil dari metadata)
+     * skill (diambil dari skillInfo)
      * @return {@link EngimonHunter2000.Element.El} skill
      */
     public Set<Element> getElements() {
-        return metadata.getElements();
+        return skillInfo.getElements();
     }
 
     /**
