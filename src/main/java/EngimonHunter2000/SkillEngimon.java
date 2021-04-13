@@ -13,18 +13,6 @@ public class SkillEngimon {
     private int masteryLevel;
 
     /**
-     * @deprecated
-     * Default constructor with default skill metadata and mastery level 1.
-     * See default Skill constructor for details.
-     */
-    public SkillEngimon() {
-        // initialize metadata as a new skill with default values
-        metadata = new Skill();
-        // default mastery level is 1
-        masteryLevel = 1;
-    }
-
-    /**
      * Construct a new engimon skill from a skill named `name` and 1 mastery
      * level.
      * @param name name of skill

@@ -13,19 +13,6 @@ public class Skill {
     private final ElementsList elements;
 
     /**
-     * @deprecated
-     * Default constructor, menghasilkan skill THUNDAAA dengan detail:
-     * nama: THUNDAAA
-     * basePower: 40
-     * Element: Electric
-     */
-    public Skill() {
-        name = "THUNDAAA";
-        basePower = 40;
-        elements = new ElementsList();
-    }
-
-    /**
      * Constructor untuk membuat skill baru dengan nama, basePower,
      * masteryLevel, dan el yang ditentunkan.
      * @param _name nama skill

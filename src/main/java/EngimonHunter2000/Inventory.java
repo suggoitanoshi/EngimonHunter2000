@@ -2,7 +2,11 @@ package EngimonHunter2000;
 
 import java.util.ArrayList;
 
-class Inventory<T extends InventoryItem> {
+/**
+ * TODO: Add a class that extends {@link InventoryItem} so we can use better generics
+ */
+// class Inventory<T extends InventoryItem> {
+class Inventory<T> {
     private ArrayList<T> container;
     private static int max;
     private static int itemCount = 0;

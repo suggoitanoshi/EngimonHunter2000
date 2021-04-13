@@ -2,7 +2,6 @@ package EngimonHunter2000;
 
 /**
  * class untuk menyimpan semua keperluan Player {@link EngimonHunter2000}
- * 
  * @author Cynthia Rusadi
  */
 

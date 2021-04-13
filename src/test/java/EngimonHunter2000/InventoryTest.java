@@ -1,3 +1,6 @@
+/**
+ * TODO: Add skill item/engimon to test this class
+ */
 package EngimonHunter2000;
 
 import static org.junit.jupiter.api.Assertions.*;
