@@ -4,15 +4,15 @@ import java.util.Map;
 
 /**
  * Sebuah interface seperti "ensiklopedia" besar yang dapat digunakan untuk
- * mengakses {@link DexEntity} di game, misalnya Skill dan Engimon, menggunakan
- * nama entity.
+ * mengakses Entities di game, misalnya Skill dan Engimon, menggunakan nama
+ * entity.
  *
  * Agar data dapat diakses menggunakan namanya, digunakan struktur data/class
  * yang mengimmplementasikan Map dengan string (untuk nama) sebagia key dan
  * T sebagai value. T adalah entity yang disimpan.
  * @author Josep Marcello
  */
-public interface Dex<T extends DexEntity> {
+public interface Dex<T> {
     /**
      * Fungsi untuk mendapatkan {@link DexEntity} yang disimpan.
      * @param name nama entity
@@ -25,7 +25,7 @@ public interface Dex<T extends DexEntity> {
      * Format file dibebaskan
      * @param pathToFile path ke file yang berisi data dex
      */
-    public void getDexDataFromFile(String pathToFile);
+    public void getDexDataFromFile(String pathToFile) throws DexException;
 
     /**
      * Fungsi untuk mendapatkan map yang menyimpan {@link DexEntity}

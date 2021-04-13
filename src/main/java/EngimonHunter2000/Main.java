@@ -14,5 +14,8 @@ public class Main {
         } catch (ElementsListException f) {
             f.bruh();
         }
+
+        Dex skillDex = new SkillDex();
+        skillDex.getDexDataFromFile("data/Skills.csv");
     }
 }
