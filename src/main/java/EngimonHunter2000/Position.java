@@ -1,6 +1,6 @@
 package EngimonHunter2000;
 
-class Position{
+class Position {
     private int posX;
     private int posY;
 
@@ -14,25 +14,25 @@ class Position{
         this.posY = y;
     }
 
-    public int getLeft() {
+    public int getX() {
         return this.posX;
     }
 
-    public int getRight() {
+    public int getY() {
         return this.posY;
     }
-    
-    public void setLeft(int left) {
+
+    public void setX(int left) {
         this.posX = left;
     }
 
-    public void setRight(int right) {
+    public void setY(int right) {
         this.posY = right;
     }
 
     public void setPair(Position pair) {
-        this.posX = pair.getLeft();
-        this.posY = pair.getRight();
+        this.posX = pair.posX;
+        this.posY = pair.posY;
     }
 
     public void setPair(int left, int right) {
