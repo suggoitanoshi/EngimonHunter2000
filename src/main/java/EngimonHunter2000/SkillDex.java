@@ -3,7 +3,9 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVRecord;
@@ -26,6 +28,7 @@ public class SkillDex implements Dex<Skill> {
     public void getDexDataFromFile(String pathToFile) throws DexException {
         Reader in;
         try {
+            // parse CSV
             String[] headers = {
                 "NamaSkill",
                 "BasePower",
@@ -37,19 +40,56 @@ public class SkillDex implements Dex<Skill> {
             };
 
             in = new FileReader(pathToFile);
-            Iterable<CSVRecord> records = CSVFormat.DEFAULT
+            Iterable<CSVRecord> rows = CSVFormat.DEFAULT
                 .withHeader(headers)
                 .withFirstRecordAsHeader()
                 .parse(in);
 
-            for (CSVRecord record : records) {
-                System.out.println(record.get("NamaSkill"));
+
+            // parse entries di CSV jadi Skill baru
+            for (CSVRecord row : rows) {
+                int i = 0;
+                String name = null;
+                Integer basePower = null;
+                Set<Element> elsSet = new HashSet<Element>();
+
+                for (String rowData : row) {
+                    switch (i) {
+                        case 0:
+                            name = rowData;
+                            break;
+                        case 1:
+                            basePower = Integer.parseInt(rowData);
+                            break;
+                        default: // baca element
+                            try {
+                                elsSet.add(Element.getElementFromString(rowData));
+                            } catch (ElementException e) {
+                                // skip element yang invalid
+                                System.err.println(e.what());
+                            }
+                    }
+                    ++i;
+                }
+
+                // kalo ada entry yg gagal, throw exception
+                if (name == null || basePower == null || elsSet.size() == 0) {
+                    throw new DexException(2);
+                }
+
+                try {
+                    Element[] els = new Element[elsSet.size()];
+                    elsSet.toArray(els);
+                    dex.put(name, new Skill(name, basePower, els));
+                } catch (ElementsListException e) {
+                    throw new DexException(2);
+                }
             }
 
-            in.close();
+            if (dex.size() == 0) {
+                throw new DexException(1);
+            }
         } catch (IOException e) {
-            // TODO: Finish dex exception
-            System.out.println(e.getMessage());
             throw new DexException(0);
         }
     }
