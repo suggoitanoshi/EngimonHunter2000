@@ -12,13 +12,14 @@ package EngimonHunter2000;
 public class DexException extends EngimonHunter2000Exception {
     private static final long serialVersionUID = 1L; // i think this is cursed
     private int msgID;
-    private final String[] msgs = {
+    private static final String[] msgs = {
         "Parsing file gagal, terjadi IO Exception",
         "File yang dibaca tidak menghasilkan Dex berisi",
         "File yang dibaca memiliki entry invalid",
     };
 
     public DexException(int id) {
+        super(msgs[id]);
         msgID = id;
     }
 

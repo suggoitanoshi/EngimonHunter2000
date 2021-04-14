@@ -22,6 +22,7 @@ public class ElementException extends EngimonHunter2000Exception {
      * @param id nomor exception
      */
     public ElementException(int id) {
+        super(msgs[id]);
         msgID = id;
     }
 

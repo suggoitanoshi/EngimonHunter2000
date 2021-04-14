@@ -13,6 +13,7 @@ public class Main {
             System.out.println(e.getElementsList());
         } catch (ElementsListException f) {
             f.bruh();
+            System.out.println(f);
         }
 
         Dex skillDex = new SkillDex();

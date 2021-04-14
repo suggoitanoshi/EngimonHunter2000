@@ -9,6 +9,7 @@ public class PlayerException extends EngimonHunter2000Exception {
     };
 
     public PlayerException(int id) {
+        super(msgs[id]);
         this.msgID = id;
     }
 

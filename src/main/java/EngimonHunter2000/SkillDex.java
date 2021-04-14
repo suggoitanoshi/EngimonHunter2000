@@ -26,7 +26,7 @@ public class SkillDex implements Dex<Skill> {
     }
 
     public void getDexDataFromFile(String pathToFile) throws DexException {
-        Reader in;
+        Reader in = null;
         try {
             // parse CSV
             String[] headers = {
@@ -91,13 +91,13 @@ public class SkillDex implements Dex<Skill> {
             }
         } catch (IOException e) {
             throw new DexException(0);
-        }
-
-        // close the reader
-        try {
-            in.close();
-        } catch (IOException e) {
-            // do nothing
+        } finally {
+            // close the reader
+            try {
+                in.close();
+            } catch (Exception e) {
+                // do nothing
+            }
         }
     }
 

@@ -20,6 +20,7 @@ public class InventoryException extends EngimonHunter2000Exception {
     };
 
     public InventoryException(int id) {
+        super(msgs[id]);
         this.msgID = id;
     }
 
