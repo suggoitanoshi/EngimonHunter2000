@@ -31,6 +31,7 @@ public class SkillEngimon {
     public SkillEngimon(Skill _skillInfo, int _masteryLevel) {
         // implement get skill from name
         skillInfo = _skillInfo;
+        masteryLevel = _masteryLevel;
     }
 
     /**
