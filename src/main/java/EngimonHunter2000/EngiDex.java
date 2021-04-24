@@ -16,33 +16,27 @@ public class EngiDex implements Dex<Engimon> {
 
     // constructors
     public EngiDex() {
-        this.dex = new HashMap<String, EngimonSpecies>();        
+        this.dex = new HashMap<String, EngimonSpecies>();
     }
 
     // getters
     public EngimonSpecies getEntity(String name) {
-        return dex.get(name);
+        if (dex.get(name) == null) {
+            throw new DexException(4);
+        } else {
+            return dex.get(name);
+        }
+
     }
 
     public void getDexDataFromFile(String pathToFile) {
         Reader in = null;
         try {
-            String[] headers= {
-                "SpesiesName",
-                "Slogan",
-                "FirstMove",
-                "Element1",
-                "Element2",
-                "Element3",
-                "Element4",
-                "Element5"
-            };
+            String[] headers = { "SpesiesName", "Slogan", "FirstMove", "Element1", "Element2", "Element3", "Element4",
+                    "Element5" };
 
             in = new FileReader(pathToFile);
-            Iterable<CSVRecord> rows = CSVFormat.DEFAULT
-                .withHeader(headers)
-                .withFirstRecordAsHeader()
-                .parse(in);
+            Iterable<CSVRecord> rows = CSVFormat.DEFAULT.withHeader(headers).withFirstRecordAsHeader().parse(in);
 
             for (CSVRecord row : rows) {
                 int i = 0;
@@ -53,22 +47,21 @@ public class EngiDex implements Dex<Engimon> {
 
                 for (String rowData : row) {
                     switch (i) {
-                        case 0:
-                            name = rowData;
-                            break;
-                        case 1:
-                            slogan = rowData;
-                            break;
-                        case 2:
-                            firstMove = rowData;
-                            break;
-                        default:
-                            try {
-                                elsSet.add(Element.getElementFromString(rowData));
-                            }
-                            catch (ElementException e) {
-                                System.err.println(e.what());
-                            }
+                    case 0:
+                        name = rowData;
+                        break;
+                    case 1:
+                        slogan = rowData;
+                        break;
+                    case 2:
+                        firstMove = rowData;
+                        break;
+                    default:
+                        try {
+                            elsSet.add(Element.getElementFromString(rowData));
+                        } catch (ElementException e) {
+                            System.err.println(e.what());
+                        }
                     }
                     i++;
                 }
@@ -81,8 +74,7 @@ public class EngiDex implements Dex<Engimon> {
                     Element[] els = new Element[elsSet.size()];
                     elsSet.toArray(els);
                     dex.put(name, new EngimonSpecies(name, slogan, els));
-                }
-                catch (EngimonSpeciesException e) {
+                } catch (EngimonSpeciesException e) {
                     throw new DexException(2);
                 }
             }
@@ -90,15 +82,12 @@ public class EngiDex implements Dex<Engimon> {
             if (this.dex.size() == 0) {
                 throw new DexException(1);
             }
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             throw new DexException(0);
-        }
-        finally {
+        } finally {
             try {
                 in.close();
-            }
-            catch (Exception e) {
+            } catch (Exception e) {
 
             }
         }
@@ -110,7 +99,7 @@ public class EngiDex implements Dex<Engimon> {
 
     // setters
     public void addEngi(String name, EngimonSpecies engi) {
-       this.dex.put(name, engi); 
+        this.dex.put(name, engi);
     }
 
     // methods
