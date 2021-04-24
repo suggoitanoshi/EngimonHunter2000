@@ -73,14 +73,14 @@ public class EngiDex implements Dex<EngimonSpecies> {
                     throw new DexException(2);
                 }
 
-                // try {
+                try {
                     Skill skill = this.skillDex.getEntity(firstMove); 
                     SkillEngimon firstSkill = new SkillEngimon(skill);
                     
                     dex.put(name, new EngimonSpecies(name, slogan, firstSkill, elsSet));
-                // } catch (EngimonSpeciesException e) {
-                //     throw new DexException(2);
-                // }
+                } catch (EngimonSpeciesException e) {
+                    throw new DexException(2);
+                }
             }
 
             if (this.dex.size() == 0) {
