@@ -1,9 +1,5 @@
 package EngimonHunter2000;
 
-/**
- * Class Item
- * @author Jeane Mikha Erwansyah
- */
 public class Item extends SkillEngimon {
     private int quantity;
 
@@ -68,7 +64,7 @@ public class Item extends SkillEngimon {
     }
 
     /**
-    public void learn() {
+    public void learn() throws ItemException {
         // Mengecek kecocokan skill item dengan engimon
         // Mengecek apakah ada 1 elemen yang cocok dengan skill item
         // Jika iya berarti compatible
@@ -76,6 +72,7 @@ public class Item extends SkillEngimon {
 
         // Mengecek apakah skill sudah dipelajari atau belum
         // Jika sudah tambahkan mastery level
+        // Jika susah 3 (max) throw exception 3 (baru)
         
         // Mengecek mastery level item
         // Jika tidak sama dengan 1 throw exception 0
