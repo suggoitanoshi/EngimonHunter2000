@@ -16,8 +16,13 @@ public class Main {
             System.out.println(f);
         }
 
-        Dex skillDex = new SkillDex();
+        SkillDex skillDex = new SkillDex();
         skillDex.getDexDataFromFile("data/Skills.csv");
-        System.out.println(skillDex.toString());
+        // System.out.println(skillDex.toString());
+
+        EngiDex engiDex = new EngiDex(skillDex);
+        engiDex.getDexDataFromFile("data/Engimons.csv");
+        System.out.println(engiDex.toString());
+
     }
 }

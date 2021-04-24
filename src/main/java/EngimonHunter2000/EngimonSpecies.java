@@ -34,6 +34,13 @@ public class EngimonSpecies {
         this.listElement = new HashSet<Element>();
     }
 
+    EngimonSpecies(String _spesies, String _slogan, SkillEngimon _starter, HashSet<Element> _element) {
+        this.spesies = _spesies;
+        this.slogan = _slogan;
+        this.starterSkill = _starter;
+        this.listElement = new HashSet<>(_element);
+    }
+
     EngimonSpecies(EngiDex dex, String _spesies) {
         this.spesies = dex.getEntity(_spesies).getSpecies();
         this.slogan = dex.getEntity(_spesies).getSlogan();

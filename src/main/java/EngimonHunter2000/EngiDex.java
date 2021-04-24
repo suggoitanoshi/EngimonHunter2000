@@ -6,34 +6,37 @@ import java.io.Reader;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVRecord;
 
-public class EngiDex implements Dex<Engimon> {
+public class EngiDex implements Dex<EngimonSpecies> {
     private HashMap<String, EngimonSpecies> dex;
+    private SkillDex skillDex;
 
     // constructors
-    public EngiDex() {
+    public EngiDex(SkillDex _skillDex) {
         this.dex = new HashMap<String, EngimonSpecies>();
+        this.skillDex = _skillDex;
     }
 
     // getters
     public EngimonSpecies getEntity(String name) {
-        if (dex.get(name) == null) {
-            throw new DexException(4);
-        } else {
-            return dex.get(name);
-        }
-
+        return dex.get(name);
     }
 
-    public void getDexDataFromFile(String pathToFile) {
+    public void getDexDataFromFile(String pathToFile) throws DexException {
         Reader in = null;
         try {
-            String[] headers = { "SpesiesName", "Slogan", "FirstMove", "Element1", "Element2", "Element3", "Element4",
-                    "Element5" };
+            String[] headers = {
+                "SpesiesName",
+                "Slogan",
+                "FirstMove",
+                "Element1",
+                "Element2",
+                "Element3",
+                "Element4",
+                "Element5" };
 
             in = new FileReader(pathToFile);
             Iterable<CSVRecord> rows = CSVFormat.DEFAULT.withHeader(headers).withFirstRecordAsHeader().parse(in);
@@ -43,7 +46,7 @@ public class EngiDex implements Dex<Engimon> {
                 String name = null;
                 String slogan = null;
                 String firstMove = null;
-                Set<Element> elsSet = new HashSet<Element>();
+                HashSet<Element> elsSet = new HashSet<Element>();
 
                 for (String rowData : row) {
                     switch (i) {
@@ -70,13 +73,14 @@ public class EngiDex implements Dex<Engimon> {
                     throw new DexException(2);
                 }
 
-                try {
-                    Element[] els = new Element[elsSet.size()];
-                    elsSet.toArray(els);
-                    dex.put(name, new EngimonSpecies(name, slogan, els));
-                } catch (EngimonSpeciesException e) {
-                    throw new DexException(2);
-                }
+                // try {
+                    Skill skill = this.skillDex.getEntity(firstMove); 
+                    SkillEngimon firstSkill = new SkillEngimon(skill);
+                    
+                    dex.put(name, new EngimonSpecies(name, slogan, firstSkill, elsSet));
+                // } catch (EngimonSpeciesException e) {
+                //     throw new DexException(2);
+                // }
             }
 
             if (this.dex.size() == 0) {
@@ -107,15 +111,16 @@ public class EngiDex implements Dex<Engimon> {
     public String toString() {
         StringBuilder SB = new StringBuilder();
         int i = 1;
-        SB.append(String.format("No. %-20sSpecies\tSlogan\telement\n", "Nama"));
+        SB.append(String.format("No. %-20sSlogan\t\t\tDefault Skill\t\tElement\n", "Nama"));
         for (Map.Entry<String, EngimonSpecies> engi : dex.entrySet()) {
             SB.append(String.format("%d%-3s%-20s", i, ".", engi.getKey()));
-            SB.append("\t");
-            SB.append(engi.getValue().getSpecies());
-            SB.append("\t[");
+            SB.append(engi.getValue().getSlogan());
+            SB.append("\t\t");
+            SB.append(engi.getValue().getStarterSkill().getName());
+            SB.append("\t\t[");
             int j = 0;
-            int elsLen = engi.getValue().getElements().size();
-            for (Element el : engi.getValue().getElements()) {
+            int elsLen = engi.getValue().getListElement().size();
+            for (Element el : engi.getValue().getListElement()) {
                 SB.append(el.name());
                 if (j != elsLen - 1) {
                     SB.append(", ");
