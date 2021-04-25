@@ -43,7 +43,6 @@ public class Tile {
             this.y = y;
             this.icon = '2';
         }
-
         else if (t == TileType.MOUNTAIN) {
             type = TileType.MOUNTAIN;
             isNabrak = false;
@@ -52,7 +51,6 @@ public class Tile {
             this.y = y;
             this.icon = '4';
         }
-
         else if (t == TileType.TUNDRA) {
             type = TileType.TUNDRA;
             isNabrak = false;
@@ -61,7 +59,6 @@ public class Tile {
             this.y = y;
             this.icon = '3';
         }
-
         else if (t == TileType.EDGE_GRASS) {
             type = TileType.EDGE_GRASS;
             isNabrak = false;
@@ -70,7 +67,6 @@ public class Tile {
             this.y = y;
             this.icon = 'a';
         }
-
         else if (t == TileType.EDGE_TUNDRA) {
             type = TileType.EDGE_TUNDRA;
             isNabrak = false;
@@ -79,7 +75,6 @@ public class Tile {
             this.y = y;
             this.icon = 'b';
         }
-
         else if (t == TileType.EDGE1_MOUNTAIN) {
             type = TileType.EDGE1_MOUNTAIN;
             isNabrak = false;
@@ -88,7 +83,6 @@ public class Tile {
             this.y = y;
             this.icon = 'c';
         }
-
         else if (t == TileType.EDGE2_MOUNTAIN) {
             type = TileType.EDGE2_MOUNTAIN;
             isNabrak = false;
@@ -97,7 +91,6 @@ public class Tile {
             this.y = y;
             this.icon = 'd';
         }
-
         else if (t == TileType.EDGE3_MOUNTAIN) {
             type = TileType.EDGE3_MOUNTAIN;
             isNabrak = false;
@@ -106,7 +99,6 @@ public class Tile {
             this.y = y;
             this.icon = 'e';
         }
-
         else if (t == TileType.PLAYER) {
             type = TileType.PLAYER;
             isNabrak = false;
@@ -116,6 +108,9 @@ public class Tile {
         }
     }
 
+	public void setType(TileType t){
+		this.type = t;
+	}
     public TileType getType() {
         return this.type;
     }

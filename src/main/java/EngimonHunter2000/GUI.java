@@ -151,10 +151,6 @@ public class GUI extends JFrame {
 
 class MapGrid extends JPanel {
     public MapGrid(int x_player, int y_player, Tile[][] map) {
-        // Tile map[][] = new Tile[20][20];
-
-        // MapTile m = new MapTile();
-        // map = m.getMap();
 
         JPanel panel = new JPanel(new GridLayout(20, 20, 0, 0));
         for (int i = 0; i < 20; i++) {
@@ -162,31 +158,40 @@ class MapGrid extends JPanel {
                 if (j == x_player && i == y_player) {
                     if (map[i][j].getType() == TileType.GRASS) {
                         JLabel l = new JLabel(new ImageIcon("data/resource/char_grass.png"));
+						map[i][j].setType(TileType.PLAYER);
                         panel.add(l);
                     } else if (map[i][j].getType() == TileType.WATER) {
                         JLabel l = new JLabel(new ImageIcon("data/resource/char_watergif.gif"));
-                        panel.add(l);
+						map[i][j].setType(TileType.PLAYER);
+						panel.add(l);
                     } else if (map[i][j].getType() == TileType.TUNDRA) {
                         JLabel l = new JLabel(new ImageIcon("data/resource/char_tundra.png"));
-                        panel.add(l);
+						map[i][j].setType(TileType.PLAYER);
+						panel.add(l);
                     } else if (map[i][j].getType() == TileType.MOUNTAIN) {
                         JLabel l = new JLabel(new ImageIcon("data/resource/char_mountain.png"));
-                        panel.add(l);
+						map[i][j].setType(TileType.PLAYER);
+						panel.add(l);
                     } else if (map[i][j].getType() == TileType.EDGE_GRASS) {
                         JLabel l = new JLabel(new ImageIcon("data/resource/char_edge1.png"));
-                        panel.add(l);
+						map[i][j].setType(TileType.PLAYER);
+						panel.add(l);
                     } else if (map[i][j].getType() == TileType.EDGE_TUNDRA) {
                         JLabel l = new JLabel(new ImageIcon("data/resource/char_edge3.png"));
-                        panel.add(l);
+						map[i][j].setType(TileType.PLAYER);
+						panel.add(l);
                     } else if (map[i][j].getType() == TileType.EDGE1_MOUNTAIN) {
                         JLabel l = new JLabel(new ImageIcon("data/resource/char_edge5.png"));
-                        panel.add(l);
+						map[i][j].setType(TileType.PLAYER);
+						panel.add(l);
                     } else if (map[i][j].getType() == TileType.EDGE2_MOUNTAIN) {
                         JLabel l = new JLabel(new ImageIcon("data/resource/char_edge4.png"));
-                        panel.add(l);
+						map[i][j].setType(TileType.PLAYER);
+						panel.add(l);
                     } else if (map[i][j].getType() == TileType.EDGE3_MOUNTAIN) {
                         JLabel l = new JLabel(new ImageIcon("data/resource/char_edge6.png"));
-                        panel.add(l);
+						map[i][j].setType(TileType.PLAYER);
+						panel.add(l);
                     }
                 } else {
                     JLabel l = new JLabel(new ImageIcon(map[i][j].getPath()));
