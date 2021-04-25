@@ -26,6 +26,14 @@ public class Player implements Serializable {
     }
 
     // getters
+    public Inventory<Engimon> getInventoryEngimon() {
+        return this.listEngimon;
+    }
+
+    public Inventory<Item> getInventoryItem() {
+        return this.listItem;
+    }
+
     public Engimon getActiveEngimon() {
         return this.activeEngi;
     }
@@ -111,6 +119,16 @@ public class Player implements Serializable {
 
     public void addItem(Item item) throws InventoryException {
         this.listItem.addItemNoDupe(item);
+    }
+
+    public void removeActiveEngimon() throws InventoryException {
+        int idx = this.listEngimon.getItemFromIdx(this.activeEngi);
+        if (idx != -1) {
+            this.listEngimon.removeItem(this.listEngimon.at(idx));
+        }
+        else {
+            throw new InventoryException(3);
+        }
     }
 
     public void removeItem(int itemIdx, int n) throws InventoryException {
