@@ -2,6 +2,8 @@ package EngimonHunter2000;
 
 import java.util.ArrayList;
 
+import org.apache.maven.plugin.InvalidPluginException;
+
 /**
  * TODO: Add a class that extends {@link InventoryItem} so we can use better generics
  */
@@ -45,6 +47,29 @@ class Inventory<T> {
             this.container.remove(item);
             Inventory.itemCount--;
         } else {
+            throw new InventoryException(2);
+        }
+    }
+
+    public void removeItem(T item, int n) throws InventoryException {
+        if (this.container.size() == 0)
+            throw new InventoryException(1);
+        if (this.container.contains(item)) {
+            this.container.remove(item);
+            Inventory.itemCount = Inventory.itemCount - n;
+        }
+        else {
+            throw new InventoryException(2);
+        }
+    }
+
+    public void removeItemNoDupe(T item, int n) throws InventoryException {
+        if (this.container.size() == 0)
+            throw new InventoryException(1);
+        if (this.container.contains(item)) {
+            Inventory.itemCount = Inventory.itemCount - n;
+        }
+        else {
             throw new InventoryException(2);
         }
     }

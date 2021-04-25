@@ -5,27 +5,26 @@ package EngimonHunter2000;
  * @author Cynthia Rusadi
  */
 
-// TODO: engimon + item related stuff
 public class Player {
-    // private Inventory<Engimon> listEngimon;
-    // private Inventory<Item> listItem;
-    // private Engimon activeEngi;
+    private Inventory<Engimon> listEngimon;
+    private Inventory<Item> listItem;
+    private Engimon activeEngi;
     private Position position;
     private char dir;
 
     // constructor
-    Player() {
-        // this.listEngimon = new Inventory<Engimon>();
-        // this.listItem = new Inventory<Item>();
-        // this.activeEngi = 0;
+    public Player(EngiDex dex) throws EngimonSpeciesException, ElementsListException {
+        this.listEngimon = new Inventory<Engimon>();
+        this.listItem = new Inventory<Item>();
+        this.activeEngi = new Engimon(dex, "Picakhu", "Picakhu");
         this.dir = 'a';
         this.position = new Position();
     }
 
     // getters
-    // public Engimon getActiveEngimon() {
-    //     return this.activeEngi;
-    // }
+    public Engimon getActiveEngimon() {
+        return this.activeEngi;
+    }
 
     public Position getPosition() {
         return this.position;
@@ -43,9 +42,9 @@ public class Player {
         return this.dir;
     }
 
-    // public Engimon getEngimonByID(int idx) {
-    //     return this.listEngimon[idx];
-    // }
+    public Engimon getEngimonByID(int idx) throws InventoryException {
+        return this.listEngimon.at(idx);
+    }
 
     // setters
     public void setPosition(Position pos) {
@@ -65,77 +64,72 @@ public class Player {
     }
 
     // methods
-    // public void checkActiveEngimon() {
-        // this.activeEngi.showEngimon();
-    // }
+    public void checkActiveEngimon() {
+        this.activeEngi.showEngimon();
+    }
 
-    // public void switchEngimon(int engiIdx) {
-    //     Position currPos = this.activeEngi.getPosition();
-    //     this.activeEngi.setPosition(-1, -1);
+    public void switchEngimon(int engiIdx) throws InventoryException {
+        Position currPos = this.activeEngi.getPosition();
+        this.activeEngi.setPos(-1, -1);
 
-    //     this.listEngimon[engiIdx].setPosition(currPos.getX(), currPos.getY());
-    //     this.activeEngi = this.listengimon[engiIdx];
-    // }
+        this.listEngimon.at(engiIdx).setPos(currPos.getX(), currPos.getY());
+        this.activeEngi = this.listEngimon.at(engiIdx);
+    }
 
     // specifically only one engimon
-    // public void showEngimon(int engiIdx) {
-        // this.listEngimon[engiIdx].showEngimon();
-    // }
+    public void showEngimon(int engiIdx) throws InventoryException {
+        this.listEngimon.at(engiIdx).showEngimon();
+    }
 
     // print all engimon in inventory
-    // public void showEngimon() throws InventoryException {
-    //     if (this.listEngimon.getItemCount() == 0) throw new InventoryException(1);
-    //     System.out.println("Engimon di dalam Inventory:");
-    //     this.listEngimon.showInventory();
-    // }
+    public void showEngimon() throws InventoryException {
+        if (this.listEngimon.getItemCount() == 0) throw new InventoryException(1);
+        System.out.println("Engimon di dalam Inventory:");
+        this.listEngimon.showInventory();
+    }
 
-    // public void changeEngimonName(int engiIdx, String newName) {
-    //     this.listEngimon[engiIdx].setName(newName);
-    // }
+    public void changeEngimonName(int engiIdx, String newName) throws EngimonException, InventoryException {
+        this.listEngimon.at(engiIdx).setName(newName);
+    }
 
-    // public void addEngimon(Engimon engi) {
-    //     this.listEngimon.addItem(engi);
-    // }
+    public void addEngimon(Engimon engi) throws InventoryException {
+        this.listEngimon.addItem(engi);
+    }
 
-    // public void showItem(int itemIdx) {
-    //     this.listItem[itemIdx].showItem();
-    // }
+    public void showItem(int itemIdx) {
+        this.listItem.at(itemIdx).showItem();
+    }
 
-    // public void showItem() throws InventoryException {
-    //     if (this.listItem.getItemCount() == 0) throw new InventoryException(1);
-    //     System.out.println("Skill Item di dalam Inventory:");
-    //     this.listItem.showInventory();
-    // }
+    public void showItem() throws InventoryException {
+        if (this.listItem.getItemCount() == 0) throw new InventoryException(1);
+        System.out.println("Skill Item di dalam Inventory:");
+        this.listItem.showInventory();
+    }
 
-    // public void useItem(int engiIdx, int itemIdx, Dex dex) {
-    //     this.listItem[itemIdx].learn(this.listEngimon[engiIdx], dex);
-    //     if (this.listItem[itemIdx].getQuantity() == 0) {
-    //         removeItem(listItem[itemIdx]);
-    //     }
-    // }
+    public void useItem(int engiIdx, int itemIdx, Dex dex) {
+        this.listItem.at(itemIdx).learn(this.listEngimon.at(engiIdx), dex);
+        if (this.listItem.at(itemIdx).getQuantity() == 0) {
+            listItem.removeItem(listItem.at(itemIdx));
+        }
+    }
 
-    // public void addItem(Item item) {
-    //     this.listItem.addItemNoDupe(item);
-    // }
+    public void addItem(Item item) throws InventoryException {
+        this.listItem.addItemNoDupe(item);
+    }
 
-    // public void removeItem(Item item) {
-    //     this.listItem.removeItemNoDupe(item);
-    // }
+    public void removeItem(int itemIdx, int n) throws InventoryException {
+        if (this.listItem.at(itemIdx).getQuantity() == n) {
+            this.listItem.removeItem(listItem.at(itemIdx), n);
+        }
+        else {
+            for (int i = 0; i < n; i++) {
+                this.listItem.at(itemIdx).decQuantity();
+            }
+            this.listItem.removeItemNoDupe(this.listItem.at(itemIdx), n);
+        }
+    }
 
-    // public void removeItem(String itemIdx, int n) {
-
-    // }
-
-    // public void interact() {
-    //     this.activeEngi.interact();
-    // }
-
-    // TODO: mikirin ini butuh apa kagak
-    // public void itemIsEmpty() {
-
-    // }
-
-    // public void inventoryIsFull() {
-
-    // }
+    public void interact() {
+        this.activeEngi.interact();
+    }
 }
