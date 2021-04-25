@@ -32,8 +32,7 @@ public class InventoryTest {
         Inventory<Integer> i1 = new Inventory<Integer>();
         Inventory<Float> i2 = new Inventory<Float>();
         assertAll("Konstruk dua inventory",
-            ()
-                -> assertEquals(0, i1.getItemCount()),
+            () -> assertEquals(0, i1.getItemCount()),
             () -> assertEquals(0, i2.getItemCount()));
     }
 
@@ -52,8 +51,7 @@ public class InventoryTest {
         i1.addItem(0);
         i2.addItem(0f);
         assertAll("Tambah item ke dua inventory",
-            ()
-                -> assertEquals(2, i1.getItemCount()),
+            () -> assertEquals(2, i1.getItemCount()),
             () -> assertEquals(2, i2.getItemCount()));
     }
 
@@ -87,8 +85,7 @@ public class InventoryTest {
         i1.addItem(0);
         i1.removeItem(0);
         assertAll("Penghapusan invalid",
-            ()
-                -> assertEquals(0, i1.getItemCount()),
+            () -> assertEquals(0, i1.getItemCount()),
             () -> assertThrows(InventoryException.class, () -> i1.at(0)));
     }
 
@@ -97,8 +94,7 @@ public class InventoryTest {
         Inventory<Float> i2 = new Inventory<Float>();
         i1.addItem(0);
         assertAll("Penghapusan invalid pada inventory ke-2",
-            ()
-                -> assertThrows(
+            () -> assertThrows(
                     InventoryException.class, () -> i2.removeItem(0f)));
     }
 }
