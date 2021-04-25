@@ -29,7 +29,8 @@ public class GameState implements Serializable {
 			map = maptile.getMap();
             player = new Player(engiDex);
             wildEngimons = new ArrayList<>();
-
+			
+			spawnWildEngimons(10);
 			setEntities();
 
         } catch (EngimonHunter2000Exception e) {
@@ -157,14 +158,28 @@ public class GameState implements Serializable {
                                     .getType());
         tile = new Tile(path, TileType.ENGIMON, player.getPositionX()+i, player.getPositionY()+j, false);
         map[player.getPositionY()+j][player.getPositionX()+i] = tile;
+
+		//set wild 
+		for (Engimon el : wildEngimons){
+			String pathW;
+			if (el.getLvl() > player.getActiveEngimon().getLvl()){
+				pathW = getEngimonSpriteWild(el, "big", map[el.getPosition().getY()][el.getPosition().getX()].getType());
+			}
+			else{
+				pathW = getEngimonSpriteWild(el, "small", map[el.getPosition().getY()][el.getPosition().getX()].getType());
+			}
+			Tile tileW = new Tile(pathW, TileType.ENGIMON, el.getPosition().getX(), el.getPosition().getY(), true);
+			map[el.getPosition().getY()][el.getPosition().getX()] = tileW;
+		}
+
 		
 	}
 
     private String getEngimonSprite(Engimon engie, TileType tipe) {
         StringBuilder SB = new StringBuilder("data/resource/");
-        SB.append(engie.getSpecies().toLowerCase());
+        SB.append(engie.getSpecies().replaceAll("\\s+","").toLowerCase());
         SB.append("/");
-        SB.append(engie.getSpecies().toLowerCase());
+        SB.append(engie.getSpecies().replaceAll("\\s+","").toLowerCase());
 		switch (tipe){
 			case EDGE1_MOUNTAIN:
 				SB.append("_edge5.png");
@@ -193,9 +208,47 @@ public class GameState implements Serializable {
             default: //water
 				SB.append("_watergif.gif");
 		}
-
         return SB.toString();
     }
+
+    private String getEngimonSpriteWild(Engimon engie, String type, TileType tipe) {
+        StringBuilder SB = new StringBuilder("data/resource/");
+        SB.append(engie.getSpecies().replaceAll("\\s+","").toLowerCase());
+        SB.append("/");
+        SB.append(engie.getSpecies().replaceAll("\\s+","").toLowerCase());
+		SB.append("_wild_");
+		SB.append(type);
+		switch (tipe){
+			case EDGE1_MOUNTAIN:
+				SB.append("_edge5.png");
+                break;
+			case EDGE2_MOUNTAIN:
+				SB.append("_edge4.png");
+                break;
+			case EDGE3_MOUNTAIN:
+				SB.append("_edge6.png");
+                break;
+			case EDGE_GRASS:
+				SB.append("_edge1.png");
+                break;
+			case EDGE_TUNDRA:
+				SB.append("_edge3.png");
+                break;
+			case GRASS:
+				SB.append("_grass.png");
+                break;
+			case MOUNTAIN:
+				SB.append("_mountain.png");
+                break;
+			case TUNDRA:
+				SB.append("_tundra.png");
+                break;
+            default: //water
+				SB.append("_watergif.gif");
+		}
+        return SB.toString();
+    }
+	
 
 	public void updateGameState() {
         maptile = new MapTile();
@@ -259,20 +312,18 @@ public class GameState implements Serializable {
      * @author Josep Marcello
      */
     public void spawnWildEngimons(int count) {
-        if (wildEngimons.size() >= count) {
+        if (wildEngimons.size() >= count || count == 0) {
             return;
         }
-
         for (int i = 0; i < count; ++i) {
             Engimon engie = null;
             try {
                 engie = makeWildEngimon();
                 putWildEngimon(engie);
+                wildEngimons.add(engie);
             } catch (EngimonHunter2000Exception e) {
                 --i; // coba lagi kalo gagal
                 continue;
-                // e.printStackTrace();
-                // System.exit(-1);
             }
         }
     }
