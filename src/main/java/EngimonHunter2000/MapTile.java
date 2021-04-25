@@ -10,7 +10,7 @@ public class MapTile {
     public int sizeY;
 
     public MapTile() {
-        readMap();
+		readMap();
     }
 
     public void readMap() {

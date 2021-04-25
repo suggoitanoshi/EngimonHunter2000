@@ -32,6 +32,7 @@ public class GUI extends JFrame {
                         @Override
                         public void actionPerformed(ActionEvent e) {
                             gs.getPlayer().setPositionY(gs.getPlayer().getPositionY() - 1);
+							gs.updateGameState();
                             pane.removeAll();
                             MapGrid m = new MapGrid(
                                 gs.getPlayer().getPositionX(), gs.getPlayer().getPositionY(), gs.getMap());
@@ -48,7 +49,8 @@ public class GUI extends JFrame {
                         @Override
                         public void actionPerformed(ActionEvent e) {
                             gs.getPlayer().setPositionX(gs.getPlayer().getPositionX() - 1);
-                            pane.removeAll();
+							gs.updateGameState();
+							pane.removeAll();
                             MapGrid m = new MapGrid(
                                 gs.getPlayer().getPositionX(), gs.getPlayer().getPositionY(), gs.getMap());
                             pane.add(m, BorderLayout.WEST);
@@ -64,7 +66,8 @@ public class GUI extends JFrame {
                         @Override
                         public void actionPerformed(ActionEvent e) {
                             gs.getPlayer().setPositionY(gs.getPlayer().getPositionY() + 1);
-                            pane.removeAll();
+							gs.updateGameState();
+							pane.removeAll();
                             MapGrid m = new MapGrid(
                                 gs.getPlayer().getPositionX(), gs.getPlayer().getPositionY(), gs.getMap());
                             pane.add(m, BorderLayout.WEST);
@@ -80,7 +83,8 @@ public class GUI extends JFrame {
                         @Override
                         public void actionPerformed(ActionEvent e) {
                             gs.getPlayer().setPositionX(gs.getPlayer().getPositionX() + 1);
-                            pane.removeAll();
+							gs.updateGameState();
+							pane.removeAll();
                             MapGrid m = new MapGrid(
                                 gs.getPlayer().getPositionX(), gs.getPlayer().getPositionY(), gs.getMap());
                             pane.add(m, BorderLayout.WEST);
@@ -151,98 +155,14 @@ public class GUI extends JFrame {
 
 class MapGrid extends JPanel {
     public MapGrid(int x_player, int y_player, Tile[][] map) {
-
         JPanel panel = new JPanel(new GridLayout(20, 20, 0, 0));
         for (int i = 0; i < 20; i++) {
             for (int j = 0; j < 20; j++) {
-                if (j == x_player && i == y_player) {
-                    if (map[i][j].getType() == TileType.GRASS) {
-                        JLabel l = new JLabel(new ImageIcon("data/resource/char_grass.png"));
-						map[i][j].setType(TileType.PLAYER);
-                        panel.add(l);
-                    } else if (map[i][j].getType() == TileType.WATER) {
-                        JLabel l = new JLabel(new ImageIcon("data/resource/char_watergif.gif"));
-						map[i][j].setType(TileType.PLAYER);
-						panel.add(l);
-                    } else if (map[i][j].getType() == TileType.TUNDRA) {
-                        JLabel l = new JLabel(new ImageIcon("data/resource/char_tundra.png"));
-						map[i][j].setType(TileType.PLAYER);
-						panel.add(l);
-                    } else if (map[i][j].getType() == TileType.MOUNTAIN) {
-                        JLabel l = new JLabel(new ImageIcon("data/resource/char_mountain.png"));
-						map[i][j].setType(TileType.PLAYER);
-						panel.add(l);
-                    } else if (map[i][j].getType() == TileType.EDGE_GRASS) {
-                        JLabel l = new JLabel(new ImageIcon("data/resource/char_edge1.png"));
-						map[i][j].setType(TileType.PLAYER);
-						panel.add(l);
-                    } else if (map[i][j].getType() == TileType.EDGE_TUNDRA) {
-                        JLabel l = new JLabel(new ImageIcon("data/resource/char_edge3.png"));
-						map[i][j].setType(TileType.PLAYER);
-						panel.add(l);
-                    } else if (map[i][j].getType() == TileType.EDGE1_MOUNTAIN) {
-                        JLabel l = new JLabel(new ImageIcon("data/resource/char_edge5.png"));
-						map[i][j].setType(TileType.PLAYER);
-						panel.add(l);
-                    } else if (map[i][j].getType() == TileType.EDGE2_MOUNTAIN) {
-                        JLabel l = new JLabel(new ImageIcon("data/resource/char_edge4.png"));
-						map[i][j].setType(TileType.PLAYER);
-						panel.add(l);
-                    } else if (map[i][j].getType() == TileType.EDGE3_MOUNTAIN) {
-                        JLabel l = new JLabel(new ImageIcon("data/resource/char_edge6.png"));
-						map[i][j].setType(TileType.PLAYER);
-						panel.add(l);
-                    }
-                } else {
-                    JLabel l = new JLabel(new ImageIcon(map[i][j].getPath()));
-                    panel.add(l);
-                }
+				JLabel l = new JLabel(new ImageIcon(map[i][j].getPath()));
+				panel.add(l);
             }
         }
         add(panel);
         setSize(new Dimension(640, 640));
     }
 }
-
-// class Control extends JPanel{
-//   public Control(int xp, int yp){
-//     JPanel panel = new JPanel(new GridLayout(3,8,0,0));
-
-//     for (int i=0;i<3;i++){
-//       for (int j=0;j<8;j++){
-//         if (i==0 && j==4){
-//           JButton w = new JButton("w");
-//           w.setPreferredSize(new Dimension(60, 30));
-//           w.addActionListener(new ActionListener() {
-//             @Override
-//             public void actionPerformed(ActionEvent e){
-
-//             }
-//           });
-//           panel.add(w);
-//         }
-//         else if (i==1 && j==3){
-//           JButton a = new JButton("a");
-//           a.setPreferredSize(new Dimension(60, 30));
-//           panel.add(a);
-//         }
-//         else if (i==2 && j==4){
-//           JButton s = new JButton("s");
-//           s.setPreferredSize(new Dimension(60, 30));
-//           panel.add(s);
-//         }
-//         else if (i==1 && j==5){
-//           JButton d = new JButton("d");
-//           d.setPreferredSize(new Dimension(60, 30));
-//           panel.add(d);
-//         }
-//         else{
-//           JLabel l = new JLabel();
-//           panel.add(l);
-//         }
-//       }
-//     }
-//     add(panel);
-//     setSize(new Dimension(480, 90));
-//   }
-// }

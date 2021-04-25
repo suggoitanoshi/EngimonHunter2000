@@ -10,6 +10,6 @@ public enum TileType {
     EDGE1_MOUNTAIN,
     EDGE2_MOUNTAIN,
     EDGE3_MOUNTAIN,
-    ENGIMON,
-    PLAYER;
+    PLAYER,
+    ENGIMON;
 }

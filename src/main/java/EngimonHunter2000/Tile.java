@@ -3,14 +3,22 @@ package EngimonHunter2000;
 public class Tile {
     TileType type;
     boolean isNabrak;
-    boolean canMoveW;
-    boolean canMoveA;
-    boolean canMoveS;
-    boolean canMoveD;
+    boolean canMoveW=false;
+    boolean canMoveA=false;
+    boolean canMoveS=false;
+    boolean canMoveD=false;
     String path;
     int x;
     int y;
     char icon;
+
+	public Tile(String p, TileType t, int x, int y, boolean in){
+		path = p;
+		type = t;
+		this.x = x;
+		this.y = y;
+		isNabrak = in;
+	}
 
     public Tile(TileType t, int x, int y) {
         if (y == 0) {
@@ -98,13 +106,6 @@ public class Tile {
             this.x = x;
             this.y = y;
             this.icon = 'e';
-        }
-        else if (t == TileType.PLAYER) {
-            type = TileType.PLAYER;
-            isNabrak = false;
-            path = "data/resource/char_grass.png";
-            this.x = x;
-            this.y = y;
         }
     }
 
