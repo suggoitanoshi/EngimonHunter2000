@@ -5,12 +5,20 @@ import java.io.FileNotFoundException; // Import this class to handle errors
 import java.util.Scanner; // Import the Scanner class to read text files
 
 public class MapTile {
-    Tile[][] map;
-    public int sizeX;
-    public int sizeY;
+    private Tile[][] map;
+    private int sizeX;
+    private int sizeY;
 
     public MapTile() {
 		readMap();
+    }
+
+    public int getSizeX() {
+        return sizeX;
+    }
+
+    public int getSizeY() {
+        return sizeY;
     }
 
     public void readMap() {
@@ -62,13 +70,26 @@ public class MapTile {
             }
             r.close();
         } catch (FileNotFoundException e) {
-            System.out.println("An error occurred.");
+            System.err.println("Bruh");
             e.printStackTrace();
+            // throw new GameStateException(0);
         }
     }
 
     public Tile[][] getMap() {
         return map;
+    }
+
+    public boolean isOccupied(int x, int y) {
+        return map[x][y].isOccupied();
+    }
+
+    public void makeOccupied(int x, int y) {
+        map[y][x].makeOccupied();
+    }
+
+    public void makeFree(int x, int y) {
+        map[y][x].makeFree();
     }
 
     // public Tile getTile(int x, int y) {

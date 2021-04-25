@@ -24,5 +24,7 @@ public abstract class EngimonHunter2000Exception extends Exception {
     /**
      * metode yang menuliskan pesan exception ke layar
      */
-    public abstract void bruh();
+    public void bruh() {
+        System.err.println(what());
+    }
 }
