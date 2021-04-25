@@ -17,10 +17,13 @@ public class Player implements Serializable {
 
     // constructor
     public Player(EngiDex dex)
-            throws EngimonSpeciesException, ElementsListException, EngimonException {
+            throws EngimonSpeciesException, ElementsListException, EngimonException, InventoryException {
+        Engimon engie = new Engimon(dex, "Morgana", "Morgana");
+        
         this.listEngimon = new Inventory<Engimon>();
+        this.listEngimon.addItem(engie);
         this.listItem = new Inventory<Item>();
-        this.activeEngi = new Engimon(dex, "Morgana", "Morgana");
+        this.activeEngi = engie;
         this.dir = 'a';
         this.position = new Position();
     }
