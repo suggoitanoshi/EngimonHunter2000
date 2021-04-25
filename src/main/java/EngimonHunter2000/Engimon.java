@@ -119,9 +119,14 @@ public class Engimon extends EngimonSpecies {
     }
 
     // methods
-    public void addExp(int exp) {
-
+    public void addExp(int _exp) {
+        this.exp += _exp;
+        if (this.exp >= 100) {
+            this.lvl
+        }
     }
+
+    public void 
 
     public Long getBattlePower(Double elmtAdv) {
 

@@ -28,15 +28,8 @@ public class EngiDex implements Dex<EngimonSpecies> {
     public void getDexDataFromFile(String pathToFile) throws DexException {
         Reader in = null;
         try {
-            String[] headers = {
-                "SpesiesName",
-                "Slogan",
-                "FirstMove",
-                "Element1",
-                "Element2",
-                "Element3",
-                "Element4",
-                "Element5" };
+            String[] headers = { "SpesiesName", "Slogan", "FirstMove", "Element1", "Element2", "Element3", "Element4",
+                    "Element5" };
 
             in = new FileReader(pathToFile);
             Iterable<CSVRecord> rows = CSVFormat.DEFAULT.withHeader(headers).withFirstRecordAsHeader().parse(in);
@@ -73,14 +66,14 @@ public class EngiDex implements Dex<EngimonSpecies> {
                     throw new DexException(2);
                 }
 
+                Skill skill = this.skillDex.getEntity(firstMove);
+                SkillEngimon firstSkill = new SkillEngimon(skill);
                 try {
-                    Skill skill = this.skillDex.getEntity(firstMove); 
-                    SkillEngimon firstSkill = new SkillEngimon(skill);
-                    
-                    dex.put(name, new EngimonSpecies(name, slogan, firstSkill, elsSet));
-                } catch (EngimonSpeciesException e) {
-                    throw new DexException(2);
+                    dex.put(name, new EngimonSpecies(name, slogan, firstSkill, (Element[]) elsSet.toArray()));
+                } catch (ElementsListException e) {
+                    // error message?
                 }
+
             }
 
             if (this.dex.size() == 0) {
@@ -119,8 +112,8 @@ public class EngiDex implements Dex<EngimonSpecies> {
             SB.append(engi.getValue().getStarterSkill().getName());
             SB.append("\t\t[");
             int j = 0;
-            int elsLen = engi.getValue().getListElement().size();
-            for (Element el : engi.getValue().getListElement()) {
+            int elsLen = engi.getValue().getListElement().getElementsList().size();
+            for (Element el : engi.getValue().getListElement().getElementsList()) {
                 SB.append(el.name());
                 if (j != elsLen - 1) {
                     SB.append(", ");
