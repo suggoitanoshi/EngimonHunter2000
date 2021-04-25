@@ -90,24 +90,10 @@ public enum Element {
      * @throws ElementException
      */
     public static Element getElementFromString(String el) throws ElementException {
-        if (el.toLowerCase().equals("electric")) {
-            return Element.ELECTRIC;
-        }
-
-        if (el.toLowerCase().equals("fire")) {
-            return Element.FIRE;
-        }
-
-        if (el.toLowerCase().equals("ground")) {
-            return Element.GROUND;
-        }
-
-        if (el.toLowerCase().equals("ice")) {
-            return Element.ICE;
-        }
-
-        if (el.toLowerCase().equals("water")) {
-            return Element.WATER;
+        for (Element ins : Element.values()) {
+            if (ins.name().equalsIgnoreCase(el)) {
+                return ins;
+            }
         }
 
         throw new ElementException(0);
