@@ -3,10 +3,12 @@ package EngimonHunter2000;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Random;
 
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVRecord;
@@ -130,5 +132,42 @@ public class EngiDex implements Dex<EngimonSpecies> {
         }
         return SB.toString();
     }
+    
+    private int randomGenerator(ArrayList<String> al) {
+        Random randomGenerator = new Random();
+        return randomGenerator.nextInt(al.size());
+    }
+    
+    private ArrayList<String> getEngimonNamesFromElement(Element el) {
+        ArrayList<String> engiList = new ArrayList<String>();
+        for (Map.Entry<String, EngimonSpecies> engi : dex.entrySet()) {
+            if (engi.getValue().getListElement().getElementsList().size() == 1
+            && engi.getValue().getListElement().getElementsList().contains(el)) {
+                engiList.add(engi.getValue().getSpecies());
+            }
+        }
+        return engiList;
+    }
 
+    public String getEngimonNameFromElement(Element el) {
+        ArrayList<String> engiList = getEngimonNamesFromElement(el);
+        return engiList.get(randomGenerator(engiList));
+    }
+        
+    public String getEngimonNameFromElement(Element el1, Element el2) {
+        ArrayList<String> engiList = new ArrayList<String>();
+        for (Map.Entry<String, EngimonSpecies> engi : dex.entrySet()) {
+            if (engi.getValue().getListElement().getElementsList().size() == 2
+            && engi.getValue().getListElement().getElementsList().contains(el1)
+            && engi.getValue().getListElement().getElementsList().contains(el2)) {
+                engiList.add(engi.getValue().getSpecies());
+            }
+        }
+
+        if (engiList.size() == 0) {
+            engiList.addAll(getEngimonNamesFromElement(el1));
+            engiList.addAll(getEngimonNamesFromElement(el2));
+        }
+        return engiList.get(randomGenerator(engiList));
+    }
 }

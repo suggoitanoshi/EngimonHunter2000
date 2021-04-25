@@ -34,4 +34,12 @@ public class EngiDexTest {
         assertAll("Cek kalo entitynya ga ada",
         () -> assertEquals(dex.getEntity("albeidou"), null));
     }
+
+    @Test
+    void testGetEngimonName() {
+        assertAll("Cek nama engimon",
+        () -> assertEquals(dex.getEngimonNameFromElement(Element.ELECTRIC), "Picakhu"),
+        () -> assertEquals(dex.getEngimonNameFromElement(Element.FIRE, Element.GROUND), "Tupai"),
+        () -> assertEquals(dex.getEngimonNameFromElement(Element.WATER, Element.FIRE), "Barbruh"));
+    }
 }
