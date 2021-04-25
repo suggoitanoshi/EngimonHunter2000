@@ -23,23 +23,6 @@ public class Engimon extends EngimonSpecies {
     private String[] parents;
 
     /**
-     * @deprecated Membuat engimon picakhu, pakai kalau darurat atau buat debugging
-     * @throws EngimonSpeciesException tidak terdapat nama spesies terkait pada dex
-     * @throws ElementsListException
-     */
-    Engimon(EngiDex dex) throws EngimonSpeciesException, ElementsListException {
-        super(dex, "Picakhu");
-        this.name = super.getSpecies();
-        this.lvl = 20;
-        this.exp = 0;
-        this.cexp = 20 * MAX_EXP;
-        this.lives = 3;
-        this.position = new Position(-1, -1);
-        this.parents[0] = "Picakhu";
-        this.parents[1] = "Picakhu";
-    }
-
-    /**
      * Konstruktor dengan menggunakan nama spesies dari {@link EngimonSpecies}
      * Konstruktor ini dapat digunakan untuk membuat engimon baru pada
      * {@link Inventory} dari player

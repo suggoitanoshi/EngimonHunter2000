@@ -132,4 +132,22 @@ public class Player {
     public void interact() {
         this.activeEngi.interact();
     }
+
+    /**
+     * Fungsi untuk mendapatkan engimon player yang memiliki level tertiinggi
+     */
+    public int getHighestEngimonLevel() {
+        int highest = 0x7FFFFFFF;
+        for (int i = 0; i < listEngimon.getItemCount(); ++i) {
+            try {
+                Engimon disEngie = listEngimon.at(i);
+                highest = disEngie.getLvl() > highest ? disEngie.getLvl() : highest;
+            } catch (InventoryException e) {
+                System.err.println(e.what());
+                break; // idk what to do, really ¯\_(ツ)_/¯
+            }
+        }
+
+        return highest;
+    }
 }
