@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.Reader;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Map;
 
 import org.apache.commons.csv.CSVFormat;
@@ -69,7 +70,12 @@ public class EngiDex implements Dex<EngimonSpecies> {
                 Skill skill = this.skillDex.getEntity(firstMove);
                 SkillEngimon firstSkill = new SkillEngimon(skill);
                 try {
-                    dex.put(name, new EngimonSpecies(name, slogan, firstSkill, (Element[]) elsSet.toArray()));
+                    Element[] tempEls = new Element[elsSet.size()];
+                    Iterator<Element> it = elsSet.iterator();
+                    for (int j = 0; it.hasNext() && j < tempEls.length; ++j) {
+                        tempEls[j] = it.next();
+                    }
+                    dex.put(name, new EngimonSpecies(name, slogan, firstSkill, tempEls));
                 } catch (ElementsListException e) {
                     // error message?
                 }

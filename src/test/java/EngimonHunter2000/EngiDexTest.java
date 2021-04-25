@@ -25,8 +25,8 @@ public class EngiDexTest {
         () -> assertEquals(dex.getEntity("Zhonkli").getSpecies(), "Zhonkli"),
         () -> assertEquals(dex.getEntity("Zhonkli").getSlogan(), "Tendo Bonkshou"),
         () -> assertEquals(dex.getEntity("Zhonkli").getStarterSkill().getName(), "Fiery Thunder"),
-        () -> assertEquals(dex.getEntity("Zhonkli").getListElement().size(), 1),
-        () -> assertTrue(dex.getEntity("Zhonkli").getListElement().contains(Element.GROUND)));
+        () -> assertEquals(dex.getEntity("Zhonkli").getListElement().getElementsList().size(), 1),
+        () -> assertTrue(dex.getEntity("Zhonkli").getListElement().getElementsList().contains(Element.GROUND)));
     }
 
     @Test

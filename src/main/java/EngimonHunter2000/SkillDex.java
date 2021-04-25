@@ -22,6 +22,7 @@ public class SkillDex implements Dex<Skill> {
     }
 
     public Skill getEntity(String name) {
+        // TODO: possible null here. Maybe throw an exception when it's null?
         return dex.get(name);
     }
 
