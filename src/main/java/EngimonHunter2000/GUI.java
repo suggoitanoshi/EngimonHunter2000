@@ -6,7 +6,7 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-class Position{
+class TempPositionMap{
   public static int X = 8;
   public static int Y = 15;
 }
@@ -17,7 +17,7 @@ public class GUI extends JFrame{
     setSize(1156,640);
     JLayeredPane pane = new JLayeredPane();
     pane.setPreferredSize(new Dimension(640, 480));
-    MapGrid m = new MapGrid(Position.X, Position.Y);
+    MapGrid m = new MapGrid(TempPositionMap.X, TempPositionMap.Y);
 
     JPanel container_control = new JPanel(new BorderLayout());
     JPanel container_menu = new JPanel(new GridLayout(5,2,5,5));
@@ -34,9 +34,9 @@ public class GUI extends JFrame{
           w.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e){
-              Position.Y = Position.Y - 1;
+              TempPositionMap.Y = TempPositionMap.Y - 1;
               pane.removeAll();
-              MapGrid m = new MapGrid(Position.X, Position.Y);
+              MapGrid m = new MapGrid(TempPositionMap.X, TempPositionMap.Y);
               pane.add(m, BorderLayout.WEST);
               pane.revalidate();
               pane.repaint();
@@ -50,9 +50,9 @@ public class GUI extends JFrame{
           a.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e){
-              Position.X = Position.X - 1;
+              TempPositionMap.X = TempPositionMap.X - 1;
               pane.removeAll();
-              MapGrid m = new MapGrid(Position.X, Position.Y);
+              MapGrid m = new MapGrid(TempPositionMap.X, TempPositionMap.Y);
               pane.add(m, BorderLayout.WEST);
               pane.revalidate();
               pane.repaint();
@@ -66,9 +66,9 @@ public class GUI extends JFrame{
           s.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e){
-              Position.Y = Position.Y + 1;
+              TempPositionMap.Y = TempPositionMap.Y + 1;
               pane.removeAll();
-              MapGrid m = new MapGrid(Position.X, Position.Y);
+              MapGrid m = new MapGrid(TempPositionMap.X, TempPositionMap.Y);
               pane.add(m, BorderLayout.WEST);
               pane.revalidate();
               pane.repaint();
@@ -82,9 +82,9 @@ public class GUI extends JFrame{
           d.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e){
-              Position.X = Position.X + 1;
+              TempPositionMap.X = TempPositionMap.X + 1;
               pane.removeAll();
-              MapGrid m = new MapGrid(Position.X, Position.Y);
+              MapGrid m = new MapGrid(TempPositionMap.X, TempPositionMap.Y);
               pane.add(m, BorderLayout.WEST);
               pane.revalidate();
               pane.repaint();

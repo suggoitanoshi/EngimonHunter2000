@@ -1,15 +1,15 @@
 package EngimonHunter2000;
 
-class Position {
+public class Position {
     private int posX;
     private int posY;
 
-    Position() {
+    public Position() {
         this.posX = 1;
         this.posY = 1;
     }
 
-    Position(int x, int y) {
+    public Position(int x, int y) {
         this.posX = x;
         this.posY = y;
     }
