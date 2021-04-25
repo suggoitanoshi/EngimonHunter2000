@@ -219,6 +219,18 @@ public class Engimon extends EngimonSpecies {
     }
 
     /**
+     * Setter untuk mengubah nama
+     * @param _name nama baru engimon
+     * @throws EngimonException
+     */
+    public void setName(String _name) throws EngimonException {
+        if (_name == null || _name == "") {
+            throw new EngimonException(4);
+        }
+        this.name = _name;
+    }
+
+    /**
      * Setter untuk mengubah level, gunakan - jika berkurang, misalnya
      * Engimon.setLevel(-3); untuk mengurangi level engimon
      * SETTER UNTUK BREEDING
