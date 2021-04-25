@@ -1,22 +1,24 @@
 package EngimonHunter2000;
 
 public class Tile {
-    TileType type;
-    boolean isNabrak;
-    boolean canMoveW;
-    boolean canMoveA;
-    boolean canMoveS;
-    boolean canMoveD;
-    String path;
-    int x;
-    int y;
-    char icon;
+    public static final int maxX = 20;
+    public static final int maxY = 20;
+    private TileType type;
+    private boolean isNabrak;
+    private boolean canMoveW;
+    private boolean canMoveA;
+    private boolean canMoveS;
+    private boolean canMoveD;
+    private String path;
+    private int x;
+    private int y;
+    private char icon;
 
     public Tile(TileType t, int x, int y) {
         if (y == 0) {
             canMoveW = false;
         }
-        if (y == 19) {
+        if (y >= (maxY - 1)) {
             canMoveS = false;
         }
 
@@ -24,7 +26,7 @@ public class Tile {
             canMoveA = false;
         }
 
-        if (x == 19) {
+        if (x >= (maxX - 1)) {
             canMoveD = false;
         }
 
@@ -43,7 +45,6 @@ public class Tile {
             this.y = y;
             this.icon = '2';
         }
-
         else if (t == TileType.MOUNTAIN) {
             type = TileType.MOUNTAIN;
             isNabrak = false;
@@ -52,7 +53,6 @@ public class Tile {
             this.y = y;
             this.icon = '4';
         }
-
         else if (t == TileType.TUNDRA) {
             type = TileType.TUNDRA;
             isNabrak = false;
@@ -61,7 +61,6 @@ public class Tile {
             this.y = y;
             this.icon = '3';
         }
-
         else if (t == TileType.EDGE_GRASS) {
             type = TileType.EDGE_GRASS;
             isNabrak = false;
@@ -70,7 +69,6 @@ public class Tile {
             this.y = y;
             this.icon = 'a';
         }
-
         else if (t == TileType.EDGE_TUNDRA) {
             type = TileType.EDGE_TUNDRA;
             isNabrak = false;
@@ -79,7 +77,6 @@ public class Tile {
             this.y = y;
             this.icon = 'b';
         }
-
         else if (t == TileType.EDGE1_MOUNTAIN) {
             type = TileType.EDGE1_MOUNTAIN;
             isNabrak = false;
@@ -88,7 +85,6 @@ public class Tile {
             this.y = y;
             this.icon = 'c';
         }
-
         else if (t == TileType.EDGE2_MOUNTAIN) {
             type = TileType.EDGE2_MOUNTAIN;
             isNabrak = false;
@@ -97,7 +93,6 @@ public class Tile {
             this.y = y;
             this.icon = 'd';
         }
-
         else if (t == TileType.EDGE3_MOUNTAIN) {
             type = TileType.EDGE3_MOUNTAIN;
             isNabrak = false;
@@ -106,7 +101,6 @@ public class Tile {
             this.y = y;
             this.icon = 'e';
         }
-
         else if (t == TileType.PLAYER) {
             type = TileType.PLAYER;
             isNabrak = false;
@@ -116,6 +110,9 @@ public class Tile {
         }
     }
 
+	public void setType(TileType t){
+		this.type = t;
+	}
     public TileType getType() {
         return this.type;
     }
@@ -124,7 +121,27 @@ public class Tile {
         return this.path;
     }
 
+    public int getx() {
+        return this.x;
+    }
+
+    public int gety() {
+        return this.y;
+    }
+
     public char getIcon() {
         return this.icon;
+    }
+
+    public boolean isOccupied() {
+        return isNabrak;
+    }
+
+    public void makeOccupied() {
+        isNabrak = true;
+    }
+
+    public void makeFree() {
+        isNabrak = false;
     }
 }
