@@ -1,6 +1,8 @@
 package EngimonHunter2000;
 
 import static org.junit.jupiter.api.Assertions.*;
+
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -8,9 +10,21 @@ import org.junit.jupiter.api.Test;
  */
 
 public class PlayerTest {
+    static SkillDex skillDex;
+    static EngiDex engiDex;
+    static Player p;
+
+    @BeforeAll
+    static void setDex() throws DexException, EngimonSpeciesException, ElementsListException {
+        skillDex = new SkillDex();
+        skillDex.getDexDataFromFile("data/Test_Skills.csv");    
+        engiDex = new EngiDex(skillDex);
+        assertDoesNotThrow(() -> engiDex.getDexDataFromFile("data/Test_Engimons.csv"));
+        p = new Player(engiDex);
+    }
+
     @Test
     public void construct() {
-        Player p = new Player();
         assertAll("Construct player",
         () -> assertEquals('a', p.getDir()),
         () -> assertEquals(1, p.getPositionX()),
@@ -19,7 +33,6 @@ public class PlayerTest {
 
     @Test
     public void set_position() {
-        Player p = new Player();
         p.setPositionX(5);
         p.setPositionY(9);
         assertAll("Set position",
@@ -29,7 +42,6 @@ public class PlayerTest {
 
     @Test
     public void set_direction() {
-        Player p = new Player();
         p.setDir('w');
         assertAll("Set direction",
         () -> assertEquals('w', p.getDir()));
