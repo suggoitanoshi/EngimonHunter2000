@@ -53,9 +53,10 @@ public class Engimon extends EngimonSpecies {
         this.exp = 0;
         this.cexp = 0;
         this.lives = 3;
-        this.position.setPosition(-1, -1);
+        this.position = new Position(-1, -1);
+        this.parents = new String[2];
         this.parents[0] = _species;
-        this.parents[0] = _species;
+        this.parents[1] = _species;
     }
 
     /**
