@@ -89,7 +89,11 @@ public class GameState implements Serializable {
 		return map;
 	}
 
-	public void setEntities() throws GameStateException {
+    public MapTile getMapTile() {
+        return maptile;
+    }
+
+	public void setEntities() {
         String path;
 		switch(map[player.getPositionY()][player.getPositionX()].getType()) {
 			case EDGE1_MOUNTAIN:
@@ -120,10 +124,11 @@ public class GameState implements Serializable {
                 path = "data/resource/char_watergif.gif";
 				break;
 			default:
-                throw new GameStateException(0);
+                path = "data/resource/char_edge5.png"; // ga bakal ke sini harusnya
 		}
 
         Tile tile = new Tile(path, TileType.PLAYER, player.getPositionX(),player.getPositionY(),true);
+        // return tile to original sprite
         map[player.getPositionY()][player.getPositionX()] = tile;
 		//set active 
 		int i = 0;
@@ -178,21 +183,22 @@ public class GameState implements Serializable {
 			case WATER:
 				path = "data/resource/"+ player.getActiveEngimon().getSpecies() +"/"+ player.getActiveEngimon().getSpecies() +"_watergif.gif";
 				break;
-			default:
-                throw new GameStateException(0);
+			default: // ga bakal ke sini harusnya
+				path = "data/resource/"+ player.getActiveEngimon().getSpecies() +"/"+ player.getActiveEngimon().getSpecies() +"_edge5.png";
 		}
-        tile = new Tile(path,TileType.ENGIMON, player.getPositionX()+i, player.getPositionY()+j, true);
+        tile = new Tile(path, TileType.ENGIMON, player.getPositionX()+i, player.getPositionY()+j, false);
         map[player.getPositionY()+j][player.getPositionX()+i] = tile;
 		
 	}
 
-	public void updateGameState() throws GameStateException {
-		maptile = new MapTile();
-		map = maptile.getMap();
+	public void updateGameState() {
+        maptile = new MapTile();
+        map = maptile.getMap();
 		setEntities();
 	}
 
-    private Engimon makeWildEngimon() throws EngimonHunter2000Exception {
+    private Engimon makeWildEngimon() throws
+        EngimonException, ElementsListException, EngimonSpeciesException {
         Random seeder = new Random();
         Random rand = new Random(seeder.nextLong());
 
@@ -257,8 +263,10 @@ public class GameState implements Serializable {
                 engie = makeWildEngimon();
                 putWildEngimon(engie);
             } catch (EngimonHunter2000Exception e) {
-                e.printStackTrace();
-                System.exit(-1);
+                --i; // coba lagi kalo gagal
+                continue;
+                // e.printStackTrace();
+                // System.exit(-1);
             }
         }
     }

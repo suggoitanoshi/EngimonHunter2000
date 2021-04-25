@@ -7,11 +7,13 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 
 public class GUI extends JFrame {
+    private static final long serialVersionUID = 1L;
+
     public GUI() {
         GameState gs=new GameState();
 
         setTitle("EngimonHunter2000");
-        setSize(1156, 640);
+        setSize(1156, 704);
         JLayeredPane pane = new JLayeredPane();
         pane.setPreferredSize(new Dimension(640, 480));
         MapGrid m = new MapGrid(gs.getPlayer().getPositionX(), gs.getPlayer().getPositionY(), gs.getMap());
@@ -31,9 +33,15 @@ public class GUI extends JFrame {
                     w.addActionListener(new ActionListener() {
                         @Override
                         public void actionPerformed(ActionEvent e) {
-                            gs.getPlayer().setPositionY(gs.getPlayer().getPositionY() - 1);
+                            if (gs.getPlayer().getPositionY() - 1 >= 0
+                                && !gs
+                                    .getMapTile()
+                                    .isOccupied(gs.getPlayer().getPositionX(),
+                                                gs.getPlayer().getPositionY() - 1)) {
+                                gs.getPlayer().setPositionY(gs.getPlayer().getPositionY() - 1);
+                            }
 							gs.getPlayer().setDir('w');
-							gs.updateGameState();
+                            gs.updateGameState();
                             pane.removeAll();
                             MapGrid m = new MapGrid(
                                 gs.getPlayer().getPositionX(), gs.getPlayer().getPositionY(), gs.getMap());
@@ -49,7 +57,13 @@ public class GUI extends JFrame {
                     a.addActionListener(new ActionListener() {
                         @Override
                         public void actionPerformed(ActionEvent e) {
-                            gs.getPlayer().setPositionX(gs.getPlayer().getPositionX() - 1);
+                            if (gs.getPlayer().getPositionX() - 1 >= 0
+                                && !gs
+                                    .getMapTile()
+                                    .isOccupied(gs.getPlayer().getPositionX() - 1,
+                                                gs.getPlayer().getPositionY())) {
+                                gs.getPlayer().setPositionX(gs.getPlayer().getPositionX() - 1);
+                            }
 							gs.getPlayer().setDir('a');
 							gs.updateGameState();
 							pane.removeAll();
@@ -67,10 +81,16 @@ public class GUI extends JFrame {
                     s.addActionListener(new ActionListener() {
                         @Override
                         public void actionPerformed(ActionEvent e) {
-                            gs.getPlayer().setPositionY(gs.getPlayer().getPositionY() + 1);
+                            if (gs.getPlayer().getPositionY() + 1 < gs.getMapTile().getSizeY()
+                                && !gs
+                                    .getMapTile()
+                                    .isOccupied(gs.getPlayer().getPositionX(),
+                                                gs.getPlayer().getPositionY() + 1)) {
+                                gs.getPlayer().setPositionY(gs.getPlayer().getPositionY() + 1);
+                            }
 							gs.getPlayer().setDir('s');
-							gs.updateGameState();
-							pane.removeAll();
+                            gs.updateGameState();
+                            pane.removeAll();
                             MapGrid m = new MapGrid(
                                 gs.getPlayer().getPositionX(), gs.getPlayer().getPositionY(), gs.getMap());
                             pane.add(m, BorderLayout.WEST);
@@ -85,7 +105,13 @@ public class GUI extends JFrame {
                     d.addActionListener(new ActionListener() {
                         @Override
                         public void actionPerformed(ActionEvent e) {
-                            gs.getPlayer().setPositionX(gs.getPlayer().getPositionX() + 1);
+                            if (gs.getPlayer().getPositionX() + 1 < gs.getMapTile().getSizeX()
+                                && !gs
+                                    .getMapTile()
+                                    .isOccupied(gs.getPlayer().getPositionX() + 1,
+                                                gs.getPlayer().getPositionY())) {
+                                gs.getPlayer().setPositionX(gs.getPlayer().getPositionX() + 1);
+                            }
 							gs.getPlayer().setDir('d');
 							gs.updateGameState();
 							pane.removeAll();
@@ -153,6 +179,7 @@ public class GUI extends JFrame {
 }
 
 class MapGrid extends JPanel {
+    private static final long serialVersionUID = 1L;
     public MapGrid(int x_player, int y_player, Tile[][] map) {
         JPanel panel = new JPanel(new GridLayout(20, 20, 0, 0));
         for (int i = 0; i < 20; i++) {
