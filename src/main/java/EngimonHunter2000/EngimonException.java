@@ -7,7 +7,6 @@ package EngimonHunter2000;
  * 0   : Level engimon tidak cukup untuk dikurang
  * 1   : Gagal mencari nama skill pada listSkill engimon
  * 2   : Lives engimon tidak cukup untuk dikurang
- * 3   : Level parent engimon (salah satu atau dua) masih dibawah umur untuk breeding
  * 4   : Nama engimon tidak valid (null atau kosong)
  * @author Alvin Wilta
  */
@@ -18,7 +17,8 @@ public class EngimonException extends EngimonHunter2000Exception {
     private static final String[] msgs = { "Level yang dimiliki engimon tidak cukup",
             "Nama skill terkait tidak dimiliki oleh engimon ini",
             "Lives tidak bisa dikurangi hingga < 0, pastikan dicek dahulu sebelum dikurang",
-            "Nama engimon tidak boleh kosong" };
+            "Nama engimon tidak boleh kosong", "Nama skill tidak terdapat pada engimon",
+            "Skill engimon sudah melebihi kapasitas" };
 
     public EngimonException(int id) {
         super(msgs[id]);

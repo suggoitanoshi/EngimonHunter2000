@@ -185,13 +185,13 @@ public class Engimon extends EngimonSpecies {
         throw new EngimonException(1);
     }
 
-    // /**
-    //  * Getter jumlah skill dari engimon
-    //  * @return jumlah skill yang dimiliki engimon
-    //  */
-    // public int getSkillsCount() {
-    //     return this.listSkill.size();
-    // }
+    /**
+     * Getter jumlah skill dari engimon
+     * @return jumlah skill yang dimiliki engimon
+     */
+    public int getSkillsCount() {
+        return this.listSkill.size();
+    }
 
     /**
      * Getter jumlah lives yang dimiliki engimon
@@ -225,15 +225,6 @@ public class Engimon extends EngimonSpecies {
      */
     public void setPos(int x, int y) {
         position.setPosition(x, y);
-    }
-
-    /**
-     * masih gatau ini butuh ato engga
-     * @param index
-     * @param oskill
-     */
-    public void setSkills(int index, Skill oskill) {
-
     }
 
     /**
@@ -309,7 +300,17 @@ public class Engimon extends EngimonSpecies {
 
     }
 
-    public void addSkill(SkillEngimon s) {
-        listSkill.add(s);
+    public void addSkill(SkillEngimon s) throws EngimonException {
+        if (this.getSkillCount() >= MAX_SKILLS) {
+            throw new EngimonException(5);
+        } else {
+            listSkill.add(s);
+        }
+    }
+
+    public void delSkill(SkillEngimon s) throws EngimonException {
+        if (!listSkill.remove(s)) {
+            throw new EngimonException(4);
+        }
     }
 }
