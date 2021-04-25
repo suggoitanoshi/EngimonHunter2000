@@ -101,7 +101,7 @@ public class Player implements Serializable {
         this.listEngimon.addItem(engi);
     }
 
-    public void useItem(int engiIdx, int itemIdx, Dex dex)
+    public void useItem(int engiIdx, int itemIdx)
             throws ItemException, InventoryException, SkillEngimonException {
         this.listItem.at(itemIdx).learn(this.listEngimon.at(engiIdx));
         if (this.listItem.at(itemIdx).getQuantity() == 0) {
