@@ -17,15 +17,26 @@ public class Player implements Serializable {
 
     // constructor
     public Player(EngiDex dex)
-            throws EngimonSpeciesException, ElementsListException, EngimonException {
+            throws EngimonSpeciesException, ElementsListException, EngimonException, InventoryException {
+        Engimon engie = new Engimon(dex, "Morgana", "Morgana");
+        
         this.listEngimon = new Inventory<Engimon>();
+        this.listEngimon.addItem(engie);
         this.listItem = new Inventory<Item>();
-        this.activeEngi = new Engimon(dex, "Picakhu", "Picakhu");
+        this.activeEngi = engie;
         this.dir = 'a';
         this.position = new Position();
     }
 
     // getters
+    public Inventory<Engimon> getInventoryEngimon() {
+        return this.listEngimon;
+    }
+
+    public Inventory<Item> getInventoryItem() {
+        return this.listItem;
+    }
+
     public Engimon getActiveEngimon() {
         return this.activeEngi;
     }
@@ -111,6 +122,16 @@ public class Player implements Serializable {
 
     public void addItem(Item item) throws InventoryException {
         this.listItem.addItemNoDupe(item);
+    }
+
+    public void removeActiveEngimon() throws InventoryException {
+        int idx = this.listEngimon.getItemFromIdx(this.activeEngi);
+        if (idx != -1) {
+            this.listEngimon.removeItem(this.listEngimon.at(idx));
+        }
+        else {
+            throw new InventoryException(3);
+        }
     }
 
     public void removeItem(int itemIdx, int n) throws InventoryException {
