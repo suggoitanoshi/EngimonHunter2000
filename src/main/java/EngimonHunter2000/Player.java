@@ -20,7 +20,7 @@ public class Player implements Serializable {
             throws EngimonSpeciesException, ElementsListException, EngimonException {
         this.listEngimon = new Inventory<Engimon>();
         this.listItem = new Inventory<Item>();
-        this.activeEngi = new Engimon(dex, "Picakhu", "Picakhu");
+        this.activeEngi = new Engimon(dex, "Morgana", "Morgana");
         this.dir = 'a';
         this.position = new Position();
     }
