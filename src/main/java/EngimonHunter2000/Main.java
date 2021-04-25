@@ -24,5 +24,10 @@ public class Main {
         engiDex.getDexDataFromFile("data/Engimons.csv");
         System.out.println(engiDex.toString());
 
+        GameState gs = new GameState();
+        gs.spawnWildEngimons(10);
+        gs.save("data/game.obj");
+
+        GameState gsLoad = GameState.load("data/game.obj");
     }
 }

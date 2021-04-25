@@ -13,7 +13,8 @@ public class Player {
     private char dir;
 
     // constructor
-    public Player(EngiDex dex) throws EngimonSpeciesException, ElementsListException {
+    public Player(EngiDex dex)
+            throws EngimonSpeciesException, ElementsListException, EngimonException {
         this.listEngimon = new Inventory<Engimon>();
         this.listItem = new Inventory<Item>();
         this.activeEngi = new Engimon(dex, "Picakhu", "Picakhu");

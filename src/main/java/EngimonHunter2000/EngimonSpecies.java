@@ -41,6 +41,7 @@ public class EngimonSpecies {
         if (this.spesies == null) {
             throw new EngimonSpeciesException(0);
         }
+        this.spesies = etty.getSpecies();
         this.slogan = etty.getSlogan();
         Element[] temp = new Element[etty.getListElement().getElementsList().size()];
         Iterator<Element> it = etty.getListElement().getElementsList().iterator();

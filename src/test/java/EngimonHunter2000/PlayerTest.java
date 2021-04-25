@@ -17,10 +17,10 @@ public class PlayerTest {
     @BeforeAll
     static void setDex() throws DexException, EngimonSpeciesException, ElementsListException {
         skillDex = new SkillDex();
-        skillDex.getDexDataFromFile("data/Test_Skills.csv");    
+        skillDex.getDexDataFromFile("data/Test_Skills.csv");
         engiDex = new EngiDex(skillDex);
         assertDoesNotThrow(() -> engiDex.getDexDataFromFile("data/Test_Engimons.csv"));
-        p = new Player(engiDex);
+        assertDoesNotThrow(() -> p = new Player(engiDex));
     }
 
     @Test
