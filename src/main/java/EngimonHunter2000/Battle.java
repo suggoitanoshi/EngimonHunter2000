@@ -1,5 +1,4 @@
 package EngimonHunter2000;
-import java.util.Set;
 
 public class Battle {
     private double advA;
@@ -24,15 +23,8 @@ public class Battle {
 
     public Boolean runBattle(Engimon A, Engimon B) {
         checkAdvantage(A, B);
-        this.pwrA = A.getLvl() * this.advA;
-        for (SkillEngimon skillA : A.getSkills()) {
-            this.pwrA = this.pwrA + skillA.getBasePower() * skillA.getMasteryLevel();
-        }
-
-        this.pwrB = B.getLvl() * this.advB;
-        for (SkillEngimon skillB : B.getSkills()) {
-            this.pwrB = this.pwrB + skillB.getBasePower() * skillB.getMasteryLevel();
-        }
+        this.pwrA = A.getBattlePower(this.advA);
+        this.pwrB = B.getBattlePower(this.advB);
 
         if (this.pwrA >= this.pwrB) {
             System.out.println("Hore menang!");
