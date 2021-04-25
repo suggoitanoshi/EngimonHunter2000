@@ -1,7 +1,6 @@
 package EngimonHunter2000;
 
 import java.util.HashSet;
-import java.util.ArrayList;
 
 /**
  * {@link EngimonHunter2000}
@@ -32,9 +31,14 @@ public class Engimon extends EngimonSpecies {
      * @param _name                 Nama engimon tersebut
      * @throws EngimonSpeciesException tidak terdapat nama spesies terkait pada dex
      * @throws ElementsListException
+     * @throws EngimonException nama tidak boleh kosong
      */
-    Engimon(EngiDex dex, String _species, String _name) throws EngimonSpeciesException, ElementsListException {
+    Engimon(EngiDex dex, String _species, String _name)
+            throws EngimonSpeciesException, ElementsListException, EngimonException {
         super(dex, _species);
+        if (_name == null || _name == "") {
+            throw new EngimonException(3);
+        }
         this.listSkill = new HashSet<SkillEngimon>();
         this.listSkill.add(super.getStarterSkill());
         this.name = _name;
@@ -67,7 +71,7 @@ public class Engimon extends EngimonSpecies {
             String _parent2) throws EngimonSpeciesException, ElementsListException, EngimonException {
         super(dex, _species);
         if (_name == null || _name == "") {
-            throw new EngimonException(4);
+            throw new EngimonException(3);
         }
         this.listSkill = new HashSet<SkillEngimon>();
         this.listSkill.add(super.getStarterSkill());
@@ -93,7 +97,7 @@ public class Engimon extends EngimonSpecies {
             throws EngimonSpeciesException, ElementsListException, EngimonException {
         super(dex, _species);
         if (_name == null || _name == "") {
-            throw new EngimonException(4);
+            throw new EngimonException(3);
         }
         this.listSkill = new HashSet<SkillEngimon>();
         this.listSkill.add(_skill);
