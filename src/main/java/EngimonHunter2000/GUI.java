@@ -1,217 +1,256 @@
 package EngimonHunter2000;
+
 import javax.swing.*;
 import java.awt.*;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
+class Position{
+  public static int X = 8;
+  public static int Y = 15;
+}
 
 public class GUI extends JFrame{
   public GUI(){
     setTitle("EngimonHunter2000");
-    setSize(640, 480);
+    setSize(1156,640);
     JLayeredPane pane = new JLayeredPane();
     pane.setPreferredSize(new Dimension(640, 480));
-    MainMenu menu = new MainMenu();
-    MainGame game = new MainGame();
-    pane.add(menu, 2);
-    pane.add(game, 1);
-    add(pane, BorderLayout.CENTER);
+    MapGrid m = new MapGrid(Position.X, Position.Y);
+
+    JPanel container_control = new JPanel(new BorderLayout());
+    JPanel container_menu = new JPanel(new GridLayout(5,2,5,5));
+    JPanel container_hasil = new JPanel();
+    JPanel control = new JPanel();
+    JPanel panel = new JPanel(new GridLayout(3,8,0,0));
+
+    //movement
+    for (int i=0;i<3;i++){
+      for (int j=0;j<8;j++){
+        if (i==0 && j==4){
+          JButton w = new JButton("w");
+          w.setPreferredSize(new Dimension(60, 30));
+          w.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e){
+              Position.Y = Position.Y - 1;
+              pane.removeAll();
+              MapGrid m = new MapGrid(Position.X, Position.Y);
+              pane.add(m, BorderLayout.WEST);
+              pane.revalidate();
+              pane.repaint();
+            }
+          });
+          panel.add(w);
+        }
+        else if (i==1 && j==3){
+          JButton a = new JButton("a");
+          a.setPreferredSize(new Dimension(60, 30));
+          a.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e){
+              Position.X = Position.X - 1;
+              pane.removeAll();
+              MapGrid m = new MapGrid(Position.X, Position.Y);
+              pane.add(m, BorderLayout.WEST);
+              pane.revalidate();
+              pane.repaint();
+            }
+          });
+          panel.add(a);
+        }
+        else if (i==2 && j==4){
+          JButton s = new JButton("s");
+          s.setPreferredSize(new Dimension(60, 30));
+          s.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e){
+              Position.Y = Position.Y + 1;
+              pane.removeAll();
+              MapGrid m = new MapGrid(Position.X, Position.Y);
+              pane.add(m, BorderLayout.WEST);
+              pane.revalidate();
+              pane.repaint();
+            }
+          });
+          panel.add(s);
+        }
+        else if (i==1 && j==5){
+          JButton d = new JButton("d");
+          d.setPreferredSize(new Dimension(60, 30));
+          d.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e){
+              Position.X = Position.X + 1;
+              pane.removeAll();
+              MapGrid m = new MapGrid(Position.X, Position.Y);
+              pane.add(m, BorderLayout.WEST);
+              pane.revalidate();
+              pane.repaint();
+            }
+          });
+          panel.add(d);
+        }
+        else{
+          JLabel l = new JLabel();
+          panel.add(l);
+        }
+      }
+    }
+    //movement done
+
+    control.add(panel);
+
+    //menu start
+    JButton lihat1 = new JButton("Lihat list engimon pemain");
+    JButton lihat2 = new JButton("Lihat seluruh list engimon");
+    JButton ganti = new JButton("Ganti active engimon");
+    JButton skill = new JButton("Lihat skill item pemain");
+    JButton item = new JButton("Gunakan skill item");
+    JButton breed = new JButton("Lakukan breeding");
+    JButton battle = new JButton("Lakukan battle");
+    JButton engi = new JButton("Lihat data lengkap engimon pemain");
+    JButton interact = new JButton("Interaksi dengan engimon");
+    JButton save = new JButton("Save game");
+
+    container_menu.setSize(new Dimension(576,200));
+    container_menu.add(lihat1);
+    container_menu.add(lihat2);
+    container_menu.add(ganti);
+    container_menu.add(skill);
+    container_menu.add(item);
+    container_menu.add(breed);
+    container_menu.add(battle);
+    container_menu.add(engi);
+    container_menu.add(interact);
+    container_menu.add(save);
+    container_control.add(container_menu, BorderLayout.NORTH);
+    // menu end
+    control.add(panel);
+
+    //hasil start
+    container_hasil.setSize(new Dimension(576,190));
+    container_control.add(container_hasil, BorderLayout.CENTER);
+    //hasil end
+        
+    pane.add(m, 1);
+    add(pane, BorderLayout.WEST);
+    container_control.setSize(new Dimension(512,480));
+    container_control.add(control, BorderLayout.SOUTH);
+    add(container_control, BorderLayout.EAST);
+    control.setSize(new Dimension(512, 90));
+    container_control.setBorder(BorderFactory.createEmptyBorder(5, 5 , 0, 5));
+
+    setResizable(false);
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
   }
-  /*
+
   public static void main(String[] args){
     GUI g = new GUI();
     g.setVisible(true);
   }
-  */
 }
 
-class MainGame extends JPanel{
-  public MainGame(){
-    JPanel pane = new JPanel(new GridBagLayout());
-    GridBagConstraints c = new GridBagConstraints();
-    GameViz viz = new GameViz();
-    JPanel move = new JPanel(new GridBagLayout());
-    JButton moveUp = new JButton("w");
-    JButton moveDown = new JButton("s");
-    JButton moveLeft = new JButton("a");
-    JButton moveRight = new JButton("d");
-    JLabel catchPhrase = new JLabel("Smoke weed everyday");
-    DefaultListModel<String> engimonInventoryModel = new DefaultListModel<String>();
-    JList<String> engimonList = new JList<String>(engimonInventoryModel);
-    JScrollPane engimonPane = new JScrollPane(engimonList);
-    engimonPane.setPreferredSize(new Dimension(150, 200));
-    JButton fight = new JButton("Gelud");
-    JButton interact = new JButton("Interaksi");
-    JButton change = new JButton("Ganti");
-    JPanel engiButtons = new JPanel();
-    EngimonDetails engiDetails = new EngimonDetails();
-    DefaultListModel<String> itemInventoryModel = new DefaultListModel<String>();
-    JList<String> itemInventoryList = new JList<String>(itemInventoryModel);
-    JScrollPane itemPane = new JScrollPane(itemInventoryList);
-    itemPane.setPreferredSize(new Dimension(150, 200));
-    JButton useItem = new JButton("Pakai");
+class MapGrid extends JPanel{
+  public MapGrid(int x_player, int y_player){
+    Tile map[][] = new Tile[20][20];
 
-    engiButtons.add(fight);
-    engiButtons.add(interact);
-    engiButtons.add(change);
+    MapTile m = new MapTile();
+    map = m.getMap();
 
-    c.fill = GridBagConstraints.BOTH;
+    JPanel panel = new JPanel(new GridLayout(20,20,0,0));
+    for (int i = 0; i<20;i++){
+      for (int j=0; j<20 ; j++){
+        if (j==x_player && i==y_player){
 
-    c.gridx = 1;
-    c.gridy = 0;
-    move.add(moveUp, c);
-    c.gridx = 1;
-    c.gridy = 1;
-    move.add(moveDown, c);
-    c.gridx = 2;
-    move.add(moveRight, c);
-    c.gridx = 0;
-    move.add(moveLeft, c);
-
-    c.gridx = 0;
-    c.gridy = 0;
-    pane.add(viz, c);
-    c.gridy = 1;
-    pane.add(move, c);
-    c.gridy = 2;
-    pane.add(catchPhrase, c);
-    c.gridx = 1;
-    c.gridy = 0;
-    pane.add(engimonPane, c);
-    c.gridy = 1;
-    pane.add(engiButtons, c);
-    c.gridy = 2;
-    pane.add(engiDetails, c);
-    c.gridx = 2;
-    c.gridy = 0;
-    pane.add(itemPane, c);
-    c.gridy = 1;
-    pane.add(useItem, c);
-    add(pane);
-    setSize(new Dimension(640, 480));
-  }
-}
-
-class EngimonDetails extends JPanel{
-  private JLabel nama, live, parent1, parent2, species, elements, skills, level, exp, cexp;
-
-  public EngimonDetails(){
-    JPanel panel = new JPanel(new GridBagLayout());
-    GridBagConstraints c = new GridBagConstraints();
-    // nama, live, parentName, speciesName, elements, skills, level, exp, cex
-    nama = new JLabel("Nama");
-    live = new JLabel("Live");
-    parent1 = new JLabel("Parent 1");
-    parent2 = new JLabel("Parent 2");
-    species = new JLabel("Species");
-    elements = new JLabel("Elements");
-    skills = new JLabel("Skills");
-    level = new JLabel("Level");
-    exp = new JLabel("Exp");
-    cexp = new JLabel("Cumulative Exp");
-
-    c.gridx = 0;
-    c.gridy = 0;
-    c.gridwidth = 2;
-    panel.add(nama, c);
-    c.gridx = 0;
-    c.gridy = 1;
-    panel.add(live, c);
-    c.gridx = 0;
-    c.gridy = 2;
-    c.gridwidth = 1;
-    panel.add(parent1, c);
-    c.gridx = 1;
-    panel.add(parent2, c);
-    c.gridx = 0;
-    c.gridy = 3;
-    c.gridwidth = 2;
-    panel.add(species, c);
-    c.gridy = 4;
-    panel.add(elements, c);
-    c.gridy = 5;
-    panel.add(skills, c);
-    c.gridy = 6;
-    panel.add(level, c);
-    c.gridy = 7;
-    panel.add(exp, c);
-    c.gridy = 8;
-    panel.add(cexp, c);
-    add(panel);
-    setPreferredSize(new Dimension(150, 200));
-  }
-
-  /* TODO: Impleemnt Engimon!
-  public void SetEngimon(Engimon newE){
-    this.nama.setText(newE.getName());
-    this.live.setText("Lives: "+newE.getLives());
-    Engimon[] parents = newE.getParents();
-    this.parent1.setText("Parent1: "+parents[0]);
-    this.parent2.setText("Parent2: "+parents[1]);
-    this.species.setText("Species: "+newE.getSpecies());
-    this.elements.setText("Element: "+newE.getElements().toString());
-    this.skills.setText("Skills: "+newE.getSkills());
-    this.level.setText("Level: "+newE.getLevel());
-    this.exp.setText("Exp: "+newE.getExp());
-    this.cexp.setText("CExp: "+newE.getCExp());
-  }
-  */
-}
-
-class MainMenu extends JPanel{
-  public MainMenu(){
-    JPanel pane = new JPanel(new GridBagLayout());
-    GridBagConstraints c = new GridBagConstraints();
-    JButton start = new JButton("Start");
-    JButton load = new JButton("Save");
-
-    start.addActionListener(new ActionListener(){
-      @Override
-      public void actionPerformed(ActionEvent e) {
-        setVisible(false);
+          if (map[i][j].getType() == TileType.GRASS){
+            JLabel l =new JLabel(new ImageIcon("data/resource/char_grass.png"));
+            panel.add(l);          
+          }
+          else if (map[i][j].getType() == TileType.WATER){
+            JLabel l =new JLabel(new ImageIcon("data/resource/char_watergif.gif"));
+            panel.add(l); 
+          }
+          else if (map[i][j].getType() == TileType.TUNDRA){
+            JLabel l =new JLabel(new ImageIcon("data/resource/char_tundra.png"));
+            panel.add(l); 
+          }
+          else if (map[i][j].getType() == TileType.MOUNTAIN){
+            JLabel l =new JLabel(new ImageIcon("data/resource/char_mountain.png"));
+            panel.add(l); 
+          }
+          else if (map[i][j].getType() == TileType.EDGE_GRASS){
+            JLabel l =new JLabel(new ImageIcon("data/resource/char_edge1.png"));
+            panel.add(l); 
+          }
+          else if (map[i][j].getType() == TileType.EDGE_TUNDRA){
+            JLabel l =new JLabel(new ImageIcon("data/resource/char_edge3.png"));
+            panel.add(l); 
+          }
+          else if (map[i][j].getType() == TileType.EDGE1_MOUNTAIN){
+            JLabel l =new JLabel(new ImageIcon("data/resource/char_edge5.png"));
+            panel.add(l); 
+          }
+          else if (map[i][j].getType() == TileType.EDGE2_MOUNTAIN){
+            JLabel l =new JLabel(new ImageIcon("data/resource/char_edge4.png"));
+            panel.add(l); 
+          }
+          else if (map[i][j].getType() == TileType.EDGE3_MOUNTAIN){
+            JLabel l =new JLabel(new ImageIcon("data/resource/char_edge6.png"));
+            panel.add(l); 
+          }
+        }
+        else{
+          JLabel l =new JLabel(new ImageIcon(map[i][j].getPath()));
+          panel.add(l);
+        }
       }
-    });
-
-    c.anchor = GridBagConstraints.CENTER;
-    c.fill = GridBagConstraints.BOTH;
-
-    c.weighty = 1;
-    c.gridx = 0;
-    c.gridy = 0;
-    pane.add(start, c);
-    c.gridy = 2;
-    pane.add(load, c);
-    add(pane, BorderLayout.CENTER);
-    setSize(640, 480);
-  }
-
-  @Override
-  public Dimension getPreferredSize(){
-    return new Dimension(640, 480);
-  }
-}
-
-class GameViz extends JPanel{
-  @Override
-  protected void paintComponent(Graphics g){
-    super.paintComponent(g);
-    g.setColor(Color.RED);
-    g.drawPolygon(new int[]{0, 140, 140, 0}, new int[]{0, 0, 140, 140}, 4);
-  }
-
-  @Override
-  public Dimension getPreferredSize(){
-    return new Dimension(200, 200);
-  }
-}
-
-class Loader implements Runnable{
-  @Override
-  public void run(){
-    try{
-      Thread.sleep(1000);
-      System.out.println("run");
     }
-    catch(Exception e){}
+    add(panel);
+    setSize(new Dimension(640, 640));
   }
 }
+
+// class Control extends JPanel{
+//   public Control(int xp, int yp){
+//     JPanel panel = new JPanel(new GridLayout(3,8,0,0));
+
+//     for (int i=0;i<3;i++){
+//       for (int j=0;j<8;j++){
+//         if (i==0 && j==4){
+//           JButton w = new JButton("w");
+//           w.setPreferredSize(new Dimension(60, 30));
+//           w.addActionListener(new ActionListener() {
+//             @Override
+//             public void actionPerformed(ActionEvent e){
+
+//             }
+//           });
+//           panel.add(w);
+//         }
+//         else if (i==1 && j==3){
+//           JButton a = new JButton("a");
+//           a.setPreferredSize(new Dimension(60, 30));
+//           panel.add(a);
+//         }
+//         else if (i==2 && j==4){
+//           JButton s = new JButton("s");
+//           s.setPreferredSize(new Dimension(60, 30));
+//           panel.add(s);
+//         }
+//         else if (i==1 && j==5){
+//           JButton d = new JButton("d");
+//           d.setPreferredSize(new Dimension(60, 30));
+//           panel.add(d);
+//         }
+//         else{
+//           JLabel l = new JLabel();
+//           panel.add(l);
+//         }
+//       }
+//     }
+//     add(panel);
+//     setSize(new Dimension(480, 90));
+//   }
+// }
