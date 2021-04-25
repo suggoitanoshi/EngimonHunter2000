@@ -24,6 +24,8 @@ public class Engimon extends EngimonSpecies {
 
     /**
      * @deprecated Membuat engimon picakhu, pakai kalau darurat atau buat debugging
+     * @throws EngimonSpeciesException tidak terdapat nama spesies terkait pada dex
+     * @throws ElementsListException
      */
     Engimon(EngiDex dex) throws EngimonSpeciesException, ElementsListException {
         super(dex, "Picakhu");
@@ -44,6 +46,8 @@ public class Engimon extends EngimonSpecies {
      * @param dex {@link EngiDex}   EngiDex yang akan dilookup untuk mendapatkan spesiesnya
      * @param _species              Nama species engimon yang akan di-construct
      * @param _name                 Nama engimon tersebut
+     * @throws EngimonSpeciesException tidak terdapat nama spesies terkait pada dex
+     * @throws ElementsListException
      */
     Engimon(EngiDex dex, String _species, String _name) throws EngimonSpeciesException, ElementsListException {
         super(dex, _species);
@@ -54,9 +58,10 @@ public class Engimon extends EngimonSpecies {
         this.exp = 0;
         this.cexp = 0;
         this.lives = 3;
-        this.position.setPosition(-1, -1);
+        this.position = new Position(-1, -1);
+        this.parents = new String[2];
         this.parents[0] = _species;
-        this.parents[0] = _species;
+        this.parents[1] = _species;
     }
 
     /**
@@ -70,10 +75,16 @@ public class Engimon extends EngimonSpecies {
      * @param _lives lives default
      * @param _parent1 nama parent engimon 1
      * @param _parent2 nama parent engimon 2
+     * @throws EngimonSpeciesException tidak terdapat nama spesies terkait pada dex
+     * @throws ElementsListException
+     * @throws EngimonException nama tidak valid
      */
     Engimon(EngiDex dex, String _species, String _name, int _lvl, int _exp, Position _pos, int _lives, String _parent1,
-            String _parent2) throws EngimonSpeciesException, ElementsListException {
+            String _parent2) throws EngimonSpeciesException, ElementsListException, EngimonException {
         super(dex, _species);
+        if (_name == null || _name == "") {
+            throw new EngimonException(4);
+        }
         this.listSkill = new HashSet<SkillEngimon>();
         this.listSkill.add(super.getStarterSkill());
         this.name = _name;
@@ -84,19 +95,31 @@ public class Engimon extends EngimonSpecies {
         this.position = new Position(_pos.getX(), _pos.getY());
     }
 
-    // buat breding (pake method breedingElement buat nentuin element anaknya
-    Engimon(EngiDex dex, String _species, String _name, SkillEngimon _skill, Engimon parent1, Engimon parent2)
-            throws EngimonSpeciesException, ElementsListException {
-        super(dex, _species);
-        this.listSkill = new HashSet<SkillEngimon>();
-        this.listSkill.add(_skill);
-        this.name = _name;
-        this.lvl = 1;
-        this.exp = 0;
-        this.cexp = 0;
-        this.lives = 3;
-        this.position = new Position(-1, -1);
-    }
+    /**
+     * Konstruktor untuk BREEDING
+     * @param dex dex yang akan dipakai oleh engimon
+     * @param _name nama anak engimon
+     * @param parent1 nama parent1 (parent1 dan parent2 bisa di-interchange)
+     * @param parent2 nama parent2 (parent1 dan parent2 bisa di-interchange)
+     * @throws EngimonSpeciesException
+     * @throws ElementsListException
+     * @throws EngimonException
+     */
+    // Engimon(EngiDex dex, String _name, Engimon parent1, Engimon parent2)
+    //         throws EngimonSpeciesException, ElementsListException, EngimonException {
+    //     super(dex, _species);
+    //     if (_name == null || _name == "") {
+    //         throw new EngimonException(4);
+    //     }
+    //     this.listSkill = new HashSet<SkillEngimon>();
+    //     this.listSkill.add(_skill);
+    //     this.name = _name;
+    //     this.lvl = 1;
+    //     this.exp = 0;
+    //     this.cexp = 0;
+    //     this.lives = 3;
+    //     this.position = new Position(-1, -1);
+    // }
 
     //belom selesai
     // private void breedingElement(Engimon parent1, Engimon parent2) throws EngimonException {
@@ -162,6 +185,7 @@ public class Engimon extends EngimonSpecies {
      * Getter skill engimon berdasarkan nama skill
      * @param _skillname nama dari skill engimon
      * @return {@link SkillEngimon} skill engimon yang dimiliki berdasarkan nama
+     * @throws EngimonException gagal mencari nama skill pada listSkill engimon
      */
     public SkillEngimon getSkillByString(String _skillname) throws EngimonException {
         for (SkillEngimon se : this.listSkill) {
@@ -191,6 +215,11 @@ public class Engimon extends EngimonSpecies {
 
     // SETTER
 
+    /**
+     * Menambah atau mengurangi lives pada engimon, maks 3 (jika ditambah >3 akan otomatis diset jadi 3)
+     * @param _lives jumlah lives yang akan DITAMBAH/DIKURANG (bukan diset)
+     * @throws EngimonException jika pengurangan terlalu banyak (lives<0)
+     */
     public void setLives(int _lives) throws EngimonException {
         this.lives += _lives;
         if (this.lives > 3) {
@@ -222,7 +251,7 @@ public class Engimon extends EngimonSpecies {
     /**
      * Setter untuk mengubah nama
      * @param _name nama baru engimon
-     * @throws EngimonException
+     * @throws EngimonException jika nama yang ingin diganti kosong atau null
      */
     public void setName(String _name) throws EngimonException {
         if (_name == null || _name == "") {
@@ -232,12 +261,12 @@ public class Engimon extends EngimonSpecies {
     }
 
     /**
-     * Setter untuk mengubah level, gunakan - jika berkurang, misalnya
-     * Engimon.setLevel(-3); untuk mengurangi level engimon
+     * Setter untuk mengubah level
      * SETTER UNTUK BREEDING
      * Note: jangan lupa untuk cek hasil return, untuk mendelete engimon kalau level udah melebihi
-     * @param level
+     * @param _lvl level yang ingin ditambah/dikurang gunakan - jika berkurang misalnya Engimon.addLevel(-3)
      * @return true jika engimon masih bisa hidup, false jika engimon melebihi cumulative exp dan harus didelete
+     * @throws EngimonException jika pengurangan level terlalu banyak
      */
     public boolean addLevel(int _lvl) throws EngimonException {
         if (this.lvl - _lvl < 1) {
@@ -259,6 +288,7 @@ public class Engimon extends EngimonSpecies {
      * Note: jangan lupa untuk cek hasil return, untuk mendelete engimon kalau level udah melebihi
      * @param _exp exp yang ingin ditambah, bisa >100
      * @return true jika engimon masih bisa hidup, false jika engimon melebihi cumulative exp dan harus didelete
+     * @throws EngimoException jika pengurangan exp terlalu banyak
      */
     public boolean addExp(int _exp) throws EngimonException {
         this.exp += _exp;

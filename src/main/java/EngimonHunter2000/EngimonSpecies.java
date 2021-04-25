@@ -1,5 +1,7 @@
 package EngimonHunter2000;
 
+import java.util.Iterator;
+
 /**
  * 
  * {@link EngimonHunter2000}
@@ -34,14 +36,19 @@ public class EngimonSpecies {
      * @param _spesies nama spesies yang akan di-construct
      */
     EngimonSpecies(EngiDex dex, String _spesies) throws ElementsListException, EngimonSpeciesException {
-        this.spesies = dex.getEntity(_spesies).getSpecies();
+        EngimonSpecies etty = dex.getEntity(_spesies);
+        this.spesies = etty.getSpecies();
         if (this.spesies == null) {
             throw new EngimonSpeciesException(0);
         }
-        this.slogan = dex.getEntity(_spesies).getSlogan();
-        this.listElement = new ElementsList(
-                (Element[]) dex.getEntity(_spesies).getListElement().getElementsList().toArray());
-        this.starterSkill = dex.getEntity(_spesies).getStarterSkill();
+        this.slogan = etty.getSlogan();
+        Element[] temp = new Element[etty.getListElement().getElementsList().size()];
+        Iterator<Element> it = etty.getListElement().getElementsList().iterator();
+        for (int i = 0; it.hasNext() && i < temp.length; ++i) {
+            temp[i] = it.next();
+        }
+        this.listElement = new ElementsList(temp);
+        this.starterSkill = etty.getStarterSkill();
 
     }
 

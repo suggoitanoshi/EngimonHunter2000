@@ -8,13 +8,13 @@ import javax.swing.*;
 
 public class GUI extends JFrame {
     public GUI() {
-        GameState gs = new GameState();
+        GameState gs=new GameState();
 
         setTitle("EngimonHunter2000");
         setSize(1156, 640);
         JLayeredPane pane = new JLayeredPane();
         pane.setPreferredSize(new Dimension(640, 480));
-        MapGrid m = new MapGrid(gs.getPlayer().getPositionX(), gs.getPlayer().getPositionY());
+        MapGrid m = new MapGrid(gs.getPlayer().getPositionX(), gs.getPlayer().getPositionY(), gs.getMap());
 
         JPanel container_control = new JPanel(new BorderLayout());
         JPanel container_menu = new JPanel(new GridLayout(5, 2, 5, 5));
@@ -34,7 +34,7 @@ public class GUI extends JFrame {
                             gs.getPlayer().setPositionY(gs.getPlayer().getPositionY() - 1);
                             pane.removeAll();
                             MapGrid m = new MapGrid(
-                                gs.getPlayer().getPositionX(), gs.getPlayer().getPositionY());
+                                gs.getPlayer().getPositionX(), gs.getPlayer().getPositionY(), gs.getMap());
                             pane.add(m, BorderLayout.WEST);
                             pane.revalidate();
                             pane.repaint();
@@ -50,7 +50,7 @@ public class GUI extends JFrame {
                             gs.getPlayer().setPositionX(gs.getPlayer().getPositionX() - 1);
                             pane.removeAll();
                             MapGrid m = new MapGrid(
-                                gs.getPlayer().getPositionX(), gs.getPlayer().getPositionY());
+                                gs.getPlayer().getPositionX(), gs.getPlayer().getPositionY(), gs.getMap());
                             pane.add(m, BorderLayout.WEST);
                             pane.revalidate();
                             pane.repaint();
@@ -66,7 +66,7 @@ public class GUI extends JFrame {
                             gs.getPlayer().setPositionY(gs.getPlayer().getPositionY() + 1);
                             pane.removeAll();
                             MapGrid m = new MapGrid(
-                                gs.getPlayer().getPositionX(), gs.getPlayer().getPositionY());
+                                gs.getPlayer().getPositionX(), gs.getPlayer().getPositionY(), gs.getMap());
                             pane.add(m, BorderLayout.WEST);
                             pane.revalidate();
                             pane.repaint();
@@ -82,7 +82,7 @@ public class GUI extends JFrame {
                             gs.getPlayer().setPositionX(gs.getPlayer().getPositionX() + 1);
                             pane.removeAll();
                             MapGrid m = new MapGrid(
-                                gs.getPlayer().getPositionX(), gs.getPlayer().getPositionY());
+                                gs.getPlayer().getPositionX(), gs.getPlayer().getPositionY(), gs.getMap());
                             pane.add(m, BorderLayout.WEST);
                             pane.revalidate();
                             pane.repaint();
@@ -150,11 +150,11 @@ public class GUI extends JFrame {
 }
 
 class MapGrid extends JPanel {
-    public MapGrid(int x_player, int y_player) {
-        Tile map[][] = new Tile[20][20];
+    public MapGrid(int x_player, int y_player, Tile[][] map) {
+        // Tile map[][] = new Tile[20][20];
 
-        MapTile m = new MapTile();
-        map = m.getMap();
+        // MapTile m = new MapTile();
+        // map = m.getMap();
 
         JPanel panel = new JPanel(new GridLayout(20, 20, 0, 0));
         for (int i = 0; i < 20; i++) {
