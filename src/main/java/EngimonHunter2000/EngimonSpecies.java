@@ -1,11 +1,5 @@
 package EngimonHunter2000;
 
-import java.util.Set;
-
-import com.google.common.collect.SetMultimap;
-
-import java.util.HashSet;
-
 /**
  * 
  * {@link EngimonHunter2000}
@@ -17,34 +11,38 @@ public class EngimonSpecies {
     private final String spesies;
     private final String slogan;
     private SkillEngimon starterSkill;
-    private HashSet<Element> listElement;
+    private ElementsList listElement;
 
     /**
      * Konstruktor ini dibuat untuk membuat {@link EngiDex}
      * 
      * @param _spesies nama dari spesies yang dibaca dari file
-     * @param _slogan  slogan dari spesies yang dibaca dari file
-     * @param _starter skill pertama yang dibaca dari file dan sudah di-construct
+     * @param _slogan slogan dari spesies yang dibaca dari file
+     * @param _starter {@link SkillEngimon} skill pertama yang dibaca dari file dan sudah di-construct
      *                 menggunakan konstruktor {@link SkillEngimon}
      */
-    EngimonSpecies(String _spesies, String _slogan, SkillEngimon _starter) {
+    EngimonSpecies(String _spesies, String _slogan, SkillEngimon _starter, Element... el) throws ElementsListException {
+        this.listElement = new ElementsList(el);
         this.spesies = _spesies;
         this.slogan = _slogan;
         this.starterSkill = _starter;
-        this.listElement = new HashSet<Element>();
     }
 
     /**
      * Konstruktor ini dibuat untuk membuat {@link Engimon}
-     * 
-     * @param dex      EngiDex yang akan dilookup untuk mendapatkan spesiesnya
+     * TODO: buat exception dari dex ketika gadapet engimon yang sesuai dari namanya
+     * @param dex {@link EngiDex} EngiDex yang akan dilookup untuk mendapatkan spesiesnya
      * @param _spesies nama spesies yang akan di-construct
      */
-    EngimonSpecies(EngiDex dex, String _spesies) {
-        this.spesies = dex.getEntity(_spesies).getSpecies();
+    EngimonSpecies(EngiDex dex, String _spesies) throws ElementsListException, EngimonSpeciesException {
+        try {
+            this.spesies = dex.getEntity(_spesies).getSpecies();
+        } catch (DexException e) {
+            throw new EngimonSpeciesException(0);
+        }
         this.slogan = dex.getEntity(_spesies).getSlogan();
-        this.listElement = new HashSet<Element>();
-        this.listElement.addAll(dex.getEntity(_spesies).getListElement());
+        this.listElement = new ElementsList(
+                (Element[]) dex.getEntity(_spesies).getListElement().getElementsList().toArray());
         this.starterSkill = dex.getEntity(_spesies).getStarterSkill();
 
     }
@@ -58,15 +56,25 @@ public class EngimonSpecies {
     }
 
     public SkillEngimon getStarterSkill() {
+
         return this.starterSkill;
+
     }
 
-    public Set<Element> getListElement() {
+    public ElementsList getListElement() {
         return this.listElement;
     }
 
-    public void addElement(Element _element) {
-        this.listElement.add(_element);
+    /**
+     * TODO: handle buat elemen baru?
+     * @param _element {@link Element} Element yang ingin ditambahkan
+     */
+    public void addElement(Element _element) throws EngimonSpeciesException {
+        if (this.listElement.getElementsList().size() < 2) {
+            // nambahin elemen baru?
+        } else {
+            throw new EngimonSpeciesException(1);
+        }
     }
 
 }
