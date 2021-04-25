@@ -15,7 +15,8 @@ public class EngimonException extends EngimonHunter2000Exception {
     private static final long serialVersionUID = 1L;
     private int msgID;
     private static final String[] msgs = { "Level yang dimiliki engimon tidak cukup",
-            "Nama skill terkait tidak dimiliki oleh engimon ini", "Nama spesies yang tertera tidak ada pada dex" };
+            "Nama skill terkait tidak dimiliki oleh engimon ini", "Lives tidak bisa dikurangi hingga < 0",
+            "Parent dari engimon memiliki level < 4" };
 
     public EngimonException(int id) {
         super(msgs[id]);
