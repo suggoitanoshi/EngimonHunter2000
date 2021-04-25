@@ -1,6 +1,9 @@
 package EngimonHunter2000;
 
-public class Position {
+import java.io.Serializable;
+
+public class Position implements Serializable {
+    public static final long serialVersionUID = 1L;
     private int posX;
     private int posY;
 

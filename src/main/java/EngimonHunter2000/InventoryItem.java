@@ -1,6 +1,6 @@
 package EngimonHunter2000;
 
-public abstract class InventoryItem {
+public interface InventoryItem {
     @Override
     public abstract String toString();
 }

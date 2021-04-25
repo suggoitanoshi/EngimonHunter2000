@@ -1,5 +1,6 @@
 package EngimonHunter2000;
 
+import java.io.Serializable;
 import java.util.Set;
 
 /**
@@ -7,7 +8,8 @@ import java.util.Set;
  * Class ini merupakan "blueprint" dari skill milik {@link Engimon}.
  * @author Josep Marcello
  */
-public class Skill {
+public class Skill implements Serializable {
+    public static final long serialVersionUID = 1L;
     private final String name;
     private final int basePower;
     private final ElementsList elements;

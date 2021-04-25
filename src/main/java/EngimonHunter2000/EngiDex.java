@@ -18,9 +18,16 @@ public class EngiDex implements Dex<EngimonSpecies> {
     private SkillDex skillDex;
 
     // constructors
-    public EngiDex(SkillDex _skillDex) {
+    public EngiDex(SkillDex _skillDex) throws DexException {
         this.dex = new HashMap<String, EngimonSpecies>();
         this.skillDex = _skillDex;
+        getDexDataFromFile("data/Engimons.csv");
+    }
+
+    public EngiDex(SkillDex _skillDex, String fpath) throws DexException {
+        this.dex = new HashMap<String, EngimonSpecies>();
+        this.skillDex = _skillDex;
+        getDexDataFromFile(fpath);
     }
 
     // getters

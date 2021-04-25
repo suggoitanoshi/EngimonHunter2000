@@ -1,14 +1,10 @@
 package EngimonHunter2000;
 
 import java.util.ArrayList;
+import java.io.Serializable;
 
-import org.apache.maven.plugin.InvalidPluginException;
-
-/**
- * TODO: Add a class that extends {@link InventoryItem} so we can use better generics
- */
-// class Inventory<T extends InventoryItem> {
-class Inventory<T> {
+class Inventory<T> implements Serializable {
+    public static final long serialVersionUID = 1L;
     private ArrayList<T> container;
     private static int max;
     private static int itemCount = 0;
