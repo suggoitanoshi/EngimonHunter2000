@@ -168,20 +168,28 @@ public class GameState implements Serializable {
 		switch (tipe){
 			case EDGE1_MOUNTAIN:
 				SB.append("_edge5.png");
+                break;
 			case EDGE2_MOUNTAIN:
 				SB.append("_edge4.png");
+                break;
 			case EDGE3_MOUNTAIN:
 				SB.append("_edge6.png");
+                break;
 			case EDGE_GRASS:
 				SB.append("_edge1.png");
+                break;
 			case EDGE_TUNDRA:
 				SB.append("_edge3.png");
+                break;
 			case GRASS:
 				SB.append("_grass.png");
+                break;
 			case MOUNTAIN:
 				SB.append("_mountain.png");
+                break;
 			case TUNDRA:
 				SB.append("_tundra.png");
+                break;
             default: //water
 				SB.append("_watergif.gif");
 		}
