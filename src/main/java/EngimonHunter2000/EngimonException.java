@@ -18,7 +18,7 @@ public class EngimonException extends EngimonHunter2000Exception {
     private static final String[] msgs = { "Level yang dimiliki engimon tidak cukup",
             "Nama skill terkait tidak dimiliki oleh engimon ini",
             "Lives tidak bisa dikurangi hingga < 0, pastikan dicek dahulu sebelum dikurang",
-            "Parent dari engimon memiliki level < 4", "Nama engimon tidak boleh kosong" };
+            "Nama engimon tidak boleh kosong" };
 
     public EngimonException(int id) {
         super(msgs[id]);
