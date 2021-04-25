@@ -1,14 +1,15 @@
 package EngimonHunter2000;
 
 import java.util.HashSet;
-import java.util.ArrayList;
+import java.io.Serializable;
 
 /**
  * {@link EngimonHunter2000}
  * @author Alvin Wilta
  */
 
-public class Engimon extends EngimonSpecies {
+public class Engimon extends EngimonSpecies implements Serializable {
+    public static final long serialVersionUID = 1L;
     public static final int MAX_EXP = 100;
     public static final int MAX_CEXP = 100000;
     public static final int MAX_LIVES = 3;
@@ -24,6 +25,23 @@ public class Engimon extends EngimonSpecies {
     private String[] parents;
 
     /**
+     * @deprecated Membuat engimon picakhu, pakai kalau darurat atau buat debugging
+     * @throws EngimonSpeciesException tidak terdapat nama spesies terkait pada dex
+     * @throws ElementsListException
+     */
+    Engimon() throws EngimonSpeciesException, ElementsListException {
+        super();
+        this.name = super.getSpecies();
+        this.lvl = 20;
+        this.exp = 0;
+        this.cexp = 20 * MAX_EXP;
+        this.lives = 3;
+        this.position = new Position(-1, -1);
+        this.parents[0] = null;
+        this.parents[1] = null;
+    }
+
+    /**
      * Konstruktor dengan menggunakan nama spesies dari {@link EngimonSpecies}
      * Konstruktor ini dapat digunakan untuk membuat engimon baru pada
      * {@link Inventory} dari player
@@ -32,9 +50,14 @@ public class Engimon extends EngimonSpecies {
      * @param _name                 Nama engimon tersebut
      * @throws EngimonSpeciesException tidak terdapat nama spesies terkait pada dex
      * @throws ElementsListException
+     * @throws EngimonException nama tidak boleh kosong
      */
-    Engimon(EngiDex dex, String _species, String _name) throws EngimonSpeciesException, ElementsListException {
+    Engimon(EngiDex dex, String _species, String _name)
+            throws EngimonSpeciesException, ElementsListException, EngimonException {
         super(dex, _species);
+        if (_name == null || _name == "") {
+            throw new EngimonException(3);
+        }
         this.listSkill = new HashSet<SkillEngimon>();
         this.listSkill.add(super.getStarterSkill());
         this.name = _name;
@@ -67,7 +90,7 @@ public class Engimon extends EngimonSpecies {
             String _parent2) throws EngimonSpeciesException, ElementsListException, EngimonException {
         super(dex, _species);
         if (_name == null || _name == "") {
-            throw new EngimonException(4);
+            throw new EngimonException(3);
         }
         this.listSkill = new HashSet<SkillEngimon>();
         this.listSkill.add(super.getStarterSkill());
@@ -93,7 +116,7 @@ public class Engimon extends EngimonSpecies {
             throws EngimonSpeciesException, ElementsListException, EngimonException {
         super(dex, _species);
         if (_name == null || _name == "") {
-            throw new EngimonException(4);
+            throw new EngimonException(3);
         }
         this.listSkill = new HashSet<SkillEngimon>();
         this.listSkill.add(_skill);
@@ -181,13 +204,13 @@ public class Engimon extends EngimonSpecies {
         throw new EngimonException(1);
     }
 
-    // /**
-    //  * Getter jumlah skill dari engimon
-    //  * @return jumlah skill yang dimiliki engimon
-    //  */
-    // public int getSkillsCount() {
-    //     return this.listSkill.size();
-    // }
+    /**
+     * Getter jumlah skill dari engimon
+     * @return jumlah skill yang dimiliki engimon
+     */
+    public int getSkillsCount() {
+        return this.listSkill.size();
+    }
 
     /**
      * Getter jumlah lives yang dimiliki engimon
@@ -221,15 +244,6 @@ public class Engimon extends EngimonSpecies {
      */
     public void setPos(int x, int y) {
         position.setPosition(x, y);
-    }
-
-    /**
-     * masih gatau ini butuh ato engga
-     * @param index
-     * @param oskill
-     */
-    public void setSkills(int index, Skill oskill) {
-
     }
 
     /**
@@ -305,7 +319,17 @@ public class Engimon extends EngimonSpecies {
 
     }
 
-    public void addSkill(SkillEngimon s) {
-        listSkill.add(s);
+    public void addSkill(SkillEngimon s) throws EngimonException {
+        if (this.getSkillCount() >= MAX_SKILLS) {
+            throw new EngimonException(5);
+        } else {
+            listSkill.add(s);
+        }
+    }
+
+    public void delSkill(SkillEngimon s) throws EngimonException {
+        if (!listSkill.remove(s)) {
+            throw new EngimonException(4);
+        }
     }
 }

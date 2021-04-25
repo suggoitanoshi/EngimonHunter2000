@@ -1,11 +1,14 @@
 package EngimonHunter2000;
 
+import java.io.Serializable;
+
 /**
  * class untuk menyimpan semua keperluan Player {@link EngimonHunter2000}
  * @author Cynthia Rusadi
  */
 
-public class Player {
+public class Player implements Serializable {
+    public static final long serialVersionUID = 1L;
     private Inventory<Engimon> listEngimon;
     private Inventory<Item> listItem;
     private Engimon activeEngi;
@@ -13,7 +16,8 @@ public class Player {
     private char dir;
 
     // constructor
-    public Player(EngiDex dex) throws EngimonSpeciesException, ElementsListException {
+    public Player(EngiDex dex)
+            throws EngimonSpeciesException, ElementsListException, EngimonException {
         this.listEngimon = new Inventory<Engimon>();
         this.listItem = new Inventory<Item>();
         this.activeEngi = new Engimon(dex, "Picakhu", "Picakhu");
