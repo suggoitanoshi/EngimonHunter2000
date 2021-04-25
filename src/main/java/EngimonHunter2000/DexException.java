@@ -1,22 +1,18 @@
 package EngimonHunter2000;
 
 /**
- * Class Exception untuk {@link Dex}
- * ID   : Alasan
- * -----|-------
- * 0    : Parsing file gagal, terjadi IO Exception
- * 1    : File yang dibaca tidak menghasilkan Dex berisi
- * 2    : File yang dibaca memiliki entry invalid
+ * Class Exception untuk {@link Dex} ID : Alasan -----|------- 0 : Parsing file
+ * gagal, terjadi IO Exception 1 : File yang dibaca tidak menghasilkan Dex
+ * berisi 2 : File yang dibaca memiliki entry invalid
+ * 
  * @author Josep Marcello
  */
 public class DexException extends EngimonHunter2000Exception {
     private static final long serialVersionUID = 1L; // i think this is cursed
     private int msgID;
-    private static final String[] msgs = {
-        "Parsing file gagal, terjadi IO Exception",
-        "File yang dibaca tidak menghasilkan Dex berisi",
-        "File yang dibaca memiliki entry invalid",
-    };
+    private static final String[] msgs = { "Parsing file gagal, terjadi IO Exception",
+            "File yang dibaca tidak menghasilkan Dex berisi", "File yang dibaca memiliki entry invalid",
+            "Nama spesies yang tertera tidak ada pada dex" };
 
     public DexException(int id) {
         super(msgs[id]);

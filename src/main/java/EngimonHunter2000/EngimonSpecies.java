@@ -34,6 +34,7 @@ public class EngimonSpecies {
         this.listElement = new HashSet<Element>();
     }
 
+<<<<<<< Updated upstream
     EngimonSpecies(String _spesies, String _slogan, SkillEngimon _starter, HashSet<Element> _element) {
         this.spesies = _spesies;
         this.slogan = _slogan;
@@ -41,6 +42,14 @@ public class EngimonSpecies {
         this.listElement = new HashSet<>(_element);
     }
 
+=======
+    /**
+     * Konstruktor ini dibuat untuk membuat {@link Engimon}
+     * 
+     * @param dex      EngiDex yang akan dilookup untuk mendapatkan spesiesnya
+     * @param _spesies nama spesies yang akan di-construct
+     */
+>>>>>>> Stashed changes
     EngimonSpecies(EngiDex dex, String _spesies) {
         this.spesies = dex.getEntity(_spesies).getSpecies();
         this.slogan = dex.getEntity(_spesies).getSlogan();
