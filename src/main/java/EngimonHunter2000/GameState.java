@@ -156,9 +156,7 @@ public class GameState implements Serializable {
             Engimon engie = null;
             try {
                 engie = makeWildEngimon();
-                System.out.println("Berhasil bikin engimon");
                 putWildEngimon(engie);
-                System.out.println("Berhasil naroh engimon\n");
             } catch (EngimonHunter2000Exception e) {
                 e.printStackTrace();
                 System.exit(-1);
