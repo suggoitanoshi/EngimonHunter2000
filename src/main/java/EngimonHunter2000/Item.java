@@ -1,5 +1,7 @@
 package EngimonHunter2000;
 
+import java.util.*;
+
 public class Item extends SkillEngimon {
     private int quantity;
 
@@ -64,22 +66,82 @@ public class Item extends SkillEngimon {
     }
 
     /**
-    public void learn() throws ItemException {
+     * Metode untuk engimon belajar sebuah skill dari skill item
+     * Jika engimon sudah memiliki skill maka mastery level bertambahm, max 3 level
+     * Jika belum maka akan ditambahkan ke list skills engimon,
+     * jika engimon sudah memiliki 4 skill, maka akan menggantikan
+     * sebuah skill yang sudah ada
+     * @param e engimon
+     * @param dex dex skill
+     * @throws ItemException
+     * @throws SkillEngimonException
+     */
+    public void learn(Engimon e) throws ItemException, SkillEngimonException {
+        boolean compatible = false;
+        boolean newSkill = true;
+        
         // Mengecek kecocokan skill item dengan engimon
-        // Mengecek apakah ada 1 elemen yang cocok dengan skill item
-        // Jika iya berarti compatible
-        // Jika tidak throw exception 1
+        for (Element el : getElements()) {
+            for (SkillEngimon s : e.getSkills()) {
+                for (Element el1 : s.getElements()) {
+                    if (el.equals(el1)) {
+                        compatible = true;
+                        break;
+                    }
+                }
+            }
+        }
 
-        // Mengecek apakah skill sudah dipelajari atau belum
-        // Jika sudah tambahkan mastery level
-        // Jika susah 3 (max) throw exception 3 (baru)
+        if (!compatible) {
+            throw new ItemException(1);
+        }
         
         // Mengecek mastery level item
-        // Jika tidak sama dengan 1 throw exception 0
+        if (getMasteryLevel() != 1) {
+            throw new ItemException(0);
+        }
         
-        // Mengecek jumlah skills yang telah dilajari
-        // Jika jumlah skill engimon sudah max maka pilih skill untuk di-replace
-        // Jika pilihan salah throw exception 2
+        // Mengecek apakah skill sudah dipelajari atau belum
+        for (SkillEngimon s : e.getSkills()) {
+            if (s.getName().equals(getName())) {
+                newSkill = false;
+                if (s.getMasteryLevel() == 3) {
+                    throw new SkillEngimonException(1);
+                } else {
+                    s.incMasteryLevel();
+                    // return;
+                }
+                break;
+            }
+        }
+        
+        if (newSkill) {
+            if (e.getSkillCount() == Engimon.MAX_SKILLS) {
+                int i = 1, input;
+                Scanner sc = new Scanner(System.in);
+
+                for (SkillEngimon s : e.getSkills()) {
+                    System.out.print(i + "." + s.getName() + "\n");
+                }
+
+                System.out.print("Pilih nomor skill untuk diganti dengan skill baru: ");
+                input = sc.nextInt();
+
+                if (input < 1 || input > Engimon.MAX_SKILLS) {
+                    throw new ItemException(2);
+                }
+            } else {
+                Element[] els = new Element[getElements().size()];
+                getElements().toArray(els);
+
+                try {
+                    Skill s = new Skill(getName(), getBasePower(), els);
+                    SkillEngimon se = new SkillEngimon(s);
+                    e.addSkill(se);
+                } catch (ElementsListException exception) {
+                    System.out.println("Gagal menambahkan skill baru");
+                }
+            }
+        }
     }
-    */
 }

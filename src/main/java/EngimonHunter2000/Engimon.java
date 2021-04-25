@@ -8,9 +8,10 @@ import java.util.HashSet;
  */
 
 public class Engimon extends EngimonSpecies {
-    public static int max_exp = 100;
-    public static int max_cexp = 100000;
-    public static int max_lives = 3;
+    public static final int MAX_EXP = 100;
+    public static final int MAX_CEXP = 100000;
+    public static final int MAX_LIVES = 3;
+    public static final int MAX_SKILLS = 4;
 
     private HashSet<SkillEngimon> listSkill;
     private String name;
@@ -29,7 +30,7 @@ public class Engimon extends EngimonSpecies {
         this.name = super.getSpecies();
         this.lvl = 20;
         this.exp = 0;
-        this.cexp = 20 * max_exp;
+        this.cexp = 20 * MAX_EXP;
         this.lives = 3;
         this.position = new Position(-1, -1);
         this.parents[0] = "Picakhu";
@@ -78,7 +79,7 @@ public class Engimon extends EngimonSpecies {
         this.name = _name;
         this.lvl = _lvl;
         this.exp = _exp;
-        this.cexp = this.lvl * max_exp + this.exp;
+        this.cexp = this.lvl * MAX_EXP + this.exp;
         this.lives = _lives;
         this.position = new Position(_pos.getX(), _pos.getY());
     }
@@ -172,13 +173,13 @@ public class Engimon extends EngimonSpecies {
         throw new EngimonException(1);
     }
 
-    /**
-     * Getter jumlah skill dari engimon
-     * @return jumlah skill yang dimiliki engimon
-     */
-    public int getSkillsCount() {
-        return this.listSkill.size();
-    }
+    // /**
+    //  * Getter jumlah skill dari engimon
+    //  * @return jumlah skill yang dimiliki engimon
+    //  */
+    // public int getSkillsCount() {
+    //     return this.listSkill.size();
+    // }
 
     /**
      * Getter jumlah lives yang dimiliki engimon
@@ -243,8 +244,8 @@ public class Engimon extends EngimonSpecies {
             throw new EngimonException(0);
         } else {
             this.lvl += _lvl;
-            this.cexp += _lvl * max_exp;
-            if (this.cexp >= max_cexp) {
+            this.cexp += _lvl * MAX_EXP;
+            if (this.cexp >= MAX_CEXP) {
                 return false;
             } else {
                 return true;
@@ -261,8 +262,8 @@ public class Engimon extends EngimonSpecies {
      */
     public boolean addExp(int _exp) throws EngimonException {
         this.exp += _exp;
-        if (this.exp >= max_exp) {
-            this.exp -= max_exp;
+        if (this.exp >= MAX_EXP) {
+            this.exp -= MAX_EXP;
             return this.addLevel(1);
         } else {
             return true;
@@ -290,4 +291,7 @@ public class Engimon extends EngimonSpecies {
 
     }
 
+    public void addSkill(SkillEngimon s) {
+        listSkill.add(s);
+    }
 }

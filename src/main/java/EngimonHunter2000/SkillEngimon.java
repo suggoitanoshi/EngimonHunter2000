@@ -9,6 +9,9 @@ import java.util.Set;
  * @author Josep Marcello
  */
 public class SkillEngimon {
+    public static final int MAX_MASTERYLEVEL = 3;
+    public static final int MIN_MASTERYLEVEL = 1;
+
     private Skill skillInfo;
     private int masteryLevel;
 
@@ -71,21 +74,30 @@ public class SkillEngimon {
      * Setter untuk masteryLevel
      * @param _masteryLevel nilai mastery level yang baru
      */
-    public void setMasteryLevel(int _masteryLevel) {
+    public void setMasteryLevel(int _masteryLevel) throws SkillEngimonException {
+        if (_masteryLevel > MAX_MASTERYLEVEL) {
+            throw new SkillEngimonException(1);
+        }
         masteryLevel = _masteryLevel;
     }
 
     /**
      * Menambahkan mastery level sebanyak 1
      */
-    public void incMasteryLevel() {
+    public void incMasteryLevel() throws SkillEngimonException {
+        if (getMasteryLevel() == MAX_MASTERYLEVEL) {
+            throw new SkillEngimonException(1);
+        }
         masteryLevel++;
     }
 
     /**
      * Mengurangi mastery level sebanyak 1
      */
-    public void decMasteryLevel() {
+    public void decMasteryLevel() throws SkillEngimonException {
+        if (getMasteryLevel() == MIN_MASTERYLEVEL) {
+            throw new SkillEngimonException(1);
+        }
         masteryLevel--;
     }
 }
