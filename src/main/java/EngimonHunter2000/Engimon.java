@@ -1,13 +1,15 @@
 package EngimonHunter2000;
 
 import java.util.HashSet;
+import java.io.Serializable;
 
 /**
  * {@link EngimonHunter2000}
  * @author Alvin Wilta
  */
 
-public class Engimon extends EngimonSpecies {
+public class Engimon extends EngimonSpecies implements Serializable {
+    public static final long serialVersionUID = 1L;
     public static final int MAX_EXP = 100;
     public static final int MAX_CEXP = 100000;
     public static final int MAX_LIVES = 3;
@@ -21,6 +23,23 @@ public class Engimon extends EngimonSpecies {
     private Position position;
     private int lives;
     private String[] parents;
+
+    /**
+     * @deprecated Membuat engimon picakhu, pakai kalau darurat atau buat debugging
+     * @throws EngimonSpeciesException tidak terdapat nama spesies terkait pada dex
+     * @throws ElementsListException
+     */
+    Engimon() throws EngimonSpeciesException, ElementsListException {
+        super();
+        this.name = super.getSpecies();
+        this.lvl = 20;
+        this.exp = 0;
+        this.cexp = 20 * MAX_EXP;
+        this.lives = 3;
+        this.position = new Position(-1, -1);
+        this.parents[0] = null;
+        this.parents[1] = null;
+    }
 
     /**
      * Konstruktor dengan menggunakan nama spesies dari {@link EngimonSpecies}

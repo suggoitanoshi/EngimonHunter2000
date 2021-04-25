@@ -17,8 +17,14 @@ import org.apache.commons.csv.CSVRecord;
 public class SkillDex implements Dex<Skill> {
     private HashMap<String, Skill> dex;
 
-    public SkillDex() {
+    public SkillDex() throws DexException {
         dex = new HashMap<String, Skill>();
+        getDexDataFromFile("data/Skills.csv");
+    }
+
+    public SkillDex(String fpath) throws DexException {
+        dex = new HashMap<String, Skill>();
+        getDexDataFromFile(fpath);
     }
 
     public Skill getEntity(String name) {

@@ -14,18 +14,16 @@ import java.util.Set;
 
 public class GameState implements Serializable {
     public static final long serialVersionUID = 1L;
+    transient private SkillDex skillDex;
+    transient private EngiDex engiDex;
+    transient private MapTile map;
     private Player player;
-    private SkillDex skillDex;
-    private EngiDex engiDex;
-    private MapTile map;
     private ArrayList<Engimon> wildEngimons;
 
     public GameState() {
         try {
             skillDex = new SkillDex();
-            skillDex.getDexDataFromFile("data/Skills.csv");
             engiDex = new EngiDex(skillDex);
-            engiDex.getDexDataFromFile("data/Engimons.csv");
             map = new MapTile();
             player = new Player(engiDex);
             wildEngimons = new ArrayList<>();
@@ -60,15 +58,16 @@ public class GameState implements Serializable {
             FileInputStream file = new FileInputStream(new File(filename));
             ObjectInputStream in = new ObjectInputStream(file);
             a = (GameState) in.readObject();
+            a.skillDex = new SkillDex();
+            a.engiDex = new EngiDex(a.skillDex);
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+            System.exit(-1);
+        } catch (EngimonHunter2000Exception e) {
+            e.printStackTrace();
+            System.err.println("Gagal loading");
+            System.exit(-1);
 
-            System.out.println(a.skillDex.toString());
-            System.out.println(a.engiDex.toString());
-        } catch (IOException e) {
-            e.printStackTrace();
-            System.exit(-1);
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-            System.exit(-1);
         }
 
         return a;

@@ -13,10 +13,8 @@ public class EngiDexTest {
     
     @BeforeAll
     static void setDex() throws DexException {
-        SkillDex skillDex = new SkillDex();
-        skillDex.getDexDataFromFile("data/Test_Skills.csv");
-        dex = new EngiDex(skillDex);
-        assertDoesNotThrow(() -> dex.getDexDataFromFile("data/Test_Engimons.csv"));
+        SkillDex skillDex = new SkillDex("data/Test_Skills.csv");
+        assertDoesNotThrow(() -> dex = new EngiDex(skillDex, "data/Test_Engimons.csv"));
     }
 
     @Test
@@ -35,11 +33,11 @@ public class EngiDexTest {
         () -> assertEquals(dex.getEntity("albeidou"), null));
     }
 
-    @Test
-    void testGetEngimonName() {
-        assertAll("Cek nama engimon",
-        () -> assertEquals(dex.getEngimonNameFromElement(Element.ELECTRIC), "Picakhu"),
-        () -> assertEquals(dex.getEngimonNameFromElement(Element.FIRE, Element.GROUND), "Tupai"),
-        () -> assertEquals(dex.getEngimonNameFromElement(Element.WATER, Element.FIRE), "Barbruh"));
-    }
+    // @Test
+    // void testGetEngimonName() {
+    //     assertAll("Cek nama engimon",
+    //     () -> assertEquals(dex.getEngimonNameFromElement(Element.ELECTRIC), "Picakhu"),
+    //     () -> assertEquals(dex.getEngimonNameFromElement(Element.FIRE, Element.GROUND), "Tupai"),
+    //     () -> assertEquals(dex.getEngimonNameFromElement(Element.WATER, Element.FIRE), "Barbruh"));
+    // }
 }

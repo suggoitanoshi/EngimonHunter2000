@@ -1,5 +1,6 @@
 package EngimonHunter2000;
 
+import java.io.Serializable;
 import java.util.Set;
 
 /**
@@ -8,7 +9,8 @@ import java.util.Set;
  * {@link SkillDex} to get the existing skill instance.
  * @author Josep Marcello
  */
-public class SkillEngimon {
+public class SkillEngimon implements Serializable {
+    public static final long serialVersionUID = 1L;
     public static final int MAX_MASTERYLEVEL = 3;
     public static final int MIN_MASTERYLEVEL = 1;
 

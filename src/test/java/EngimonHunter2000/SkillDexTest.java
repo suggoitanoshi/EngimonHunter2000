@@ -12,8 +12,7 @@ public class SkillDexTest {
 
     @BeforeAll
     static void setDex() {
-        dex = new SkillDex();
-        assertDoesNotThrow(() -> dex.getDexDataFromFile("data/Test_Skills.csv"));
+        assertDoesNotThrow(() -> dex = new SkillDex("data/Test_Skills.csv"));
     }
 
     @Test

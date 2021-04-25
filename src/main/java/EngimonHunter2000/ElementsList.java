@@ -1,5 +1,6 @@
 package EngimonHunter2000;
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -9,7 +10,8 @@ import java.util.Set;
  * Tidak boleh kosong.
  * @author Josep Marcello
  */
-public class ElementsList {
+public class ElementsList implements Serializable {
+    public static final long serialVersionUID = 1L;
     private Set<Element> elementsList;
 
     /**

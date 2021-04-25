@@ -30,6 +30,16 @@ public class EngimonSpecies {
     }
 
     /**
+     * @deprecated
+     */
+    public EngimonSpecies() {
+        spesies = null;
+        slogan = null;
+        starterSkill = null;
+        listElement = null;
+    }
+
+    /**
      * Konstruktor ini dibuat untuk membuat {@link Engimon}
      * TODO: buat exception dari dex ketika gadapet engimon yang sesuai dari namanya
      * @param dex {@link EngiDex} EngiDex yang akan dilookup untuk mendapatkan spesiesnya
@@ -37,8 +47,7 @@ public class EngimonSpecies {
      */
     EngimonSpecies(EngiDex dex, String _spesies) throws ElementsListException, EngimonSpeciesException {
         EngimonSpecies etty = dex.getEntity(_spesies);
-        this.spesies = etty.getSpecies();
-        if (this.spesies == null) {
+        if (etty == null) {
             throw new EngimonSpeciesException(0);
         }
         this.spesies = etty.getSpecies();
