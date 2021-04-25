@@ -32,6 +32,7 @@ public class GUI extends JFrame {
                         @Override
                         public void actionPerformed(ActionEvent e) {
                             gs.getPlayer().setPositionY(gs.getPlayer().getPositionY() - 1);
+							gs.getPlayer().setDir('w');
 							gs.updateGameState();
                             pane.removeAll();
                             MapGrid m = new MapGrid(
@@ -49,6 +50,7 @@ public class GUI extends JFrame {
                         @Override
                         public void actionPerformed(ActionEvent e) {
                             gs.getPlayer().setPositionX(gs.getPlayer().getPositionX() - 1);
+							gs.getPlayer().setDir('a');
 							gs.updateGameState();
 							pane.removeAll();
                             MapGrid m = new MapGrid(
@@ -66,6 +68,7 @@ public class GUI extends JFrame {
                         @Override
                         public void actionPerformed(ActionEvent e) {
                             gs.getPlayer().setPositionY(gs.getPlayer().getPositionY() + 1);
+							gs.getPlayer().setDir('s');
 							gs.updateGameState();
 							pane.removeAll();
                             MapGrid m = new MapGrid(
@@ -83,6 +86,7 @@ public class GUI extends JFrame {
                         @Override
                         public void actionPerformed(ActionEvent e) {
                             gs.getPlayer().setPositionX(gs.getPlayer().getPositionX() + 1);
+							gs.getPlayer().setDir('d');
 							gs.updateGameState();
 							pane.removeAll();
                             MapGrid m = new MapGrid(

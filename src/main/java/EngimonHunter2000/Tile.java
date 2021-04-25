@@ -1,16 +1,18 @@
 package EngimonHunter2000;
 
 public class Tile {
-    TileType type;
-    boolean isNabrak;
-    boolean canMoveW=false;
-    boolean canMoveA=false;
-    boolean canMoveS=false;
-    boolean canMoveD=false;
-    String path;
-    int x;
-    int y;
-    char icon;
+	public static final int maxX = 20;
+    public static final int maxY = 20;
+    private TileType type;
+    private boolean isNabrak;
+    private boolean canMoveW=false;
+    private boolean canMoveA=false;
+    private boolean canMoveS=false;
+    private boolean canMoveD=false;
+    private String path;
+    private int x;
+    private int y;
+    private char icon;
 
 	public Tile(String p, TileType t, int x, int y, boolean in){
 		path = p;
@@ -24,7 +26,7 @@ public class Tile {
         if (y == 0) {
             canMoveW = false;
         }
-        if (y == 19) {
+        if (y >= (maxY - 1)) {
             canMoveS = false;
         }
 
@@ -32,7 +34,7 @@ public class Tile {
             canMoveA = false;
         }
 
-        if (x == 19) {
+        if (x >= (maxX - 1)) {
             canMoveD = false;
         }
 
@@ -120,7 +122,27 @@ public class Tile {
         return this.path;
     }
 
+    public int getx() {
+        return this.x;
+    }
+
+    public int gety() {
+        return this.y;
+    }
+
     public char getIcon() {
         return this.icon;
+    }
+
+    public boolean isOccupied() {
+        return isNabrak;
+    }
+
+    public void makeOccupied() {
+        isNabrak = true;
+    }
+
+    public void makeFree() {
+        isNabrak = false;
     }
 }

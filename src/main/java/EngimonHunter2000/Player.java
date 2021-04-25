@@ -88,7 +88,8 @@ public class Player {
         this.listEngimon.showInventory();
     }
 
-    public void changeEngimonName(int engiIdx, String newName) throws EngimonException, InventoryException {
+    public void changeEngimonName(int engiIdx, String newName)
+            throws EngimonException, InventoryException {
         this.listEngimon.at(engiIdx).setName(newName);
     }
 
@@ -96,18 +97,9 @@ public class Player {
         this.listEngimon.addItem(engi);
     }
 
-    public void showItem(int itemIdx) {
-        this.listItem.at(itemIdx).showItem();
-    }
-
-    public void showItem() throws InventoryException {
-        if (this.listItem.getItemCount() == 0) throw new InventoryException(1);
-        System.out.println("Skill Item di dalam Inventory:");
-        this.listItem.showInventory();
-    }
-
-    public void useItem(int engiIdx, int itemIdx, Dex dex) {
-        this.listItem.at(itemIdx).learn(this.listEngimon.at(engiIdx), dex);
+    public void useItem(int engiIdx, int itemIdx, Dex dex)
+            throws ItemException, InventoryException, SkillEngimonException {
+        this.listItem.at(itemIdx).learn(this.listEngimon.at(engiIdx));
         if (this.listItem.at(itemIdx).getQuantity() == 0) {
             listItem.removeItem(listItem.at(itemIdx));
         }
@@ -131,5 +123,23 @@ public class Player {
 
     public void interact() {
         this.activeEngi.interact();
+    }
+
+    /**
+     * Fungsi untuk mendapatkan engimon player yang memiliki level tertiinggi
+     */
+    public int getHighestEngimonLevel() {
+        int highest = 0x7FFFFFFF;
+        for (int i = 0; i < listEngimon.getItemCount(); ++i) {
+            try {
+                Engimon disEngie = listEngimon.at(i);
+                highest = disEngie.getLvl() > highest ? disEngie.getLvl() : highest;
+            } catch (InventoryException e) {
+                System.err.println(e.what());
+                break; // idk what to do, really ¯\_(ツ)_/¯
+            }
+        }
+
+        return highest;
     }
 }
