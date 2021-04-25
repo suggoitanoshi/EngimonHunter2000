@@ -73,7 +73,6 @@ public class EngiDex implements Dex<EngimonSpecies> {
                 } catch (ElementsListException e) {
                     // error message?
                 }
-
             }
 
             if (this.dex.size() == 0) {

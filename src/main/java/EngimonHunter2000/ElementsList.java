@@ -50,13 +50,13 @@ public class ElementsList {
         elementsList = new HashSet<Element>();
 
         for (String elStr : elms) {
-                try {
-                    elementsList.add(Element.getElementFromString(elStr));
-                } catch (ElementException err) {
-                    // Nama elemen salah. Skip aja.
-                    err.bruh();
-                    continue;
-                }
+            try {
+                elementsList.add(Element.getElementFromString(elStr));
+            } catch (ElementException err) {
+                // Nama elemen salah. Skip aja.
+                err.bruh();
+                continue;
+            }
         }
 
         if (elementsList.size() == 0) {

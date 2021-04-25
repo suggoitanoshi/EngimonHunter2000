@@ -15,7 +15,6 @@ public class EngimonSpecies {
 
     /**
      * Konstruktor ini dibuat untuk membuat {@link EngiDex}
-     * 
      * @param _spesies nama dari spesies yang dibaca dari file
      * @param _slogan slogan dari spesies yang dibaca dari file
      * @param _starter {@link SkillEngimon} skill pertama yang dibaca dari file dan sudah di-construct
@@ -35,9 +34,8 @@ public class EngimonSpecies {
      * @param _spesies nama spesies yang akan di-construct
      */
     EngimonSpecies(EngiDex dex, String _spesies) throws ElementsListException, EngimonSpeciesException {
-        try {
-            this.spesies = dex.getEntity(_spesies).getSpecies();
-        } catch (DexException e) {
+        this.spesies = dex.getEntity(_spesies).getSpecies();
+        if (this.spesies == null) {
             throw new EngimonSpeciesException(0);
         }
         this.slogan = dex.getEntity(_spesies).getSlogan();
