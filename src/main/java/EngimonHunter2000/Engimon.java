@@ -1,8 +1,6 @@
 package EngimonHunter2000;
 
-import java.util.Set;
 import java.util.HashSet;
-import java.util.Iterator;
 
 /**
  * {@link EngimonHunter2000}
@@ -12,6 +10,8 @@ import java.util.Iterator;
 public class Engimon extends EngimonSpecies {
     public static int max_exp = 100;
     public static int max_cexp = 100000;
+    public static int max_lives = 3;
+
     private HashSet<SkillEngimon> listSkill;
     private String name;
     private int lvl;
@@ -97,8 +97,11 @@ public class Engimon extends EngimonSpecies {
         this.position = new Position(-1, -1);
     }
 
-    // belom selesai
-    // private void breedingElement(Engimon parent1, Engimon parent2) {
+    //belom selesai
+    // private void breedingElement(Engimon parent1, Engimon parent2) throws EngimonException {
+    //     if (parent1.getLvl() < 4 || parent2.getLvl() < 4) {
+    //         throw new EngimonException(3);
+    //     }
     //     if (Element.getElementalAdvantage(parent1.getListElement(), parent2.getListElement())) {
 
     //     }
@@ -187,6 +190,16 @@ public class Engimon extends EngimonSpecies {
 
     // SETTER
 
+    public void setLives(int _lives) throws EngimonException {
+        this.lives += _lives;
+        if (this.lives > 3) {
+            this.lives = 3;
+        }
+        if (this.lives < 0) {
+            throw new EngimonException(2);
+        }
+    }
+
     /**
      * Setter untuk mengubah posisi engimon
      * @param x absis dari koordinat
@@ -203,6 +216,18 @@ public class Engimon extends EngimonSpecies {
      */
     public void setSkills(int index, Skill oskill) {
 
+    }
+
+    /**
+     * Setter untuk mengubah nama
+     * @param _name nama baru engimon
+     * @throws EngimonException
+     */
+    public void setName(String _name) throws EngimonException {
+        if (_name == null || _name == "") {
+            throw new EngimonException(4);
+        }
+        this.name = _name;
     }
 
     /**
