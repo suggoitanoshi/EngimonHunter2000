@@ -1,6 +1,7 @@
 package EngimonHunter2000;
 
 import java.util.HashSet;
+import java.util.ArrayList;
 
 /**
  * {@link EngimonHunter2000}
@@ -66,7 +67,7 @@ public class Engimon extends EngimonSpecies {
 
     /**
      * Konstruktor dengan parameter lengkap
-     * @param dex dex yang akan dipakai oleh engimon
+     * @param dex {@link EngiDex} dex yang akan dipakai oleh engimon
      * @param _species nama spesies
      * @param _name nama engimon
      * @param _lvl level engimon
@@ -97,7 +98,7 @@ public class Engimon extends EngimonSpecies {
 
     /**
      * Konstruktor untuk BREEDING
-     * @param dex dex yang akan dipakai oleh engimon
+     * @param dex {@link EngiDex} dex yang akan dipakai oleh engimon
      * @param _name nama anak engimon
      * @param parent1 nama parent1 (parent1 dan parent2 bisa di-interchange)
      * @param parent2 nama parent2 (parent1 dan parent2 bisa di-interchange)
@@ -105,21 +106,21 @@ public class Engimon extends EngimonSpecies {
      * @throws ElementsListException
      * @throws EngimonException
      */
-    // Engimon(EngiDex dex, String _name, Engimon parent1, Engimon parent2)
-    //         throws EngimonSpeciesException, ElementsListException, EngimonException {
-    //     super(dex, _species);
-    //     if (_name == null || _name == "") {
-    //         throw new EngimonException(4);
-    //     }
-    //     this.listSkill = new HashSet<SkillEngimon>();
-    //     this.listSkill.add(_skill);
-    //     this.name = _name;
-    //     this.lvl = 1;
-    //     this.exp = 0;
-    //     this.cexp = 0;
-    //     this.lives = 3;
-    //     this.position = new Position(-1, -1);
-    // }
+    Engimon(EngiDex dex, String _species, SkillEngimon _skill, String _name, String parent1, String parent2)
+            throws EngimonSpeciesException, ElementsListException, EngimonException {
+        super(dex, _species);
+        if (_name == null || _name == "") {
+            throw new EngimonException(4);
+        }
+        this.listSkill = new HashSet<SkillEngimon>();
+        this.listSkill.add(_skill);
+        this.name = _name;
+        this.lvl = 1;
+        this.exp = 0;
+        this.cexp = 0;
+        this.lives = 3;
+        this.position = new Position(-1, -1);
+    }
 
     //belom selesai
     // private void breedingElement(Engimon parent1, Engimon parent2) throws EngimonException {
