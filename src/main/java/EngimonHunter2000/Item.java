@@ -79,7 +79,7 @@ public class Item extends SkillEngimon {
     public void learn(Engimon e) throws ItemException, SkillEngimonException {
         boolean compatible = false;
         boolean newSkill = true;
-        
+
         // Mengecek kecocokan skill item dengan engimon
         for (Element el : getElements()) {
             for (SkillEngimon s : e.getSkills()) {
@@ -135,11 +135,13 @@ public class Item extends SkillEngimon {
                 getElements().toArray(els);
 
                 try {
-                    Skill s = new Skill(getName(), getBasePower(), els);
+                    SkillDex temp = new SkillDex();
+                    Skill s = temp.getEntity(getName());
                     SkillEngimon se = new SkillEngimon(s);
                     e.addSkill(se);
-                } catch (ElementsListException exception) {
-                    System.out.println("Gagal menambahkan skill baru");
+                } catch (DexException | EngimonException exception) {
+                    exception.printStackTrace();
+                    throw new ItemException(3);
                 }
             }
         }

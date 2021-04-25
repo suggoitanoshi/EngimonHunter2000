@@ -150,11 +150,6 @@ public class GUI extends JFrame {
         setResizable(false);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
-
-    public static void main(String[] args) {
-        GUI g = new GUI();
-        g.setVisible(true);
-    }
 }
 
 class MapGrid extends JPanel {

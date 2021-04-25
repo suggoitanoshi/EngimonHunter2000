@@ -42,18 +42,17 @@ public class GameState implements Serializable {
         return player;
     }
 
-    public void save(String filename) {
+    public void save(String filename) throws GameStateException {
         try {
             FileOutputStream file = new FileOutputStream(new File(filename));
             ObjectOutputStream out = new ObjectOutputStream(file);
             out.writeObject(this);
         } catch (IOException e) {
-            System.err.println(e);
-            System.exit(-1);
+            throw new GameStateException(2);
         }
     }
 
-    public static GameState load(String filename) {
+    public static GameState load(String filename) throws GameStateException {
         GameState a = null;
         try {
             FileInputStream file = new FileInputStream(new File(filename));
@@ -61,14 +60,8 @@ public class GameState implements Serializable {
             a = (GameState) in.readObject();
             a.skillDex = new SkillDex();
             a.engiDex = new EngiDex(a.skillDex);
-        } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
-            System.exit(-1);
-        } catch (EngimonHunter2000Exception e) {
-            e.printStackTrace();
-            System.err.println("Gagal loading");
-            System.exit(-1);
-
+        } catch (Exception e) {
+            throw new GameStateException(1);
         }
 
         return a;
@@ -96,48 +89,42 @@ public class GameState implements Serializable {
 		return map;
 	}
 
-	public void setEntities(){
-
+	public void setEntities() throws GameStateException {
+        String path;
 		switch(map[player.getPositionY()][player.getPositionX()].getType()) {
 			case EDGE1_MOUNTAIN:
-				Tile tile1 = new Tile("data/resource/char_edge5.png", TileType.PLAYER, player.getPositionX(),player.getPositionY(),true);
-				map[player.getPositionY()][player.getPositionX()] = tile1;
+                path = "data/resource/char_edge5.png";
 				break;
 			case EDGE2_MOUNTAIN:
-				Tile tile2 = new Tile("data/resource/char_edge4.png", TileType.PLAYER, player.getPositionX(),player.getPositionY(),true);
-				map[player.getPositionY()][player.getPositionX()] = tile2;
+                path = "data/resource/char_edge4.png";
 				break;
 			case EDGE3_MOUNTAIN:
-				Tile tile3 = new Tile("data/resource/char_edge6.png", TileType.PLAYER, player.getPositionX(),player.getPositionY(),true);
-				map[player.getPositionY()][player.getPositionX()] = tile3;
+                path = "data/resource/char_edge6.png";
 				break;
 			case EDGE_GRASS:
-				Tile tile4 = new Tile("data/resource/char_edge1.png", TileType.PLAYER, player.getPositionX(),player.getPositionY(),true);
-				map[player.getPositionY()][player.getPositionX()] = tile4;
+                path = "data/resource/char_edge1.png";
 				break;
 			case EDGE_TUNDRA:
-				Tile tile5 = new Tile("data/resource/char_edge3.png", TileType.PLAYER, player.getPositionX(),player.getPositionY(),true);
-				map[player.getPositionY()][player.getPositionX()] = tile5;
+                path = "data/resource/char_edge3.png";
 				break;
 			case GRASS:
-				Tile tile6 = new Tile("data/resource/char_grass.png", TileType.PLAYER, player.getPositionX(),player.getPositionY(),true);
-				map[player.getPositionY()][player.getPositionX()] = tile6;
+                path = "data/resource/char_grass.png";
 				break;
 			case MOUNTAIN:
-				Tile tile7 = new Tile("data/resource/char_mountain.png", TileType.PLAYER, player.getPositionX(),player.getPositionY(),true);
-				map[player.getPositionY()][player.getPositionX()] = tile7;
+                path = "data/resource/char_mountain.png";
 				break;
 			case TUNDRA:
-				Tile tile8 = new Tile("data/resource/char_tundra.png", TileType.PLAYER, player.getPositionX(),player.getPositionY(),true);
-				map[player.getPositionY()][player.getPositionX()] = tile8;
+                path = "data/resource/char_tundra.png";
 				break;
 			case WATER:
-				Tile tile_p = new Tile("data/resource/char_watergif.gif", TileType.PLAYER, player.getPositionX(),player.getPositionY(),true);
-				map[player.getPositionY()][player.getPositionX()] = tile_p;
+                path = "data/resource/char_watergif.gif";
 				break;
 			default:
-				break;
+                throw new GameStateException(0);
 		}
+
+        Tile tile = new Tile(path, TileType.PLAYER, player.getPositionX(),player.getPositionY(),true);
+        map[player.getPositionY()][player.getPositionX()] = tile;
 		//set active 
 		int i = 0;
 		int j = 0;
@@ -165,49 +152,41 @@ public class GameState implements Serializable {
 		
 		switch (map[player.getPositionY()+j][player.getPositionX()+i].getType()){
 			case EDGE1_MOUNTAIN:
-				String path1 = "data/resource/"+ player.getActiveEngimon().getSpecies() +"/"+ player.getActiveEngimon().getSpecies() +"_edge5.png";
-				map[player.getPositionY()+j][player.getPositionX()+i] = new Tile(path1,TileType.ENGIMON, player.getPositionX()+i, player.getPositionY()+j, true);
+				path = "data/resource/"+ player.getActiveEngimon().getSpecies() +"/"+ player.getActiveEngimon().getSpecies() +"_edge5.png";
 				break;
 			case EDGE2_MOUNTAIN:
-				String path2 = "data/resource/"+ player.getActiveEngimon().getSpecies() +"/"+ player.getActiveEngimon().getSpecies() +"_edge4.png";
-				map[player.getPositionY()+j][player.getPositionX()+i] = new Tile(path2,TileType.ENGIMON, player.getPositionX()+i, player.getPositionY()+j, true);
+				path = "data/resource/"+ player.getActiveEngimon().getSpecies() +"/"+ player.getActiveEngimon().getSpecies() +"_edge4.png";
 				break;
 			case EDGE3_MOUNTAIN:
-				String path3 = "data/resource/"+ player.getActiveEngimon().getSpecies() +"/"+ player.getActiveEngimon().getSpecies() +"_edge6.png";
-				map[player.getPositionY()+j][player.getPositionX()+i] = new Tile(path3,TileType.ENGIMON, player.getPositionX()+i, player.getPositionY()+j, true);
+				path = "data/resource/"+ player.getActiveEngimon().getSpecies() +"/"+ player.getActiveEngimon().getSpecies() +"_edge6.png";
 				break;
 			case EDGE_GRASS:
-				String path4 = "data/resource/"+ player.getActiveEngimon().getSpecies() +"/"+ player.getActiveEngimon().getSpecies() +"_edge1.png";
-				map[player.getPositionY()+j][player.getPositionX()+i] = new Tile(path4,TileType.ENGIMON, player.getPositionX()+i, player.getPositionY()+j, true);
+				path = "data/resource/"+ player.getActiveEngimon().getSpecies() +"/"+ player.getActiveEngimon().getSpecies() +"_edge1.png";
 				break;
 			case EDGE_TUNDRA:
-				String path5 = "data/resource/"+ player.getActiveEngimon().getSpecies() +"/"+ player.getActiveEngimon().getSpecies() +"_edge3.png";
-				map[player.getPositionY()+j][player.getPositionX()+i] = new Tile(path5,TileType.ENGIMON, player.getPositionX()+i, player.getPositionY()+j, true);
+				path = "data/resource/"+ player.getActiveEngimon().getSpecies() +"/"+ player.getActiveEngimon().getSpecies() +"_edge3.png";
 				break;
 			case GRASS:
-				String path6 = "data/resource/"+ player.getActiveEngimon().getSpecies() +"/"+ player.getActiveEngimon().getSpecies() +"_grass.png";
-				map[player.getPositionY()+j][player.getPositionX()+i] = new Tile(path6,TileType.ENGIMON, player.getPositionX()+i, player.getPositionY()+j, true);
+				path = "data/resource/"+ player.getActiveEngimon().getSpecies() +"/"+ player.getActiveEngimon().getSpecies() +"_grass.png";
 				break;
 			case MOUNTAIN:
-				String path7 = "data/resource/"+ player.getActiveEngimon().getSpecies() +"/"+ player.getActiveEngimon().getSpecies() +"_mountain.png";
-				map[player.getPositionY()+j][player.getPositionX()+i] = new Tile(path7,TileType.ENGIMON, player.getPositionX()+i, player.getPositionY()+j, true);
+				path = "data/resource/"+ player.getActiveEngimon().getSpecies() +"/"+ player.getActiveEngimon().getSpecies() +"_mountain.png";
 				break;
 			case TUNDRA:
-				String path8 = "data/resource/"+ player.getActiveEngimon().getSpecies() +"/"+ player.getActiveEngimon().getSpecies() +"_tundra.png";
-				map[player.getPositionY()+j][player.getPositionX()+i] = new Tile(path8,TileType.ENGIMON, player.getPositionX()+i, player.getPositionY()+j, true);
+				path = "data/resource/"+ player.getActiveEngimon().getSpecies() +"/"+ player.getActiveEngimon().getSpecies() +"_tundra.png";
 				break;
 			case WATER:
-				String path9 = "data/resource/"+ player.getActiveEngimon().getSpecies() +"/"+ player.getActiveEngimon().getSpecies() +"_watergif.gif";
-				map[player.getPositionY()+j][player.getPositionX()+i] = new Tile(path9,TileType.ENGIMON, player.getPositionX()+i, player.getPositionY()+j, true);
+				path = "data/resource/"+ player.getActiveEngimon().getSpecies() +"/"+ player.getActiveEngimon().getSpecies() +"_watergif.gif";
 				break;
 			default:
-				break;
-
+                throw new GameStateException(0);
 		}
+        tile = new Tile(path,TileType.ENGIMON, player.getPositionX()+i, player.getPositionY()+j, true);
+        map[player.getPositionY()+j][player.getPositionX()+i] = tile;
 		
 	}
 
-	public void updateGameState(){
+	public void updateGameState() throws GameStateException {
 		maptile = new MapTile();
 		map = maptile.getMap();
 		setEntities();
