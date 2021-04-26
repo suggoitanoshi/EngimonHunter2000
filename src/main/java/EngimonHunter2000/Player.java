@@ -128,7 +128,7 @@ public class Player implements Serializable {
         this.listItem.addItemNoDupe(item);
     }
 
-    public void removeEngimon(int idx) throws InventoryException {        
+    public void removeEngimon(int idx) throws InventoryException {
         this.listEngimon.removeItem(this.listEngimon.at(idx));
         if (this.listEngimon.at(idx).equals(this.activeEngi)) {
             this.activeEngi = this.listEngimon.at(0);
@@ -167,7 +167,7 @@ public class Player implements Serializable {
      */
     public int getHighestEngimonLevel() {
         int highest = 0xFFFFFFFF;
-        for (int i = 0; i < listEngimon.getAllInvenTotalItemCount(); ++i) {
+        for (int i = 0; i < listEngimon.getItemCount(); ++i) {
             try {
                 Engimon disEngie = listEngimon.at(i);
                 highest = disEngie.getLvl() > highest ? disEngie.getLvl() : highest;

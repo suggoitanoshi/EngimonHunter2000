@@ -197,7 +197,6 @@ public class GUI extends JFrame {
                                 @Override
                                 public void actionPerformed(ActionEvent e){
                                     container_hasil.removeAll();
-                                    
                                     JTextField namanya = new JTextField();
                                     JButton ok = new JButton("Ok");
 
@@ -225,28 +224,35 @@ public class GUI extends JFrame {
                             hapus.addActionListener(new ActionListener(){
                                 @Override
                                 public void actionPerformed(ActionEvent e){
-                                    try{
-                                        gs.getPlayer().removeEngimon(j);
-                                        container_hasil.removeAll();
-                                        container_hasil.revalidate();
-                                        container_hasil.repaint();
-                                        gs.updateGameState();
-                                        pane.removeAll();
-                                        MapGrid m = new MapGrid(
-                                            gs.getPlayer().getPositionX(), gs.getPlayer().getPositionY(), gs.getMap());
-                                        pane.add(m, BorderLayout.WEST);
-                                        pane.revalidate();
-                                        pane.repaint();
+                                    try {
+                                        if (gs.getPlayer().getInventoryEngimon().getItemCount() > 1) {
+                                            Engimon ea = gs.getPlayer().getActiveEngimon();
+                                            Engimon yangMauDiapus = gs.getPlayer().getInventoryEngimon().at(j);
+                                            gs.getPlayer().removeEngimon(j);
+                                            if (ea.equals(yangMauDiapus)) {
+                                                // ganti engimonnya
+                                                gs.getPlayer().switchEngimon(0);
+                                            }
+                                            container_hasil.removeAll();
+                                            container_hasil.revalidate();
+                                            container_hasil.repaint();
+                                        } else {
+                                            container_hasil.removeAll();
+                                            c.gridx = 0;
+                                            c.gridy = 0;
+                                            container_hasil.add(new JLabel("GAME OVER GAN"), c);
+                                            c.gridy = 1;
+                                            container_hasil.add(new JLabel("SIAPA SURUH NGAPUS AKTIF ENGIMON"), c);
+                                            container_hasil.revalidate();
+                                            container_hasil.repaint();
+                                            gs.setGameOver();
+                                        }
                                     } catch(InventoryException ex){
+                                        ex.printStackTrace();
                                         container_hasil.removeAll();
-                                        c.gridx = 0;
-                                        c.gridy = 0;
-                                        container_hasil.add(new JLabel("GAME OVER GAN"), c);
-                                        c.gridy = 1;
-                                        container_hasil.add(new JLabel("SIAPA SURUH NGAPUS AKTIF ENGIMON"), c);
                                         container_hasil.revalidate();
                                         container_hasil.repaint();
-                                        gs.setGameOver();
+                                    } finally {
                                         gs.updateGameState();
                                         pane.removeAll();
                                         MapGrid m = new MapGrid(
@@ -535,9 +541,12 @@ public class GUI extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e){
                 container_hasil.removeAll();
-                java.util.List<Engimon> engs = gs.getWildEngimons().stream().filter((engi) -> {
-                    return engi.getPosition().distanceTo(gs.getPlayer().getPosition()) < 2;
-                }).collect(Collectors.toList());
+                java.util.List<Engimon> engs = gs
+                    .getWildEngimons().stream().filter((engi) -> {
+                        return engi
+                            .getPosition()
+                            .distanceTo(gs.getPlayer().getPosition()) < 2;
+                    }).collect(Collectors.toList());
                 c.gridx = 0;
                 for(int i = 0; i < engs.size(); i++){
                     c.gridy = i;
@@ -552,7 +561,7 @@ public class GUI extends JFrame {
                             Battle gelud = new Battle();
                             gelud.checkAdvantage(gs.getPlayer().getActiveEngimon(), en);
                             StringBuilder detailEngiMusuh = new StringBuilder();
-                            // spesies, elemen, level,  
+                            // spesies, elemen, level,
                             detailEngiMusuh.append("Spesies: "+en.getSpecies()+"\n");
                             ElementsList els = en.getListElement();
                             detailEngiMusuh.append("Elemen: ");
