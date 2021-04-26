@@ -10,7 +10,7 @@ import org.junit.jupiter.api.BeforeAll;
 
 public class EngiDexTest {
     static EngiDex dex;
-    
+
     @BeforeAll
     static void setDex() throws DexException {
         SkillDex skillDex = new SkillDex("data/Test_Skills.csv");

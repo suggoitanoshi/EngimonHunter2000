@@ -125,7 +125,6 @@ public class Item extends SkillEngimon {
                     throw new SkillEngimonException(0);
                 } else {
                     s.incMasteryLevel();
-                    // return;
                 }
                 break;
             }
