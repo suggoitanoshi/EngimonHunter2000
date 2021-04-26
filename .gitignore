@@ -4,6 +4,7 @@ target/
 docs/html
 docs/latex
 data/game.obj
+data/save.dat
 
 # Created by https://www.toptal.com/developers/gitignore/api/maven,java
 # Edit at https://www.toptal.com/developers/gitignore?templates=maven,java

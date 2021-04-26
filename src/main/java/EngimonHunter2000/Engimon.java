@@ -25,23 +25,6 @@ public class Engimon extends EngimonSpecies implements Serializable {
     private String[] parents;
 
     /**
-     * @deprecated Membuat engimon picakhu, pakai kalau darurat atau buat debugging
-     * @throws EngimonSpeciesException tidak terdapat nama spesies terkait pada dex
-     * @throws ElementsListException
-     */
-    Engimon() throws EngimonSpeciesException, ElementsListException {
-        super();
-        this.name = super.getSpecies();
-        this.lvl = 20;
-        this.exp = 0;
-        this.cexp = 20 * MAX_EXP;
-        this.lives = 3;
-        this.position = new Position(-1, -1);
-        this.parents[0] = null;
-        this.parents[1] = null;
-    }
-
-    /**
      * Konstruktor dengan menggunakan nama spesies dari {@link EngimonSpecies}
      * Konstruktor ini dapat digunakan untuk membuat engimon baru pada
      * {@link Inventory} dari player
@@ -292,8 +275,9 @@ public class Engimon extends EngimonSpecies implements Serializable {
         this.exp += _exp;
         this.cexp += _exp;
         if (this.exp >= MAX_EXP) {
-            this.exp -= MAX_EXP;
-            return this.addLevel(1);
+            int lvl = this.exp / MAX_EXP;
+            this.exp -= (lvl * MAX_EXP);
+            return this.addLevel(lvl);
         } else {
             return true;
         }

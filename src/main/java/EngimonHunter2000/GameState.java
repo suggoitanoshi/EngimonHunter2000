@@ -14,7 +14,7 @@ import java.util.Set;
 
 public class GameState implements Serializable {
     public static final long serialVersionUID = 1L;
-    private final int wildEngieCount = 30;
+    private static final int wildEngieCount = 30;
     transient private SkillDex skillDex;
     transient private EngiDex engiDex;
     transient private MapTile maptile;
@@ -43,10 +43,10 @@ public class GameState implements Serializable {
     }
 
 	public void updateGameState() {
-		turn++;
+        turn++;
 
         // tambahin exp dan move engimon
-        if (turn % 1 == 0) {
+        if (turn % 5 == 0) {
             activateWildEngimons();
         }
 
@@ -78,18 +78,24 @@ public class GameState implements Serializable {
     }
 
     public static GameState load(String filename) throws GameStateException {
-        GameState a = null;
         try {
+            GameState a = null;
             FileInputStream file = new FileInputStream(new File(filename));
             ObjectInputStream in = new ObjectInputStream(file);
+
             a = (GameState) in.readObject();
             a.skillDex = new SkillDex();
+            a.maptile = new MapTile();
+			a.map = a.maptile.getMap();
             a.engiDex = new EngiDex(a.skillDex);
+
+            a.fillMap();
+
+            return a;
         } catch (Exception e) {
+            e.printStackTrace();
             throw new GameStateException(1);
         }
-
-        return a;
     }
 
 	public Tile[][] getMap(){
@@ -357,7 +363,7 @@ public class GameState implements Serializable {
             int dx = 0;
             int dy = 0;
 
-            if (horizontalMove) {
+            if (!horizontalMove) {
                 dy = 1 * (neg ? -1 : 1);
             } else {
                 dx = 1 * (neg ? -1 : 1);
@@ -423,12 +429,6 @@ public class GameState implements Serializable {
             if (x < 0) x += Tile.maxX;
             y = rand.nextInt() % Tile.maxY;
             if (y < 0) y += Tile.maxY;
-
-            if ((x == player.getPositionX() && y == player.getPositionY())
-                || (x == player.getActiveEngimon().getPosition().getX() && y == player.getActiveEngimon().getPosition().getY())) {
-                System.out.println("ANJENGGGG");
-                System.out.println("NAHA AING NABRAK JANCOK");
-            }
         } while (x >= emptyTiles.size()
                 || y >= emptyTiles.get(x).size()
                 || !canMoveEngimon(0, 0, x, y, engie.getSpecies()));

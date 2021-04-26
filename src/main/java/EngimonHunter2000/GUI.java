@@ -48,6 +48,7 @@ public class GUI extends JFrame {
                                                  gs.getPlayer().getPositionY())) {
                                 gs.getPlayer().setPositionY(gs.getPlayer().getPositionY() - 1);
                                 gs.applyPlayerPosition();
+                                gs.applyActiveEngimonPosition();
                             }
 							gs.getPlayer().setDir('w');
                             gs.updateGameState();
@@ -71,6 +72,7 @@ public class GUI extends JFrame {
                                                  gs.getPlayer().getPositionY())) {
                                 gs.getPlayer().setPositionX(gs.getPlayer().getPositionX() - 1);
                                 gs.applyPlayerPosition();
+                                gs.applyActiveEngimonPosition();
                             }
 							gs.getPlayer().setDir('a');
 							gs.updateGameState();
@@ -94,6 +96,7 @@ public class GUI extends JFrame {
                                                  gs.getPlayer().getPositionY())) {
                                 gs.getPlayer().setPositionY(gs.getPlayer().getPositionY() + 1);
                                 gs.applyPlayerPosition();
+                                gs.applyActiveEngimonPosition();
                             }
 							gs.getPlayer().setDir('s');
                             gs.updateGameState();
@@ -117,6 +120,7 @@ public class GUI extends JFrame {
                                                  gs.getPlayer().getPositionY())) {
                                 gs.getPlayer().setPositionX(gs.getPlayer().getPositionX() + 1);
                                 gs.applyPlayerPosition();
+                                gs.applyActiveEngimonPosition();
                             }
 							gs.getPlayer().setDir('d');
 							gs.updateGameState();
@@ -521,6 +525,13 @@ public class GUI extends JFrame {
                     outerpane.remove(startmenu);
                     outerpane.revalidate();
                     outerpane.repaint();
+
+                    pane.removeAll();
+                    MapGrid m = new MapGrid(
+                        gs.getPlayer().getPositionX(), gs.getPlayer().getPositionY(), gs.getMap());
+                    pane.add(m, BorderLayout.WEST);
+                    pane.revalidate();
+                    pane.repaint();
                 } catch(GameStateException ex){
                     System.exit(-1);
                 }
