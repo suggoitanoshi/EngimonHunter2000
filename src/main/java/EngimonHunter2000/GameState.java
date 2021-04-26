@@ -150,10 +150,8 @@ public class GameState implements Serializable {
 
 			// set active engimon sprite
 			Engimon aE = player.getActiveEngimon();
-			System.out.println(aE.getName());
 			path = getEngimonSprite(aE,
 									map[aE.getPosition().getY()][aE.getPosition().getX()].getType());
-			System.out.println(path);
 			tile = new Tile(path, TileType.ENGIMON,
 							aE.getPosition().getX(), aE.getPosition().getY(), true);
 			map[aE.getPosition().getY()][aE.getPosition().getX()] = tile;
@@ -243,7 +241,6 @@ public class GameState implements Serializable {
             default: //water
 				SB.append("_watergif.gif");
 		}
-		// System.out.println(SB.toString());
         return SB.toString();
     }
 

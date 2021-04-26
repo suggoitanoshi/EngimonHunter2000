@@ -389,11 +389,11 @@ public class GUI extends JFrame {
 								catch (InventoryException e1){
 									System.out.println("tolol");
 								}
-							}
-                            else{
+							} else{
 								JOptionPane.showMessageDialog(container_hasil, "menang");
 								try{
-									gs.getPlayer().getInventoryEngimon().addItemNoDupe(en);
+                                    gs.getWildEngimons().remove(en);
+									gs.getPlayer().getInventoryEngimon().addItem(en);
 								}
 								catch (InventoryException e1){
 									System.out.println("tolol");
