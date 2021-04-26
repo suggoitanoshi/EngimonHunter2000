@@ -170,7 +170,7 @@ public class GUI extends JFrame {
                 c.gridx = 0;
                 Inventory<Engimon> engies = gs.getPlayer().getInventoryEngimon();
                 HashMap<String, ArrayList<Engimon>> groupByElement = new HashMap<String, ArrayList<Engimon>>();
-                for(int i = 0; i < engies.getAllInvenTotalItemCount(); i++){
+                for(int i = 0; i < engies.getItemCount(); i++){
                     try{
                         Engimon en = engies.at(i);
                         String el = ((Element)en.getListElement().getElementsList().toArray()[0]).name();
@@ -300,7 +300,7 @@ public class GUI extends JFrame {
                 container_hasil.removeAll();
                 Inventory<Engimon> engies = gs.getPlayer().getInventoryEngimon();
                 HashMap<String, ArrayList<Engimon>> groupByElement = new HashMap<String, ArrayList<Engimon>>();
-                for(int i = 0; i < engies.getAllInvenTotalItemCount(); i++){
+                for(int i = 0; i < engies.getItemCount(); i++){
                     try{
                         Engimon en = engies.at(i);
                         String el = ((Element)en.getListElement().getElementsList().toArray()[0]).name();
@@ -356,7 +356,7 @@ public class GUI extends JFrame {
                 c.gridx = 0;
                 Inventory<Item> items = gs.getPlayer().getInventoryItem();
                 java.util.List<Item> itemsorted = new java.util.ArrayList<Item>();
-                for(int i = 0; i < items.getAllInvenTotalItemCount(); i++){
+                for(int i = 0; i < items.getItemCount(); i++){
                     try{
                         itemsorted.add(items.at(i));
                     }
@@ -440,7 +440,7 @@ public class GUI extends JFrame {
                 container_hasil.removeAll();
                 Inventory<Item> items = gs.getPlayer().getInventoryItem();
                 java.util.List<Item> itemsorted = new java.util.ArrayList<Item>();
-                for(int i = 0; i < items.getAllInvenTotalItemCount(); i++){
+                for(int i = 0; i < items.getItemCount(); i++){
                     try{
                         itemsorted.add(items.at(i));
                     }
@@ -513,7 +513,7 @@ public class GUI extends JFrame {
                 JLabel kawinlabel = new JLabel("Pilih orangtua 1: ");
                 container_hasil.add(new JLabel("Kawin~"));
                 container_hasil.add(kawinlabel);
-                for(int i = 0; i < engies.getAllInvenTotalItemCount(); i++){
+                for(int i = 0; i < engies.getItemCount(); i++){
                     try{
                         c.gridy = i+2;
                         int j = i;

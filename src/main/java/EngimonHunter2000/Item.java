@@ -3,6 +3,7 @@ package EngimonHunter2000;
 import java.util.*;
 
 public class Item extends SkillEngimon {
+    public static final long serialVersionUID = 5914066636119786165L;
     private int quantity;
 
     /**
