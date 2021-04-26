@@ -75,6 +75,10 @@ public class Item extends SkillEngimon {
             return false;
         }
 
+        if (this == o) {
+            return true;
+        }
+
         Item _i = (Item) o;
 
         return this.quantity == _i.getQuantity() &&

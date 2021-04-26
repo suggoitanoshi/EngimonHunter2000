@@ -66,7 +66,7 @@ public class EngiDex implements Dex<EngimonSpecies> {
                         try {
                             elsSet.add(Element.getElementFromString(rowData));
                         } catch (ElementException e) {
-                            System.err.println(e.what());
+                            e.printStackTrace();
                         }
                     }
                     i++;
