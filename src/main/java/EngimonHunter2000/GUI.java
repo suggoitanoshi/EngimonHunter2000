@@ -18,7 +18,7 @@ public class GUI extends JFrame {
         gs=new GameState();
 
         setTitle("EngimonHunter2000");
-        setSize(1156, 704);
+        setSize(1156, 684);
         JLayeredPane pane = new JLayeredPane();
         JPanel innerBox = new JPanel(new BorderLayout());
         JLayeredPane outerpane = new JLayeredPane();

@@ -29,7 +29,8 @@ public class GameState implements Serializable {
 			map = maptile.getMap();
             player = new Player(engiDex);
             wildEngimons = new ArrayList<>();
-
+			
+			spawnWildEngimons(10);
 			setEntities();
 
         } catch (EngimonHunter2000Exception e) {
@@ -120,11 +121,8 @@ public class GameState implements Serializable {
 			case TUNDRA:
                 path = "data/resource/char_tundra.png";
 				break;
-			case WATER:
+            default: // water
                 path = "data/resource/char_watergif.gif";
-				break;
-			default:
-                path = "data/resource/char_edge5.png"; // ga bakal ke sini harusnya
 		}
 
         Tile tile = new Tile(path, TileType.PLAYER, player.getPositionX(),player.getPositionY(),true);
@@ -154,42 +152,103 @@ public class GameState implements Serializable {
 			default:
 				break;
 		}
-		
-		switch (map[player.getPositionY()+j][player.getPositionX()+i].getType()){
-			case EDGE1_MOUNTAIN:
-				path = "data/resource/"+ player.getActiveEngimon().getSpecies() +"/"+ player.getActiveEngimon().getSpecies() +"_edge5.png";
-				break;
-			case EDGE2_MOUNTAIN:
-				path = "data/resource/"+ player.getActiveEngimon().getSpecies() +"/"+ player.getActiveEngimon().getSpecies() +"_edge4.png";
-				break;
-			case EDGE3_MOUNTAIN:
-				path = "data/resource/"+ player.getActiveEngimon().getSpecies() +"/"+ player.getActiveEngimon().getSpecies() +"_edge6.png";
-				break;
-			case EDGE_GRASS:
-				path = "data/resource/"+ player.getActiveEngimon().getSpecies() +"/"+ player.getActiveEngimon().getSpecies() +"_edge1.png";
-				break;
-			case EDGE_TUNDRA:
-				path = "data/resource/"+ player.getActiveEngimon().getSpecies() +"/"+ player.getActiveEngimon().getSpecies() +"_edge3.png";
-				break;
-			case GRASS:
-				path = "data/resource/"+ player.getActiveEngimon().getSpecies() +"/"+ player.getActiveEngimon().getSpecies() +"_grass.png";
-				break;
-			case MOUNTAIN:
-				path = "data/resource/"+ player.getActiveEngimon().getSpecies() +"/"+ player.getActiveEngimon().getSpecies() +"_mountain.png";
-				break;
-			case TUNDRA:
-				path = "data/resource/"+ player.getActiveEngimon().getSpecies() +"/"+ player.getActiveEngimon().getSpecies() +"_tundra.png";
-				break;
-			case WATER:
-				path = "data/resource/"+ player.getActiveEngimon().getSpecies() +"/"+ player.getActiveEngimon().getSpecies() +"_watergif.gif";
-				break;
-			default: // ga bakal ke sini harusnya
-				path = "data/resource/"+ player.getActiveEngimon().getSpecies() +"/"+ player.getActiveEngimon().getSpecies() +"_edge5.png";
-		}
+
+        path = getEngimonSprite(player.getActiveEngimon(),
+                                map[player.getPositionY() + j][player.getPositionX() + i]
+                                    .getType());
         tile = new Tile(path, TileType.ENGIMON, player.getPositionX()+i, player.getPositionY()+j, false);
         map[player.getPositionY()+j][player.getPositionX()+i] = tile;
+
+		//set wild 
+		for (Engimon el : wildEngimons){
+			String pathW;
+			if (el.getLvl() > player.getActiveEngimon().getLvl()){
+				pathW = getEngimonSpriteWild(el, "big", map[el.getPosition().getY()][el.getPosition().getX()].getType());
+			}
+			else{
+				pathW = getEngimonSpriteWild(el, "small", map[el.getPosition().getY()][el.getPosition().getX()].getType());
+			}
+			Tile tileW = new Tile(pathW, TileType.ENGIMON, el.getPosition().getX(), el.getPosition().getY(), true);
+			map[el.getPosition().getY()][el.getPosition().getX()] = tileW;
+		}
+
 		
 	}
+
+    private String getEngimonSprite(Engimon engie, TileType tipe) {
+        StringBuilder SB = new StringBuilder("data/resource/");
+        SB.append(engie.getSpecies().replaceAll("\\s+","").toLowerCase());
+        SB.append("/");
+        SB.append(engie.getSpecies().replaceAll("\\s+","").toLowerCase());
+		switch (tipe){
+			case EDGE1_MOUNTAIN:
+				SB.append("_edge5.png");
+                break;
+			case EDGE2_MOUNTAIN:
+				SB.append("_edge4.png");
+                break;
+			case EDGE3_MOUNTAIN:
+				SB.append("_edge6.png");
+                break;
+			case EDGE_GRASS:
+				SB.append("_edge1.png");
+                break;
+			case EDGE_TUNDRA:
+				SB.append("_edge3.png");
+                break;
+			case GRASS:
+				SB.append("_grass.png");
+                break;
+			case MOUNTAIN:
+				SB.append("_mountain.png");
+                break;
+			case TUNDRA:
+				SB.append("_tundra.png");
+                break;
+            default: //water
+				SB.append("_watergif.gif");
+		}
+        return SB.toString();
+    }
+
+    private String getEngimonSpriteWild(Engimon engie, String type, TileType tipe) {
+        StringBuilder SB = new StringBuilder("data/resource/");
+        SB.append(engie.getSpecies().replaceAll("\\s+","").toLowerCase());
+        SB.append("/");
+        SB.append(engie.getSpecies().replaceAll("\\s+","").toLowerCase());
+		SB.append("_wild_");
+		SB.append(type);
+		switch (tipe){
+			case EDGE1_MOUNTAIN:
+				SB.append("_edge5.png");
+                break;
+			case EDGE2_MOUNTAIN:
+				SB.append("_edge4.png");
+                break;
+			case EDGE3_MOUNTAIN:
+				SB.append("_edge6.png");
+                break;
+			case EDGE_GRASS:
+				SB.append("_edge1.png");
+                break;
+			case EDGE_TUNDRA:
+				SB.append("_edge3.png");
+                break;
+			case GRASS:
+				SB.append("_grass.png");
+                break;
+			case MOUNTAIN:
+				SB.append("_mountain.png");
+                break;
+			case TUNDRA:
+				SB.append("_tundra.png");
+                break;
+            default: //water
+				SB.append("_watergif.gif");
+		}
+        return SB.toString();
+    }
+	
 
 	public void updateGameState() {
         maptile = new MapTile();
@@ -253,20 +312,18 @@ public class GameState implements Serializable {
      * @author Josep Marcello
      */
     public void spawnWildEngimons(int count) {
-        if (wildEngimons.size() >= count) {
+        if (wildEngimons.size() >= count || count == 0) {
             return;
         }
-
         for (int i = 0; i < count; ++i) {
             Engimon engie = null;
             try {
                 engie = makeWildEngimon();
                 putWildEngimon(engie);
+                wildEngimons.add(engie);
             } catch (EngimonHunter2000Exception e) {
                 --i; // coba lagi kalo gagal
                 continue;
-                // e.printStackTrace();
-                // System.exit(-1);
             }
         }
     }

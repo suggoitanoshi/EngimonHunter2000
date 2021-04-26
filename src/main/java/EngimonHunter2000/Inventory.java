@@ -95,4 +95,20 @@ class Inventory<T> implements Serializable {
     public static void resetItems() {
         Inventory.itemCount = 0;
     }
+
+    public int getItemFromIdx(T item) throws InventoryException {
+        if (this.container.size() == 0)
+            throw new InventoryException(1);
+        if (this.container.contains(item)) {
+            for (int i = 0; i < this.container.size(); i++) {
+                if (this.container.get(i).equals(item)) {
+                    return i;
+                }
+            }
+        }
+        else {
+            throw new InventoryException(2);
+        }
+        return -1;
+    }
 }
