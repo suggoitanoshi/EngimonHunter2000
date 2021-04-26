@@ -137,12 +137,8 @@ public class Player implements Serializable {
     }
 
     public void removeActiveEngimon() throws InventoryException {
-        int idx = this.listEngimon.getItemFromIdx(this.activeEngi);
-        if (idx != -1) {
-            this.listEngimon.removeItem(this.listEngimon.at(idx));
-        } else {
-            throw new InventoryException(3);
-        }
+        this.listEngimon.removeItem(this.activeEngi);
+        this.activeEngi = this.listEngimon.at(0);
     }
 
     public void removeItem(int itemIdx, int n) throws InventoryException {

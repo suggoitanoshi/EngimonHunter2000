@@ -368,7 +368,7 @@ public class GUI extends JFrame {
                     try{
                         int j = items.getItemFromIdx(i);
                         String realname = i.getName();
-                        String filename = realname.toLowerCase().replaceAll("\\s", "");
+                        String filename = realname.toLowerCase().replaceAll("[^a-zA-Z0-9]", "");
                         c.gridx = 0;
                         c.gridy = gridy++;
                         ImageIcon icon = ambilGambar("/skills/"+filename+".png");
@@ -446,12 +446,34 @@ public class GUI extends JFrame {
                     try{
                         int j = items.getItemFromIdx(i);
                         String namaasli = i.getName();
-                        String namapalsu = namaasli.toLowerCase().replaceAll("\\s", "");
+                        String namapalsu = namaasli.toLowerCase().replaceAll("[^a-zA-Z0-9]", "");
                         ImageIcon icon = ambilGambar("/skills/"+namapalsu+".png");
                         JButton button = new JButton(namaasli, icon);
                         button.addActionListener(new ActionListener(){
                             @Override
                             public void actionPerformed(ActionEvent e){
+                                if(gs.getPlayer().getActiveEngimon().getSkillCount() == 4){
+                                    container_hasil.removeAll();
+                                    JComboBox combo = new JComboBox(i.getElements().stream().map((item)->{return item.name();}).collect(Collectors.toList()).toArray());
+                                    JButton ok = new JButton("OK");
+                                    ok.addActionListener(new ActionListener(){
+                                        @Override
+                                        public void actionPerformed(ActionEvent e){
+                                            try{
+                                                gs.getPlayer().getActiveEngimon().delSkill(gs.getPlayer().getActiveEngimon().getSkillByString((String)combo.getSelectedItem()));
+                                                gs.getPlayer().useItem(j);
+                                            }catch(EngimonHunter2000Exception ex){}
+                                            container_hasil.removeAll();
+                                            container_hasil.revalidate();
+                                            container_hasil.repaint();
+                                        }
+                                    });
+                                    container_hasil.add(new JLabel("Pilih skill yang akan ditimpa: "));
+                                    container_hasil.add(combo);
+                                    container_hasil.add(ok);
+                                    container_hasil.revalidate();
+                                    container_hasil.repaint();
+                                }
                                 try{
                                     gs.getPlayer().useItem(j);
                                 } catch(ItemException | SkillEngimonException exp) {
@@ -600,8 +622,7 @@ public class GUI extends JFrame {
                                             container_hasil.revalidate();
                                             container_hasil.repaint();
                                         } else {
-                                            gs.getPlayer().switchEngimon(1);
-                                            gs.getPlayer().getInventoryEngimon().removeItem(gs.getPlayer().getActiveEngimon());
+                                            gs.getPlayer().removeActiveEngimon();
                                         }
                                     }
 								} catch (InventoryException e1){
