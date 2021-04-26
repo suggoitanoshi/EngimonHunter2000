@@ -13,7 +13,7 @@ public class GUI extends JFrame {
         GameState gs=new GameState();
 
         setTitle("EngimonHunter2000");
-        setSize(1156, 684);
+        setSize(1156, 704);
         JLayeredPane pane = new JLayeredPane();
         pane.setPreferredSize(new Dimension(640, 480));
         MapGrid m = new MapGrid(gs.getPlayer().getPositionX(), gs.getPlayer().getPositionY(), gs.getMap());
@@ -33,11 +33,9 @@ public class GUI extends JFrame {
                     w.addActionListener(new ActionListener() {
                         @Override
                         public void actionPerformed(ActionEvent e) {
-                            if (gs.getPlayer().getPositionY() - 1 >= 0
-                                && !gs
-                                    .getMapTile()
-                                    .isOccupied(gs.getPlayer().getPositionX(),
-                                                gs.getPlayer().getPositionY() - 1)) {
+                            if (gs.canMoveEntity(0, -1,
+                                                 gs.getPlayer().getPositionX(),
+                                                 gs.getPlayer().getPositionY())) {
                                 gs.getPlayer().setPositionY(gs.getPlayer().getPositionY() - 1);
                             }
 							gs.getPlayer().setDir('w');
@@ -57,11 +55,9 @@ public class GUI extends JFrame {
                     a.addActionListener(new ActionListener() {
                         @Override
                         public void actionPerformed(ActionEvent e) {
-                            if (gs.getPlayer().getPositionX() - 1 >= 0
-                                && !gs
-                                    .getMapTile()
-                                    .isOccupied(gs.getPlayer().getPositionX() - 1,
-                                                gs.getPlayer().getPositionY())) {
+                            if (gs.canMoveEntity(-1, 0,
+                                                 gs.getPlayer().getPositionX(),
+                                                 gs.getPlayer().getPositionY())) {
                                 gs.getPlayer().setPositionX(gs.getPlayer().getPositionX() - 1);
                             }
 							gs.getPlayer().setDir('a');
@@ -81,11 +77,9 @@ public class GUI extends JFrame {
                     s.addActionListener(new ActionListener() {
                         @Override
                         public void actionPerformed(ActionEvent e) {
-                            if (gs.getPlayer().getPositionY() + 1 < gs.getMapTile().getSizeY()
-                                && !gs
-                                    .getMapTile()
-                                    .isOccupied(gs.getPlayer().getPositionX(),
-                                                gs.getPlayer().getPositionY() + 1)) {
+                            if (gs.canMoveEntity(0, 1,
+                                                 gs.getPlayer().getPositionX(),
+                                                 gs.getPlayer().getPositionY())) {
                                 gs.getPlayer().setPositionY(gs.getPlayer().getPositionY() + 1);
                             }
 							gs.getPlayer().setDir('s');
@@ -105,11 +99,9 @@ public class GUI extends JFrame {
                     d.addActionListener(new ActionListener() {
                         @Override
                         public void actionPerformed(ActionEvent e) {
-                            if (gs.getPlayer().getPositionX() + 1 < gs.getMapTile().getSizeX()
-                                && !gs
-                                    .getMapTile()
-                                    .isOccupied(gs.getPlayer().getPositionX() + 1,
-                                                gs.getPlayer().getPositionY())) {
+                            if (gs.canMoveEntity(1, 0,
+                                                 gs.getPlayer().getPositionX(),
+                                                 gs.getPlayer().getPositionY())) {
                                 gs.getPlayer().setPositionX(gs.getPlayer().getPositionX() + 1);
                             }
 							gs.getPlayer().setDir('d');

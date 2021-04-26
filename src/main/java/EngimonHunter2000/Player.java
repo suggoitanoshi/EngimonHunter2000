@@ -18,7 +18,7 @@ public class Player implements Serializable {
     // constructor
     public Player(EngiDex dex)
             throws EngimonSpeciesException, ElementsListException, EngimonException, InventoryException {
-        Engimon engie = new Engimon(dex, "Morgana", "Morgana");
+        Engimon engie = new Engimon(dex, "Picakhu", "Picakhu");
         
         this.listEngimon = new Inventory<Engimon>();
         this.listEngimon.addItem(engie);

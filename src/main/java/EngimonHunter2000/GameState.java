@@ -14,12 +14,14 @@ import java.util.Set;
 
 public class GameState implements Serializable {
     public static final long serialVersionUID = 1L;
+    private final int wildEngieCount = 20;
     transient private SkillDex skillDex;
     transient private EngiDex engiDex;
     transient private MapTile maptile;
 	transient private Tile[][] map;
     private Player player;
     private ArrayList<Engimon> wildEngimons;
+    private int turn;
 
     public GameState() {
         try {
@@ -29,14 +31,20 @@ public class GameState implements Serializable {
 			map = maptile.getMap();
             player = new Player(engiDex);
             wildEngimons = new ArrayList<>();
-			
-			spawnWildEngimons(10);
-			setEntities();
+            turn = 1;
 
+            fillMap();
         } catch (EngimonHunter2000Exception e) {
             System.err.println(e.getMessage());
             System.exit(-1);
         }
+    }
+
+    private void fillMap() {
+        setPlayerPosition();
+        setActiveEngimonPosition();
+        spawnWildEngimons(wildEngieCount - wildEngimons.size());
+        setSprite();
     }
 
     public Player getPlayer() {
@@ -68,24 +76,6 @@ public class GameState implements Serializable {
         return a;
     }
 
-    /**
-     * Metode untuk mendapatkan {@link Tile} kosong pada map game. Isi list-nya
-     * adalah reference ke tile pada map
-     */
-    private ArrayList<ArrayList<Tile>> getEmptyTiles() {
-        ArrayList<ArrayList<Tile>> ret = new ArrayList<>();
-        for (int x = 0; x < Tile.maxX; ++x) {
-            ArrayList<Tile> perantara = new ArrayList<>();
-            for (int y = 0; y < Tile.maxY; ++y) {
-                if (!map[y][x].isOccupied()) {
-                    perantara.add(map[y][x]);
-                }
-            }
-            ret.add(perantara);
-        }
-        return ret;
-    }
-
 	public Tile[][] getMap(){
 		return map;
 	}
@@ -94,7 +84,12 @@ public class GameState implements Serializable {
         return maptile;
     }
 
-	public void setEntities() {
+    public void setPlayerPosition() {
+        // map[player.getPositionY()][player.getPositionX()].setType(TileType.PLAYER);
+        map[player.getPositionY()][player.getPositionX()].makeOccupied();
+    }
+
+	public void setSprite() {
         String path;
 		switch(map[player.getPositionY()][player.getPositionX()].getType()) {
 			case EDGE1_MOUNTAIN:
@@ -125,12 +120,35 @@ public class GameState implements Serializable {
                 path = "data/resource/char_watergif.gif";
 		}
 
+        // set player sprite
         Tile tile = new Tile(path, TileType.PLAYER, player.getPositionX(),player.getPositionY(),true);
-        // return tile to original sprite
         map[player.getPositionY()][player.getPositionX()] = tile;
-		//set active 
-		int i = 0;
-		int j = 0;
+
+		// set active engimon sprite
+        Engimon aE = player.getActiveEngimon();
+        path = getEngimonSprite(aE,
+                                map[aE.getPosition().getY()][aE.getPosition().getX()].getType());
+        tile = new Tile(path, TileType.ENGIMON,
+                        aE.getPosition().getX(), aE.getPosition().getY(), false);
+        map[aE.getPosition().getY()][aE.getPosition().getX()] = tile;
+
+		// set wild sprite
+		for (Engimon el : wildEngimons){
+			String pathW;
+			if (el.getLvl() > player.getActiveEngimon().getLvl()){
+				pathW = getEngimonSpriteWild(el, "big", map[el.getPosition().getY()][el.getPosition().getX()].getType());
+			}
+			else{
+				pathW = getEngimonSpriteWild(el, "small", map[el.getPosition().getY()][el.getPosition().getX()].getType());
+			}
+			Tile tileW = new Tile(pathW, TileType.ENGIMON, el.getPosition().getX(), el.getPosition().getY(), true);
+			map[el.getPosition().getY()][el.getPosition().getX()] = tileW;
+		}
+	}
+
+    public void setActiveEngimonPosition() {
+		int i;
+		int j;
 
 		switch(player.getDir()){
 			case 'w':
@@ -145,41 +163,24 @@ public class GameState implements Serializable {
 				i = 0;
 				j = -1;
 				break;
-			case 'd':
+            default:
 				i = -1;
 				j = 0;
-				break;
-			default:
-				break;
 		}
 
-        path = getEngimonSprite(player.getActiveEngimon(),
-                                map[player.getPositionY() + j][player.getPositionX() + i]
-                                    .getType());
-        tile = new Tile(path, TileType.ENGIMON, player.getPositionX()+i, player.getPositionY()+j, false);
-        map[player.getPositionY()+j][player.getPositionX()+i] = tile;
-
-		//set wild 
-		for (Engimon el : wildEngimons){
-			String pathW;
-			if (el.getLvl() > player.getActiveEngimon().getLvl()){
-				pathW = getEngimonSpriteWild(el, "big", map[el.getPosition().getY()][el.getPosition().getX()].getType());
-			}
-			else{
-				pathW = getEngimonSpriteWild(el, "small", map[el.getPosition().getY()][el.getPosition().getX()].getType());
-			}
-			Tile tileW = new Tile(pathW, TileType.ENGIMON, el.getPosition().getX(), el.getPosition().getY(), true);
-			map[el.getPosition().getY()][el.getPosition().getX()] = tileW;
-		}
-
-		
-	}
+        Engimon aE = player.getActiveEngimon();
+        aE.setPos(player.getPosition().getX() + i,
+                  player.getPosition().getY() + j);
+        System.out.println(player.getActiveEngimon().getPosition().getX() + "\t" + player.getActiveEngimon().getPosition().getY());
+        // map[aE.getPosition().getY()][aE.getPosition().getX()].setType(TileType.ENGIMON);
+        map[aE.getPosition().getY()][aE.getPosition().getX()].makeOccupied();
+    }
 
     private String getEngimonSprite(Engimon engie, TileType tipe) {
         StringBuilder SB = new StringBuilder("data/resource/");
-        SB.append(engie.getSpecies().replaceAll("\\s+","").toLowerCase());
+        SB.append(engie.getSpecies().toLowerCase().replace("\\s", ""));
         SB.append("/");
-        SB.append(engie.getSpecies().replaceAll("\\s+","").toLowerCase());
+        SB.append(engie.getSpecies().toLowerCase().replace("\\s", ""));
 		switch (tipe){
 			case EDGE1_MOUNTAIN:
 				SB.append("_edge5.png");
@@ -208,14 +209,15 @@ public class GameState implements Serializable {
             default: //water
 				SB.append("_watergif.gif");
 		}
+
         return SB.toString();
     }
 
     private String getEngimonSpriteWild(Engimon engie, String type, TileType tipe) {
         StringBuilder SB = new StringBuilder("data/resource/");
-        SB.append(engie.getSpecies().replaceAll("\\s+","").toLowerCase());
+        SB.append(engie.getSpecies().replaceAll("\\s+", "").toLowerCase());
         SB.append("/");
-        SB.append(engie.getSpecies().replaceAll("\\s+","").toLowerCase());
+        SB.append(engie.getSpecies().replaceAll("\\s+", "").toLowerCase());
 		SB.append("_wild_");
 		SB.append(type);
 		switch (tipe){
@@ -248,13 +250,121 @@ public class GameState implements Serializable {
 		}
         return SB.toString();
     }
-	
 
 	public void updateGameState() {
         maptile = new MapTile();
         map = maptile.getMap();
-		setEntities();
+
+        // tambahin exp dan move engimon
+        if (turn % 5 == 0) {
+            activateWildEngimons();
+        }
+
+        turn++;
+        fillMap();
 	}
+
+    public boolean canMoveEntity(int dx, int dy, int x, int y) {
+        if (y + dy >= maptile.getSizeY()
+            || x + dx >= maptile.getSizeX()
+            || x + dx < 0
+            || y + dy < 0) {
+            return false;
+        }
+
+        Tile targetTile = map[y + dy][x + dx];
+
+        if (targetTile.isOccupied()) {
+            return false;
+        }
+
+        return true;
+    }
+
+    public boolean canMoveEngimon(int dx, int dy, int x, int y, String engieSpecies) {
+        if (!canMoveEntity(dx, dy, x, y)) {
+            return false;
+        }
+
+        Tile targetTile = map[y + dy][x + dx];
+        Set<Element> elSet = engiDex.getEntity(engieSpecies).getListElement().getElementsList();
+        switch (targetTile.getType()) {
+            case ENGIMON:
+                return false;
+            case PLAYER:
+                return false;
+			case EDGE1_MOUNTAIN:
+                return elSet.contains(Element.FIRE);
+			case EDGE2_MOUNTAIN:
+                return elSet.contains(Element.FIRE);
+			case EDGE3_MOUNTAIN:
+                return elSet.contains(Element.FIRE);
+			case MOUNTAIN:
+                return elSet.contains(Element.FIRE);
+			case EDGE_GRASS:
+                return elSet.contains(Element.GROUND) || elSet.contains(Element.ELECTRIC);
+			case GRASS:
+                return elSet.contains(Element.GROUND) || elSet.contains(Element.ELECTRIC);
+			case EDGE_TUNDRA:
+                return elSet.contains(Element.ICE);
+			case TUNDRA:
+                return elSet.contains(Element.ICE);
+            default: //water
+                return elSet.contains(Element.WATER);
+        }
+    }
+
+    /**
+     * Metode untuk mendapatkan {@link Tile} kosong pada map game. Isi list-nya
+     * adalah reference ke tile pada map
+     */
+    private ArrayList<ArrayList<Tile>> getEmptyTiles() {
+        ArrayList<ArrayList<Tile>> ret = new ArrayList<>();
+        for (int x = 0; x < Tile.maxX; ++x) {
+            ArrayList<Tile> perantara = new ArrayList<>();
+            for (int y = 0; y < Tile.maxY; ++y) {
+                if (!map[y][x].isOccupied()) {
+                    perantara.add(map[y][x]);
+                }
+            }
+            ret.add(perantara);
+        }
+        return ret;
+    }
+
+    private void activateWildEngimons() {
+        for (Engimon wildEngimon : wildEngimons) {
+            // move
+            Random rand = new Random();
+            boolean horizontalMove = Math.abs(rand.nextInt()) % 2 == 0;
+            boolean neg = Math.abs(rand.nextInt()) % 2 == 1;
+            int dx = 0;
+            int dy = 0;
+
+            if (horizontalMove) {
+                dy = 1 * (neg ? -1 : 1);
+            } else {
+                dx = 1 * (neg ? -1 : 1);
+            }
+
+            Position oldPos = wildEngimon.getPosition();
+            int oldX = oldPos.getX();
+            int oldY = oldPos.getY();
+            if (canMoveEngimon(dx, dy, oldX, oldY, wildEngimon.getSpecies())) {
+                wildEngimon.setPos(dx + oldX, dy + oldY);
+            }
+
+            // add exp
+            int dExp = Math.abs(rand.nextInt()) % 50;
+            try {
+                if (!wildEngimon.addExp(dExp)) {
+                    wildEngimons.remove(wildEngimon);
+                }
+            } catch (EngimonException e) {
+                // do nothing ae lah
+            }
+        }
+    }
 
     private Engimon makeWildEngimon() throws
         EngimonException, ElementsListException, EngimonSpeciesException {
@@ -288,17 +398,15 @@ public class GameState implements Serializable {
         int y;
         Random rand = new Random();
         ArrayList<ArrayList<Tile>> emptyTiles = getEmptyTiles();
-        Tile emptyTile;
 
         do {
             x = rand.nextInt() % Tile.maxX;
             if (x < 0) x += Tile.maxX;
             y = rand.nextInt() % Tile.maxY;
             if (y < 0) y += Tile.maxY;
-            emptyTile = map[y][x];
-        } while (x >= emptyTiles.size() ||
-                 y >= emptyTiles.get(x).size() ||
-                 !emptyTiles.get(x).contains(emptyTile));
+        } while (x >= emptyTiles.size()
+                || y >= emptyTiles.get(x).size()
+                || !canMoveEngimon(0, 0, x, y, engie.getSpecies()));
 
         engie.setPos(x, y);
         map[y][x].makeOccupied();
@@ -315,6 +423,7 @@ public class GameState implements Serializable {
         if (wildEngimons.size() >= count || count == 0) {
             return;
         }
+
         for (int i = 0; i < count; ++i) {
             Engimon engie = null;
             try {
