@@ -623,8 +623,7 @@ public class GUI extends JFrame {
                                             container_hasil.revalidate();
                                             container_hasil.repaint();
                                         } else {
-                                            gs.getPlayer().switchEngimon(1);
-                                            gs.getPlayer().getInventoryEngimon().removeItem(gs.getPlayer().getActiveEngimon());
+                                            gs.getPlayer().removeActiveEngimon();
                                         }
                                     }
 								} catch (InventoryException e1){
