@@ -21,6 +21,9 @@ public class Battle {
         this.advB = elB.getElementalAdvantage(elA);
     }
 
+    public double getAdvA(){ return this.advA; }
+    public double getAdvB(){ return this.advB; }
+
     public Boolean runBattle(Engimon A, Engimon B) {
         checkAdvantage(A, B);
         this.pwrA = A.getBattlePower(this.advA);
