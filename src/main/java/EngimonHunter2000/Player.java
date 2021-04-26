@@ -19,6 +19,7 @@ public class Player implements Serializable {
     public Player(EngiDex dex)
             throws EngimonSpeciesException, ElementsListException, EngimonException, InventoryException {
         Engimon engie = new Engimon(dex, "Picakhu", "Picakhu");
+        engie.addLevel(10);
         Inventory.setMax(50);
         this.listEngimon = new Inventory<Engimon>();
         this.listEngimon.addItem(engie);
@@ -94,13 +95,13 @@ public class Player implements Serializable {
 
     // print all engimon in inventory
     public void showEngimon() throws InventoryException {
-        if (this.listEngimon.getAllInvenTotalItemCount() == 0) throw new InventoryException(1);
+        if (this.listEngimon.getAllInvenTotalItemCount() == 0)
+            throw new InventoryException(1);
         System.out.println("Engimon di dalam Inventory:");
         this.listEngimon.showInventory();
     }
 
-    public void changeEngimonName(int engiIdx, String newName)
-            throws EngimonException, InventoryException {
+    public void changeEngimonName(int engiIdx, String newName) throws EngimonException, InventoryException {
         this.listEngimon.at(engiIdx).setName(newName);
     }
 
@@ -108,8 +109,7 @@ public class Player implements Serializable {
         this.listEngimon.addItem(engi);
     }
 
-    public void useItem(int itemIdx)
-            throws ItemException, InventoryException, SkillEngimonException {
+    public void useItem(int itemIdx) throws ItemException, InventoryException, SkillEngimonException {
         int engiIdx = this.listEngimon.getItemFromIdx(this.activeEngi);
         if (engiIdx != -1) {
             this.listItem.at(itemIdx).learn(this.listEngimon.at(engiIdx));
@@ -140,8 +140,7 @@ public class Player implements Serializable {
         int idx = this.listEngimon.getItemFromIdx(this.activeEngi);
         if (idx != -1) {
             this.listEngimon.removeItem(this.listEngimon.at(idx));
-        }
-        else {
+        } else {
             throw new InventoryException(3);
         }
     }
@@ -149,8 +148,7 @@ public class Player implements Serializable {
     public void removeItem(int itemIdx, int n) throws InventoryException {
         if (this.listItem.at(itemIdx).getQuantity() == n) {
             this.listItem.removeItem(listItem.at(itemIdx), n);
-        }
-        else {
+        } else {
             for (int i = 0; i < n; i++) {
                 this.listItem.at(itemIdx).decQuantity();
             }
