@@ -164,7 +164,7 @@ public class GUI extends JFrame {
                 container_hasil.removeAll();
                 c.gridx = 0;
                 Inventory<Engimon> engies = gs.getPlayer().getInventoryEngimon();
-                for(int i = 0; i < engies.getItemCount(); i++){
+                for(int i = 0; i < engies.getAllInvenTotalItemCount(); i++){
                     try{
                         c.gridy = i;
                         Engimon curr = engies.at(i);
@@ -202,7 +202,7 @@ public class GUI extends JFrame {
             public void actionPerformed(ActionEvent e){
                 container_hasil.removeAll();
                 Inventory<Engimon> engies = gs.getPlayer().getInventoryEngimon();
-                for(int i = 0; i < engies.getItemCount(); i++){
+                for(int i = 0; i < engies.getAllInvenTotalItemCount(); i++){
                     try{
                         c.gridy = i;
                         int j = i;
@@ -243,7 +243,7 @@ public class GUI extends JFrame {
                 container_hasil.removeAll();
                 c.gridx = 0;
                 Inventory<Item> items = gs.getPlayer().getInventoryItem();
-                for(int i = 0; i < items.getItemCount(); i++){
+                for(int i = 0; i < items.getAllInvenTotalItemCount(); i++){
                     try{
                         String realname = items.at(i).getName();
                         String filename = realname.toLowerCase().replaceAll("\\s", "");
@@ -262,7 +262,7 @@ public class GUI extends JFrame {
             public void actionPerformed(ActionEvent e){
                 container_hasil.removeAll();
                 Inventory<Item> items = gs.getPlayer().getInventoryItem();
-                for(int i = 0; i < items.getItemCount(); i++){
+                for(int i = 0; i < items.getAllInvenTotalItemCount(); i++){
                     try{
                         c.gridy = i;
                         int j = i;
@@ -304,7 +304,7 @@ public class GUI extends JFrame {
                 JLabel kawinlabel = new JLabel("Pilih orangtua 1: ");
                 container_hasil.add(new JLabel("Kawin~"));
                 container_hasil.add(kawinlabel);
-                for(int i = 0; i < engies.getItemCount(); i++){
+                for(int i = 0; i < engies.getAllInvenTotalItemCount(); i++){
                     try{
                         c.gridy = i+2;
                         int j = i;
@@ -380,23 +380,32 @@ public class GUI extends JFrame {
                             if(!menangkh){
 								JOptionPane.showMessageDialog(container_hasil, "kalah");
 								try{
-									if (gs.getPlayer().getInventoryEngimon().getItemCount() == 1){
-										gs.setGameOver();
-									}
-									gs.getPlayer().switchEngimon(1);
-									gs.getPlayer().getInventoryEngimon().removeItem(gs.getPlayer().getActiveEngimon());
+                                    try {
+                                        gs.getPlayer().getActiveEngimon().setLives(-1);
+                                        if (gs.getPlayer().getActiveEngimon().getLives() <= 0) {
+                                            throw new EngimonException(2);
+                                        }
+                                    } catch (EngimonException exp) {
+                                        if (gs.getPlayer().getInventoryEngimon().getItemCount() == 1){
+                                            gs.setGameOver();
+                                        } else {
+                                            gs.getPlayer().switchEngimon(1);
+                                            gs.getPlayer().getInventoryEngimon().removeItem(gs.getPlayer().getActiveEngimon());
+                                        }
+                                    }
+								} catch (InventoryException e1){
+                                    e1.printStackTrace();
+                                    gs.setGameOver(); // dibikin game over
 								}
-								catch (InventoryException e1){
-									System.out.println("tolol");
-								}
-							} else{
+							} else {
 								JOptionPane.showMessageDialog(container_hasil, "menang");
 								try{
+                                    en.setLives(3);
                                     gs.getWildEngimons().remove(en);
 									gs.getPlayer().getInventoryEngimon().addItem(en);
 								}
-								catch (InventoryException e1){
-									System.out.println("tolol");
+								catch (InventoryException | EngimonException e1){
+                                    e1.printStackTrace();
 								}
 							}
 
