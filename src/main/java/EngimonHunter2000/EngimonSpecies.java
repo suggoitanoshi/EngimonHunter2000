@@ -1,5 +1,6 @@
 package EngimonHunter2000;
 
+import java.io.Serializable;
 import java.util.Iterator;
 
 /**
@@ -9,7 +10,8 @@ import java.util.Iterator;
  * @author Alvin Wilta
  */
 
-public class EngimonSpecies {
+public class EngimonSpecies implements Serializable {
+    public static final long serialVersionUID = 1L;
     private final String spesies;
     private final String slogan;
     private SkillEngimon starterSkill;
@@ -27,16 +29,6 @@ public class EngimonSpecies {
         this.spesies = _spesies;
         this.slogan = _slogan;
         this.starterSkill = _starter;
-    }
-
-    /**
-     * @deprecated
-     */
-    public EngimonSpecies() {
-        spesies = null;
-        slogan = null;
-        starterSkill = null;
-        listElement = null;
     }
 
     /**
