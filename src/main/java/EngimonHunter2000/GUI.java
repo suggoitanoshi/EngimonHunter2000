@@ -215,6 +215,14 @@ public class GUI extends JFrame {
                             public void actionPerformed(ActionEvent e){
                                 try{
                                     gs.getPlayer().switchEngimon(j);
+
+                                    gs.updateGameState();
+                                    pane.removeAll();
+                                    MapGrid m = new MapGrid(
+                                        gs.getPlayer().getPositionX(), gs.getPlayer().getPositionY(), gs.getMap());
+                                    pane.add(m, BorderLayout.WEST);
+                                    pane.revalidate();
+                                    pane.repaint();
                                 } catch(InventoryException ex){}
                                 container_hasil.removeAll();
                                 container_hasil.revalidate();
