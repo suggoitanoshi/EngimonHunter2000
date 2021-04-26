@@ -78,7 +78,7 @@ public class Item extends SkillEngimon {
         Item _i = (Item) o;
 
         return this.quantity == _i.getQuantity() &&
-            this.skillInfo.getName() == _i.getName() &&
+            this.skillInfo.getName().equals(_i.getName()) &&
             this.masteryLevel == _i.getMasteryLevel();
     }
 
