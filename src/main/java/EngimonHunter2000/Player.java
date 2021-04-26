@@ -165,12 +165,12 @@ public class Player implements Serializable {
      */
     public int getHighestEngimonLevel() {
         int highest = 0xFFFFFFFF;
-        for (int i = 0; i < listEngimon.getAllInvenTotalItemCount(); ++i) {
+        for (int i = 0; i < listEngimon.getItemCount(); ++i) {
             try {
                 Engimon disEngie = listEngimon.at(i);
                 highest = disEngie.getLvl() > highest ? disEngie.getLvl() : highest;
             } catch (InventoryException e) {
-                System.err.println(e.what());
+                e.printStackTrace();
                 break; // idk what to do, really ¯\_(ツ)_/¯
             }
         }

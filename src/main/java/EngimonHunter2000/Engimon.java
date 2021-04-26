@@ -330,9 +330,16 @@ public class Engimon extends EngimonSpecies {
             return false;
         }
 
+        if (this == o) {
+            return true;
+        }
+
         Engimon _e = (Engimon) o;
 
-        return this.getSpecies() == _e.getSpecies() && this.getName() == _e.getName() && this.getLvl() == _e.getLvl()
-                && this.getExp() == _e.getExp() && this.getBattlePower(1.0) == _e.getBattlePower(1.0);
+        return this.getSpecies() == _e.getSpecies()
+                && this.getName() == _e.getName()
+                && this.getLvl() == _e.getLvl()
+                && this.getExp() == _e.getExp()
+                && this.getBattlePower(1.0) == _e.getBattlePower(1.0);
     }
 }
