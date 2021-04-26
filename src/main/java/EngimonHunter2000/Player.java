@@ -57,10 +57,6 @@ public class Player implements Serializable {
         return this.dir;
     }
 
-    public Engimon getEngimonByID(int idx) throws InventoryException {
-        return this.listEngimon.at(idx);
-    }
-
     // setters
     public void setPosition(Position pos) {
         this.position.setPosition(pos);
@@ -112,11 +108,17 @@ public class Player implements Serializable {
         this.listEngimon.addItem(engi);
     }
 
-    public void useItem(int engiIdx, int itemIdx)
+    public void useItem(int itemIdx)
             throws ItemException, InventoryException, SkillEngimonException {
-        this.listItem.at(itemIdx).learn(this.listEngimon.at(engiIdx));
-        if (this.listItem.at(itemIdx).getQuantity() == 0) {
-            listItem.removeItem(listItem.at(itemIdx));
+        int engiIdx = this.listEngimon.getItemFromIdx(this.activeEngi);
+        if (engiIdx != -1) {
+            this.listItem.at(itemIdx).learn(this.listEngimon.at(engiIdx));
+            if (this.listItem.at(itemIdx).getQuantity() == 0) {
+                listItem.removeItem(listItem.at(itemIdx));
+            }
+        }
+        else {
+            throw new InventoryException(3);
         }
     }
 

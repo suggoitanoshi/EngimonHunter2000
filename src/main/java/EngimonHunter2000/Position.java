@@ -42,4 +42,8 @@ public class Position implements Serializable {
         this.posX = left;
         this.posY = right;
     }
+
+    public double distanceTo(Position other){
+        return Math.sqrt(Math.pow(this.posX - other.posX, 2) + Math.pow(this.posY - other.posY, 2));
+    }
 }

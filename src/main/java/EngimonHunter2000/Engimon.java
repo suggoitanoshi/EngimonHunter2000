@@ -290,6 +290,7 @@ public class Engimon extends EngimonSpecies implements Serializable {
      */
     public boolean addExp(int _exp) throws EngimonException {
         this.exp += _exp;
+        this.cexp += _exp;
         if (this.exp >= MAX_EXP) {
             this.exp -= MAX_EXP;
             return this.addLevel(1);
@@ -331,5 +332,17 @@ public class Engimon extends EngimonSpecies implements Serializable {
         if (!listSkill.remove(s)) {
             throw new EngimonException(4);
         }
+    }
+
+    public int getExp() {
+        return this.exp;
+    }
+
+    public int getCExp() {
+        return this.cexp;
+    }
+
+    public String[] getParents() {
+        return this.parents;
     }
 }
