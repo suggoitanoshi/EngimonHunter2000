@@ -13,7 +13,7 @@ public class GUI extends JFrame {
         GameState gs=new GameState();
 
         setTitle("EngimonHunter2000");
-        setSize(1156, 704);
+        setSize(1156, 684);
         JLayeredPane pane = new JLayeredPane();
         pane.setPreferredSize(new Dimension(640, 480));
         MapGrid m = new MapGrid(gs.getPlayer().getPositionX(), gs.getPlayer().getPositionY(), gs.getMap());
