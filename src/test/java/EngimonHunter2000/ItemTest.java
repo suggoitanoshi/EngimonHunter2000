@@ -1,15 +1,15 @@
 package EngimonHunter2000;
 
 import static org.junit.jupiter.api.Assertions.*;
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 public class ItemTest {
     static Item i;
     static Skill s;
 
-    @BeforeAll
-    static void newItem() throws ElementsListException {
+    @BeforeEach
+    public void newItem() throws ElementsListException {
         assertDoesNotThrow(() -> s = new Skill("THUNDAAA", 40, "ELECTRIC"));
         assertDoesNotThrow(() -> i = new Item(s));
     }
