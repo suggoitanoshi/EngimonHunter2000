@@ -5,6 +5,8 @@ package EngimonHunter2000;
  * @author y e e wangy wangy
  */
 public class Main {
+	private static int max=200;
+
     // public static void main(String[] args) throws Exception {
     //     System.out.println("Hello, world!");
     //     String[] a = {};
