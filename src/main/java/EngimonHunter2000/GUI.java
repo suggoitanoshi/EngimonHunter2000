@@ -216,6 +216,13 @@ public class GUI extends JFrame {
                                     container_hasil.removeAll();
                                     container_hasil.revalidate();
                                     container_hasil.repaint();
+                                    gs.updateGameState();
+                                    pane.removeAll();
+                                    MapGrid m = new MapGrid(
+                                        gs.getPlayer().getPositionX(), gs.getPlayer().getPositionY(), gs.getMap());
+                                    pane.add(m, BorderLayout.WEST);
+                                    pane.revalidate();
+                                    pane.repaint();
                                 } catch(InventoryException ex){
                                     container_hasil.removeAll();
                                     c.gridx = 0;
@@ -223,6 +230,16 @@ public class GUI extends JFrame {
                                     container_hasil.add(new JLabel("GAME OVER GAN"), c);
                                     c.gridy = 1;
                                     container_hasil.add(new JLabel("SIAPA SURUH NGAPUS AKTIF ENGIMON"), c);
+                                    container_hasil.revalidate();
+                                    container_hasil.repaint();
+                                    gs.setGameOver();
+                                    gs.updateGameState();
+                                    pane.removeAll();
+                                    MapGrid m = new MapGrid(
+                                        gs.getPlayer().getPositionX(), gs.getPlayer().getPositionY(), gs.getMap());
+                                    pane.add(m, BorderLayout.WEST);
+                                    pane.revalidate();
+                                    pane.repaint();
                                 }
                             }
                         });
@@ -487,7 +504,7 @@ public class GUI extends JFrame {
                             int jadigak = JOptionPane.showConfirmDialog(container_hasil, detailEngiMusuh.toString(), "Konfirmasi gelud", JOptionPane.YES_NO_OPTION);
                             if(jadigak == JOptionPane.NO_OPTION) return;
 
-                            boolean menangkh = gelud.runBattle(gs.getPlayer().getActiveEngimon(), wildEngie);
+                            boolean menangkh = gelud.runBattle(gs.getPlayer().getActiveEngimon(), en);
 
                             if(!menangkh) { // kalah
 								JOptionPane.showMessageDialog(container_hasil, "kalah");
@@ -512,12 +529,12 @@ public class GUI extends JFrame {
 							} else { // menang
 								JOptionPane.showMessageDialog(container_hasil, "menang");
 								try{
-                                    wildEngie.setLives(3);
-                                    gs.getWildEngimons().remove(wildEngie);
-                                    gs.getPlayer().addEngimon(wildEngie);
+                                    en.setLives(3);
+                                    gs.getWildEngimons().remove(en);
+                                    gs.getPlayer().addEngimon(en);
                                     Skill itSkill = gs
                                                     .getSkillDex()
-                                                    .getEntity(wildEngie
+                                                    .getEntity(en
                                                         .getStarterSkill()
                                                         .getName());
                                     gs.getPlayer().addItem(new Item(itSkill));
