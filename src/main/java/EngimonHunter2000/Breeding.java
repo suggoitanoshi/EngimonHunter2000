@@ -2,6 +2,12 @@ package EngimonHunter2000;
 
 import java.util.ArrayList;
 
+/**
+ * {@link EngimonHunter2000}
+ * Breeding untuk {@link Engimon}
+ * @author Alvin Wilta
+ */
+
 public class Breeding {
 
     private int max1;
@@ -80,7 +86,6 @@ public class Breeding {
         }
 
         int max_addskill = _parent1.getSkillCount() + _parent2.getSkillCount();
-        System.out.println(max_addskill);
         // Untuk menghapus skill ketika skill starter engimon sudah dimiliki oleh parentnya
         boolean dupl_skill = false;
         for (SkillEngimon skill : skillsP1) {
@@ -123,8 +128,6 @@ public class Breeding {
 
     private SkillEngimon priorityBreeding(SkillDex _skillDex) throws BreedingException {
         if (skillsP1.size() != 0 && skillsP2.size() != 0) {
-            System.out.println("Skill 1: " + skillsP1.size());
-            System.out.println("Skill 2: " + skillsP2.size());
             // Mengambil benchmark
             SkillEngimon S1 = skillsP1.get(0);
             this.max_mastery = S1.getMasteryLevel();
@@ -175,8 +178,6 @@ public class Breeding {
                 }
             }
         } else {
-            System.out.println("Skill 1: " + skillsP1.size());
-            System.out.println("Skill 2: " + skillsP2.size());
             if (skillsP1.size() > 0) {
                 String namaSkill = new String(skillsP1.get(0).getName());
                 int mastery = skillsP1.get(0).getMasteryLevel();

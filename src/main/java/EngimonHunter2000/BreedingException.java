@@ -5,7 +5,10 @@ package EngimonHunter2000;
  * ID   : Alasan
  * -----|-------
  * 0    : Parent tidak memiliki level yang cukup
- * 1    : 
+ * 1    : Engimon tidak bisa breeding dengan dirinya
+ * 2    : Skill engimon parent 1 kosong
+ * 3    : Skill engimon parent 2 kosong
+ * 4    : Kebanyakan iterasi di max_skill
  * @author Alvin Wilta
  */
 public class BreedingException extends EngimonHunter2000Exception {
@@ -20,7 +23,10 @@ public class BreedingException extends EngimonHunter2000Exception {
      * ID   : Alasan
      * -----|-------
      * 0    : Parent tidak memiliki level yang cukup
-     * 1    :
+     * 1    : Engimon tidak bisa breeding dengan dirinya
+     * 2    : Skill engimon parent 1 kosong
+     * 3    : Skill engimon parent 2 kosong
+     * 4    : Kebanyakan iterasi di max_skill
      * @param id nomor exception
      */
     public BreedingException(int id) {

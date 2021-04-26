@@ -3,7 +3,9 @@ package EngimonHunter2000;
 import java.util.HashSet;
 
 /**
- * {@link EngimonHunter2000}
+ * class untuk membuat engimon
+ * Kelas turunan dari {@link EngimonSpecies}
+ * Membutuhkan {@link EngiDex} untuk lookup parent dari engimon
  * @author Alvin Wilta
  */
 
@@ -318,7 +320,8 @@ public class Engimon extends EngimonSpecies {
         this.parents[_idx] = _name;
     }
 
-    @Override public boolean equals(Object o) {
+    @Override
+    public boolean equals(Object o) {
         if (o == null) {
             return false;
         }
@@ -329,9 +332,7 @@ public class Engimon extends EngimonSpecies {
 
         Engimon _e = (Engimon) o;
 
-        return this.getSpecies() == _e.getSpecies()
-                && this.getName() == _e.getName() && this.getLvl() == _e.getLvl()
-                && this.getExp() == _e.getExp()
-                && this.getBattlePower(1.0) == _e.getBattlePower(1.0);
+        return this.getSpecies() == _e.getSpecies() && this.getName() == _e.getName() && this.getLvl() == _e.getLvl()
+                && this.getExp() == _e.getExp() && this.getBattlePower(1.0) == _e.getBattlePower(1.0);
     }
 }
