@@ -14,8 +14,8 @@ public class SkillEngimon implements Serializable {
     public static final int MAX_MASTERYLEVEL = 3;
     public static final int MIN_MASTERYLEVEL = 1;
 
-    private Skill skillInfo;
-    private int masteryLevel;
+    protected Skill skillInfo;
+    protected int masteryLevel;
 
     /**
      * Construct a new engimon skill from an existing skill called _skillInfo
