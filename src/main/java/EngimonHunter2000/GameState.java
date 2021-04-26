@@ -14,7 +14,7 @@ import java.util.Set;
 
 public class GameState implements Serializable {
     public static final long serialVersionUID = 1L;
-    private final int wildEngieCount = 20;
+    private final int wildEngieCount = 30;
     transient private SkillDex skillDex;
     transient private EngiDex engiDex;
     transient private MapTile maptile;
@@ -40,9 +40,23 @@ public class GameState implements Serializable {
         }
     }
 
+	public void updateGameState() {
+        maptile = new MapTile();
+        map = maptile.getMap();
+
+        turn++;
+
+        // tambahin exp dan move engimon
+        if (turn % 1 == 0) {
+            activateWildEngimons();
+        }
+
+        fillMap();
+	}
+
     private void fillMap() {
-        setPlayerPosition();
-        setActiveEngimonPosition();
+        applyPlayerPosition();
+        applyActiveEngimonPosition();
         spawnWildEngimons(wildEngieCount - wildEngimons.size());
         setSprite();
     }
@@ -84,9 +98,9 @@ public class GameState implements Serializable {
         return maptile;
     }
 
-    public void setPlayerPosition() {
+    public void applyPlayerPosition() {
         // map[player.getPositionY()][player.getPositionX()].setType(TileType.PLAYER);
-        map[player.getPositionY()][player.getPositionX()].makeOccupied();
+        maptile.makeOccupied(player.getPositionX(), player.getPositionY());
     }
 
 	public void setSprite() {
@@ -146,7 +160,7 @@ public class GameState implements Serializable {
 		}
 	}
 
-    public void setActiveEngimonPosition() {
+    public void applyActiveEngimonPosition() {
 		int i;
 		int j;
 
@@ -171,9 +185,8 @@ public class GameState implements Serializable {
         Engimon aE = player.getActiveEngimon();
         aE.setPos(player.getPosition().getX() + i,
                   player.getPosition().getY() + j);
-        System.out.println(player.getActiveEngimon().getPosition().getX() + "\t" + player.getActiveEngimon().getPosition().getY());
         // map[aE.getPosition().getY()][aE.getPosition().getX()].setType(TileType.ENGIMON);
-        map[aE.getPosition().getY()][aE.getPosition().getX()].makeOccupied();
+        maptile.makeOccupied(aE.getPosition().getX(), aE.getPosition().getY());
     }
 
     private String getEngimonSprite(Engimon engie, TileType tipe) {
@@ -251,19 +264,6 @@ public class GameState implements Serializable {
         return SB.toString();
     }
 
-	public void updateGameState() {
-        maptile = new MapTile();
-        map = maptile.getMap();
-
-        // tambahin exp dan move engimon
-        if (turn % 5 == 0) {
-            activateWildEngimons();
-        }
-
-        turn++;
-        fillMap();
-	}
-
     public boolean canMoveEntity(int dx, int dy, int x, int y) {
         if (y + dy >= maptile.getSizeY()
             || x + dx >= maptile.getSizeX()
@@ -272,9 +272,7 @@ public class GameState implements Serializable {
             return false;
         }
 
-        Tile targetTile = map[y + dy][x + dx];
-
-        if (targetTile.isOccupied()) {
+        if (maptile.isOccupied(x + dx, y + dy)) {
             return false;
         }
 
@@ -351,11 +349,13 @@ public class GameState implements Serializable {
             int oldX = oldPos.getX();
             int oldY = oldPos.getY();
             if (canMoveEngimon(dx, dy, oldX, oldY, wildEngimon.getSpecies())) {
+                maptile.makeFree(oldY, oldX);
                 wildEngimon.setPos(dx + oldX, dy + oldY);
+                maptile.makeOccupied(oldX + dx, oldY + dy);
             }
 
             // add exp
-            int dExp = Math.abs(rand.nextInt()) % 50;
+            int dExp = Math.abs(rand.nextInt()) % 10;
             try {
                 if (!wildEngimon.addExp(dExp)) {
                     wildEngimons.remove(wildEngimon);
@@ -404,6 +404,12 @@ public class GameState implements Serializable {
             if (x < 0) x += Tile.maxX;
             y = rand.nextInt() % Tile.maxY;
             if (y < 0) y += Tile.maxY;
+
+            if ((x == player.getPositionX() && y == player.getPositionY())
+                || (x == player.getActiveEngimon().getPosition().getX() && y == player.getActiveEngimon().getPosition().getY())) {
+                System.out.println("ANJENGGGG");
+                System.out.println("NAHA AING NABRAK JANCOK");
+            }
         } while (x >= emptyTiles.size()
                 || y >= emptyTiles.get(x).size()
                 || !canMoveEngimon(0, 0, x, y, engie.getSpecies()));
@@ -425,9 +431,8 @@ public class GameState implements Serializable {
         }
 
         for (int i = 0; i < count; ++i) {
-            Engimon engie = null;
             try {
-                engie = makeWildEngimon();
+                Engimon engie = makeWildEngimon();
                 putWildEngimon(engie);
                 wildEngimons.add(engie);
             } catch (EngimonHunter2000Exception e) {

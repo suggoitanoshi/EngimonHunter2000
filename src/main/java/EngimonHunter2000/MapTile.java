@@ -81,7 +81,7 @@ public class MapTile {
     }
 
     public boolean isOccupied(int x, int y) {
-        return map[x][y].isOccupied();
+        return map[y][x].isOccupied();
     }
 
     public void makeOccupied(int x, int y) {

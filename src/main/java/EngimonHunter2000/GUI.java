@@ -47,6 +47,7 @@ public class GUI extends JFrame {
                                                  gs.getPlayer().getPositionX(),
                                                  gs.getPlayer().getPositionY())) {
                                 gs.getPlayer().setPositionY(gs.getPlayer().getPositionY() - 1);
+                                gs.applyPlayerPosition();
                             }
 							gs.getPlayer().setDir('w');
                             gs.updateGameState();
@@ -69,6 +70,7 @@ public class GUI extends JFrame {
                                                  gs.getPlayer().getPositionX(),
                                                  gs.getPlayer().getPositionY())) {
                                 gs.getPlayer().setPositionX(gs.getPlayer().getPositionX() - 1);
+                                gs.applyPlayerPosition();
                             }
 							gs.getPlayer().setDir('a');
 							gs.updateGameState();
@@ -91,6 +93,7 @@ public class GUI extends JFrame {
                                                  gs.getPlayer().getPositionX(),
                                                  gs.getPlayer().getPositionY())) {
                                 gs.getPlayer().setPositionY(gs.getPlayer().getPositionY() + 1);
+                                gs.applyPlayerPosition();
                             }
 							gs.getPlayer().setDir('s');
                             gs.updateGameState();
@@ -113,6 +116,7 @@ public class GUI extends JFrame {
                                                  gs.getPlayer().getPositionX(),
                                                  gs.getPlayer().getPositionY())) {
                                 gs.getPlayer().setPositionX(gs.getPlayer().getPositionX() + 1);
+                                gs.applyPlayerPosition();
                             }
 							gs.getPlayer().setDir('d');
 							gs.updateGameState();
