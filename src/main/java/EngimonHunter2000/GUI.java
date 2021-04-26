@@ -676,6 +676,13 @@ public class GUI extends JFrame {
                 container_hasil.add(new JLabel("Engimon "+engi.getName()+":"), c);
                 String[] parents = engi.getParents();
                 c.gridy++;
+                StringBuilder elems = new StringBuilder();
+                elems.append("Elements: ");
+                for(Element el: engi.getListElement().getElementsList()){
+                    elems.append(el.name()+", ");
+                }
+                container_hasil.add(new JLabel(elems.toString()), c);
+                c.gridy++;
                 container_hasil.add(new JLabel("Orangtua 1: "+parents[0]), c);
                 c.gridy++;
                 container_hasil.add(new JLabel("Orangtua 2: "+parents[1]), c);
