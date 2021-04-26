@@ -89,7 +89,7 @@ class Inventory<T extends Serializable> implements Serializable {
         return this.container.size();
     }
 
-    public int getAllInvenTotalItemCount() {
+    public static int getAllInvenTotalItemCount() {
         return Inventory.itemCount;
     }
 
@@ -115,5 +115,9 @@ class Inventory<T extends Serializable> implements Serializable {
             throw new InventoryException(2);
         }
         return -1;
+    }
+
+    public static void setItemCount(int count) {
+        itemCount = count;
     }
 }

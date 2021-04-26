@@ -95,7 +95,7 @@ public class Player implements Serializable {
 
     // print all engimon in inventory
     public void showEngimon() throws InventoryException {
-        if (this.listEngimon.getAllInvenTotalItemCount() == 0)
+        if (this.listEngimon.getItemCount() == 0)
             throw new InventoryException(1);
         System.out.println("Engimon di dalam Inventory:");
         this.listEngimon.showInventory();
@@ -110,17 +110,12 @@ public class Player implements Serializable {
     }
 
     public void useItem(int itemIdx) throws ItemException, InventoryException, SkillEngimonException {
-        int engiIdx = this.listEngimon.getItemFromIdx(this.activeEngi);
-        if (engiIdx != -1) {
-            this.listItem.at(itemIdx).learn(this.listEngimon.at(engiIdx));
-            int qty = this.listItem.at(itemIdx).getQuantity();
-            if (qty - 1 == 0) {
-                listItem.removeItem(listItem.at(itemIdx));
-            } else {
-                this.listItem.at(itemIdx).setQuantity(qty - 1);
-            }
+        this.listItem.at(itemIdx).learn(activeEngi);
+        int qty = this.listItem.at(itemIdx).getQuantity();
+        if (qty - 1 == 0) {
+            listItem.removeItem(listItem.at(itemIdx));
         } else {
-            throw new InventoryException(3);
+            this.listItem.at(itemIdx).decQuantity();
         }
     }
 

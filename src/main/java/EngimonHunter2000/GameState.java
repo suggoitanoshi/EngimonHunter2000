@@ -15,6 +15,7 @@ import java.util.Set;
 public class GameState implements Serializable {
     public static final long serialVersionUID = 1L;
     private static final int wildEngieCount = 30;
+    private int itemCount;
     transient private SkillDex skillDex;
     transient private EngiDex engiDex;
     transient private MapTile maptile;
@@ -71,6 +72,7 @@ public class GameState implements Serializable {
         try {
             FileOutputStream file = new FileOutputStream(new File(filename));
             ObjectOutputStream out = new ObjectOutputStream(file);
+            itemCount = Inventory.getAllInvenTotalItemCount();
             out.writeObject(this);
         } catch (IOException e) {
             throw new GameStateException(2);
@@ -90,6 +92,7 @@ public class GameState implements Serializable {
             a.engiDex = new EngiDex(a.skillDex);
 
             a.fillMap();
+            Inventory.setItemCount(a.itemCount);
 
             return a;
         } catch (Exception e) {
