@@ -544,8 +544,14 @@ public class GUI extends JFrame {
                                                 try{
                                                     Engimon anak = b.breeding(gs.getEDex(), parents[0], parents[1], gs.getSkillDex(), namaAnak.getText());
                                                     gs.getPlayer().addEngimon(anak);
-                                                } catch(EngimonHunter2000Exception ex){}
+                                                } catch (BreedingException ex) {
+                                                    JOptionPane.showMessageDialog(container_hasil, ex.what());
+                                                } catch (EngimonHunter2000Exception ex) {
+                                                    JOptionPane.showMessageDialog(container_hasil, ex.what());
+                                                }
                                                 container_hasil.removeAll();
+                                                container_hasil.revalidate();
+                                                container_hasil.repaint();
                                             }
                                         });
                                         container_hasil.add(namaAnak);

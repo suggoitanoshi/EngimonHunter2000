@@ -172,7 +172,7 @@ public class GameState implements Serializable {
 		else{
 			for (int i=0; i<maptile.getSizeY(); i++){
 				for(int j=0; j<maptile.getSizeX(); j++){
-					map[i][j] = new Tile("data/resource/black.png", TileType.PLAYER, i,j, true);
+					map[i][j] = new Tile("/black.png", TileType.PLAYER, i,j, true);
 				}
 			}
 		}
