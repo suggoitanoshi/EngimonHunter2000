@@ -364,8 +364,46 @@ public class GUI extends JFrame {
                             Battle gelud = new Battle();
 
                             boolean menangkh = gelud.runBattle(gs.getPlayer().getActiveEngimon(), en);
-                            if(menangkh) JOptionPane.showMessageDialog(container_hasil, "Menang boss");
-                            else JOptionPane.showMessageDialog(container_hasil, "Kalah boss");
+
+                            if(!menangkh){
+								JOptionPane.showMessageDialog(container_hasil, "kalah");
+								try{
+									if (gs.getPlayer().getInventoryEngimon().getItemCount() == 1){
+										gs.setGameOver();
+									}
+									gs.getPlayer().switchEngimon(1);
+									gs.getPlayer().getInventoryEngimon().removeItem(gs.getPlayer().getActiveEngimon());
+								}
+								catch (InventoryException e1){
+									System.out.println("tolol");
+								}
+							}
+                            else{
+								JOptionPane.showMessageDialog(container_hasil, "menang");
+								try{
+									gs.getPlayer().getInventoryEngimon().addItemNoDupe(en);
+								}
+								catch (InventoryException e1){
+									System.out.println("tolol");
+								}
+							}
+
+							// else{
+							// 	try{
+							// 		gs.getPlayer().switchEngimon(0);
+							// 	}
+							// 	catch(Exception f){
+							// 		System.out.println("salah");
+							// 	}
+							// }
+
+							gs.updateGameState();
+							pane.removeAll();
+                            MapGrid m = new MapGrid(
+                                gs.getPlayer().getPositionX(), gs.getPlayer().getPositionY(), gs.getMap());
+                            pane.add(m, BorderLayout.WEST);
+                            pane.revalidate();
+                            pane.repaint();
                             container_hasil.removeAll();
                             container_hasil.repaint();
                         }
