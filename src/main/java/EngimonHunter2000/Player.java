@@ -126,6 +126,14 @@ public class Player implements Serializable {
         this.listItem.addItemNoDupe(item);
     }
 
+    public void removeEngimon(int idx) throws InventoryException {        
+        this.listEngimon.removeItem(this.listEngimon.at(idx));
+        if (this.listEngimon.at(idx).equals(this.activeEngi)) {
+            this.activeEngi = this.listEngimon.at(0);
+            // kalo broken, artinya dia cuman punya 1 engimon
+        }
+    }
+
     public void removeActiveEngimon() throws InventoryException {
         int idx = this.listEngimon.getItemFromIdx(this.activeEngi);
         if (idx != -1) {
