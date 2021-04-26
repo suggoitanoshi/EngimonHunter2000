@@ -58,6 +58,7 @@ public class GUI extends JFrame {
                             pane.add(m, BorderLayout.WEST);
                             pane.revalidate();
                             pane.repaint();
+                            container_hasil.removeAll();
                         }
                     });
                     panel.add(w);
@@ -82,6 +83,7 @@ public class GUI extends JFrame {
                             pane.add(m, BorderLayout.WEST);
                             pane.revalidate();
                             pane.repaint();
+                            container_hasil.removeAll();
                         }
                     });
                     panel.add(a);
@@ -106,6 +108,7 @@ public class GUI extends JFrame {
                             pane.add(m, BorderLayout.WEST);
                             pane.revalidate();
                             pane.repaint();
+                            container_hasil.removeAll();
                         }
                     });
                     panel.add(s);
@@ -130,6 +133,7 @@ public class GUI extends JFrame {
                             pane.add(m, BorderLayout.WEST);
                             pane.revalidate();
                             pane.repaint();
+                            container_hasil.removeAll();
                         }
                     });
                     panel.add(d);
@@ -166,11 +170,66 @@ public class GUI extends JFrame {
                 Inventory<Engimon> engies = gs.getPlayer().getInventoryEngimon();
                 for(int i = 0; i < engies.getAllInvenTotalItemCount(); i++){
                     try{
+                        int j = i;
+                        c.gridx = 0;
                         c.gridy = i;
                         Engimon curr = engies.at(i);
                         String species = curr.getSpecies().toLowerCase().replaceAll("\\s", "");
                         ImageIcon icon = new ImageIcon("data/resource/"+species+"/"+species+".png");
+                        JButton gantinama = new JButton("Ganti namanya");
+                        JButton hapus = new JButton("Hapus yang ini");
+                        gantinama.addActionListener(new ActionListener(){
+                            @Override
+                            public void actionPerformed(ActionEvent e){
+                                container_hasil.removeAll();
+                                
+                                JTextField namanya = new JTextField();
+                                JButton ok = new JButton("Ok");
+
+                                namanya.setColumns(20);
+
+                                ok.addActionListener(new ActionListener(){
+                                    @Override
+                                    public void actionPerformed(ActionEvent e){
+                                        try{
+                                            gs.getPlayer().changeEngimonName(j, namanya.getText());
+                                            container_hasil.removeAll();
+                                            container_hasil.revalidate();
+                                            container_hasil.repaint();
+                                        } catch(EngimonHunter2000Exception ex){}
+                                    }
+                                });
+
+                                container_hasil.add(new JLabel("Nama baru: "));
+                                container_hasil.add(namanya);
+                                container_hasil.add(ok);
+                                container_hasil.revalidate();
+                                container_hasil.repaint();
+                            }
+                        });
+                        hapus.addActionListener(new ActionListener(){
+                            @Override
+                            public void actionPerformed(ActionEvent e){
+                                try{
+                                    gs.getPlayer().removeEngimon(j);
+                                    container_hasil.removeAll();
+                                    container_hasil.revalidate();
+                                    container_hasil.repaint();
+                                } catch(InventoryException ex){
+                                    container_hasil.removeAll();
+                                    c.gridx = 0;
+                                    c.gridy = 0;
+                                    container_hasil.add(new JLabel("GAME OVER GAN"), c);
+                                    c.gridy = 1;
+                                    container_hasil.add(new JLabel("SIAPA SURUH NGAPUS AKTIF ENGIMON"), c);
+                                }
+                            }
+                        });
                         container_hasil.add(new JLabel(curr.getName(), icon, SwingConstants.LEFT), c);
+                        c.gridx = 1;
+                        container_hasil.add(gantinama, c);
+                        c.gridx = 2;
+                        container_hasil.add(hapus, c);
                     } catch(InventoryException ex){}
                 }
                 container_hasil.revalidate();
@@ -245,11 +304,39 @@ public class GUI extends JFrame {
                 Inventory<Item> items = gs.getPlayer().getInventoryItem();
                 for(int i = 0; i < items.getAllInvenTotalItemCount(); i++){
                     try{
+                        int j = i;
                         String realname = items.at(i).getName();
                         String filename = realname.toLowerCase().replaceAll("\\s", "");
+                        c.gridx = 0;
                         c.gridy = i;
                         ImageIcon icon = new ImageIcon("data/resource/skills/"+filename+".png");
+                        JButton hapusgan = new JButton("Hapus Item");
+                        hapusgan.addActionListener(new ActionListener(){
+                            @Override
+                            public void actionPerformed(ActionEvent e){
+                                container_hasil.removeAll();
+                                JSpinner num = new JSpinner();
+                                JButton anjay = new JButton("OK");
+
+                                anjay.addActionListener(new ActionListener(){
+                                    @Override
+                                    public void actionPerformed(ActionEvent e){
+                                        try{
+                                            num.commitEdit();
+                                            gs.getPlayer().removeItem(j, (Integer)num.getValue());
+                                            container_hasil.removeAll();
+                                        } catch(Exception ex){}
+                                    }
+                                });
+
+                                container_hasil.add(new JLabel("Masukkan jumlah: "));
+                                container_hasil.add(num);
+                                container_hasil.add(anjay);
+                            }
+                        });
                         container_hasil.add(new JLabel(realname, icon, SwingConstants.LEFT), c);
+                        c.gridx = 1;
+                        container_hasil.add(hapusgan,c);
                     } catch(InventoryException ex){}
                 }
                 container_hasil.revalidate();
@@ -367,13 +454,35 @@ public class GUI extends JFrame {
                     c.gridy = i;
                     Engimon en = engs.get(i);
                     String species = en.getSpecies();
-                    String iconpath = species.toLowerCase().replace("\\s", "");
+                    String iconpath = species.toLowerCase().replaceAll("\\s", "");
+                    System.out.println(iconpath);
                     ImageIcon icon = new ImageIcon("data/resource/"+iconpath+"/"+iconpath+".png");
                     JButton button = new JButton(species, icon);
                     button.addActionListener(new ActionListener(){
                         @Override
                         public void actionPerformed(ActionEvent e){
                             Battle gelud = new Battle();
+                            gelud.checkAdvantage(gs.getPlayer().getActiveEngimon(), en);
+                            StringBuilder detailEngiMusuh = new StringBuilder();
+                            // spesies, elemen, level,  
+                            detailEngiMusuh.append("Spesies: "+en.getSpecies()+"\n");
+                            ElementsList els = en.getListElement();
+                            detailEngiMusuh.append("Elemen: ");
+                            for(Element el: els.getElementsList()){
+                                detailEngiMusuh.append(el+", ");
+                            }
+                            detailEngiMusuh.append("\n");
+
+                            detailEngiMusuh.append("Level: "+en.getLvl()+"\n");
+                            detailEngiMusuh.append("\n\n");
+                            detailEngiMusuh.append("Power: \n");
+                            detailEngiMusuh.append("Punyamu>");
+                            detailEngiMusuh.append(gs.getPlayer().getActiveEngimon().getName()+": "+gs.getPlayer().getActiveEngimon().getBattlePower(gelud.getAdvA()));
+                            detailEngiMusuh.append("\nWild Engimon>");
+                            detailEngiMusuh.append(en.getSpecies()+": "+en.getBattlePower(gelud.getAdvB()));
+
+                            int jadigak = JOptionPane.showConfirmDialog(container_hasil, detailEngiMusuh.toString(), "Konfirmasi gelud", JOptionPane.YES_NO_OPTION);
+                            if(jadigak == JOptionPane.NO_OPTION) return;
 
                             boolean menangkh = gelud.runBattle(gs.getPlayer().getActiveEngimon(), en);
 
