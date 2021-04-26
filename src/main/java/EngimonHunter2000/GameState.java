@@ -41,15 +41,17 @@ public class GameState implements Serializable {
     }
 
 	public void updateGameState() {
-        maptile = new MapTile();
-        map = maptile.getMap();
-
-        turn++;
+		turn++;
 
         // tambahin exp dan move engimon
         if (turn % 1 == 0) {
             activateWildEngimons();
         }
+		
+        maptile = new MapTile();
+        map = maptile.getMap();
+
+
 
         fillMap();
 	}
@@ -143,7 +145,7 @@ public class GameState implements Serializable {
         path = getEngimonSprite(aE,
                                 map[aE.getPosition().getY()][aE.getPosition().getX()].getType());
         tile = new Tile(path, TileType.ENGIMON,
-                        aE.getPosition().getX(), aE.getPosition().getY(), false);
+                        aE.getPosition().getX(), aE.getPosition().getY(), true);
         map[aE.getPosition().getY()][aE.getPosition().getX()] = tile;
 
 		// set wild sprite
