@@ -144,13 +144,14 @@ public class EngiDex implements Dex<EngimonSpecies> {
         ArrayList<String> engiList = new ArrayList<String>();
         for (Map.Entry<String, EngimonSpecies> engi : dex.entrySet()) {
             if (engi.getValue().getListElement().getElementsList().size() == 1
-            && engi.getValue().getListElement().getElementsList().contains(el)) {
+                    && engi.getValue().getListElement().getElementsList().contains(el)) {
                 engiList.add(engi.getValue().getSpecies());
             }
         }
 
         Random randomGenerator = new Random();
-        int idx = randomGenerator.nextInt(engiList.size());
+        // int idx = randomGenerator.nextInt(engiList.size());
+        int idx = Math.abs(randomGenerator.nextInt()) % engiList.size();
         return engiList.get(idx);
     }
 }

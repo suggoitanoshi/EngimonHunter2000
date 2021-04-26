@@ -12,7 +12,8 @@ public class BreedingException extends EngimonHunter2000Exception {
     private static final long serialVersionUID = 1L; // i think this is cursed
     private final int msgID;
     static private final String[] msgs = { "Parent dari engimon memiliki level < 4",
-            "Engimon tidak bisa dikawinkan dengan dirinya sendiri" };
+            "Engimon tidak bisa dikawinkan dengan dirinya sendiri", "Gagal membuat arraylist 1",
+            "Gagal membuat arraylist 2", "Kebanyakan iterasi :(" };
 
     /**
      * Constructor ElementsException
@@ -25,6 +26,7 @@ public class BreedingException extends EngimonHunter2000Exception {
     public BreedingException(int id) {
         super(msgs[id]);
         msgID = id;
+        this.bruh();
     }
 
     public String what() {

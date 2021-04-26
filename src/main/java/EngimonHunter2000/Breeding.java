@@ -13,6 +13,8 @@ public class Breeding {
     private Element[] el_p2;
     private ArrayList<SkillEngimon> skillsP1;
     private ArrayList<SkillEngimon> skillsP2;
+    private int n1;
+    private int n2;
 
     public Breeding() {
         this.max1 = 0;
@@ -24,6 +26,8 @@ public class Breeding {
         skillsP2 = new ArrayList<SkillEngimon>();
         el_p1 = new Element[2];
         el_p2 = new Element[2];
+        this.n1 = 0;
+        this.n2 = 0;
     }
 
     public Engimon breeding(EngiDex _dex, Engimon _parent1, Engimon _parent2, SkillDex _skillDex, String _name)
@@ -31,19 +35,27 @@ public class Breeding {
         if (_parent1.getLvl() < 4 || _parent2.getLvl() < 4) {
             throw new BreedingException(0);
         }
-        if (_parent1.getName() == _parent2.getName()) {
+        if (_parent1.equals(_parent2)) {
             throw new BreedingException(1);
         }
+        this.n1 = _parent1.getListElement().getElementsList().size();
+        this.n2 = _parent2.getListElement().getElementsList().size();
         // Mengubah ElementList menjadi Array (mengambil 2 elemen terdepan saja)
-        Element[] temp = new Element[_parent1.getListElement().getElementsList().size()];
-        Element[] temp2 = new Element[_parent2.getListElement().getElementsList().size()];
+        Element[] temp = new Element[this.n1];
+        Element[] temp2 = new Element[this.n2];
         _parent1.getListElement().getElementsList().toArray(temp);
         _parent2.getListElement().getElementsList().toArray(temp2);
 
         el_p1[0] = temp[0];
-        el_p1[1] = temp[1];
+        if (this.n1 > 1) {
+            el_p1[1] = temp[1];
+        }
+
         el_p2[0] = temp2[0];
-        el_p2[1] = temp2[1];
+        if (this.n2 > 1) {
+            el_p2[1] = temp2[1];
+        }
+
         Engimon retVal = new Engimon(_dex, prioritySpecies(_dex), _name);
 
         // Mengubah HashSet -> Array -> ArrayList
@@ -54,22 +66,51 @@ public class Breeding {
         for (SkillEngimon skill : skillP1) {
             skillsP1.add(skill);
         }
+        if (skillsP1.isEmpty()) {
+            throw new BreedingException(2);
+        }
 
         SkillEngimon[] skillP2 = new SkillEngimon[max2];
         _parent2.getSkills().toArray(skillP2);
         for (SkillEngimon skill : skillP2) {
             skillsP2.add(skill);
         }
+        if (skillsP1.isEmpty()) {
+            throw new BreedingException(3);
+        }
+
         int max_addskill = _parent1.getSkillCount() + _parent2.getSkillCount();
-        if (max_addskill >= 4) {
+        System.out.println(max_addskill);
+        // Untuk menghapus skill ketika skill starter engimon sudah dimiliki oleh parentnya
+        boolean dupl_skill = false;
+        for (SkillEngimon skill : skillsP1) {
+            if (retVal.getStarterSkill().getName() == skill.getName()) {
+                dupl_skill = true;
+            }
+        }
+        for (SkillEngimon skill2 : skillsP2) {
+            if (retVal.getStarterSkill().getName() == skill2.getName()) {
+                dupl_skill = true;
+            }
+        }
+        if (max_addskill >= 4 || dupl_skill) {
             // delete starter skill buat direplace oleh parent: Spesifikasi 5.d.i
+            // didelete ketika skill parent > 4 atau terdapat skill yang bisa diinherit oleh parent
+            if (max_addskill > 4) {
+                max_addskill = 4;
+            }
             retVal.delSkill(_dex.getEntity(retVal.getSpecies()).getStarterSkill());
-            for (int i = 0; i < 4; i++) {
+            for (int i = 0; i < max_addskill; i++) {
                 retVal.addSkill(priorityBreeding(_skillDex));
+                this.max1 = skillsP1.size();
+                this.max2 = skillsP2.size();
             }
         } else {
             for (int i = 0; i < max_addskill; i++) {
                 retVal.addSkill(priorityBreeding(_skillDex));
+                this.max1 = skillsP1.size();
+                this.max2 = skillsP2.size();
+
             }
         }
 
@@ -80,8 +121,10 @@ public class Breeding {
 
     }
 
-    private SkillEngimon priorityBreeding(SkillDex _skillDex) {
-        if (skillsP1.size() != 0 || skillsP2.size() != 0) {
+    private SkillEngimon priorityBreeding(SkillDex _skillDex) throws BreedingException {
+        if (skillsP1.size() != 0 && skillsP2.size() != 0) {
+            System.out.println("Skill 1: " + skillsP1.size());
+            System.out.println("Skill 2: " + skillsP2.size());
             // Mengambil benchmark
             SkillEngimon S1 = skillsP1.get(0);
             this.max_mastery = S1.getMasteryLevel();
@@ -90,7 +133,7 @@ public class Breeding {
             int idxS1 = 0;
             int idxS2 = 0;
             // Iterasi untuk mencari skill terbaik: Spesifikasi 5.d.iii.1, iterasi dari belakang spesifikasi 5.d.iii.3
-            for (int i = max1; i >= 0; i--) {
+            for (int i = max1 - 1; i > 0; i--) {
                 if (skillsP1.get(i).getMasteryLevel() > max_mastery) {
                     S1 = skillsP1.get(i);
                     max_mastery = skillsP1.get(i).getMasteryLevel();
@@ -98,7 +141,7 @@ public class Breeding {
                 }
             }
 
-            for (int i = max2; i >= 0; i--) {
+            for (int i = max2 - 1; i > 0; i--) {
                 if (skillsP2.get(i).getMasteryLevel() > max_mastery2) {
                     S2 = skillsP2.get(i);
                     max_mastery2 = skillsP2.get(i).getMasteryLevel();
@@ -132,16 +175,20 @@ public class Breeding {
                 }
             }
         } else {
+            System.out.println("Skill 1: " + skillsP1.size());
+            System.out.println("Skill 2: " + skillsP2.size());
             if (skillsP1.size() > 0) {
                 String namaSkill = new String(skillsP1.get(0).getName());
                 int mastery = skillsP1.get(0).getMasteryLevel();
                 skillsP1.remove(0);
                 return new SkillEngimon(_skillDex.getEntity(namaSkill), mastery);
-            } else {
+            } else if (skillsP2.size() > 0) {
                 String namaSkill = new String(skillsP2.get(0).getName());
                 int mastery = skillsP2.get(0).getMasteryLevel();
                 skillsP2.remove(0);
                 return new SkillEngimon(_skillDex.getEntity(namaSkill), mastery);
+            } else {
+                throw new BreedingException(4);
             }
         }
     }
@@ -149,28 +196,38 @@ public class Breeding {
     private String prioritySpecies(EngiDex _engiDex) {
         // Spesifikasi 5.e
         Element tempEl1 = el_p1[0];
-        for (Element el1 : el_p1) {
-            for (Element el2 : el_p2) {
-                max_adv = max(max_adv, Element.getElementalAdvantage(el1, el2));
-                tempEl1 = el1;
+        int i, j;
+        for (j = 0; j < this.n2; j++) {
+            for (i = 0; i < this.n1; i++) {
+                if (max_adv < Element.getElementalAdvantage(el_p1[i], el_p2[j])) {
+                    max_adv = Element.getElementalAdvantage(el_p1[i], el_p2[j]);
+                    tempEl1 = el_p1[i];
+                }
             }
         }
         max_adv = 0.0;
         Element tempEl2 = el_p2[0];
-        for (Element el2 : el_p2) {
-            for (Element el1 : el_p1) {
-                max_adv = max(max_adv, Element.getElementalAdvantage(el2, el1));
-                tempEl2 = el2;
+
+        for (j = 0; j < this.n2; j++) {
+            for (i = 0; i < this.n1; i++) {
+                if (max_adv < Element.getElementalAdvantage(el_p2[j], el_p1[i])) {
+                    max_adv = Element.getElementalAdvantage(el_p2[j], el_p1[i]);
+                    tempEl1 = el_p2[i];
+                }
             }
         }
+
         if (Element.getElementalAdvantage(tempEl1, tempEl2) >= 1) {
+            //printElement(tempEl1);
             return _engiDex.getEngimonNameFromElement(tempEl1);
         } else {
+            //printElement(tempEl2);
             return _engiDex.getEngimonNameFromElement(tempEl2);
         }
     }
 
-    private static <T extends Number> T max(T a, T b) {
-        return a.doubleValue() >= b.doubleValue() ? a : b;
-    }
+    // private static <T extends Number> T max(T a, T b) {
+    //     return a.doubleValue() >= b.doubleValue() ? a : b;
+    // }
+
 }
