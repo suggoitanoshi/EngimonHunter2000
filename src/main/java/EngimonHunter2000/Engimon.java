@@ -234,7 +234,7 @@ public class Engimon extends EngimonSpecies {
      * @throws EngimonException jika pengurangan level terlalu banyak
      */
     public boolean addLevel(int _lvl) throws EngimonException {
-        if (this.lvl - _lvl < 1) {
+        if (this.lvl + _lvl < 1) {
             throw new EngimonException(0);
         } else {
             this.lvl += _lvl;

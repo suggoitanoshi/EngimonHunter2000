@@ -27,7 +27,7 @@ public class EngimonTest {
                 () -> assertEquals(engi1.getElementCount(), 1), () -> assertEquals(engi1.getSkillCount(), 1),
                 () -> assertEquals(engi1.getPosition().getX(), -1), () -> assertEquals(engi1.getPosition().getY(), -1),
                 () -> assertEquals(engi1.getSkillByString("THUNDAAA").getName(), "THUNDAAA"),
-                () -> assertEquals(engi1.getLives(), 3), () -> assertEquals(engi1.getBattlePower(1.0), 41),
+                () -> assertEquals(engi1.getLives(), 3), () -> assertEquals(engi1.getBattlePower(1.0), 51),
                 () -> assertEquals(engi1.getParents()[0], "Picakhu"),
                 () -> assertEquals(engi1.getParents()[1], "Picakhu"));
         engi1.setName("Ayam");
@@ -39,7 +39,7 @@ public class EngimonTest {
                 () -> assertEquals(engi1.getName(), "Ayam"), () -> assertEquals(engi1.getLives(), 3));
         engi1.addExp(325);
         assertAll("Check add exp engimon", () -> assertEquals(engi1.getLvl(), 14),
-                () -> assertEquals(engi1.getExp(), 25), () -> assertEquals(engi1.getCExp(), 10325));
+                () -> assertEquals(engi1.getExp(), 25), () -> assertEquals(engi1.getCExp(), 1625));
         engi1.addSkill(new SkillEngimon(skillDex.getEntity("Tackle"), 2));
         assertAll("Check add skill engimon", () -> assertEquals(engi1.getSkillCount(), 2),
                 () -> assertEquals(engi1.getSkillByString("Tackle").getMasteryLevel(), 2));
@@ -57,7 +57,7 @@ public class EngimonTest {
                 () -> assertEquals(engi2.getElementCount(), 1), () -> assertEquals(engi2.getSkillCount(), 1),
                 () -> assertEquals(engi2.getPosition().getX(), 2), () -> assertEquals(engi2.getPosition().getY(), 3),
                 () -> assertEquals(engi2.getSkillByString("THUNDAAA").getName(), "THUNDAAA"),
-                () -> assertEquals(engi2.getLives(), 2), () -> assertEquals(engi2.getBattlePower(1.0), 41),
+                () -> assertEquals(engi2.getLives(), 2), () -> assertEquals(engi2.getBattlePower(1.0), 70),
                 () -> assertEquals(engi2.getParents()[0], "Rachui"),
                 () -> assertEquals(engi2.getParents()[1], "Rachua"));
         engi2.setName("Picha");
