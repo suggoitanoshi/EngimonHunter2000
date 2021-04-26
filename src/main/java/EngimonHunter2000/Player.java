@@ -172,7 +172,7 @@ public class Player implements Serializable {
                 Engimon disEngie = listEngimon.at(i);
                 highest = disEngie.getLvl() > highest ? disEngie.getLvl() : highest;
             } catch (InventoryException e) {
-                System.err.println(e.what());
+                e.printStackTrace();
                 break; // idk what to do, really ¯\_(ツ)_/¯
             }
         }
