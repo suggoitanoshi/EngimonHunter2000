@@ -292,8 +292,9 @@ public class Engimon extends EngimonSpecies implements Serializable {
         this.exp += _exp;
         this.cexp += _exp;
         if (this.exp >= MAX_EXP) {
-            this.exp -= MAX_EXP;
-            return this.addLevel(1);
+            int lvl = this.exp / MAX_EXP;
+            this.exp -= (lvl * MAX_EXP);
+            return this.addLevel(lvl);
         } else {
             return true;
         }
