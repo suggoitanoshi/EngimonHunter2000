@@ -14,7 +14,7 @@ public class Breeding {
     private ArrayList<SkillEngimon> skillsP1;
     private ArrayList<SkillEngimon> skillsP2;
 
-    Breeding() {
+    public Breeding() {
         this.max1 = 0;
         this.max2 = 0;
         this.max_adv = 0d;
@@ -35,8 +35,8 @@ public class Breeding {
             throw new BreedingException(1);
         }
         // Mengubah ElementList menjadi Array (mengambil 2 elemen terdepan saja)
-        Element[] temp = new Element[2];
-        Element[] temp2 = new Element[2];
+        Element[] temp = new Element[_parent1.getListElement().getElementsList().size()];
+        Element[] temp2 = new Element[_parent2.getListElement().getElementsList().size()];
         _parent1.getListElement().getElementsList().toArray(temp);
         _parent2.getListElement().getElementsList().toArray(temp2);
 

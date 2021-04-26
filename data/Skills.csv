@@ -1,8 +1,8 @@
 NamaSkill,BasePower,Element1,Element2,Element3,Element4,Element5
-THUNDAAA,40,ELECTRIC
+THUNDAAA,60,ELECTRIC
 Tackle,40,ELECTRIC,FIRE,GROUND,ICE,WATER
 Fiery Thunder,150,ELECTRIC,FIRE
-Neko Punch?,30,WATER
+Neko Punch?,50,WATER
 Burn My Dread,50,FIRE
-Krabby Patty,50,WATER,GROUND
-Rock Throw,69,FIRE
+Krabby Patty,45,WATER,GROUND
+Rock Throw,50,FIRE
