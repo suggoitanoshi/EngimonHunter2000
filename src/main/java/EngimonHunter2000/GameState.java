@@ -270,4 +270,8 @@ public class GameState implements Serializable {
             }
         }
     }
+
+    public EngiDex getEDex(){ return this.engiDex; }
+    public SkillDex getSkillDex(){ return this.skillDex; }
+    public ArrayList<Engimon> getWildEngimons(){ return this.wildEngimons; }
 }

@@ -332,4 +332,8 @@ public class Engimon extends EngimonSpecies implements Serializable {
             throw new EngimonException(4);
         }
     }
+
+    public int getExp(){ return this.exp; }
+    public int getCExp(){ return this.cexp; }
+    public String[] getParents(){ return this.parents; }
 }
