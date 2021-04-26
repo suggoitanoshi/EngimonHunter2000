@@ -1,14 +1,13 @@
 package EngimonHunter2000;
 
 import java.util.HashSet;
-import java.io.Serializable;
 
 /**
  * {@link EngimonHunter2000}
  * @author Alvin Wilta
  */
 
-public class Engimon extends EngimonSpecies implements Serializable {
+public class Engimon extends EngimonSpecies {
     public static final long serialVersionUID = 1L;
     public static final int MAX_EXP = 100;
     public static final int MAX_CEXP = 100000;

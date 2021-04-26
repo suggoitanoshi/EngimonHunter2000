@@ -113,11 +113,13 @@ public class Player implements Serializable {
         int engiIdx = this.listEngimon.getItemFromIdx(this.activeEngi);
         if (engiIdx != -1) {
             this.listItem.at(itemIdx).learn(this.listEngimon.at(engiIdx));
-            if (this.listItem.at(itemIdx).getQuantity() == 0) {
+            int qty = this.listItem.at(itemIdx).getQuantity();
+            if (qty - 1 == 0) {
                 listItem.removeItem(listItem.at(itemIdx));
+            } else {
+                this.listItem.at(itemIdx).setQuantity(qty - 1);
             }
-        }
-        else {
+        } else {
             throw new InventoryException(3);
         }
     }
@@ -156,7 +158,7 @@ public class Player implements Serializable {
      * Fungsi untuk mendapatkan engimon player yang memiliki level tertiinggi
      */
     public int getHighestEngimonLevel() {
-        int highest = 0x7FFFFFFF;
+        int highest = 0xFFFFFFFF;
         for (int i = 0; i < listEngimon.getAllInvenTotalItemCount(); ++i) {
             try {
                 Engimon disEngie = listEngimon.at(i);
