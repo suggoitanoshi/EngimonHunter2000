@@ -73,7 +73,7 @@ public class SkillDex implements Dex<Skill> {
                                 elsSet.add(Element.getElementFromString(rowData));
                             } catch (ElementException e) {
                                 // skip element yang invalid
-                                System.err.println(e.what());
+                                e.printStackTrace();
                             }
                     }
                     ++i;

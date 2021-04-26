@@ -393,8 +393,13 @@ public class GameState implements Serializable {
 
         int lvlMinBound = player.getHighestEngimonLevel();
         int lvlMaxBound = player.getActiveEngimon().getLvl() + 5;
-        int engiLvl = Math.max(Math.abs(rand.nextInt()) % (lvlMaxBound - lvlMinBound), 0)
+        int engiLvl;
+        try {
+            engiLvl = Math.max(Math.abs(rand.nextInt()) % (lvlMaxBound - lvlMinBound), 0)
                         + lvlMinBound;
+        } catch (ArithmeticException e) {
+            engiLvl = lvlMinBound;
+        }
 
         Set<String> possibleNames = engiDex.getDex().keySet();
         Iterator<String> it = possibleNames.iterator();
@@ -437,7 +442,7 @@ public class GameState implements Serializable {
      * @author Josep Marcello
      */
     public void spawnWildEngimons(int count) {
-        if (wildEngimons.size() >= count || count == 0) {
+        if (wildEngimons.size() >= wildEngieCount || count == 0) {
             return;
         }
 
