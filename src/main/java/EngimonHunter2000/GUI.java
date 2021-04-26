@@ -648,6 +648,7 @@ public class GUI extends JFrame {
                                                         .getStarterSkill()
                                                         .getName());
                                     gs.getPlayer().addItem(new Item(itSkill));
+                                    gs.getPlayer().getActiveEngimon().addExp(20 + en.getExp());
 								}
 								catch (InventoryException | EngimonException e1){
                                     e1.printStackTrace();
