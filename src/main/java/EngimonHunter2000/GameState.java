@@ -37,7 +37,7 @@ public class GameState implements Serializable {
 
             fillMap();
         } catch (EngimonHunter2000Exception e) {
-            System.err.println(e.getMessage());
+            e.printStackTrace();
             System.exit(-1);
         }
     }
@@ -203,16 +203,14 @@ public class GameState implements Serializable {
         Engimon aE = player.getActiveEngimon();
         aE.setPos(player.getPosition().getX() + i,
                   player.getPosition().getY() + j);
-        // map[aE.getPosition().getY()][aE.getPosition().getX()].setType(TileType.ENGIMON);
 		map[aE.getPosition().getY()][aE.getPosition().getX()].makeOccupied();
-        // maptile.makeOccupied(aE.getPosition().getX(), aE.getPosition().getY());
     }
 
     private String getEngimonSprite(Engimon engie, TileType tipe) {
         StringBuilder SB = new StringBuilder("data/resource/");
-        SB.append(engie.getSpecies().toLowerCase().replace("\\s", ""));
+        SB.append(engie.getSpecies().replaceAll("\\s+", "").toLowerCase());
         SB.append("/");
-        SB.append(engie.getSpecies().toLowerCase().replace("\\s", ""));
+        SB.append(engie.getSpecies().replaceAll("\\s+", "").toLowerCase());
 		switch (tipe){
 			case EDGE1_MOUNTAIN:
 				SB.append("_edge5.png");
@@ -395,11 +393,8 @@ public class GameState implements Serializable {
 
         int lvlMinBound = player.getHighestEngimonLevel();
         int lvlMaxBound = player.getActiveEngimon().getLvl() + 5;
-        int engiLvl =
-            Math.min(
-                Math.max(
-                    (rand.nextInt() % (lvlMaxBound - lvlMinBound)) + lvlMinBound,
-                    lvlMinBound), lvlMaxBound);
+        int engiLvl = Math.max(Math.abs(rand.nextInt()) % (lvlMaxBound - lvlMinBound), 0)
+                        + lvlMinBound;
 
         Set<String> possibleNames = engiDex.getDex().keySet();
         Iterator<String> it = possibleNames.iterator();

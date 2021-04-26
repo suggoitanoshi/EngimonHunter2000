@@ -4,6 +4,7 @@ import java.awt.*;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.rmi.server.SkeletonMismatchException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.stream.Collectors;
@@ -276,7 +277,10 @@ public class GUI extends JFrame {
                             public void actionPerformed(ActionEvent e){
                                 try{
                                     gs.getPlayer().useItem(j);
-                                } catch(EngimonHunter2000Exception ex){}
+                                } catch(ItemException | SkillEngimonException exp) {
+                                    JOptionPane
+                                        .showMessageDialog(container_hasil, exp.what());
+                                } catch (InventoryException exp) {}
                                 container_hasil.removeAll();
                                 container_hasil.revalidate();
                                 container_hasil.repaint();
@@ -287,7 +291,6 @@ public class GUI extends JFrame {
                 }
                 container_hasil.revalidate();
                 container_hasil.repaint();
-                
             }
         });
 
@@ -333,7 +336,8 @@ public class GUI extends JFrame {
                                             public void actionPerformed(ActionEvent e){
                                                 Breeding b = new Breeding();
                                                 try{
-                                                    b.breeding(gs.getEDex(), parents[0], parents[1], gs.getSkillDex(), namaAnak.getText());
+                                                    Engimon anak = b.breeding(gs.getEDex(), parents[0], parents[1], gs.getSkillDex(), namaAnak.getText());
+                                                    gs.getPlayer().addEngimon(anak);
                                                 } catch(EngimonHunter2000Exception ex){}
                                                 container_hasil.removeAll();
                                             }
@@ -365,8 +369,8 @@ public class GUI extends JFrame {
                 c.gridx = 0;
                 for(int i = 0; i < engs.size(); i++){
                     c.gridy = i;
-                    Engimon en = engs.get(i);
-                    String species = en.getSpecies();
+                    Engimon wildEngie = engs.get(i);
+                    String species = wildEngie.getSpecies();
                     String iconpath = species.toLowerCase().replace("\\s", "");
                     ImageIcon icon = new ImageIcon("data/resource/"+iconpath+"/"+iconpath+".png");
                     JButton button = new JButton(species, icon);
@@ -375,9 +379,9 @@ public class GUI extends JFrame {
                         public void actionPerformed(ActionEvent e){
                             Battle gelud = new Battle();
 
-                            boolean menangkh = gelud.runBattle(gs.getPlayer().getActiveEngimon(), en);
+                            boolean menangkh = gelud.runBattle(gs.getPlayer().getActiveEngimon(), wildEngie);
 
-                            if(!menangkh){
+                            if(!menangkh) { // kalah
 								JOptionPane.showMessageDialog(container_hasil, "kalah");
 								try{
                                     try {
@@ -397,26 +401,23 @@ public class GUI extends JFrame {
                                     e1.printStackTrace();
                                     gs.setGameOver(); // dibikin game over
 								}
-							} else {
+							} else { // menang
 								JOptionPane.showMessageDialog(container_hasil, "menang");
 								try{
-                                    en.setLives(3);
-                                    gs.getWildEngimons().remove(en);
-									gs.getPlayer().getInventoryEngimon().addItem(en);
+                                    wildEngie.setLives(3);
+                                    gs.getWildEngimons().remove(wildEngie);
+                                    gs.getPlayer().addEngimon(wildEngie);
+                                    Skill itSkill = gs
+                                                    .getSkillDex()
+                                                    .getEntity(wildEngie
+                                                        .getStarterSkill()
+                                                        .getName());
+                                    gs.getPlayer().addItem(new Item(itSkill));
 								}
 								catch (InventoryException | EngimonException e1){
                                     e1.printStackTrace();
 								}
 							}
-
-							// else{
-							// 	try{
-							// 		gs.getPlayer().switchEngimon(0);
-							// 	}
-							// 	catch(Exception f){
-							// 		System.out.println("salah");
-							// 	}
-							// }
 
 							gs.updateGameState();
 							pane.removeAll();
@@ -461,7 +462,7 @@ public class GUI extends JFrame {
                 container_hasil.add(new JLabel("Skills: "), c);
                 for(SkillEngimon s: engi.getSkills()){
                     c.gridy++;
-                    String skillname = s.getName();
+                    String skillname = s.getName() + "(" + s.getMasteryLevel() + ")";
                     String stripped = skillname.toLowerCase().replace("\\s", "");
                     ImageIcon icon = new ImageIcon("data/resource/skills/"+stripped+".png");
                     container_hasil.add(new JLabel(skillname, icon, SwingConstants.LEFT), c);

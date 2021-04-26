@@ -72,7 +72,6 @@ public class Item extends SkillEngimon {
      * jika engimon sudah memiliki 4 skill, maka akan menggantikan
      * sebuah skill yang sudah ada
      * @param e engimon
-     * @param dex dex skill
      * @throws ItemException
      * @throws SkillEngimonException
      */
@@ -82,31 +81,27 @@ public class Item extends SkillEngimon {
 
         // Mengecek kecocokan skill item dengan engimon
         for (Element el : getElements()) {
-            for (SkillEngimon s : e.getSkills()) {
-                for (Element el1 : s.getElements()) {
-                    if (el.equals(el1)) {
-                        compatible = true;
-                        break;
-                    }
-                }
+            compatible = e.getListElement().getElementsList().contains(el);
+            if (compatible) {
+                break;
             }
         }
 
         if (!compatible) {
             throw new ItemException(1);
         }
-        
+
         // Mengecek mastery level item
         if (getMasteryLevel() != 1) {
             throw new ItemException(0);
         }
-        
+
         // Mengecek apakah skill sudah dipelajari atau belum
         for (SkillEngimon s : e.getSkills()) {
             if (s.getName().equals(getName())) {
                 newSkill = false;
                 if (s.getMasteryLevel() == 3) {
-                    throw new SkillEngimonException(1);
+                    throw new SkillEngimonException(0);
                 } else {
                     s.incMasteryLevel();
                     // return;
@@ -114,7 +109,7 @@ public class Item extends SkillEngimon {
                 break;
             }
         }
-        
+
         if (newSkill) {
             if (e.getSkillCount() == Engimon.MAX_SKILLS) {
                 int i = 1, input;
