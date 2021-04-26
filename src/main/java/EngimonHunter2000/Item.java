@@ -65,6 +65,23 @@ public class Item extends SkillEngimon {
         quantity--;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (o == null) {
+            return false;
+        }
+
+        if (o.getClass() != Item.class) {
+            return false;
+        }
+
+        Item _i = (Item) o;
+
+        return this.quantity == _i.getQuantity() &&
+            this.skillInfo.getName() == _i.getName() &&
+            this.masteryLevel == _i.getMasteryLevel();
+    }
+
     /**
      * Metode untuk engimon belajar sebuah skill dari skill item
      * Jika engimon sudah memiliki skill maka mastery level bertambahm, max 3 level
