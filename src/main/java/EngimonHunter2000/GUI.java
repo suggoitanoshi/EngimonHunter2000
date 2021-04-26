@@ -517,6 +517,12 @@ public class GUI extends JFrame {
                                     } catch (EngimonException exp) {
                                         if (gs.getPlayer().getInventoryEngimon().getItemCount() == 1){
                                             gs.setGameOver();
+                                            container_hasil.removeAll();
+                                            c.gridx = 0;
+                                            c.gridy = 0;
+                                            container_hasil.add(new JLabel("GAME OVER GAN"), c);
+                                            container_hasil.revalidate();
+                                            container_hasil.repaint();
                                         } else {
                                             gs.getPlayer().switchEngimon(1);
                                             gs.getPlayer().getInventoryEngimon().removeItem(gs.getPlayer().getActiveEngimon());
