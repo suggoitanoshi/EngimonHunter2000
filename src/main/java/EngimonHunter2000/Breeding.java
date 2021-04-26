@@ -14,7 +14,7 @@ public class Breeding {
     private ArrayList<SkillEngimon> skillsP1;
     private ArrayList<SkillEngimon> skillsP2;
 
-    Breeding() {
+    public Breeding() {
         this.max1 = 0;
         this.max2 = 0;
         this.max_adv = 0d;
@@ -31,9 +31,12 @@ public class Breeding {
         if (_parent1.getLvl() < 4 || _parent2.getLvl() < 4) {
             throw new BreedingException(0);
         }
+        if (_parent1.getName() == _parent2.getName()) {
+            throw new BreedingException(1);
+        }
         // Mengubah ElementList menjadi Array (mengambil 2 elemen terdepan saja)
-        Element[] temp = new Element[10];
-        Element[] temp2 = new Element[10];
+        Element[] temp = new Element[_parent1.getListElement().getElementsList().size()];
+        Element[] temp2 = new Element[_parent2.getListElement().getElementsList().size()];
         _parent1.getListElement().getElementsList().toArray(temp);
         _parent2.getListElement().getElementsList().toArray(temp2);
 
@@ -69,6 +72,10 @@ public class Breeding {
                 retVal.addSkill(priorityBreeding(_skillDex));
             }
         }
+
+        retVal.changeParent(0, _parent1.getName());
+        retVal.changeParent(1, _parent2.getName());
+
         return retVal;
 
     }
