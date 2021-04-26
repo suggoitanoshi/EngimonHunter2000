@@ -25,7 +25,7 @@ public class InventoryTest {
     public void constructOne() {
         Inventory<Integer> i1 = new Inventory<Integer>();
         assertAll("Konstruk satu inventory",
-            () -> assertEquals(0, i1.getItemCount()));
+            () -> assertEquals(0, i1.getAllInvenTotalItemCount()));
     }
 
     @Test
@@ -33,8 +33,8 @@ public class InventoryTest {
         Inventory<Integer> i1 = new Inventory<Integer>();
         Inventory<Float> i2 = new Inventory<Float>();
         assertAll("Konstruk dua inventory",
-            () -> assertEquals(0, i1.getItemCount()),
-            () -> assertEquals(0, i2.getItemCount()));
+            () -> assertEquals(0, i1.getAllInvenTotalItemCount()),
+            () -> assertEquals(0, i2.getAllInvenTotalItemCount()));
     }
 
     @Test
@@ -42,7 +42,7 @@ public class InventoryTest {
         Inventory<Integer> i1 = new Inventory<Integer>();
         i1.addItem(0);
         assertAll("Tambah item ke satu inventory",
-            () -> assertEquals(1, i1.getItemCount()));
+            () -> assertEquals(1, i1.getAllInvenTotalItemCount()));
     }
 
     @Test
@@ -52,8 +52,8 @@ public class InventoryTest {
         i1.addItem(0);
         i2.addItem(0f);
         assertAll("Tambah item ke dua inventory",
-            () -> assertEquals(2, i1.getItemCount()),
-            () -> assertEquals(2, i2.getItemCount()));
+            () -> assertEquals(2, i1.getAllInvenTotalItemCount()),
+            () -> assertEquals(2, i2.getAllInvenTotalItemCount()));
     }
 
     @Test
@@ -86,7 +86,7 @@ public class InventoryTest {
         i1.addItem(0);
         i1.removeItem(0);
         assertAll("Penghapusan invalid",
-            () -> assertEquals(0, i1.getItemCount()),
+            () -> assertEquals(0, i1.getAllInvenTotalItemCount()),
             () -> assertThrows(InventoryException.class, () -> i1.at(0)));
     }
 

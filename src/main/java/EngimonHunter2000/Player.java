@@ -94,7 +94,7 @@ public class Player implements Serializable {
 
     // print all engimon in inventory
     public void showEngimon() throws InventoryException {
-        if (this.listEngimon.getItemCount() == 0) throw new InventoryException(1);
+        if (this.listEngimon.getAllInvenTotalItemCount() == 0) throw new InventoryException(1);
         System.out.println("Engimon di dalam Inventory:");
         this.listEngimon.showInventory();
     }
@@ -157,7 +157,7 @@ public class Player implements Serializable {
      */
     public int getHighestEngimonLevel() {
         int highest = 0x7FFFFFFF;
-        for (int i = 0; i < listEngimon.getItemCount(); ++i) {
+        for (int i = 0; i < listEngimon.getAllInvenTotalItemCount(); ++i) {
             try {
                 Engimon disEngie = listEngimon.at(i);
                 highest = disEngie.getLvl() > highest ? disEngie.getLvl() : highest;

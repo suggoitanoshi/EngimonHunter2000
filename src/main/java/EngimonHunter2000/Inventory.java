@@ -85,6 +85,10 @@ class Inventory<T> implements Serializable {
     }
 
     public int getItemCount() {
+        return this.container.size();
+    }
+
+    public int getAllInvenTotalItemCount() {
         return Inventory.itemCount;
     }
 

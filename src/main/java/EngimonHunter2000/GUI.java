@@ -48,6 +48,7 @@ public class GUI extends JFrame {
                                                  gs.getPlayer().getPositionY())) {
                                 gs.getPlayer().setPositionY(gs.getPlayer().getPositionY() - 1);
                                 gs.applyPlayerPosition();
+                                gs.applyActiveEngimonPosition();
                             }
 							gs.getPlayer().setDir('w');
                             gs.updateGameState();
@@ -71,6 +72,7 @@ public class GUI extends JFrame {
                                                  gs.getPlayer().getPositionY())) {
                                 gs.getPlayer().setPositionX(gs.getPlayer().getPositionX() - 1);
                                 gs.applyPlayerPosition();
+                                gs.applyActiveEngimonPosition();
                             }
 							gs.getPlayer().setDir('a');
 							gs.updateGameState();
@@ -94,6 +96,7 @@ public class GUI extends JFrame {
                                                  gs.getPlayer().getPositionY())) {
                                 gs.getPlayer().setPositionY(gs.getPlayer().getPositionY() + 1);
                                 gs.applyPlayerPosition();
+                                gs.applyActiveEngimonPosition();
                             }
 							gs.getPlayer().setDir('s');
                             gs.updateGameState();
@@ -117,6 +120,7 @@ public class GUI extends JFrame {
                                                  gs.getPlayer().getPositionY())) {
                                 gs.getPlayer().setPositionX(gs.getPlayer().getPositionX() + 1);
                                 gs.applyPlayerPosition();
+                                gs.applyActiveEngimonPosition();
                             }
 							gs.getPlayer().setDir('d');
 							gs.updateGameState();
@@ -160,7 +164,7 @@ public class GUI extends JFrame {
                 container_hasil.removeAll();
                 c.gridx = 0;
                 Inventory<Engimon> engies = gs.getPlayer().getInventoryEngimon();
-                for(int i = 0; i < engies.getItemCount(); i++){
+                for(int i = 0; i < engies.getAllInvenTotalItemCount(); i++){
                     try{
                         c.gridy = i;
                         Engimon curr = engies.at(i);
@@ -198,7 +202,7 @@ public class GUI extends JFrame {
             public void actionPerformed(ActionEvent e){
                 container_hasil.removeAll();
                 Inventory<Engimon> engies = gs.getPlayer().getInventoryEngimon();
-                for(int i = 0; i < engies.getItemCount(); i++){
+                for(int i = 0; i < engies.getAllInvenTotalItemCount(); i++){
                     try{
                         c.gridy = i;
                         int j = i;
@@ -211,6 +215,14 @@ public class GUI extends JFrame {
                             public void actionPerformed(ActionEvent e){
                                 try{
                                     gs.getPlayer().switchEngimon(j);
+
+                                    gs.updateGameState();
+                                    pane.removeAll();
+                                    MapGrid m = new MapGrid(
+                                        gs.getPlayer().getPositionX(), gs.getPlayer().getPositionY(), gs.getMap());
+                                    pane.add(m, BorderLayout.WEST);
+                                    pane.revalidate();
+                                    pane.repaint();
                                 } catch(InventoryException ex){}
                                 container_hasil.removeAll();
                                 container_hasil.revalidate();
@@ -231,7 +243,7 @@ public class GUI extends JFrame {
                 container_hasil.removeAll();
                 c.gridx = 0;
                 Inventory<Item> items = gs.getPlayer().getInventoryItem();
-                for(int i = 0; i < items.getItemCount(); i++){
+                for(int i = 0; i < items.getAllInvenTotalItemCount(); i++){
                     try{
                         String realname = items.at(i).getName();
                         String filename = realname.toLowerCase().replaceAll("\\s", "");
@@ -250,7 +262,7 @@ public class GUI extends JFrame {
             public void actionPerformed(ActionEvent e){
                 container_hasil.removeAll();
                 Inventory<Item> items = gs.getPlayer().getInventoryItem();
-                for(int i = 0; i < items.getItemCount(); i++){
+                for(int i = 0; i < items.getAllInvenTotalItemCount(); i++){
                     try{
                         c.gridy = i;
                         int j = i;
@@ -292,7 +304,7 @@ public class GUI extends JFrame {
                 JLabel kawinlabel = new JLabel("Pilih orangtua 1: ");
                 container_hasil.add(new JLabel("Kawin~"));
                 container_hasil.add(kawinlabel);
-                for(int i = 0; i < engies.getItemCount(); i++){
+                for(int i = 0; i < engies.getAllInvenTotalItemCount(); i++){
                     try{
                         c.gridy = i+2;
                         int j = i;
@@ -364,8 +376,55 @@ public class GUI extends JFrame {
                             Battle gelud = new Battle();
 
                             boolean menangkh = gelud.runBattle(gs.getPlayer().getActiveEngimon(), en);
-                            if(menangkh) JOptionPane.showMessageDialog(container_hasil, "Menang boss");
-                            else JOptionPane.showMessageDialog(container_hasil, "Kalah boss");
+
+                            if(!menangkh){
+								JOptionPane.showMessageDialog(container_hasil, "kalah");
+								try{
+                                    try {
+                                        gs.getPlayer().getActiveEngimon().setLives(-1);
+                                        if (gs.getPlayer().getActiveEngimon().getLives() <= 0) {
+                                            throw new EngimonException(2);
+                                        }
+                                    } catch (EngimonException exp) {
+                                        if (gs.getPlayer().getInventoryEngimon().getItemCount() == 1){
+                                            gs.setGameOver();
+                                        } else {
+                                            gs.getPlayer().switchEngimon(1);
+                                            gs.getPlayer().getInventoryEngimon().removeItem(gs.getPlayer().getActiveEngimon());
+                                        }
+                                    }
+								} catch (InventoryException e1){
+                                    e1.printStackTrace();
+                                    gs.setGameOver(); // dibikin game over
+								}
+							} else {
+								JOptionPane.showMessageDialog(container_hasil, "menang");
+								try{
+                                    en.setLives(3);
+                                    gs.getWildEngimons().remove(en);
+									gs.getPlayer().getInventoryEngimon().addItem(en);
+								}
+								catch (InventoryException | EngimonException e1){
+                                    e1.printStackTrace();
+								}
+							}
+
+							// else{
+							// 	try{
+							// 		gs.getPlayer().switchEngimon(0);
+							// 	}
+							// 	catch(Exception f){
+							// 		System.out.println("salah");
+							// 	}
+							// }
+
+							gs.updateGameState();
+							pane.removeAll();
+                            MapGrid m = new MapGrid(
+                                gs.getPlayer().getPositionX(), gs.getPlayer().getPositionY(), gs.getMap());
+                            pane.add(m, BorderLayout.WEST);
+                            pane.revalidate();
+                            pane.repaint();
                             container_hasil.removeAll();
                             container_hasil.repaint();
                         }
@@ -483,6 +542,13 @@ public class GUI extends JFrame {
                     outerpane.remove(startmenu);
                     outerpane.revalidate();
                     outerpane.repaint();
+
+                    pane.removeAll();
+                    MapGrid m = new MapGrid(
+                        gs.getPlayer().getPositionX(), gs.getPlayer().getPositionY(), gs.getMap());
+                    pane.add(m, BorderLayout.WEST);
+                    pane.revalidate();
+                    pane.repaint();
                 } catch(GameStateException ex){
                     System.exit(-1);
                 }

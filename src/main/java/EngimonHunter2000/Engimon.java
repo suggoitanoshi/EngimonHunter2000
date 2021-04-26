@@ -25,23 +25,6 @@ public class Engimon extends EngimonSpecies implements Serializable {
     private String[] parents;
 
     /**
-     * @deprecated Membuat engimon picakhu, pakai kalau darurat atau buat debugging
-     * @throws EngimonSpeciesException tidak terdapat nama spesies terkait pada dex
-     * @throws ElementsListException
-     */
-    Engimon() throws EngimonSpeciesException, ElementsListException {
-        super();
-        this.name = super.getSpecies();
-        this.lvl = 20;
-        this.exp = 0;
-        this.cexp = 20 * MAX_EXP;
-        this.lives = 3;
-        this.position = new Position(-1, -1);
-        this.parents[0] = null;
-        this.parents[1] = null;
-    }
-
-    /**
      * Konstruktor dengan menggunakan nama spesies dari {@link EngimonSpecies}
      * Konstruktor ini dapat digunakan untuk membuat engimon baru pada
      * {@link Inventory} dari player
@@ -86,8 +69,9 @@ public class Engimon extends EngimonSpecies implements Serializable {
      * @throws ElementsListException
      * @throws EngimonException nama tidak valid
      */
-    Engimon(EngiDex dex, String _species, String _name, int _lvl, int _exp, Position _pos, int _lives, String _parent1,
-            String _parent2) throws EngimonSpeciesException, ElementsListException, EngimonException {
+    Engimon(EngiDex dex, String _species, String _name, int _lvl, int _exp,
+            Position _pos, int _lives, String _parent1, String _parent2)
+            throws EngimonSpeciesException, ElementsListException, EngimonException {
         super(dex, _species);
         if (_name == null || _name == "") {
             throw new EngimonException(3);
@@ -100,6 +84,9 @@ public class Engimon extends EngimonSpecies implements Serializable {
         this.cexp = this.lvl * MAX_EXP + this.exp;
         this.lives = _lives;
         this.position = new Position(_pos.getX(), _pos.getY());
+        this.parents = new String[2];
+        this.parents[0] = _parent1;
+        this.parents[1] = _parent2;
     }
 
     /**

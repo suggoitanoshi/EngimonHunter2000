@@ -14,7 +14,7 @@ import java.util.Set;
 
 public class GameState implements Serializable {
     public static final long serialVersionUID = 1L;
-    private final int wildEngieCount = 30;
+    private static final int wildEngieCount = 30;
     transient private SkillDex skillDex;
     transient private EngiDex engiDex;
     transient private MapTile maptile;
@@ -22,6 +22,7 @@ public class GameState implements Serializable {
     private Player player;
     private ArrayList<Engimon> wildEngimons;
     private int turn;
+	private boolean isGameOver;
 
     public GameState() {
         try {
@@ -32,6 +33,7 @@ public class GameState implements Serializable {
             player = new Player(engiDex);
             wildEngimons = new ArrayList<>();
             turn = 1;
+			isGameOver = false;
 
             fillMap();
         } catch (EngimonHunter2000Exception e) {
@@ -41,17 +43,15 @@ public class GameState implements Serializable {
     }
 
 	public void updateGameState() {
-		turn++;
+        turn++;
 
         // tambahin exp dan move engimon
-        if (turn % 1 == 0) {
+        if (turn % 5 == 0) {
             activateWildEngimons();
         }
-		
+
         maptile = new MapTile();
         map = maptile.getMap();
-
-
 
         fillMap();
 	}
@@ -78,18 +78,24 @@ public class GameState implements Serializable {
     }
 
     public static GameState load(String filename) throws GameStateException {
-        GameState a = null;
         try {
+            GameState a = null;
             FileInputStream file = new FileInputStream(new File(filename));
             ObjectInputStream in = new ObjectInputStream(file);
+
             a = (GameState) in.readObject();
             a.skillDex = new SkillDex();
+            a.maptile = new MapTile();
+			a.map = a.maptile.getMap();
             a.engiDex = new EngiDex(a.skillDex);
+
+            a.fillMap();
+
+            return a;
         } catch (Exception e) {
+            e.printStackTrace();
             throw new GameStateException(1);
         }
-
-        return a;
     }
 
 	public Tile[][] getMap(){
@@ -102,63 +108,73 @@ public class GameState implements Serializable {
 
     public void applyPlayerPosition() {
         // map[player.getPositionY()][player.getPositionX()].setType(TileType.PLAYER);
-        maptile.makeOccupied(player.getPositionX(), player.getPositionY());
+        // maptile.makeOccupied(player.getPositionX(), player.getPositionY());
+		map[player.getPositionY()][player.getPositionX()].makeOccupied();
     }
 
 	public void setSprite() {
-        String path;
-		switch(map[player.getPositionY()][player.getPositionX()].getType()) {
-			case EDGE1_MOUNTAIN:
-                path = "data/resource/char_edge5.png";
-				break;
-			case EDGE2_MOUNTAIN:
-                path = "data/resource/char_edge4.png";
-				break;
-			case EDGE3_MOUNTAIN:
-                path = "data/resource/char_edge6.png";
-				break;
-			case EDGE_GRASS:
-                path = "data/resource/char_edge1.png";
-				break;
-			case EDGE_TUNDRA:
-                path = "data/resource/char_edge3.png";
-				break;
-			case GRASS:
-                path = "data/resource/char_grass.png";
-				break;
-			case MOUNTAIN:
-                path = "data/resource/char_mountain.png";
-				break;
-			case TUNDRA:
-                path = "data/resource/char_tundra.png";
-				break;
-            default: // water
-                path = "data/resource/char_watergif.gif";
+		if (!isGameOver){
+			String path;
+			switch(map[player.getPositionY()][player.getPositionX()].getType()) {
+				case EDGE1_MOUNTAIN:
+					path = "data/resource/char_edge5.png";
+					break;
+				case EDGE2_MOUNTAIN:
+					path = "data/resource/char_edge4.png";
+					break;
+				case EDGE3_MOUNTAIN:
+					path = "data/resource/char_edge6.png";
+					break;
+				case EDGE_GRASS:
+					path = "data/resource/char_edge1.png";
+					break;
+				case EDGE_TUNDRA:
+					path = "data/resource/char_edge3.png";
+					break;
+				case GRASS:
+					path = "data/resource/char_grass.png";
+					break;
+				case MOUNTAIN:
+					path = "data/resource/char_mountain.png";
+					break;
+				case TUNDRA:
+					path = "data/resource/char_tundra.png";
+					break;
+				default: // water
+					path = "data/resource/char_watergif.gif";
+			}
+
+			// set player sprite
+			Tile tile = new Tile(path, TileType.PLAYER, player.getPositionX(),player.getPositionY(),true);
+			map[player.getPositionY()][player.getPositionX()] = tile;
+
+			// set active engimon sprite
+			Engimon aE = player.getActiveEngimon();
+			path = getEngimonSprite(aE,
+									map[aE.getPosition().getY()][aE.getPosition().getX()].getType());
+			tile = new Tile(path, TileType.ENGIMON,
+							aE.getPosition().getX(), aE.getPosition().getY(), true);
+			map[aE.getPosition().getY()][aE.getPosition().getX()] = tile;
+
+			// set wild sprite
+			for (Engimon el : wildEngimons){
+				String pathW;
+				if (el.getLvl() > player.getActiveEngimon().getLvl()){
+					pathW = getEngimonSpriteWild(el, "big", map[el.getPosition().getY()][el.getPosition().getX()].getType());
+				}
+				else{
+					pathW = getEngimonSpriteWild(el, "small", map[el.getPosition().getY()][el.getPosition().getX()].getType());
+				}
+				Tile tileW = new Tile(pathW, TileType.ENGIMON, el.getPosition().getX(), el.getPosition().getY(), true);
+				map[el.getPosition().getY()][el.getPosition().getX()] = tileW;
+			}
 		}
-
-        // set player sprite
-        Tile tile = new Tile(path, TileType.PLAYER, player.getPositionX(),player.getPositionY(),true);
-        map[player.getPositionY()][player.getPositionX()] = tile;
-
-		// set active engimon sprite
-        Engimon aE = player.getActiveEngimon();
-        path = getEngimonSprite(aE,
-                                map[aE.getPosition().getY()][aE.getPosition().getX()].getType());
-        tile = new Tile(path, TileType.ENGIMON,
-                        aE.getPosition().getX(), aE.getPosition().getY(), true);
-        map[aE.getPosition().getY()][aE.getPosition().getX()] = tile;
-
-		// set wild sprite
-		for (Engimon el : wildEngimons){
-			String pathW;
-			if (el.getLvl() > player.getActiveEngimon().getLvl()){
-				pathW = getEngimonSpriteWild(el, "big", map[el.getPosition().getY()][el.getPosition().getX()].getType());
+		else{
+			for (int i=0; i<maptile.getSizeY(); i++){
+				for(int j=0; j<maptile.getSizeX(); j++){
+					map[i][j] = new Tile("data/resource/black.png", TileType.PLAYER, i,j, true);
+				}
 			}
-			else{
-				pathW = getEngimonSpriteWild(el, "small", map[el.getPosition().getY()][el.getPosition().getX()].getType());
-			}
-			Tile tileW = new Tile(pathW, TileType.ENGIMON, el.getPosition().getX(), el.getPosition().getY(), true);
-			map[el.getPosition().getY()][el.getPosition().getX()] = tileW;
 		}
 	}
 
@@ -188,7 +204,8 @@ public class GameState implements Serializable {
         aE.setPos(player.getPosition().getX() + i,
                   player.getPosition().getY() + j);
         // map[aE.getPosition().getY()][aE.getPosition().getX()].setType(TileType.ENGIMON);
-        maptile.makeOccupied(aE.getPosition().getX(), aE.getPosition().getY());
+		map[aE.getPosition().getY()][aE.getPosition().getX()].makeOccupied();
+        // maptile.makeOccupied(aE.getPosition().getX(), aE.getPosition().getY());
     }
 
     private String getEngimonSprite(Engimon engie, TileType tipe) {
@@ -224,7 +241,6 @@ public class GameState implements Serializable {
             default: //water
 				SB.append("_watergif.gif");
 		}
-
         return SB.toString();
     }
 
@@ -274,7 +290,10 @@ public class GameState implements Serializable {
             return false;
         }
 
-        if (maptile.isOccupied(x + dx, y + dy)) {
+        // if (maptile.isOccupied(x + dx, y + dy)) {
+        //     return false;
+        // }
+		if (map[y+dy][x+dx].isOccupied() == true) {
             return false;
         }
 
@@ -341,7 +360,7 @@ public class GameState implements Serializable {
             int dx = 0;
             int dy = 0;
 
-            if (horizontalMove) {
+            if (!horizontalMove) {
                 dy = 1 * (neg ? -1 : 1);
             } else {
                 dx = 1 * (neg ? -1 : 1);
@@ -353,7 +372,8 @@ public class GameState implements Serializable {
             if (canMoveEngimon(dx, dy, oldX, oldY, wildEngimon.getSpecies())) {
                 maptile.makeFree(oldY, oldX);
                 wildEngimon.setPos(dx + oldX, dy + oldY);
-                maptile.makeOccupied(oldX + dx, oldY + dy);
+                // maptile.makeOccupied(oldX + dx, oldY + dy);
+				map[oldY + dy][oldX + dx].makeOccupied();
             }
 
             // add exp
@@ -406,12 +426,6 @@ public class GameState implements Serializable {
             if (x < 0) x += Tile.maxX;
             y = rand.nextInt() % Tile.maxY;
             if (y < 0) y += Tile.maxY;
-
-            if ((x == player.getPositionX() && y == player.getPositionY())
-                || (x == player.getActiveEngimon().getPosition().getX() && y == player.getActiveEngimon().getPosition().getY())) {
-                System.out.println("ANJENGGGG");
-                System.out.println("NAHA AING NABRAK JANCOK");
-            }
         } while (x >= emptyTiles.size()
                 || y >= emptyTiles.get(x).size()
                 || !canMoveEngimon(0, 0, x, y, engie.getSpecies()));
@@ -443,6 +457,10 @@ public class GameState implements Serializable {
             }
         }
     }
+
+	public void setGameOver(){
+		isGameOver = true;
+	}
 
     public EngiDex getEDex(){ return this.engiDex; }
     public SkillDex getSkillDex(){ return this.skillDex; }
