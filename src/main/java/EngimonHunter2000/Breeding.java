@@ -44,6 +44,8 @@ public class Breeding {
         if (_parent1.equals(_parent2)) {
             throw new BreedingException(1);
         }
+        _parent1.addLevel(-3);
+        _parent2.addLevel(-3);
         this.n1 = _parent1.getListElement().getElementsList().size();
         this.n2 = _parent2.getListElement().getElementsList().size();
         // Mengubah ElementList menjadi Array (mengambil 2 elemen terdepan saja)
