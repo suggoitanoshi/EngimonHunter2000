@@ -5,7 +5,6 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.stream.Collectors;
 
@@ -170,7 +169,7 @@ public class GUI extends JFrame {
                 c.gridx = 0;
                 Inventory<Engimon> engies = gs.getPlayer().getInventoryEngimon();
                 HashMap<String, ArrayList<Engimon>> groupByElement = new HashMap<String, ArrayList<Engimon>>();
-                for(int i = 0; i < engies.getAllInvenTotalItemCount(); i++){
+                for(int i = 0; i < engies.getItemCount(); i++){
                     try{
                         Engimon en = engies.at(i);
                         String el = ((Element)en.getListElement().getElementsList().toArray()[0]).name();
@@ -300,7 +299,7 @@ public class GUI extends JFrame {
                 container_hasil.removeAll();
                 Inventory<Engimon> engies = gs.getPlayer().getInventoryEngimon();
                 HashMap<String, ArrayList<Engimon>> groupByElement = new HashMap<String, ArrayList<Engimon>>();
-                for(int i = 0; i < engies.getAllInvenTotalItemCount(); i++){
+                for(int i = 0; i < engies.getItemCount(); i++){
                     try{
                         Engimon en = engies.at(i);
                         String el = ((Element)en.getListElement().getElementsList().toArray()[0]).name();
@@ -356,7 +355,7 @@ public class GUI extends JFrame {
                 c.gridx = 0;
                 Inventory<Item> items = gs.getPlayer().getInventoryItem();
                 java.util.List<Item> itemsorted = new java.util.ArrayList<Item>();
-                for(int i = 0; i < items.getAllInvenTotalItemCount(); i++){
+                for(int i = 0; i < items.getItemCount(); i++){
                     try{
                         itemsorted.add(items.at(i));
                     }
@@ -422,7 +421,7 @@ public class GUI extends JFrame {
                                 container_hasil.repaint();
                             }
                         });
-                        container_hasil.add(new JLabel(realname, icon, SwingConstants.LEFT), c);
+                        container_hasil.add(new JLabel(realname + " (qty: " + i.getQuantity() + ")", icon, SwingConstants.LEFT), c);
                         c.gridx = 1;
                         container_hasil.add(liatdetail, c);
                         c.gridx = 2;
@@ -440,7 +439,7 @@ public class GUI extends JFrame {
                 container_hasil.removeAll();
                 Inventory<Item> items = gs.getPlayer().getInventoryItem();
                 java.util.List<Item> itemsorted = new java.util.ArrayList<Item>();
-                for(int i = 0; i < items.getAllInvenTotalItemCount(); i++){
+                for(int i = 0; i < items.getItemCount(); i++){
                     try{
                         itemsorted.add(items.at(i));
                     }
@@ -513,7 +512,7 @@ public class GUI extends JFrame {
                 JLabel kawinlabel = new JLabel("Pilih orangtua 1: ");
                 container_hasil.add(new JLabel("Kawin~"));
                 container_hasil.add(kawinlabel);
-                for(int i = 0; i < engies.getAllInvenTotalItemCount(); i++){
+                for(int i = 0; i < engies.getItemCount(); i++){
                     try{
                         c.gridy = i+2;
                         int j = i;
@@ -544,8 +543,14 @@ public class GUI extends JFrame {
                                                 try{
                                                     Engimon anak = b.breeding(gs.getEDex(), parents[0], parents[1], gs.getSkillDex(), namaAnak.getText());
                                                     gs.getPlayer().addEngimon(anak);
-                                                } catch(EngimonHunter2000Exception ex){}
+                                                } catch (BreedingException ex) {
+                                                    JOptionPane.showMessageDialog(container_hasil, ex.what());
+                                                } catch (EngimonHunter2000Exception ex) {
+                                                    JOptionPane.showMessageDialog(container_hasil, ex.what());
+                                                }
                                                 container_hasil.removeAll();
+                                                container_hasil.revalidate();
+                                                container_hasil.repaint();
                                             }
                                         });
                                         container_hasil.add(namaAnak);
@@ -648,6 +653,7 @@ public class GUI extends JFrame {
                                                         .getStarterSkill()
                                                         .getName());
                                     gs.getPlayer().addItem(new Item(itSkill));
+                                    gs.getPlayer().getActiveEngimon().addExp(20 + en.getExp());
 								}
 								catch (InventoryException | EngimonException e1){
                                     e1.printStackTrace();
@@ -705,7 +711,7 @@ public class GUI extends JFrame {
                 for(SkillEngimon s: engi.getSkills()){
                     c.gridy++;
                     String skillname = s.getName() + "(" + s.getMasteryLevel() + ")";
-                    String stripped = skillname.toLowerCase().replace("\\s", "");
+                    String stripped = s.getName().toLowerCase().replaceAll("[^a-zA-Z0-9]", "");
                     ImageIcon icon = ambilGambar("/skills/"+stripped+".png");
                     container_hasil.add(new JLabel(skillname, icon, SwingConstants.LEFT), c);
                 }
@@ -720,7 +726,8 @@ public class GUI extends JFrame {
                 container_hasil.removeAll();
                 Engimon engi = gs.getPlayer().getActiveEngimon();
                 String species = engi.getSpecies().toLowerCase().replaceAll("\\s", "");
-                ImageIcon icon = ambilGambar("/"+species+"/"+species+".png");
+                ImageIcon icon = ambilGambar("/" + species + "/" + species + ".png");
+                container_hasil.add(new JLabel(engi.getName() + ": " + engi.getSlogan(), icon, SwingConstants.LEFT));
                 container_hasil.revalidate();
                 container_hasil.repaint();
             }

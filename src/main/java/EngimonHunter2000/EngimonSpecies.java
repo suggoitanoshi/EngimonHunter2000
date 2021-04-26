@@ -63,9 +63,7 @@ public class EngimonSpecies implements Serializable {
     }
 
     public SkillEngimon getStarterSkill() {
-
-        return this.starterSkill;
-
+        return new SkillEngimon(starterSkill);
     }
 
     public ElementsList getListElement() {

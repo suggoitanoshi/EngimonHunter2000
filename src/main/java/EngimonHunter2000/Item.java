@@ -3,6 +3,7 @@ package EngimonHunter2000;
 import java.util.*;
 
 public class Item extends SkillEngimon {
+    public static final long serialVersionUID = 5914066636119786165L;
     private int quantity;
 
     /**
@@ -81,9 +82,8 @@ public class Item extends SkillEngimon {
 
         Item _i = (Item) o;
 
-        return this.quantity == _i.getQuantity() &&
-            this.skillInfo.getName().equals(_i.getName()) &&
-            this.masteryLevel == _i.getMasteryLevel();
+        return this.skillInfo.getName().equals(_i.getName()) &&
+               this.masteryLevel == _i.getMasteryLevel();
     }
 
     /**
@@ -131,33 +131,17 @@ public class Item extends SkillEngimon {
         }
 
         if (newSkill) {
-            if (e.getSkillCount() == Engimon.MAX_SKILLS) {
-                int i = 1, input;
-                Scanner sc = new Scanner(System.in);
+            Element[] els = new Element[getElements().size()];
+            getElements().toArray(els);
 
-                for (SkillEngimon s : e.getSkills()) {
-                    System.out.print(i + "." + s.getName() + "\n");
-                }
-
-                System.out.print("Pilih nomor skill untuk diganti dengan skill baru: ");
-                input = sc.nextInt();
-
-                if (input < 1 || input > Engimon.MAX_SKILLS) {
-                    throw new ItemException(2);
-                }
-            } else {
-                Element[] els = new Element[getElements().size()];
-                getElements().toArray(els);
-
-                try {
-                    SkillDex temp = new SkillDex();
-                    Skill s = temp.getEntity(getName());
-                    SkillEngimon se = new SkillEngimon(s);
-                    e.addSkill(se);
-                } catch (DexException | EngimonException exception) {
-                    exception.printStackTrace();
-                    throw new ItemException(3);
-                }
+            try {
+                SkillDex temp = new SkillDex();
+                Skill s = temp.getEntity(getName());
+                SkillEngimon se = new SkillEngimon(s);
+                e.addSkill(se);
+            } catch (DexException | EngimonException exception) {
+                exception.printStackTrace();
+                throw new ItemException(3);
             }
         }
     }

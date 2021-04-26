@@ -39,6 +39,11 @@ public class SkillEngimon implements Serializable {
         masteryLevel = _masteryLevel;
     }
 
+    public SkillEngimon(SkillEngimon sumber) {
+        skillInfo = sumber.skillInfo;
+        masteryLevel = sumber.masteryLevel;
+    }
+
     /**
      * Getter untuk mendapatkan nama skill (diambil dari skillInfo)
      * @return nama skill

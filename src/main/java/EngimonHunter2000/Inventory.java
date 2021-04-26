@@ -3,11 +3,12 @@ package EngimonHunter2000;
 import java.util.ArrayList;
 import java.io.Serializable;
 
-class Inventory<T> implements Serializable {
+class Inventory<T extends Serializable> implements Serializable {
     public static final long serialVersionUID = 1L;
     private ArrayList<T> container;
     private static int max = 50;
     private static int itemCount = 0;
+
     public Inventory() {
         this.container = new ArrayList<T>();
     }
@@ -88,7 +89,7 @@ class Inventory<T> implements Serializable {
         return this.container.size();
     }
 
-    public int getAllInvenTotalItemCount() {
+    public static int getAllInvenTotalItemCount() {
         return Inventory.itemCount;
     }
 
@@ -114,5 +115,9 @@ class Inventory<T> implements Serializable {
             throw new InventoryException(2);
         }
         return -1;
+    }
+
+    public static void setItemCount(int count) {
+        itemCount = count;
     }
 }
