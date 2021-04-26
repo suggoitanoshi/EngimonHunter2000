@@ -69,9 +69,8 @@ public class Engimon extends EngimonSpecies implements Serializable {
      * @throws ElementsListException
      * @throws EngimonException nama tidak valid
      */
-    Engimon(EngiDex dex, String _species, String _name, int _lvl, int _exp,
-            Position _pos, int _lives, String _parent1, String _parent2)
-            throws EngimonSpeciesException, ElementsListException, EngimonException {
+    Engimon(EngiDex dex, String _species, String _name, int _lvl, int _exp, Position _pos, int _lives, String _parent1,
+            String _parent2) throws EngimonSpeciesException, ElementsListException, EngimonException {
         super(dex, _species);
         if (_name == null || _name == "") {
             throw new EngimonException(3);
@@ -114,16 +113,6 @@ public class Engimon extends EngimonSpecies implements Serializable {
         this.lives = 3;
         this.position = new Position(-1, -1);
     }
-
-    //belom selesai
-    // private void breedingElement(Engimon parent1, Engimon parent2) throws EngimonException {
-    //     if (parent1.getLvl() < 4 || parent2.getLvl() < 4) {
-    //         throw new EngimonException(3);
-    //     }
-    //     if (Element.getElementalAdvantage(parent1.getListElement(), parent2.getListElement())) {
-
-    //     }
-    // }
 
     // GETTER
 
@@ -189,14 +178,6 @@ public class Engimon extends EngimonSpecies implements Serializable {
         }
 
         throw new EngimonException(1);
-    }
-
-    /**
-     * Getter jumlah skill dari engimon
-     * @return jumlah skill yang dimiliki engimon
-     */
-    public int getSkillsCount() {
-        return this.listSkill.size();
     }
 
     /**
@@ -332,5 +313,9 @@ public class Engimon extends EngimonSpecies implements Serializable {
 
     public String[] getParents() {
         return this.parents;
+    }
+
+    public void changeParent(int _idx, String _name) {
+        this.parents[_idx] = _name;
     }
 }

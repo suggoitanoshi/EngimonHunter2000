@@ -31,9 +31,12 @@ public class Breeding {
         if (_parent1.getLvl() < 4 || _parent2.getLvl() < 4) {
             throw new BreedingException(0);
         }
+        if (_parent1.getName() == _parent2.getName()) {
+            throw new BreedingException(1);
+        }
         // Mengubah ElementList menjadi Array (mengambil 2 elemen terdepan saja)
-        Element[] temp = new Element[10];
-        Element[] temp2 = new Element[10];
+        Element[] temp = new Element[2];
+        Element[] temp2 = new Element[2];
         _parent1.getListElement().getElementsList().toArray(temp);
         _parent2.getListElement().getElementsList().toArray(temp2);
 
@@ -69,6 +72,10 @@ public class Breeding {
                 retVal.addSkill(priorityBreeding(_skillDex));
             }
         }
+
+        retVal.changeParent(0, _parent1.getName());
+        retVal.changeParent(1, _parent2.getName());
+
         return retVal;
 
     }
