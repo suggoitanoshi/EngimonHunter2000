@@ -42,11 +42,12 @@ public class GameState implements Serializable {
 
 	public void updateGameState() {
         turn++;
+
         // tambahin exp dan move engimon
         if (turn % 5 == 0) {
             activateWildEngimons();
         }
-
+		
         maptile = new MapTile();
         map = maptile.getMap();
 
