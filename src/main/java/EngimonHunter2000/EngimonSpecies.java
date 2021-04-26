@@ -80,16 +80,4 @@ public class EngimonSpecies {
         return this.listElement;
     }
 
-    /**
-     * TODO: handle buat elemen baru?
-     * @param _element {@link Element} Element yang ingin ditambahkan
-     */
-    public void addElement(Element _element) throws EngimonSpeciesException {
-        if (this.listElement.getElementsList().size() < 2) {
-            // nambahin elemen baru?
-        } else {
-            throw new EngimonSpeciesException(1);
-        }
-    }
-
 }
