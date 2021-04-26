@@ -318,12 +318,20 @@ public class Engimon extends EngimonSpecies {
         this.parents[_idx] = _name;
     }
 
-    public boolean isEngimonEqual(Engimon _e) {
-        if (this.getSpecies() == _e.getSpecies() && this.getName() == _e.getName() && this.getLvl() == _e.getLvl()
-                && this.getExp() == _e.getExp() && this.getBattlePower(1.0) == _e.getBattlePower(1.0)) {
-            return true;
-        } else {
+    @Override public boolean equals(Object o) {
+        if (o == null) {
             return false;
         }
+
+        if (o.getClass() != Engimon.class) {
+            return false;
+        }
+
+        Engimon _e = (Engimon) o;
+
+        return this.getSpecies() == _e.getSpecies()
+                && this.getName() == _e.getName() && this.getLvl() == _e.getLvl()
+                && this.getExp() == _e.getExp()
+                && this.getBattlePower(1.0) == _e.getBattlePower(1.0);
     }
 }

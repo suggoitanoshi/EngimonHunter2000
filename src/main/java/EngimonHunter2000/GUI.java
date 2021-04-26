@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import java.rmi.server.SkeletonMismatchException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.stream.Collectors;
 
 import javax.swing.*;
@@ -169,86 +170,100 @@ public class GUI extends JFrame {
                 container_hasil.removeAll();
                 c.gridx = 0;
                 Inventory<Engimon> engies = gs.getPlayer().getInventoryEngimon();
+                HashMap<String, ArrayList<Engimon>> groupByElement = new HashMap<String, ArrayList<Engimon>>();
                 for(int i = 0; i < engies.getAllInvenTotalItemCount(); i++){
                     try{
-                        int j = i;
-                        c.gridx = 0;
-                        c.gridy = i;
-                        Engimon curr = engies.at(i);
-                        String species = curr.getSpecies().toLowerCase().replaceAll("\\s", "");
-                        ImageIcon icon = new ImageIcon("data/resource/"+species+"/"+species+".png");
-                        JButton gantinama = new JButton("Ganti namanya");
-                        JButton hapus = new JButton("Hapus yang ini");
-                        gantinama.addActionListener(new ActionListener(){
-                            @Override
-                            public void actionPerformed(ActionEvent e){
-                                container_hasil.removeAll();
-                                
-                                JTextField namanya = new JTextField();
-                                JButton ok = new JButton("Ok");
-
-                                namanya.setColumns(20);
-
-                                ok.addActionListener(new ActionListener(){
-                                    @Override
-                                    public void actionPerformed(ActionEvent e){
-                                        try{
-                                            gs.getPlayer().changeEngimonName(j, namanya.getText());
-                                            container_hasil.removeAll();
-                                            container_hasil.revalidate();
-                                            container_hasil.repaint();
-                                        } catch(EngimonHunter2000Exception ex){}
-                                    }
-                                });
-
-                                container_hasil.add(new JLabel("Nama baru: "));
-                                container_hasil.add(namanya);
-                                container_hasil.add(ok);
-                                container_hasil.revalidate();
-                                container_hasil.repaint();
-                            }
-                        });
-                        hapus.addActionListener(new ActionListener(){
-                            @Override
-                            public void actionPerformed(ActionEvent e){
-                                try{
-                                    gs.getPlayer().removeEngimon(j);
-                                    container_hasil.removeAll();
-                                    container_hasil.revalidate();
-                                    container_hasil.repaint();
-                                    gs.updateGameState();
-                                    pane.removeAll();
-                                    MapGrid m = new MapGrid(
-                                        gs.getPlayer().getPositionX(), gs.getPlayer().getPositionY(), gs.getMap());
-                                    pane.add(m, BorderLayout.WEST);
-                                    pane.revalidate();
-                                    pane.repaint();
-                                } catch(InventoryException ex){
-                                    container_hasil.removeAll();
-                                    c.gridx = 0;
-                                    c.gridy = 0;
-                                    container_hasil.add(new JLabel("GAME OVER GAN"), c);
-                                    c.gridy = 1;
-                                    container_hasil.add(new JLabel("SIAPA SURUH NGAPUS AKTIF ENGIMON"), c);
-                                    container_hasil.revalidate();
-                                    container_hasil.repaint();
-                                    gs.setGameOver();
-                                    gs.updateGameState();
-                                    pane.removeAll();
-                                    MapGrid m = new MapGrid(
-                                        gs.getPlayer().getPositionX(), gs.getPlayer().getPositionY(), gs.getMap());
-                                    pane.add(m, BorderLayout.WEST);
-                                    pane.revalidate();
-                                    pane.repaint();
-                                }
-                            }
-                        });
-                        container_hasil.add(new JLabel(curr.getName(), icon, SwingConstants.LEFT), c);
-                        c.gridx = 1;
-                        container_hasil.add(gantinama, c);
-                        c.gridx = 2;
-                        container_hasil.add(hapus, c);
+                        Engimon en = engies.at(i);
+                        String el = ((Element)en.getListElement().getElementsList().toArray()[0]).name();
+                        if(groupByElement.get(el) == null){
+                            groupByElement.put(el, new ArrayList<Engimon>());
+                        }
+                        groupByElement.get(el).add(en);
                     } catch(InventoryException ex){}
+                }
+                c.gridy = 0;
+                for(ArrayList<Engimon> anjay: groupByElement.values()){
+                    java.util.List<Engimon> sorted = anjay.stream().sorted((e1, e2)->{ return Integer.compare(e1.getLvl(), e2.getLvl()); }).collect(Collectors.toList());
+                    for(Engimon curr: sorted){
+                        try{
+                            c.gridx = 0;
+                            c.gridy++;
+                            int j = engies.getItemFromIdx(curr);
+                            String species = curr.getSpecies().toLowerCase().replaceAll("\\s", "");
+                            ImageIcon icon = new ImageIcon("data/resource/"+species+"/"+species+".png");
+                            JButton gantinama = new JButton("Ganti namanya");
+                            JButton hapus = new JButton("Hapus yang ini");
+                            gantinama.addActionListener(new ActionListener(){
+                                @Override
+                                public void actionPerformed(ActionEvent e){
+                                    container_hasil.removeAll();
+                                    
+                                    JTextField namanya = new JTextField();
+                                    JButton ok = new JButton("Ok");
+
+                                    namanya.setColumns(20);
+
+                                    ok.addActionListener(new ActionListener(){
+                                        @Override
+                                        public void actionPerformed(ActionEvent e){
+                                            try{
+                                                gs.getPlayer().changeEngimonName(j, namanya.getText());
+                                                container_hasil.removeAll();
+                                                container_hasil.revalidate();
+                                                container_hasil.repaint();
+                                            } catch(EngimonHunter2000Exception ex){}
+                                        }
+                                    });
+
+                                    container_hasil.add(new JLabel("Nama baru: "));
+                                    container_hasil.add(namanya);
+                                    container_hasil.add(ok);
+                                    container_hasil.revalidate();
+                                    container_hasil.repaint();
+                                }
+                            });
+                            hapus.addActionListener(new ActionListener(){
+                                @Override
+                                public void actionPerformed(ActionEvent e){
+                                    try{
+                                        gs.getPlayer().removeEngimon(j);
+                                        container_hasil.removeAll();
+                                        container_hasil.revalidate();
+                                        container_hasil.repaint();
+                                        gs.updateGameState();
+                                        pane.removeAll();
+                                        MapGrid m = new MapGrid(
+                                            gs.getPlayer().getPositionX(), gs.getPlayer().getPositionY(), gs.getMap());
+                                        pane.add(m, BorderLayout.WEST);
+                                        pane.revalidate();
+                                        pane.repaint();
+                                    } catch(InventoryException ex){
+                                        container_hasil.removeAll();
+                                        c.gridx = 0;
+                                        c.gridy = 0;
+                                        container_hasil.add(new JLabel("GAME OVER GAN"), c);
+                                        c.gridy = 1;
+                                        container_hasil.add(new JLabel("SIAPA SURUH NGAPUS AKTIF ENGIMON"), c);
+                                        container_hasil.revalidate();
+                                        container_hasil.repaint();
+                                        gs.setGameOver();
+                                        gs.updateGameState();
+                                        pane.removeAll();
+                                        MapGrid m = new MapGrid(
+                                            gs.getPlayer().getPositionX(), gs.getPlayer().getPositionY(), gs.getMap());
+                                        pane.add(m, BorderLayout.WEST);
+                                        pane.revalidate();
+                                        pane.repaint();
+                                    }
+                                }
+                            });
+                            container_hasil.add(new JLabel(curr.getName(), icon, SwingConstants.LEFT), c);
+                            c.gridx = 1;
+                            container_hasil.add(gantinama, c);
+                            c.gridx = 2;
+                            container_hasil.add(hapus, c);
+                        } catch(InventoryException ex){}
+                    }
                 }
                 container_hasil.revalidate();
                 container_hasil.repaint();
@@ -279,35 +294,50 @@ public class GUI extends JFrame {
             public void actionPerformed(ActionEvent e){
                 container_hasil.removeAll();
                 Inventory<Engimon> engies = gs.getPlayer().getInventoryEngimon();
+                HashMap<String, ArrayList<Engimon>> groupByElement = new HashMap<String, ArrayList<Engimon>>();
                 for(int i = 0; i < engies.getAllInvenTotalItemCount(); i++){
                     try{
-                        c.gridy = i;
-                        int j = i;
-                        Engimon curr = engies.at(i);
-                        String species = curr.getSpecies().toLowerCase().replaceAll("\\s", "");
-                        ImageIcon icon = new ImageIcon("data/resource/"+species+"/"+species+".png");
-                        JButton button = new JButton(curr.getName(), icon);
-                        button.addActionListener(new ActionListener(){
-                            @Override
-                            public void actionPerformed(ActionEvent e){
-                                try{
-                                    gs.getPlayer().switchEngimon(j);
-
-                                    gs.updateGameState();
-                                    pane.removeAll();
-                                    MapGrid m = new MapGrid(
-                                        gs.getPlayer().getPositionX(), gs.getPlayer().getPositionY(), gs.getMap());
-                                    pane.add(m, BorderLayout.WEST);
-                                    pane.revalidate();
-                                    pane.repaint();
-                                } catch(InventoryException ex){}
-                                container_hasil.removeAll();
-                                container_hasil.revalidate();
-                                container_hasil.repaint();
-                            }
-                        });
-                        container_hasil.add(button, c);
+                        Engimon en = engies.at(i);
+                        String el = ((Element)en.getListElement().getElementsList().toArray()[0]).name();
+                        if(groupByElement.get(el) == null){
+                            groupByElement.put(el, new ArrayList<Engimon>());
+                        }
+                        groupByElement.get(el).add(en);
                     } catch(InventoryException ex){}
+                }
+                c.gridy = 0;
+                for(ArrayList<Engimon> anjay: groupByElement.values()){
+                    java.util.List<Engimon> sorted = anjay.stream().sorted((e1, e2)->{ return Integer.compare(e1.getLvl(), e2.getLvl()); }).collect(Collectors.toList());
+                    for(Engimon curr: sorted){
+                        try{
+                            c.gridx = 0;
+                            c.gridy++;
+                            int j = engies.getItemFromIdx(curr);
+                            String species = curr.getSpecies().toLowerCase().replaceAll("\\s", "");
+                            ImageIcon icon = new ImageIcon("data/resource/"+species+"/"+species+".png");
+                            JButton button = new JButton(curr.getName(), icon);
+                            button.addActionListener(new ActionListener(){
+                                @Override
+                                public void actionPerformed(ActionEvent e){
+                                    try{
+                                        gs.getPlayer().switchEngimon(j);
+
+                                        gs.updateGameState();
+                                        pane.removeAll();
+                                        MapGrid m = new MapGrid(
+                                            gs.getPlayer().getPositionX(), gs.getPlayer().getPositionY(), gs.getMap());
+                                        pane.add(m, BorderLayout.WEST);
+                                        pane.revalidate();
+                                        pane.repaint();
+                                    } catch(InventoryException ex){}
+                                    container_hasil.removeAll();
+                                    container_hasil.revalidate();
+                                    container_hasil.repaint();
+                                }
+                            });
+                            container_hasil.add(button, c);
+                        } catch(InventoryException ex){}
+                    }
                 }
                 container_hasil.revalidate();
                 container_hasil.repaint();
@@ -320,15 +350,45 @@ public class GUI extends JFrame {
                 container_hasil.removeAll();
                 c.gridx = 0;
                 Inventory<Item> items = gs.getPlayer().getInventoryItem();
+                java.util.List<Item> itemsorted = new java.util.ArrayList<Item>();
                 for(int i = 0; i < items.getAllInvenTotalItemCount(); i++){
                     try{
-                        int j = i;
-                        String realname = items.at(i).getName();
+                        itemsorted.add(items.at(i));
+                    }
+                    catch(InventoryException ex){}
+                }
+                itemsorted = itemsorted.stream().sorted((i1, i2)->{ return Integer.compare(i1.getBasePower(), i2.getBasePower()); }).collect(Collectors.toList());
+                int gridy = 0;
+                for(Item i: itemsorted){
+                    try{
+                        int j = items.getItemFromIdx(i);
+                        String realname = i.getName();
                         String filename = realname.toLowerCase().replaceAll("\\s", "");
                         c.gridx = 0;
-                        c.gridy = i;
+                        c.gridy = gridy++;
                         ImageIcon icon = new ImageIcon("data/resource/skills/"+filename+".png");
+                        JButton liatdetail = new JButton("Lihat detail");
                         JButton hapusgan = new JButton("Hapus Item");
+                        liatdetail.addActionListener(new ActionListener(){
+                            @Override
+                            public void actionPerformed(ActionEvent e){
+                                container_hasil.removeAll();
+                                c.gridx = 0;
+                                c.gridy = 0;
+                                container_hasil.add(new JLabel("Detail Item:", icon, SwingConstants.LEFT), c);
+                                c.gridy = 1;
+                                container_hasil.add(new JLabel("Base power: "+i.getBasePower()), c);
+                                StringBuilder els = new StringBuilder();
+                                els.append("Elements: ");
+                                for(Element elem: i.getElements()){
+                                    els.append(elem.name()+", ");
+                                }
+                                c.gridy = 2;
+                                container_hasil.add(new JLabel(els.toString()), c);
+                                container_hasil.revalidate();
+                                container_hasil.repaint();
+                            }
+                        });
                         hapusgan.addActionListener(new ActionListener(){
                             @Override
                             public void actionPerformed(ActionEvent e){
@@ -354,6 +414,8 @@ public class GUI extends JFrame {
                         });
                         container_hasil.add(new JLabel(realname, icon, SwingConstants.LEFT), c);
                         c.gridx = 1;
+                        container_hasil.add(liatdetail, c);
+                        c.gridx = 2;
                         container_hasil.add(hapusgan,c);
                     } catch(InventoryException ex){}
                 }
@@ -367,12 +429,18 @@ public class GUI extends JFrame {
             public void actionPerformed(ActionEvent e){
                 container_hasil.removeAll();
                 Inventory<Item> items = gs.getPlayer().getInventoryItem();
+                java.util.List<Item> itemsorted = new java.util.ArrayList<Item>();
                 for(int i = 0; i < items.getAllInvenTotalItemCount(); i++){
                     try{
-                        c.gridy = i;
-                        int j = i;
-                        Item curr = items.at(i);
-                        String namaasli = curr.getName();
+                        itemsorted.add(items.at(i));
+                    }
+                    catch(InventoryException ex){}
+                }
+                itemsorted = itemsorted.stream().sorted((i1, i2)->{ return Integer.compare(i1.getBasePower(), i2.getBasePower()); }).collect(Collectors.toList());
+                for(Item i: itemsorted){
+                    try{
+                        int j = items.getItemFromIdx(i);
+                        String namaasli = i.getName();
                         String namapalsu = namaasli.toLowerCase().replaceAll("\\s", "");
                         ImageIcon icon = new ImageIcon("data/resource/skills/"+namapalsu+".png");
                         JButton button = new JButton(namaasli, icon);
