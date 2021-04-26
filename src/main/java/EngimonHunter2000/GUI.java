@@ -409,6 +409,8 @@ public class GUI extends JFrame {
                                             num.commitEdit();
                                             gs.getPlayer().removeItem(j, (Integer)num.getValue());
                                             container_hasil.removeAll();
+                                            container_hasil.revalidate();
+                                            container_hasil.repaint();
                                         } catch(Exception ex){}
                                     }
                                 });
@@ -416,6 +418,9 @@ public class GUI extends JFrame {
                                 container_hasil.add(new JLabel("Masukkan jumlah: "));
                                 container_hasil.add(num);
                                 container_hasil.add(anjay);
+
+                                container_hasil.revalidate();
+                                container_hasil.repaint();
                             }
                         });
                         container_hasil.add(new JLabel(realname, icon, SwingConstants.LEFT), c);
@@ -443,8 +448,10 @@ public class GUI extends JFrame {
                     catch(InventoryException ex){}
                 }
                 itemsorted = itemsorted.stream().sorted((i1, i2)->{ return Integer.compare(i1.getBasePower(), i2.getBasePower()); }).collect(Collectors.toList());
+                c.gridy = 0;
                 for(Item i: itemsorted){
                     try{
+                        c.gridy++;
                         int j = items.getItemFromIdx(i);
                         String namaasli = i.getName();
                         String namapalsu = namaasli.toLowerCase().replaceAll("[^a-zA-Z0-9]", "");
