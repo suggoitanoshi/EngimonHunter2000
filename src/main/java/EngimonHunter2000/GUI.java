@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.stream.Collectors;
 
 import javax.swing.*;
 
@@ -309,10 +310,10 @@ public class GUI extends JFrame {
                                 try{
                                     if(parents[0] == null){
                                         kawinlabel.setText("Pilih orangtua 2: ");
-                                        parents[0] = gs.getPlayer().getEngimonByID(j);
+                                        parents[0] = gs.getPlayer().getInventoryEngimon().at(j);
                                     }
                                     else{
-                                        parents[1] = gs.getPlayer().getEngimonByID(j);
+                                        parents[1] = gs.getPlayer().getInventoryEngimon().at(j);
                                         container_hasil.removeAll();
                                         container_hasil.add(new JLabel("Nama: "));
                                         JTextField namaAnak = new JTextField();
@@ -352,14 +353,27 @@ public class GUI extends JFrame {
                 container_hasil.removeAll();
                 java.util.List<Engimon> engs = gs.getWildEngimons().stream().filter((engi) -> {
                     return engi.getPosition().distanceTo(gs.getPlayer().getPosition()) < 2;
-                }).toList();
+                }).collect(Collectors.toList());
                 c.gridx = 0;
                 for(int i = 0; i < engs.size(); i++){
                     c.gridy = i;
-                    String species = engs.get(i).getSpecies();
+                    Engimon en = engs.get(i);
+                    String species = en.getSpecies();
                     String iconpath = species.toLowerCase().replace("\\s", "");
                     ImageIcon icon = new ImageIcon("data/resource/"+iconpath+"/"+iconpath+".png");
                     JButton button = new JButton(species, icon);
+                    button.addActionListener(new ActionListener(){
+                        @Override
+                        public void actionPerformed(ActionEvent e){
+                            Battle gelud = new Battle();
+
+                            boolean menangkh = gelud.runBattle(gs.getPlayer().getActiveEngimon(), en);
+                            if(menangkh) JOptionPane.showMessageDialog(container_hasil, "Menang boss");
+                            else JOptionPane.showMessageDialog(container_hasil, "Kalah boss");
+                            container_hasil.removeAll();
+                            container_hasil.repaint();
+                        }
+                    });
                     container_hasil.add(button, c);
                 }
                 container_hasil.revalidate();
