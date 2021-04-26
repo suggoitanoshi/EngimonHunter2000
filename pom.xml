@@ -57,6 +57,13 @@
   </dependencies>
 
   <build>
+    <!-- Buat resourcces -->
+    <resources>
+      <!-- gamabr -->
+      <resource>
+        <directory>data/resource</directory>
+      </resource>
+    </resources>
     <plugins>
       <!--surefire for multithreaded testing-->
       <plugin>
@@ -86,6 +93,11 @@
                     <shadedPattern>hidden.coyote</shadedPattern>
                   </relocation>
                 </relocations>
+                <artifactSet>
+                  <excludes>
+                    <exclude>junit:junit</exclude>
+                  </excludes>
+                </artifactSet>
               </configuration>
             </execution>
           </executions>

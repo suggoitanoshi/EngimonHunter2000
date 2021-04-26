@@ -117,31 +117,31 @@ public class GameState implements Serializable {
 			String path;
 			switch(map[player.getPositionY()][player.getPositionX()].getType()) {
 				case EDGE1_MOUNTAIN:
-					path = "data/resource/char_edge5.png";
+					path = "/char_edge5.png";
 					break;
 				case EDGE2_MOUNTAIN:
-					path = "data/resource/char_edge4.png";
+					path = "/char_edge4.png";
 					break;
 				case EDGE3_MOUNTAIN:
-					path = "data/resource/char_edge6.png";
+					path = "/char_edge6.png";
 					break;
 				case EDGE_GRASS:
-					path = "data/resource/char_edge1.png";
+					path = "/char_edge1.png";
 					break;
 				case EDGE_TUNDRA:
-					path = "data/resource/char_edge3.png";
+					path = "/char_edge3.png";
 					break;
 				case GRASS:
-					path = "data/resource/char_grass.png";
+					path = "/char_grass.png";
 					break;
 				case MOUNTAIN:
-					path = "data/resource/char_mountain.png";
+					path = "/char_mountain.png";
 					break;
 				case TUNDRA:
-					path = "data/resource/char_tundra.png";
+					path = "/char_tundra.png";
 					break;
 				default: // water
-					path = "data/resource/char_watergif.gif";
+					path = "/char_watergif.gif";
 			}
 
 			// set player sprite
@@ -207,7 +207,7 @@ public class GameState implements Serializable {
     }
 
     private String getEngimonSprite(Engimon engie, TileType tipe) {
-        StringBuilder SB = new StringBuilder("data/resource/");
+        StringBuilder SB = new StringBuilder("/");
         SB.append(engie.getSpecies().replaceAll("\\s+", "").toLowerCase());
         SB.append("/");
         SB.append(engie.getSpecies().replaceAll("\\s+", "").toLowerCase());
@@ -243,7 +243,7 @@ public class GameState implements Serializable {
     }
 
     private String getEngimonSpriteWild(Engimon engie, String type, TileType tipe) {
-        StringBuilder SB = new StringBuilder("data/resource/");
+        StringBuilder SB = new StringBuilder("/");
         SB.append(engie.getSpecies().replaceAll("\\s+", "").toLowerCase());
         SB.append("/");
         SB.append(engie.getSpecies().replaceAll("\\s+", "").toLowerCase());

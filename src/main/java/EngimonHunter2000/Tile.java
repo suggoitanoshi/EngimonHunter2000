@@ -43,38 +43,38 @@ public class Tile {
         this.x = x;
         this.y = y;
         if (t == TileType.GRASS) {
-            path = "data/resource/grass.png";
+            path = "/grass.png";
             this.icon = '1';
         } else if (t == TileType.WATER) {
-            path = "data/resource/watergif.gif";
+            path = "/watergif.gif";
             this.icon = '2';
         }
         else if (t == TileType.MOUNTAIN) {
-            path = "data/resource/mountain.png";
+            path = "/mountain.png";
             this.icon = '4';
         }
         else if (t == TileType.TUNDRA) {
-            path = "data/resource/tundra.png";
+            path = "/tundra.png";
             this.icon = '3';
         }
         else if (t == TileType.EDGE_GRASS) {
-            path = "data/resource/edge1.png";
+            path = "/edge1.png";
             this.icon = 'a';
         }
         else if (t == TileType.EDGE_TUNDRA) {
-            path = "data/resource/edge3.png";
+            path = "/edge3.png";
             this.icon = 'b';
         }
         else if (t == TileType.EDGE1_MOUNTAIN) {
-            path = "data/resource/edge5.png";
+            path = "/edge5.png";
             this.icon = 'c';
         }
         else if (t == TileType.EDGE2_MOUNTAIN) {
-            path = "data/resource/edge4.png";
+            path = "/edge4.png";
             this.icon = 'd';
         }
         else if (t == TileType.EDGE3_MOUNTAIN) {
-            path = "data/resource/edge6.png";
+            path = "/edge6.png";
             this.icon = 'e';
         }
     }

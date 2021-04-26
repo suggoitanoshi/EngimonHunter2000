@@ -4,7 +4,6 @@ import java.awt.*;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.rmi.server.SkeletonMismatchException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -190,7 +189,7 @@ public class GUI extends JFrame {
                             c.gridy++;
                             int j = engies.getItemFromIdx(curr);
                             String species = curr.getSpecies().toLowerCase().replaceAll("\\s", "");
-                            ImageIcon icon = new ImageIcon("data/resource/"+species+"/"+species+".png");
+                            ImageIcon icon = ambilGambar("/"+species+"/"+species+".png");
                             JButton gantinama = new JButton("Ganti namanya");
                             JButton hapus = new JButton("Hapus yang ini");
                             gantinama.addActionListener(new ActionListener(){
@@ -286,8 +285,8 @@ public class GUI extends JFrame {
                 for(int i = 0; i < dex.getDex().size(); i++){
                     c.gridy = i;
                     String species = ((EngimonSpecies)lengkap[i]).getSpecies();
-                    String speciesanjay = species.replaceAll("\\s", "");
-                    ImageIcon icon = new ImageIcon("data/resource/"+speciesanjay+"/"+speciesanjay+".png");
+                    String speciesanjay = species.replaceAll("\\s", "").toLowerCase();
+                    ImageIcon icon = ambilGambar("/"+speciesanjay+"/"+speciesanjay+".png");
                     container_hasil.add(new JLabel(species, icon, SwingConstants.LEFT), c);
                 }
                 container_hasil.revalidate();
@@ -320,7 +319,7 @@ public class GUI extends JFrame {
                             c.gridy++;
                             int j = engies.getItemFromIdx(curr);
                             String species = curr.getSpecies().toLowerCase().replaceAll("\\s", "");
-                            ImageIcon icon = new ImageIcon("data/resource/"+species+"/"+species+".png");
+                            ImageIcon icon = ambilGambar("/"+species+"/"+species+".png");
                             JButton button = new JButton(curr.getName(), icon);
                             button.addActionListener(new ActionListener(){
                                 @Override
@@ -372,7 +371,7 @@ public class GUI extends JFrame {
                         String filename = realname.toLowerCase().replaceAll("\\s", "");
                         c.gridx = 0;
                         c.gridy = gridy++;
-                        ImageIcon icon = new ImageIcon("data/resource/skills/"+filename+".png");
+                        ImageIcon icon = ambilGambar("/skills/"+filename+".png");
                         JButton liatdetail = new JButton("Lihat detail");
                         JButton hapusgan = new JButton("Hapus Item");
                         liatdetail.addActionListener(new ActionListener(){
@@ -448,7 +447,7 @@ public class GUI extends JFrame {
                         int j = items.getItemFromIdx(i);
                         String namaasli = i.getName();
                         String namapalsu = namaasli.toLowerCase().replaceAll("\\s", "");
-                        ImageIcon icon = new ImageIcon("data/resource/skills/"+namapalsu+".png");
+                        ImageIcon icon = ambilGambar("/skills/"+namapalsu+".png");
                         JButton button = new JButton(namaasli, icon);
                         button.addActionListener(new ActionListener(){
                             @Override
@@ -491,7 +490,7 @@ public class GUI extends JFrame {
                         int j = i;
                         Engimon curr = engies.at(i);
                         String species = curr.getSpecies().toLowerCase().replaceAll("\\s", "");
-                        ImageIcon icon = new ImageIcon("data/resource/"+species+"/"+species+".png");
+                        ImageIcon icon = ambilGambar("/"+species+"/"+species+".png");
                         JButton button = new JButton(curr.getName(), icon);
                         button.addActionListener(new ActionListener(){
                             @Override
@@ -553,7 +552,7 @@ public class GUI extends JFrame {
                     Engimon en = engs.get(i);
                     String species = en.getSpecies();
                     String iconpath = species.toLowerCase().replaceAll("\\s", "");
-                    ImageIcon icon = new ImageIcon("data/resource/"+iconpath+"/"+iconpath+".png");
+                    ImageIcon icon = ambilGambar("/"+iconpath+"/"+iconpath+".png");
                     JButton button = new JButton(species, icon);
                     button.addActionListener(new ActionListener(){
                         @Override
@@ -672,7 +671,7 @@ public class GUI extends JFrame {
                     c.gridy++;
                     String skillname = s.getName() + "(" + s.getMasteryLevel() + ")";
                     String stripped = skillname.toLowerCase().replace("\\s", "");
-                    ImageIcon icon = new ImageIcon("data/resource/skills/"+stripped+".png");
+                    ImageIcon icon = ambilGambar("/skills/"+stripped+".png");
                     container_hasil.add(new JLabel(skillname, icon, SwingConstants.LEFT), c);
                 }
                 container_hasil.revalidate();
@@ -686,8 +685,7 @@ public class GUI extends JFrame {
                 container_hasil.removeAll();
                 Engimon engi = gs.getPlayer().getActiveEngimon();
                 String species = engi.getSpecies().toLowerCase().replaceAll("\\s", "");
-                ImageIcon icon = new ImageIcon("data/resource/"+species+"/"+species+".png");
-                container_hasil.add(new JLabel(engi.getName() + ": "+ engi.getSlogan(), icon, SwingConstants.LEFT));
+                ImageIcon icon = ambilGambar("/"+species+"/"+species+".png");
                 container_hasil.revalidate();
                 container_hasil.repaint();
             }
@@ -804,6 +802,11 @@ public class GUI extends JFrame {
     private void loadGame() throws GameStateException{
         gs = GameState.load("data/save.dat");
     }
+
+    private ImageIcon ambilGambar(String path) {
+        System.out.println(path);
+        return new ImageIcon(getClass().getResource(path));
+    }
 }
 
 class MapGrid extends JPanel {
@@ -812,7 +815,11 @@ class MapGrid extends JPanel {
         JPanel panel = new JPanel(new GridLayout(20, 20, 0, 0));
         for (int i = 0; i < 20; i++) {
             for (int j = 0; j < 20; j++) {
-				JLabel l = new JLabel(new ImageIcon(map[i][j].getPath()));
+				JLabel l =
+                    new JLabel(
+                        new ImageIcon(
+                            this.getClass()
+                                .getResource(map[i][j].getPath())));
 				panel.add(l);
             }
         }
