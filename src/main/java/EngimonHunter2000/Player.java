@@ -125,7 +125,19 @@ public class Player implements Serializable {
     }
 
     public void addItem(Item item) throws InventoryException {
-        this.listItem.addItemNoDupe(item);
+        boolean punyaSama = false;
+        Item y = null;
+        int i;
+        for (i = 0; !punyaSama && i < listItem.getItemCount(); ++i) {
+            y = listItem.at(i);
+            punyaSama = y.equals(item);
+        }
+
+        if (punyaSama) {
+            y.incQuantity();
+        } else {
+            this.listItem.addItemNoDupe(item);
+        }
     }
 
     public void removeEngimon(int idx) throws InventoryException {

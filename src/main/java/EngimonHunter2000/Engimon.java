@@ -263,6 +263,7 @@ public class Engimon extends EngimonSpecies {
         if (this.exp >= MAX_EXP) {
             int lvl = this.exp / MAX_EXP;
             this.exp -= (lvl * MAX_EXP);
+            System.out.println(lvl);
             return this.addLevel(lvl);
         } else {
             return true;
