@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Test;
 public class InventoryTest {
     @BeforeAll
     public static void initAll() {
+        Inventory.resetItems();
         Inventory.setMax(5);
     }
 
